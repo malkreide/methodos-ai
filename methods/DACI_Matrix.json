@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "DACI_Matrix",
+  "name": "DACI Decision-Making Framework",
+  "category": "decision-making",
+  "use_case": "A role-assignment framework for cross-functional decisions, naming exactly one Driver, one Approver, multiple Contributors, and the Informed for a specific decision. Best used when decisions are stalling because nobody knows who actually owns the call versus who is consulted versus who is just kept in the loop.",
+  "strengths": [
+    "forces a single Approver — eliminates decision-by-committee drift",
+    "trivial to facilitate — one table, one meeting",
+    "scales from team-level to org-level decisions",
+    "creates an audit trail for retrospectives"
+  ],
+  "weaknesses": [
+    "doesn't help if the disagreement is *substantive* (use a different method first)",
+    "tempting to overuse — not every decision needs a DACI",
+    "the Approver role can feel autocratic in flat cultures",
+    "requires the Driver to be senior enough to push back on the Approver"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": { "min_minutes": 30, "max_minutes": 90 },
+  "references": [
+    "https://www.atlassian.com/team-playbook/plays/daci",
+    "https://en.wikipedia.org/wiki/Responsibility_assignment_matrix"
+  ]
+}
