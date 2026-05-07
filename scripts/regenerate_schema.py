@@ -3,6 +3,7 @@
 The Pydantic model is the single source of truth. Run after any change to
 `src/methodos/models.py`. CI will fail if the committed schema drifts.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -24,9 +25,7 @@ def main() -> None:
 
     schema = Method.model_json_schema()
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-    schema["$id"] = (
-        "https://github.com/Malkreide/methodos-ai/blob/main/schemas/method_schema.json"
-    )
+    schema["$id"] = "https://github.com/Malkreide/methodos-ai/blob/main/schemas/method_schema.json"
     schema["title"] = "Method"
 
     args.out.parent.mkdir(parents=True, exist_ok=True)

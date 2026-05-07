@@ -1,4 +1,5 @@
 """Runtime settings loaded from environment + .env."""
+
 from __future__ import annotations
 
 from pathlib import Path

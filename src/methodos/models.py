@@ -1,7 +1,8 @@
 """Canonical data model for a management method."""
+
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 from typing import Annotated, Any
 
 from pydantic import BaseModel, Field, StringConstraints
@@ -10,7 +11,7 @@ NonEmptyStr = Annotated[str, StringConstraints(min_length=1, strip_whitespace=Tr
 """A trimmed string with at least one non-whitespace character."""
 
 
-class Category(str, Enum):
+class Category(StrEnum):
     """Coarse-grained categorization of methods.
 
     Adding a category is a non-breaking schema change; bump `schema_version`

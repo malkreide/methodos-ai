@@ -1,11 +1,15 @@
 from pathlib import Path
-import os
+
 from methodos.config import Settings
 
 
 def test_defaults_are_offline_friendly(monkeypatch):
-    for k in ("METHODOS_MODEL", "METHODOS_EMBEDDING_PROVIDER",
-             "METHODOS_EMBEDDING_MODEL", "METHODOS_TOP_K"):
+    for k in (
+        "METHODOS_MODEL",
+        "METHODOS_EMBEDDING_PROVIDER",
+        "METHODOS_EMBEDDING_MODEL",
+        "METHODOS_TOP_K",
+    ):
         monkeypatch.delenv(k, raising=False)
     s = Settings(_env_file=None)
     assert s.model.startswith("ollama/")
@@ -28,5 +32,6 @@ def test_invalid_embedding_provider_rejected(monkeypatch):
     monkeypatch.setenv("METHODOS_EMBEDDING_PROVIDER", "elasticsearch")
     import pytest
     from pydantic import ValidationError
+
     with pytest.raises(ValidationError):
         Settings(_env_file=None)
