@@ -86,3 +86,42 @@ def test_query_with_llm_calls_llm(tmp_path, monkeypatch):
     res = runner.invoke(app, ["query", "decision making for cross-functional teams", "-k", "2"])
     assert res.exit_code == 0, res.stdout
     assert "canned explanation" in res.stdout
+
+
+REPO_METHODS = str(Path(__file__).parent.parent / "methods")
+
+
+def test_list_command_shows_all_methods():
+    from methodos.cli import app
+
+    res = runner.invoke(app, ["list", "--methods-dir", REPO_METHODS])
+    assert res.exit_code == 0
+    assert "SWOT" in res.stdout
+    assert "DACI" in res.stdout
+
+
+def test_list_filters_by_category():
+    from methodos.cli import app
+
+    res = runner.invoke(
+        app, ["list", "--methods-dir", REPO_METHODS, "--category", "decision-making"]
+    )
+    assert res.exit_code == 0
+    assert "DACI" in res.stdout
+    assert "SWOT" not in res.stdout
+
+
+def test_show_renders_markdown():
+    from methodos.cli import app
+
+    res = runner.invoke(app, ["show", "SWOT", "--methods-dir", REPO_METHODS])
+    assert res.exit_code == 0
+    assert "SWOT" in res.stdout
+
+
+def test_show_unknown_id_errors():
+    from methodos.cli import app
+
+    res = runner.invoke(app, ["show", "Nonexistent", "--methods-dir", REPO_METHODS])
+    assert res.exit_code == 1
+    assert "Nonexistent" in res.stdout

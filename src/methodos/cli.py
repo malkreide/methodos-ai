@@ -12,6 +12,7 @@ Subcommands:
 
 from __future__ import annotations
 
+import json as _json
 import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -20,12 +21,14 @@ import typer
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
+from rich.table import Table
 
 from methodos import __version__
 from methodos.config import Settings
 from methodos.providers import make_embedding, make_llm
 
 if TYPE_CHECKING:
+    from methodos.models import Method
     from methodos.search import Candidate
 
 app = typer.Typer(
@@ -160,3 +163,59 @@ def query(
     if sys.stdout.isatty() and result.candidates:
         top = result.candidates[0]
         console.print(f"\n[dim]─────[/]\n[dim]Rate with: methodos feedback {top.id} -r 1..5[/]")
+
+
+def _load_all_methods(methods_dir: Path) -> list[Method]:
+    from methodos.models import Method
+
+    methods = []
+    for f in sorted(methods_dir.glob("*.json")):
+        methods.append(Method.model_validate(_json.loads(f.read_text(encoding="utf-8"))))
+    return methods
+
+
+@app.command("list")
+def list_methods(
+    category: str | None = typer.Option(None, "--category", "-c"),
+    max_complexity: int | None = typer.Option(None, "--max-complexity"),
+    methods_dir: Path = typer.Option(Path("methods"), "--methods-dir"),  # noqa: B008
+) -> None:
+    """Browse the catalog."""
+    methods = _load_all_methods(methods_dir)
+    if category:
+        methods = [m for m in methods if m.category.value == category]
+    if max_complexity is not None:
+        methods = [m for m in methods if m.complexity_score <= max_complexity]
+
+    if not methods:
+        console.print("[yellow]No methods match.[/]")
+        return
+
+    table = Table(title="Methods")
+    table.add_column("ID", style="cyan")
+    table.add_column("Name")
+    table.add_column("Category", style="magenta")
+    table.add_column("Complexity", justify="center")
+    table.add_column("Duration (min)", justify="right")
+    for m in methods:
+        table.add_row(
+            m.id,
+            m.name,
+            m.category.value,
+            _complexity_dots(m.complexity_score),
+            f"{m.estimated_duration.min_minutes}–{m.estimated_duration.max_minutes}",  # noqa: RUF001
+        )
+    console.print(table)
+
+
+@app.command()
+def show(
+    id: str = typer.Argument(..., help="Method id (e.g. SWOT)"),
+    methods_dir: Path = typer.Option(Path("methods"), "--methods-dir"),  # noqa: B008
+) -> None:
+    """Print a method's full Markdown documentation."""
+    md = methods_dir / f"{id}.md"
+    if not md.exists():
+        console.print(f"[red]No method with id '{id}'[/]")
+        raise typer.Exit(code=1)
+    console.print(Markdown(md.read_text(encoding="utf-8")))
