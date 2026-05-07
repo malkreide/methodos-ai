@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -125,3 +126,68 @@ def test_show_unknown_id_errors():
     res = runner.invoke(app, ["show", "Nonexistent", "--methods-dir", REPO_METHODS])
     assert res.exit_code == 1
     assert "Nonexistent" in res.stdout
+
+
+def test_feedback_command_appends_rating(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    res = runner.invoke(app, ["feedback", "SWOT", "--rating", "4", "--note", "great"])
+    assert res.exit_code == 0, res.stdout
+    line = fb.read_text(encoding="utf-8").splitlines()[0]
+    obj = json.loads(line)
+    assert obj["method_id"] == "SWOT"
+    assert obj["rating"] == 4
+    assert obj["note"] == "great"
+
+
+def test_feedback_command_validates_rating_range(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(tmp_path / "fb.jsonl"))
+    res = runner.invoke(app, ["feedback", "SWOT", "--rating", "9"])
+    assert res.exit_code != 0
+
+
+def test_query_logs_recommendation(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    from tests.conftest import FakeEmbedding, FakeLLM
+
+    fake_e = FakeEmbedding(dimensions=8)
+    fake_l = FakeLLM(response="ok")
+    import methodos.cli as cli_mod
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: fake_e)
+    monkeypatch.setattr(cli_mod, "make_llm", lambda s: fake_l)
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+    runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+    res = runner.invoke(app, ["query", "decision making for cross-functional teams", "-k", "2"])
+    assert res.exit_code == 0
+    lines = fb.read_text(encoding="utf-8").splitlines()
+    rec_lines = [
+        line
+        for line in lines
+        if '"event": "recommendation"' in line or '"event":"recommendation"' in line
+    ]
+    assert len(rec_lines) == 1
+
+
+def test_stats_command_prints_table(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    runner.invoke(app, ["feedback", "SWOT", "--rating", "4"])
+    runner.invoke(app, ["feedback", "SWOT", "--rating", "5"])
+    res = runner.invoke(app, ["stats"])
+    assert res.exit_code == 0
+    assert "SWOT" in res.stdout

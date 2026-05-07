@@ -156,13 +156,25 @@ def query(
         return
 
     _render_candidates(result.candidates)
+
+    from methodos.feedback import log_recommendation
+
+    qid = log_recommendation(
+        query=text,
+        method_ids=[c.id for c in result.candidates],
+        model=settings.model,
+        path=settings.feedback_path,
+    )
+
     if result.explanation:
         console.print()
         console.print(Markdown(result.explanation))
 
     if sys.stdout.isatty() and result.candidates:
         top = result.candidates[0]
-        console.print(f"\n[dim]─────[/]\n[dim]Rate with: methodos feedback {top.id} -r 1..5[/]")
+        console.print(
+            f"\n[dim]─────[/]\n[dim]Logged as {qid} · rate with: methodos feedback {top.id} -r 4[/]"
+        )
 
 
 def _load_all_methods(methods_dir: Path) -> list[Method]:
@@ -219,3 +231,49 @@ def show(
         console.print(f"[red]No method with id '{id}'[/]")
         raise typer.Exit(code=1)
     console.print(Markdown(md.read_text(encoding="utf-8")))
+
+
+@app.command()
+def feedback(
+    method_id: str = typer.Argument(..., help="Method id (e.g. SWOT)"),
+    rating: int = typer.Option(..., "--rating", "-r", min=1, max=5),
+    note: str | None = typer.Option(None, "--note", "-n"),
+    query_id: str | None = typer.Option(None, "--query-id", "-q"),
+) -> None:
+    """Record an outcome rating for a previously-recommended method."""
+    from methodos.feedback import log_rating
+
+    settings = Settings()
+    log_rating(
+        method_id=method_id,
+        rating=rating,
+        note=note,
+        query_id=query_id,
+        path=settings.feedback_path,
+    )
+    console.print(f"[green]Recorded:[/] {method_id} rated {rating}/5")
+
+
+@app.command("stats")
+def stats_cmd() -> None:
+    """Show aggregated method ratings."""
+    from methodos.feedback import stats
+
+    settings = Settings()
+    s = stats(settings.feedback_path)
+    if not s:
+        console.print("[yellow]No feedback yet.[/]")
+        return
+    table = Table(title="Method ratings")
+    table.add_column("Method", style="cyan")
+    table.add_column("Recommended", justify="right")
+    table.add_column("Rated", justify="right")
+    table.add_column("Avg rating", justify="right")
+    for mid, stat in sorted(s.items()):
+        table.add_row(
+            mid,
+            str(stat.recommendation_count),
+            str(stat.rating_count),
+            f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
+        )
+    console.print(table)
