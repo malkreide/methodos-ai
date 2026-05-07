@@ -1,0 +1,25 @@
+name: pr-method-validate
+
+on:
+  pull_request:
+    paths:
+      - 'methods/**'
+      - 'src/methodos/models.py'
+      - 'schemas/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Validate methods
+        run: python scripts/validate_methods.py
+      - name: Schema drift
+        run: |
+          python scripts/regenerate_schema.py --out /tmp/schema_check.json
+          diff -u schemas/method_schema.json /tmp/schema_check.json
