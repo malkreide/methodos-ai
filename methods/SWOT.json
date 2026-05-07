@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "SWOT",
+  "name": "SWOT Analysis",
+  "category": "strategy",
+  "use_case": "A structured framework for evaluating an organization, project, or initiative across four quadrants: internal Strengths and Weaknesses, and external Opportunities and Threats. Best used early in strategic planning when the team needs to surface assumptions and align on the competitive landscape before committing to a direction.",
+  "strengths": [
+    "widely recognized — minimal explanation needed",
+    "simple to facilitate in a 1–2 hour workshop",
+    "outputs are immediately actionable as discussion fuel",
+    "low complexity barrier — works with mixed-experience groups"
+  ],
+  "weaknesses": [
+    "can be superficial without rigorous evidence behind each cell",
+    "no built-in prioritization between items",
+    "doesn't model dynamics over time",
+    "easily becomes a wishlist rather than an analysis"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": { "min_minutes": 60, "max_minutes": 180 },
+  "references": [
+    "https://en.wikipedia.org/wiki/SWOT_analysis",
+    "https://hbr.org/1982/05/the-strategy-process"
+  ]
+}
