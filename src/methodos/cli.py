@@ -31,6 +31,15 @@ if TYPE_CHECKING:
     from methodos.models import Method
     from methodos.search import Candidate
 
+# On Windows, default stdout encoding is cp1252, which can't render the unicode
+# characters we use in tables (●, ○, en-dash, ellipsis). Reconfigure to UTF-8 so
+# the CLI works in regular cmd / PowerShell windows without manual env tweaks.
+if sys.platform == "win32":
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8")
+
 app = typer.Typer(
     name="methodos",
     help="An expert-level RAG catalog of management methods.",
