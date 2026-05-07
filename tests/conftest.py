@@ -1,9 +1,10 @@
 """Shared test fixtures: deterministic provider fakes and tmp Chroma."""
+
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 import pytest
 

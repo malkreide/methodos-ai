@@ -1,7 +1,9 @@
 """OpenAI embeddings — opt-in cloud alternative to LocalEmbedding."""
+
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from methodos.providers.base import EmbeddingError
 
@@ -12,9 +14,10 @@ _KNOWN_DIMS: dict[str, int] = {
 }
 
 
-def _client():
+def _client() -> Any:
     """Lazy-construct the OpenAI client (reads OPENAI_API_KEY from env)."""
     from openai import OpenAI
+
     return OpenAI()
 
 

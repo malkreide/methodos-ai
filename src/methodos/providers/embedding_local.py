@@ -1,14 +1,17 @@
 """Local embeddings via sentence-transformers (CPU-friendly, offline)."""
+
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from methodos.providers.base import EmbeddingError
 
 
-def _load_st_model(model_name: str):
+def _load_st_model(model_name: str) -> Any:
     """Indirection so tests can patch this single function."""
     from sentence_transformers import SentenceTransformer
+
     return SentenceTransformer(model_name)
 
 
@@ -24,7 +27,7 @@ class LocalEmbedding:
     def __init__(self, model_name: str = "all-MiniLM-L6-v2") -> None:
         self.name = f"local:{model_name}"
         self._model_name = model_name
-        self._model = None
+        self._model: Any = None
         # `dimensions` is a plain attribute (not a property) so that
         # `hasattr(instance, "dimensions")` — used by Protocol's runtime
         # isinstance check — does NOT trigger lazy model loading.
@@ -37,7 +40,7 @@ class LocalEmbedding:
                 self._model = _load_st_model(self._model_name)
             except Exception as e:
                 raise EmbeddingError(f"failed to load {self._model_name}: {e}") from e
-            self.dimensions = self._model.get_sentence_embedding_dimension()
+            self.dimensions = int(self._model.get_sentence_embedding_dimension())
 
     def embed(self, texts: Sequence[str]) -> list[list[float]]:
         self._ensure_loaded()

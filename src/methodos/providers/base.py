@@ -1,7 +1,9 @@
 """Provider Protocols — the only seam between application code and SDKs."""
+
 from __future__ import annotations
 
-from typing import Protocol, Sequence, runtime_checkable
+from collections.abc import Sequence
+from typing import Protocol, runtime_checkable
 
 
 class LLMError(Exception):
@@ -19,8 +21,7 @@ class EmbeddingProvider(Protocol):
     name: str
     dimensions: int
 
-    def embed(self, texts: Sequence[str]) -> list[list[float]]:
-        ...
+    def embed(self, texts: Sequence[str]) -> list[list[float]]: ...
 
 
 @runtime_checkable
@@ -36,5 +37,4 @@ class LLMProvider(Protocol):
         *,
         max_tokens: int = 1024,
         temperature: float = 0.2,
-    ) -> str:
-        ...
+    ) -> str: ...
