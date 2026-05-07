@@ -43,7 +43,7 @@ The architecture is deliberately small but expert-level: a Pydantic-typed knowle
 | 9 | Ingest strategy | Always-rebuild | Chroma is a derived artifact; simpler invariant |
 | 10 | Metadata storage | Stash flattened in Chroma | Fewer disk reads at query time; trade denormalization for speed |
 | 11 | LLM call shape | One call for all top-k results | Coherent recommendation, one round-trip, one bill |
-| 12 | Default cloud LLM | Anthropic `claude-3-5-haiku-20241022` | Recommended in README; one env-var swap |
+| 12 | Default cloud LLM | Anthropic Haiku (current model string lives in README, not in code defaults) | Recommended cloud option; one env-var swap. Model strings rot — keep them out of the spec table |
 | 13 | Default embedding | `sentence-transformers/all-MiniLM-L6-v2` (local) | 384-dim, ~80MB, runs CPU-only in ms |
 | 14 | TTY hint | Print "rate this" hint only when `stdout.isatty()` | Pipe-clean for `methodos query "..." \| jq` |
 
@@ -228,6 +228,10 @@ class LLMProvider(Protocol):
 - `complete` takes split `system` and `user` — every modern provider supports this; litellm normalizes.
 - Default `temperature=0.2` for the explanation step: grounded prose, slight variation, not creative writing.
 
+### Error contract
+
+`LLMProvider.complete` raises on failure (rate limits, timeouts, bad credentials, model not found) — it does not return empty strings or sentinel values. We define a single `LLMError(Exception)` in `providers/base.py`; `LiteLLMProvider` wraps litellm's varied exception types into it. `cli.py` catches `LLMError` and renders a Rich-styled error panel *without* dropping the retrieval output — the user still sees ranked methods, just not the explanation. This is what makes `--no-llm` a graceful fallback rather than a workaround. Same pattern for `EmbeddingProvider.embed` → `EmbeddingError`.
+
 ### Concrete v1 implementations
 
 1. **`LiteLLMProvider`** (`providers/llm_litellm.py`) — implements `LLMProvider` for any model string of the form `<provider>/<model>`. ~40 lines wrapping `litellm.completion(...)`.
@@ -293,7 +297,8 @@ Both satisfy their Protocols structurally. Search tests assert exact orderings a
 2. Glob methods/*.json, parse + Pydantic-validate all.
    Collect errors; do not abort on first failure.
 3. If any errors: print all, exit 1.
-   If duplicate id: error.
+   Validation also asserts `Path(file).stem == method.id` (filename must match id field).
+   Validation rejects duplicate `id` across files.
 4. Open Chroma client at settings.chroma_path.
 5. Drop existing "methods" collection if present.
 6. Create fresh "methods" collection with metadata:
@@ -369,6 +374,9 @@ The query path reverses this: deserialize `_json` fields, hand structured object
    results   = search(query, embedding, llm, top_k=settings.top_k)
 
 2. search.py:retrieve(query, top_k):
+   # Verify provider compatibility with the persisted index.
+   if collection.metadata["embedding_provider_name"] != embedding.name:
+       raise StaleIndexError("embedding provider changed; run `methodos ingest`")
    q_vec = embedding.embed([query])[0]
    raw   = chroma.query(query_embeddings=[q_vec],
                         n_results=top_k * 2,         ← over-fetch
@@ -455,7 +463,7 @@ Append-only JSONL at `data/feedback.jsonl`. Two event types:
 
 ### Linking the two
 
-Every `query` mints a fresh ULID `query_id` and prints it in the CLI footer (TTY only):
+`cli.py` mints the ULID — `search.py` stays pure, knowing nothing about feedback. The CLI calls `feedback.log_recommendation(...)` after rendering, then prints the `query_id` in the CLI footer (TTY only):
 
 ```
 ─────
@@ -479,7 +487,7 @@ def stats() -> dict[str, MethodStats]:
     """Aggregate ratings by method_id; used by `methodos stats`."""
 ```
 
-`FeedbackEvent` is a Pydantic discriminated union — malformed lines are caught at parse.
+`FeedbackEvent` is a Pydantic discriminated union — malformed lines are caught at parse. `read_events` is **lenient**: it skips malformed lines, logs them to stderr with line numbers, and reports a count of skipped events at the end. A years-old log with one corrupt line from a crashed write must not break `methodos stats`.
 
 ### Concurrency
 
@@ -522,6 +530,8 @@ JSONL append is *almost* atomic on POSIX for writes < `PIPE_BUF` (4096 bytes), b
 ```
 
 `pyproject.toml` `[project.optional-dependencies].dev` declares ruff, mypy, pytest, types stubs. Onboarding: `pip install -e ".[dev]"`.
+
+**Note:** `litellm` ships incomplete type stubs as of writing; `pyproject.toml` includes a `[[tool.mypy.overrides]] module = "litellm.*" ignore_missing_imports = true` block to keep `mypy --strict` green without polluting code with `# type: ignore` pragmas.
 
 A second workflow `pr-method-validate.yml` runs only on PRs touching `methods/**` — fast feedback for community method-additions, the most common kind of PR.
 
