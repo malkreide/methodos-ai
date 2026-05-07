@@ -21,3 +21,23 @@ def test_errors_are_distinguishable():
     assert issubclass(LLMError, Exception)
     assert issubclass(EmbeddingError, Exception)
     assert not issubclass(LLMError, EmbeddingError)
+
+
+def test_fake_llm_satisfies_protocol(fake_llm):
+    assert isinstance(fake_llm, LLMProvider)
+
+
+def test_fake_embedding_satisfies_protocol(fake_embedding):
+    assert isinstance(fake_embedding, EmbeddingProvider)
+
+
+def test_fake_embedding_is_deterministic(fake_embedding):
+    a = fake_embedding.embed(["hello"])
+    b = fake_embedding.embed(["hello"])
+    assert a == b
+
+
+def test_fake_llm_records_calls(fake_llm):
+    fake_llm.complete("S", "U")
+    fake_llm.complete("S2", "U2")
+    assert fake_llm.calls == [("S", "U"), ("S2", "U2")]
