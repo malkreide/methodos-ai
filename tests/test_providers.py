@@ -111,3 +111,37 @@ def test_local_embedding_wraps_errors():
         p = LocalEmbedding(model_name="bogus")
         with pytest.raises(EmbeddingError):
             p.embed(["x"])
+
+
+def test_openai_embedding_satisfies_protocol():
+    from methodos.providers.embedding_openai import OpenAIEmbedding
+    assert isinstance(OpenAIEmbedding(model_name="text-embedding-3-small"), EmbeddingProvider)
+    p = OpenAIEmbedding(model_name="text-embedding-3-small")
+    assert p.name == "openai:text-embedding-3-small"
+    assert p.dimensions == 1536
+
+
+def test_openai_embedding_uses_client():
+    from methodos.providers.embedding_openai import OpenAIEmbedding
+    fake_client = MagicMock()
+    fake_client.embeddings.create.return_value = MagicMock(
+        data=[MagicMock(embedding=[0.1] * 1536), MagicMock(embedding=[0.2] * 1536)]
+    )
+    with patch("methodos.providers.embedding_openai._client", return_value=fake_client):
+        p = OpenAIEmbedding(model_name="text-embedding-3-small")
+        out = p.embed(["a", "b"])
+    assert out == [[0.1] * 1536, [0.2] * 1536]
+    fake_client.embeddings.create.assert_called_once_with(
+        model="text-embedding-3-small", input=["a", "b"]
+    )
+
+
+def test_openai_embedding_wraps_errors():
+    import pytest
+    from methodos.providers.embedding_openai import OpenAIEmbedding
+    fake_client = MagicMock()
+    fake_client.embeddings.create.side_effect = RuntimeError("rate limit")
+    with patch("methodos.providers.embedding_openai._client", return_value=fake_client):
+        p = OpenAIEmbedding(model_name="text-embedding-3-small")
+        with pytest.raises(EmbeddingError):
+            p.embed(["a"])
