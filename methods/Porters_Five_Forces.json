@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "Porters_Five_Forces",
+  "name": "Porter's Five Forces",
+  "category": "strategy",
+  "use_case": "A structural analysis of the competitive intensity and attractiveness of an industry by examining five forces: rivalry among existing competitors, threat of new entrants, threat of substitutes, bargaining power of suppliers, and bargaining power of buyers. Best used when assessing whether to enter a new market, launch a new product line, or evaluate the long-term defensibility of a position.",
+  "strengths": [
+    "structural — surfaces forces that are easy to overlook",
+    "framework is well-known in MBA and consulting contexts",
+    "produces a defensible written analysis, not just a brainstorm",
+    "links directly to strategic posture decisions (cost leadership, differentiation, focus)"
+  ],
+  "weaknesses": [
+    "static snapshot — doesn't model changes over time well",
+    "originally framed for manufacturing; software/network-effect markets need adaptation",
+    "requires real industry data, not just a workshop",
+    "underweights complementors and the role of platform dynamics"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": { "min_minutes": 240, "max_minutes": 1200 },
+  "references": [
+    "https://hbr.org/2008/01/the-five-competitive-forces-that-shape-strategy",
+    "https://en.wikipedia.org/wiki/Porter%27s_five_forces_analysis"
+  ]
+}
