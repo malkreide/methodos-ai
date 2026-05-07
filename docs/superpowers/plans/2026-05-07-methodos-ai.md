@@ -163,6 +163,8 @@ __version__ = "0.1.0"
 
 - [ ] **Step 5: Create `Makefile`**
 
+> **Windows note for the implementer:** `make` is not standard on Windows. On Windows, either install `make` via Chocolatey/Scoop (`scoop install make`), use WSL, or run the underlying commands directly (e.g. `pytest` instead of `make test`). The README and CLAUDE.md mention `make <target>` as the canonical form; if you're on Windows without `make`, mentally translate to the inner command.
+
 ```makefile
 .PHONY: install test lint fmt schema ingest demo clean
 
@@ -2090,6 +2092,10 @@ def ingest(
     collection = client.create_collection(
         name="methods",
         metadata={
+            # CRITICAL: ChromaDB defaults to L2 (Euclidean) distance. Force cosine
+            # so the math comment block above is actually true. Without this,
+            # `similarity = 1 - distance` is meaningless and rankings are wrong.
+            "hnsw:space": "cosine",
             "embedding_provider_name": embedding.name,
             "embedding_dimensions": embedding.dimensions,
             "schema_version": 1,
@@ -2256,10 +2262,14 @@ def _format_candidate(c: dict[str, Any]) -> str:
 
 
 def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -> str:
-    """Render the explain template with query + candidate list."""
+    """Render the explain template with query + candidate list.
+
+    Uses string `.replace` rather than `.format` to avoid format-injection
+    when a user's query contains literal `{` or `}` characters.
+    """
     template = load_prompt("explain")
     candidates_block = "\n".join(_format_candidate(c) for c in candidates)
-    return template.format(query=query, candidates_block=candidates_block)
+    return template.replace("{query}", query).replace("{candidates_block}", candidates_block)
 ```
 
 - [ ] **Step 5: Run tests, expect pass**
@@ -2847,30 +2857,32 @@ git commit -m "feat(cli): add query command with Rich rendering and TTY hint"
 - [ ] **Step 1: Failing test**
 
 ```python
-def test_list_command_shows_all_methods(monkeypatch):
+REPO_METHODS = str(Path(__file__).parent.parent / "methods")
+
+def test_list_command_shows_all_methods():
     from methodos.cli import app
-    res = runner.invoke(app, ["list"])
+    res = runner.invoke(app, ["list", "--methods-dir", REPO_METHODS])
     assert res.exit_code == 0
     assert "SWOT" in res.stdout
     assert "DACI" in res.stdout
 
 def test_list_filters_by_category():
     from methodos.cli import app
-    res = runner.invoke(app, ["list", "--category", "decision-making"])
+    res = runner.invoke(app, ["list", "--methods-dir", REPO_METHODS, "--category", "decision-making"])
     assert res.exit_code == 0
     assert "DACI" in res.stdout
     assert "SWOT" not in res.stdout
 
 def test_show_renders_markdown():
     from methodos.cli import app
-    res = runner.invoke(app, ["show", "SWOT"])
+    res = runner.invoke(app, ["show", "SWOT", "--methods-dir", REPO_METHODS])
     assert res.exit_code == 0
     # SWOT.md contains the header "SWOT Analysis"
     assert "SWOT" in res.stdout
 
 def test_show_unknown_id_errors():
     from methodos.cli import app
-    res = runner.invoke(app, ["show", "Nonexistent"])
+    res = runner.invoke(app, ["show", "Nonexistent", "--methods-dir", REPO_METHODS])
     assert res.exit_code == 1
     assert "Nonexistent" in res.stdout
 ```
@@ -3009,7 +3021,8 @@ def test_log_rating_rejects_out_of_range(tmp_path):
 def test_read_events_skips_corrupt_lines(tmp_path, capsys):
     fb = tmp_path / "fb.jsonl"
     log_rating(method_id="SWOT", rating=3, note=None, query_id=None, path=fb)
-    fb.open("a", encoding="utf-8").write("this-is-not-json\n")
+    with fb.open("a", encoding="utf-8") as f:
+        f.write("this-is-not-json\n")
     log_rating(method_id="DACI_Matrix", rating=4, note=None, query_id=None, path=fb)
 
     events = list(read_events(fb))
@@ -3314,8 +3327,8 @@ def feedback(
     console.print(f"[green]Recorded:[/] {method_id} rated {rating}/5")
 
 
-@app.command()
-def stats_cmd() -> None:  # exposed as `methodos stats`
+@app.command("stats")
+def stats_cmd() -> None:
     """Show aggregated method ratings."""
     from methodos.feedback import stats
     settings = Settings()
@@ -3334,13 +3347,9 @@ def stats_cmd() -> None:  # exposed as `methodos stats`
             f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
         )
     console.print(table)
-
-
-# Bind the function to the typer name `stats`
-app.command("stats")(stats_cmd.callback if hasattr(stats_cmd, "callback") else stats_cmd)
 ```
 
-(If the `stats_cmd` rebind line fails Typer-internal sanity checks, drop it and rename the function to `stats` directly with `@app.command("stats")` — pick whichever lints clean.)
+The decorator argument `"stats"` registers the command as `methodos stats` (overriding the function name). The Python function name remains `stats_cmd` to avoid shadowing the imported `stats` symbol from `methodos.feedback`.
 
 - [ ] **Step 4: Run tests, expect pass**
 
