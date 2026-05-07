@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "Category": {
+      "description": "Coarse-grained categorization of methods.\n\nAdding a category is a non-breaking schema change; bump `schema_version`\nonly when a *required* field changes.",
+      "enum": [
+        "strategy",
+        "decision-making",
+        "analysis",
+        "prioritization",
+        "retrospective"
+      ],
+      "title": "Category",
+      "type": "string"
+    },
+    "Duration": {
+      "description": "Estimated wall-clock time to apply the method end-to-end.",
+      "properties": {
+        "min_minutes": {
+          "maximum": 10000,
+          "minimum": 5,
+          "title": "Min Minutes",
+          "type": "integer"
+        },
+        "max_minutes": {
+          "maximum": 10000,
+          "minimum": 5,
+          "title": "Max Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "min_minutes",
+        "max_minutes"
+      ],
+      "title": "Duration",
+      "type": "object"
+    }
+  },
+  "description": "A management method as represented in the catalog.\n\nThe `use_case` field is the text we embed for retrieval. All other fields\nare surfaced to the user via CLI rendering or filtering. Adding a new\nfield that is *not* required is non-breaking; adding a required field\nbumps `schema_version` and requires a migration of existing JSON files.",
+  "properties": {
+    "schema_version": {
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "pattern": "^[A-Z][A-Za-z0-9_]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "category": {
+      "$ref": "#/$defs/Category"
+    },
+    "use_case": {
+      "minLength": 40,
+      "title": "Use Case",
+      "type": "string"
+    },
+    "strengths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Strengths",
+      "type": "array"
+    },
+    "weaknesses": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Weaknesses",
+      "type": "array"
+    },
+    "complexity_score": {
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Complexity Score",
+      "type": "integer"
+    },
+    "estimated_duration": {
+      "$ref": "#/$defs/Duration"
+    },
+    "references": {
+      "items": {
+        "type": "string"
+      },
+      "title": "References",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "category",
+    "use_case",
+    "strengths",
+    "weaknesses",
+    "complexity_score",
+    "estimated_duration"
+  ],
+  "title": "Method",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Malkreide/methodos-ai/blob/main/schemas/method_schema.json"
+}

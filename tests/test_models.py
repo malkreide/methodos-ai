@@ -57,3 +57,21 @@ def test_duration_max_must_be_ge_min():
 def test_unknown_category_rejected():
     with pytest.raises(ValidationError):
         Method.model_validate(_valid_payload(category="dance"))
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+def test_committed_schema_matches_pydantic_model(tmp_path):
+    """Regenerating the schema should produce a byte-identical file."""
+    repo_root = Path(__file__).parent.parent
+    target = tmp_path / "method_schema.json"
+    script = repo_root / "scripts" / "regenerate_schema.py"
+    subprocess.check_call(
+        [sys.executable, str(script), "--out", str(target)],
+        cwd=repo_root,
+    )
+    committed = (repo_root / "schemas" / "method_schema.json").read_text()
+    regenerated = target.read_text()
+    assert committed == regenerated, "Run `make schema` to update the committed schema."
