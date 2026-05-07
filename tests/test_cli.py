@@ -191,3 +191,13 @@ def test_stats_command_prints_table(tmp_path, monkeypatch):
     res = runner.invoke(app, ["stats"])
     assert res.exit_code == 0
     assert "SWOT" in res.stdout
+
+
+def test_version_reflects_active_model(monkeypatch):
+    """--version must show the model the user is actually about to use."""
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_MODEL", "anthropic/claude-3-5-haiku-20241022")
+    res = runner.invoke(app, ["--version"])
+    assert res.exit_code == 0
+    assert "anthropic/claude-3-5-haiku-20241022" in res.stdout

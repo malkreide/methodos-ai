@@ -51,7 +51,7 @@ console = Console()
 
 def _version_callback(value: bool) -> None:
     if value:
-        s = Settings(_env_file=None)  # type: ignore[call-arg]
+        s = Settings()
         console.print(
             f"methodos {__version__}\n"
             f"  model:     {s.model}\n"
