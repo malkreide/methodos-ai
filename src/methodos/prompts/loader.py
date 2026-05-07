@@ -1,4 +1,5 @@
 """Load and render prompt templates."""
+
 from __future__ import annotations
 
 from collections.abc import Sequence
@@ -35,7 +36,7 @@ def _format_candidate(c: dict[str, Any]) -> str:
         f"Use case: {c['use_case']}\n"
         f"Strengths:\n{strengths_b}\n"
         f"Weaknesses:\n{weaknesses_b}\n"
-        f"Duration: {c['duration_min']}–{c['duration_max']} minutes\n"
+        f"Duration: {c['duration_min']}-{c['duration_max']} minutes\n"
         f"---"
     )
 

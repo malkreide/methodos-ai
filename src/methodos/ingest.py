@@ -26,12 +26,14 @@ pure function of the JSON files on disk.
 # CRITICAL: ChromaDB defaults to L2 distance unless `hnsw:space=cosine` is
 # specified in collection metadata. This file sets it explicitly.
 """
+
 from __future__ import annotations
 
+import contextlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from pydantic import ValidationError
 
@@ -90,17 +92,13 @@ def _load_and_validate(methods_dir: Path) -> list[Method]:
             errors.append(f"{path}: {e}")
             continue
         if path.stem != method.id:
-            errors.append(
-                f"{path}: filename stem '{path.stem}' must equal id '{method.id}'"
-            )
+            errors.append(f"{path}: filename stem '{path.stem}' must equal id '{method.id}'")
             continue
         if not path.with_suffix(".md").exists():
             errors.append(f"{path}: missing companion {path.stem}.md")
             continue
         if method.id in seen:
-            errors.append(
-                f"{path}: duplicate id '{method.id}' (also in {seen[method.id]})"
-            )
+            errors.append(f"{path}: duplicate id '{method.id}' (also in {seen[method.id]})")
             continue
         seen[method.id] = path
         methods.append(method)
@@ -132,10 +130,8 @@ def ingest(
     chroma_path.mkdir(parents=True, exist_ok=True)
     client = chromadb.PersistentClient(path=str(chroma_path))
 
-    try:
+    with contextlib.suppress(Exception):
         client.delete_collection("methods")
-    except Exception:
-        pass
 
     collection = client.create_collection(
         name="methods",
@@ -154,13 +150,12 @@ def ingest(
     vectors = embedding.embed(use_cases)
     if any(len(v) != embedding.dimensions for v in vectors):
         raise IngestError(
-            f"embedding provider returned wrong dimensionality "
-            f"(expected {embedding.dimensions})"
+            f"embedding provider returned wrong dimensionality (expected {embedding.dimensions})"
         )
 
     collection.upsert(
         ids=[m.id for m in methods],
-        embeddings=vectors,
+        embeddings=cast(Any, vectors),
         documents=use_cases,
         metadatas=[_flatten_metadata(m) for m in methods],
     )

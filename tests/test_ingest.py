@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
+
 import pytest
 
-from methodos.ingest import ingest, IngestError
+from methodos.ingest import IngestError, ingest
 
 
 def _write_method(dir: Path, id: str, *, use_case_suffix: str = "") -> None:
@@ -10,9 +11,9 @@ def _write_method(dir: Path, id: str, *, use_case_suffix: str = "") -> None:
         "id": id,
         "name": id.replace("_", " "),
         "category": "strategy",
-        "use_case": (
-            "a useful method for problems involving " + id + " " + use_case_suffix
-        ).ljust(60, "."),
+        "use_case": ("a useful method for problems involving " + id + " " + use_case_suffix).ljust(
+            60, "."
+        ),
         "strengths": ["s"],
         "weaknesses": ["w"],
         "complexity_score": 2,
@@ -95,6 +96,7 @@ def test_ingest_persists_provider_metadata(tmp_path, fake_embedding):
     ingest(methods_dir=methods, chroma_path=chroma_path, embedding=fake_embedding)
 
     import chromadb
+
     client = chromadb.PersistentClient(path=str(chroma_path))
     coll = client.get_collection("methods")
     assert coll.metadata["embedding_provider_name"] == fake_embedding.name
