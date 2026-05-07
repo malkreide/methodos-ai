@@ -77,3 +77,37 @@ def test_litellm_provider_wraps_exceptions_into_llmerror():
         with pytest.raises(LLMError) as ei:
             p.complete("s", "u")
         assert "boom" in str(ei.value)
+
+
+def test_local_embedding_lazy_loads_model():
+    from methodos.providers.embedding_local import LocalEmbedding
+    p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
+    assert p.name == "local:all-MiniLM-L6-v2"
+    assert getattr(p, "_model", None) is None
+
+
+def test_local_embedding_calls_underlying_model():
+    from methodos.providers.embedding_local import LocalEmbedding
+    fake = MagicMock()
+    fake.get_sentence_embedding_dimension.return_value = 384
+    fake.encode.return_value = [[0.1] * 384, [0.2] * 384]
+    with patch("methodos.providers.embedding_local._load_st_model", return_value=fake) as ld:
+        p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
+        out = p.embed(["a", "b"])
+    assert out == [[0.1] * 384, [0.2] * 384]
+    assert p.dimensions == 384
+    ld.assert_called_once_with("all-MiniLM-L6-v2")
+
+
+def test_local_embedding_satisfies_protocol():
+    from methodos.providers.embedding_local import LocalEmbedding
+    assert isinstance(LocalEmbedding(model_name="x"), EmbeddingProvider)
+
+
+def test_local_embedding_wraps_errors():
+    import pytest
+    from methodos.providers.embedding_local import LocalEmbedding
+    with patch("methodos.providers.embedding_local._load_st_model", side_effect=RuntimeError("model not found")):
+        p = LocalEmbedding(model_name="bogus")
+        with pytest.raises(EmbeddingError):
+            p.embed(["x"])
