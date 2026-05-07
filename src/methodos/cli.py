@@ -12,14 +12,21 @@ Subcommands:
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import typer
 from rich.console import Console
+from rich.markdown import Markdown
+from rich.panel import Panel
 
 from methodos import __version__
 from methodos.config import Settings
-from methodos.providers import make_embedding
+from methodos.providers import make_embedding, make_llm
+
+if TYPE_CHECKING:
+    from methodos.search import Candidate
 
 app = typer.Typer(
     name="methodos",
@@ -89,3 +96,67 @@ def ingest(
         f"[green]Ingested {summary.count} method(s)[/] "
         f"(provider: {summary.provider_name}, {summary.dimensions}d)"
     )
+
+
+def _complexity_dots(score: int) -> str:
+    return "●" * score + "○" * (5 - score)
+
+
+def _render_candidates(candidates: list[Candidate]) -> None:
+    for i, c in enumerate(candidates, 1):
+        header = (
+            f"#{i}  {c.name}  (sim {c.similarity:.2f})  "
+            f"complexity {_complexity_dots(c.complexity_score)}"
+        )
+        body_lines = [
+            "[bold]Strengths:[/] " + " · ".join(c.strengths[:3]),
+            f"[bold]Duration:[/] {c.duration_min}–{c.duration_max} min",  # noqa: RUF001
+            f"[bold]Category:[/] {c.category}",
+            f"→ [link=file://{c.doc_path}]{c.doc_path}[/link]",
+        ]
+        console.print(Panel("\n".join(body_lines), title=header, expand=False))
+
+
+@app.command()
+def query(
+    text: str = typer.Argument(..., help="Natural-language problem statement"),
+    top_k: int | None = typer.Option(None, "--top-k", "-k", help="Number of methods to recommend"),
+    no_llm: bool = typer.Option(False, "--no-llm", help="Skip LLM explanation"),
+    model: str | None = typer.Option(None, "--model", help="Override LLM model string"),
+) -> None:
+    """Recommend methods for a problem."""
+    from methodos.search import StaleIndexError, search
+
+    settings = Settings()
+    if model is not None:
+        settings = settings.model_copy(update={"model": model})
+    if top_k is None:
+        top_k = settings.top_k
+
+    embedding = make_embedding(settings)
+    llm = None if no_llm else make_llm(settings)
+
+    try:
+        result = search(
+            query=text,
+            embedding=embedding,
+            llm=llm,
+            chroma_path=settings.chroma_path,
+            top_k=top_k,
+        )
+    except StaleIndexError as e:
+        console.print(f"[red]Stale index:[/] {e}")
+        raise typer.Exit(code=1) from e
+
+    if not result.candidates:
+        console.print("[yellow]No matches.[/]")
+        return
+
+    _render_candidates(result.candidates)
+    if result.explanation:
+        console.print()
+        console.print(Markdown(result.explanation))
+
+    if sys.stdout.isatty() and result.candidates:
+        top = result.candidates[0]
+        console.print(f"\n[dim]─────[/]\n[dim]Rate with: methodos feedback {top.id} -r 1..5[/]")
