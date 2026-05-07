@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "methodos"
+version = "0.1.0"
+description = "An expert-level RAG catalog of management methods."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Hayal Özkan" }]
+keywords = ["rag", "management", "methods", "swot", "decision-making"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "chromadb>=0.5",
+  "litellm>=1.40",
+  "typer>=0.12",
+  "rich>=13.7",
+  "python-ulid>=2.2",
+  "jsonschema>=4.21",
+]
+
+[project.optional-dependencies]
+local = ["sentence-transformers>=2.7"]
+openai = ["openai>=1.30"]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=5",
+  "ruff>=0.4",
+  "mypy>=1.10",
+  "types-jsonschema",
+]
+
+[project.scripts]
+methodos = "methodos.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/methodos"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/methodos"]
+
+[[tool.mypy.overrides]]
+module = "litellm.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "chromadb.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "sentence_transformers.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: requires network/API keys; not run in default suite",
+]
+addopts = "-q --strict-markers"
