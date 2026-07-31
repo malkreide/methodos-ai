@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -201,3 +203,19 @@ def test_version_reflects_active_model(monkeypatch):
     res = runner.invoke(app, ["--version"])
     assert res.exit_code == 0
     assert "anthropic/claude-3-5-haiku-20241022" in res.stdout
+
+
+def test_module_entrypoint_dispatches_to_app():
+    """`python -m methodos.cli` is the form used by the Makefile and CLAUDE.md.
+
+    Without a __main__ guard the module imports and exits 0 silently, so
+    `make ingest` / `make demo` become no-ops.
+    """
+    res = subprocess.run(
+        [sys.executable, "-m", "methodos.cli", "--version"],
+        cwd=Path(__file__).parent.parent,
+        capture_output=True,
+        text=True,
+    )
+    assert res.returncode == 0, res.stderr
+    assert "methodos" in res.stdout.lower()

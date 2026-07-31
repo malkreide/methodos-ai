@@ -286,3 +286,9 @@ def stats_cmd() -> None:
             f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
         )
     console.print(table)
+
+
+if __name__ == "__main__":
+    # `python -m methodos.cli ...` is the form the Makefile and CLAUDE.md use;
+    # without this the module would just import and exit 0 without running.
+    app()
