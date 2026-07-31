@@ -8,6 +8,23 @@ from typer.testing import CliRunner
 runner = CliRunner()
 
 
+class BrokenEmbedding:
+    """Embedding provider whose backend is unavailable (e.g. extra not installed)."""
+
+    name = "broken:model"
+
+    @property
+    def dimensions(self) -> int:
+        from methodos.providers.base import EmbeddingError
+
+        raise EmbeddingError("failed to load model: No module named 'sentence_transformers'")
+
+    def embed(self, texts):
+        from methodos.providers.base import EmbeddingError
+
+        raise EmbeddingError("failed to load model: No module named 'sentence_transformers'")
+
+
 def _seed_methods_fixture(repo_root: Path, dst: Path) -> None:
     """Copy real methods into a temp dir for CLI tests."""
     src = repo_root / "methods"
@@ -219,3 +236,83 @@ def test_module_entrypoint_dispatches_to_app():
     )
     assert res.returncode == 0, res.stderr
     assert "methodos" in res.stdout.lower()
+
+
+def test_ingest_reports_embedding_backend_failure(tmp_path, monkeypatch):
+    """A missing embedding backend must print a message, not a traceback."""
+    from methodos.cli import app
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    import methodos.cli as cli_mod
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: BrokenEmbedding())
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+
+    res = runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+    assert res.exit_code == 2
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "sentence_transformers" in res.stdout
+
+
+def test_query_reports_embedding_backend_failure(tmp_path, monkeypatch):
+    """Same for query — the most commonly run command.
+
+    Models an index built earlier, then a backend that stops loading (e.g. the
+    venv was recreated without the `local` extra). The provider name matches, so
+    the stale-index check passes and the failure lands on the embedding call.
+    """
+    from methodos.cli import app
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    from tests.conftest import FakeEmbedding
+
+    working = FakeEmbedding(dimensions=8)
+    working.name = BrokenEmbedding.name
+
+    import methodos.cli as cli_mod
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: working)
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+    runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: BrokenEmbedding())
+    res = runner.invoke(app, ["query", "how do we pick a strategy", "--no-llm"])
+    assert res.exit_code == 2
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "sentence_transformers" in res.stdout
+
+
+def test_query_reports_llm_failure(tmp_path, monkeypatch):
+    """An LLM backend failure must not surface as a traceback either."""
+    from methodos.cli import app
+    from methodos.providers.base import LLMError
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    from tests.conftest import FakeEmbedding
+
+    class BrokenLLM:
+        name = "broken-llm"
+
+        def complete(self, system, user, *, max_tokens=1024, temperature=0.2):
+            raise LLMError("APIConnectionError: ollama not running")
+
+    import methodos.cli as cli_mod
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: FakeEmbedding(dimensions=8))
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+    runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+
+    monkeypatch.setattr(cli_mod, "make_llm", lambda s: BrokenLLM())
+    res = runner.invoke(app, ["query", "how do we pick a strategy", "-k", "2"])
+    assert res.exit_code == 2
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "ollama not running" in res.stdout
