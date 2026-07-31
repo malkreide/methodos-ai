@@ -15,6 +15,23 @@ def _load_st_model(model_name: str) -> Any:
     return SentenceTransformer(model_name)
 
 
+def _read_dimensions(model: Any) -> int:
+    """Read embedding dimensionality across sentence-transformers versions.
+
+    5.x renamed `get_sentence_embedding_dimension` to `get_embedding_dimension`
+    and warns on the old name; releases before that only have the old one, and
+    pyproject allows >=2.7. Prefer the new name, fall back to the old.
+    """
+    for attr in ("get_embedding_dimension", "get_sentence_embedding_dimension"):
+        getter = getattr(model, attr, None)
+        if callable(getter):
+            return int(getter())
+    raise EmbeddingError(
+        "sentence-transformers model exposes no known dimensionality getter "
+        "(tried get_embedding_dimension, get_sentence_embedding_dimension)"
+    )
+
+
 class LocalEmbedding:
     """Lazy-loaded sentence-transformers model.
 
@@ -40,7 +57,7 @@ class LocalEmbedding:
                 self._model = _load_st_model(self._model_name)
             except Exception as e:
                 raise EmbeddingError(f"failed to load {self._model_name}: {e}") from e
-            self.dimensions = int(self._model.get_sentence_embedding_dimension())
+            self.dimensions = _read_dimensions(self._model)
 
     def embed(self, texts: Sequence[str]) -> list[list[float]]:
         self._ensure_loaded()

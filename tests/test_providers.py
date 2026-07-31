@@ -101,8 +101,13 @@ def test_local_embedding_lazy_loads_model():
 
 
 def test_local_embedding_calls_underlying_model():
-    fake = MagicMock()
-    fake.get_sentence_embedding_dimension.return_value = 384
+    """sentence-transformers >=5, where the getter is `get_embedding_dimension`.
+
+    `spec` matters here: a bare MagicMock answers to *both* getter names, which
+    would hide whichever one the provider actually calls.
+    """
+    fake = MagicMock(spec=["get_embedding_dimension", "encode"])
+    fake.get_embedding_dimension.return_value = 384
     fake.encode.return_value = [[0.1] * 384, [0.2] * 384]
     with patch("methodos.providers.embedding_local._load_st_model", return_value=fake) as ld:
         p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
@@ -110,6 +115,40 @@ def test_local_embedding_calls_underlying_model():
     assert out == [[0.1] * 384, [0.2] * 384]
     assert p.dimensions == 384
     ld.assert_called_once_with("all-MiniLM-L6-v2")
+
+
+def test_local_embedding_supports_legacy_dimension_getter():
+    """sentence-transformers <5 only has `get_sentence_embedding_dimension`.
+
+    pyproject allows >=2.7, so both generations must work.
+    """
+    fake = MagicMock(spec=["get_sentence_embedding_dimension", "encode"])
+    fake.get_sentence_embedding_dimension.return_value = 384
+    fake.encode.return_value = [[0.1] * 384]
+    with patch("methodos.providers.embedding_local._load_st_model", return_value=fake):
+        p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
+        p.embed(["a"])
+    assert p.dimensions == 384
+
+
+def test_local_embedding_prefers_new_getter_when_both_exist():
+    """The old name still exists in 5.x but warns — the new one must win."""
+    fake = MagicMock(spec=["get_embedding_dimension", "get_sentence_embedding_dimension", "encode"])
+    fake.get_embedding_dimension.return_value = 384
+    fake.encode.return_value = [[0.1] * 384]
+    with patch("methodos.providers.embedding_local._load_st_model", return_value=fake):
+        p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
+        p.embed(["a"])
+    assert p.dimensions == 384
+    fake.get_sentence_embedding_dimension.assert_not_called()
+
+
+def test_local_embedding_errors_when_no_dimension_getter():
+    fake = MagicMock(spec=["encode"])
+    with patch("methodos.providers.embedding_local._load_st_model", return_value=fake):
+        p = LocalEmbedding(model_name="all-MiniLM-L6-v2")
+        with pytest.raises(EmbeddingError, match="dimensionality"):
+            p.embed(["a"])
 
 
 def test_local_embedding_satisfies_protocol():
