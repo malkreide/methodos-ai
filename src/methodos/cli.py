@@ -83,6 +83,7 @@ def ingest(
     """Rebuild the local vector store from /methods/*.json."""
     from methodos.ingest import IngestError
     from methodos.ingest import ingest as do_ingest
+    from methodos.providers.base import EmbeddingError
 
     settings = Settings()
     try:
@@ -100,6 +101,11 @@ def ingest(
     except IngestError as e:
         console.print(f"[red]Ingest failed:[/]\n{e}")
         raise typer.Exit(code=1) from e
+    except EmbeddingError as e:
+        # Providers load their backend lazily, so a missing model or unreachable
+        # service only surfaces here — not at construction time above.
+        console.print(f"[red]Embedding provider failed:[/] {e}")
+        raise typer.Exit(code=2) from e
 
     if summary.count == 0:
         console.print("[yellow]No methods found — nothing ingested.[/]")
@@ -137,6 +143,7 @@ def query(
     model: str | None = typer.Option(None, "--model", help="Override LLM model string"),
 ) -> None:
     """Recommend methods for a problem."""
+    from methodos.providers.base import EmbeddingError, LLMError
     from methodos.search import StaleIndexError, search
 
     settings = Settings()
@@ -159,6 +166,15 @@ def query(
     except StaleIndexError as e:
         console.print(f"[red]Stale index:[/] {e}")
         raise typer.Exit(code=1) from e
+    except EmbeddingError as e:
+        # Same lazy-load story as in `ingest`: the backend is only touched here.
+        console.print(f"[red]Embedding provider failed:[/] {e}")
+        raise typer.Exit(code=2) from e
+    except LLMError as e:
+        console.print(
+            f"[red]LLM provider failed:[/] {e}\n[dim]Retry with --no-llm to rank only.[/]"
+        )
+        raise typer.Exit(code=2) from e
 
     if not result.candidates:
         console.print("[yellow]No matches.[/]")
@@ -286,3 +302,9 @@ def stats_cmd() -> None:
             f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
         )
     console.print(table)
+
+
+if __name__ == "__main__":
+    # `python -m methodos.cli ...` is the form the Makefile and CLAUDE.md use;
+    # without this the module would just import and exit 0 without running.
+    app()
