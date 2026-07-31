@@ -34,4 +34,9 @@ jobs:
       - name: Tests
         run: pytest -q
       - name: Integration tests parse-only
-        run: pytest --collect-only -m integration
+        run: |
+          # Guards against integration tests that no longer import or collect.
+          # pytest exits 5 when nothing matches the marker — there are no
+          # integration tests yet, and that is not a failure. Any other
+          # non-zero exit (collection error) still fails the job.
+          pytest --collect-only -m integration || [ "$?" -eq 5 ]
