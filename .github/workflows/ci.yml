@@ -36,7 +36,10 @@ jobs:
       - name: Integration tests parse-only
         run: |
           # Guards against integration tests that no longer import or collect.
-          # pytest exits 5 when nothing matches the marker — there are no
-          # integration tests yet, and that is not a failure. Any other
-          # non-zero exit (collection error) still fails the job.
+          # They are deselected from `pytest -q` above and can't run here (no
+          # API keys, and the `local` extra isn't installed), so collecting
+          # them is the strongest check CI can make.
+          # The `-eq 5` arm covers pytest's "no tests collected" exit, which
+          # only happens if every integration test is removed again — not a
+          # failure. Any other non-zero exit (collection error) still fails.
           pytest --collect-only -m integration || [ "$?" -eq 5 ]
