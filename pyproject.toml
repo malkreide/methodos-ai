@@ -79,4 +79,7 @@ testpaths = ["tests"]
 markers = [
   "integration: requires network/API keys; not run in default suite",
 ]
-addopts = "-q --strict-markers"
+# `-m "not integration"` keeps the default suite offline and fast. A `-m` on
+# the command line overrides this one, so `pytest -m integration` still runs
+# them (as does CI's `pytest --collect-only -m integration`).
+addopts = "-q --strict-markers -m 'not integration'"
