@@ -54,7 +54,11 @@ select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
 ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.11"
+# No `python_version` pin on purpose: it must track the interpreter mypy runs
+# under. Pinning it to 3.11 while running on 3.12 made mypy reject a dependency
+# stub written in 3.12 syntax (numpy 2.5.x is 3.12+ only and uses PEP 695
+# `type` statements). The CI matrix already checks both 3.11 and 3.12, so each
+# job validates its own floor.
 strict = true
 files = ["src/methodos"]
 
