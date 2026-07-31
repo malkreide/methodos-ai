@@ -24,10 +24,16 @@ imports break the offline-by-default guarantee.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev,local]"
+pip install -e ".[dev,local]" -c constraints.txt
 make test
 make lint
 ```
+
+`constraints.txt` pins the dev environment to the same versions CI uses, so a
+dependency release can't break your branch on its own. `pyproject.toml` keeps
+open ranges — the pins are for this repo, not for people installing methodos.
+Dependabot opens monthly PRs to move them; refresh instructions are in the
+file's header.
 
 ## Integration tests
 

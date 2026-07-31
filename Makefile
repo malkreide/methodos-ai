@@ -1,7 +1,7 @@
 .PHONY: install test lint fmt schema ingest demo clean
 
 install:
-	pip install -e ".[dev,local]"
+	pip install -e ".[dev,local]" -c constraints.txt
 
 test:
 	pytest
