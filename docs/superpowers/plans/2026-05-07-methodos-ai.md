@@ -35,7 +35,7 @@ Goal of this chunk: a working Python package that imports cleanly, has CI green 
 - Create: `.env.example`
 - Create: `Makefile`
 
-- [ ] **Step 1: Create `.gitignore`**
+- [x] **Step 1: Create `.gitignore`**
 
 ```
 .venv/
@@ -54,7 +54,7 @@ data/
 htmlcov/
 ```
 
-- [ ] **Step 2: Create `pyproject.toml`**
+- [x] **Step 2: Create `pyproject.toml`**
 
 ```toml
 [build-system]
@@ -137,14 +137,14 @@ markers = [
 addopts = "-q --strict-markers"
 ```
 
-- [ ] **Step 3: Create `src/methodos/__init__.py`**
+- [x] **Step 3: Create `src/methodos/__init__.py`**
 
 ```python
 """Methodos AI — RAG catalog of management methods."""
 __version__ = "0.1.0"
 ```
 
-- [ ] **Step 4: Create `.env.example`**
+- [x] **Step 4: Create `.env.example`**
 
 ```
 # Pick one cloud LLM (or leave blank to use the local Ollama default)
@@ -161,7 +161,7 @@ __version__ = "0.1.0"
 # METHODOS_EMBEDDING_MODEL=text-embedding-3-small
 ```
 
-- [ ] **Step 5: Create `Makefile`**
+- [x] **Step 5: Create `Makefile`**
 
 > **Windows note for the implementer:** `make` is not standard on Windows. On Windows, either install `make` via Chocolatey/Scoop (`scoop install make`), use WSL, or run the underlying commands directly (e.g. `pytest` instead of `make test`). The README and CLAUDE.md mention `make <target>` as the canonical form; if you're on Windows without `make`, mentally translate to the inner command.
 
@@ -196,7 +196,7 @@ clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache build dist *.egg-info data/chroma
 ```
 
-- [ ] **Step 6: Create venv, install, verify import**
+- [x] **Step 6: Create venv, install, verify import**
 
 Run:
 ```
@@ -207,7 +207,7 @@ python -c "import methodos; print(methodos.__version__)"
 ```
 Expected: `0.1.0`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```
 git add pyproject.toml src/methodos/__init__.py .gitignore .env.example Makefile
@@ -223,7 +223,7 @@ git commit -m "chore: bootstrap project skeleton with src/ layout"
 - Create: `tests/__init__.py`
 - Create: `tests/test_models.py`
 
-- [ ] **Step 1: Write failing test `test_models.py`**
+- [x] **Step 1: Write failing test `test_models.py`**
 
 ```python
 import pytest
@@ -287,12 +287,12 @@ def test_unknown_category_rejected():
         Method.model_validate(_valid_payload(category="dance"))
 ```
 
-- [ ] **Step 2: Run test, expect failure**
+- [x] **Step 2: Run test, expect failure**
 
 Run: `pytest tests/test_models.py -v`
 Expected: ImportError or ModuleNotFoundError on `methodos.models`.
 
-- [ ] **Step 3: Implement `src/methodos/models.py`**
+- [x] **Step 3: Implement `src/methodos/models.py`**
 
 ```python
 """Canonical data model for a management method."""
@@ -358,12 +358,12 @@ class Method(BaseModel):
         return f"methods/{self.id}.md"
 ```
 
-- [ ] **Step 4: Run tests, expect all pass**
+- [x] **Step 4: Run tests, expect all pass**
 
 Run: `pytest tests/test_models.py -v`
 Expected: 8 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/models.py tests/__init__.py tests/test_models.py
@@ -379,7 +379,7 @@ git commit -m "feat(models): add Method/Category/Duration with full validation"
 - Create: `schemas/method_schema.json`
 - Modify: `tests/test_models.py` (append schema-drift test)
 
-- [ ] **Step 1: Add failing schema-drift test to `tests/test_models.py`**
+- [x] **Step 1: Add failing schema-drift test to `tests/test_models.py`**
 
 Append:
 ```python
@@ -402,12 +402,12 @@ def test_committed_schema_matches_pydantic_model(tmp_path):
     assert committed == regenerated, "Run `make schema` to update the committed schema."
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_models.py::test_committed_schema_matches_pydantic_model -v`
 Expected: FileNotFoundError on the script.
 
-- [ ] **Step 3: Implement `scripts/regenerate_schema.py`**
+- [x] **Step 3: Implement `scripts/regenerate_schema.py`**
 
 ```python
 """Regenerate schemas/method_schema.json from the Pydantic Method model.
@@ -450,17 +450,17 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 4: Generate the schema and commit it**
+- [x] **Step 4: Generate the schema and commit it**
 
 Run: `python scripts/regenerate_schema.py`
 Expected: writes `schemas/method_schema.json`. Inspect briefly.
 
-- [ ] **Step 5: Run drift test, expect pass**
+- [x] **Step 5: Run drift test, expect pass**
 
 Run: `pytest tests/test_models.py::test_committed_schema_matches_pydantic_model -v`
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```
 git add scripts/regenerate_schema.py schemas/method_schema.json tests/test_models.py
@@ -475,7 +475,7 @@ git commit -m "feat(schema): generate JSON Schema from Pydantic model with drift
 - Create: `src/methodos/config.py`
 - Create: `tests/test_config.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 from pathlib import Path
@@ -509,11 +509,11 @@ def test_invalid_embedding_provider_rejected(monkeypatch):
         Settings(_env_file=None)
 ```
 
-- [ ] **Step 2: Run, expect failure (ImportError)**
+- [x] **Step 2: Run, expect failure (ImportError)**
 
 Run: `pytest tests/test_config.py -v`
 
-- [ ] **Step 3: Implement `src/methodos/config.py`**
+- [x] **Step 3: Implement `src/methodos/config.py`**
 
 ```python
 """Runtime settings loaded from environment + .env."""
@@ -548,12 +548,12 @@ class Settings(BaseSettings):
     top_k: int = 3
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_config.py -v`
 Expected: 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/config.py tests/test_config.py
@@ -567,7 +567,7 @@ git commit -m "feat(config): add Settings (pydantic-settings) with env-prefix ME
 **Files:**
 - Create: `.github/workflows/ci.yml`
 
-- [ ] **Step 1: Write `.github/workflows/ci.yml`**
+- [x] **Step 1: Write `.github/workflows/ci.yml`**
 
 ```yaml
 name: ci
@@ -609,7 +609,7 @@ jobs:
         run: pytest --collect-only -m integration
 ```
 
-- [ ] **Step 2: Run all local checks before committing**
+- [x] **Step 2: Run all local checks before committing**
 
 Run:
 ```
@@ -620,7 +620,7 @@ pytest -q
 ```
 Expected: all green.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add .github/workflows/ci.yml
@@ -639,7 +639,7 @@ Goal: three real methods committed as JSON + Markdown, plus a standalone validat
 - Create: `methods/SWOT.json`
 - Create: `methods/SWOT.md`
 
-- [ ] **Step 1: Write `methods/SWOT.json`**
+- [x] **Step 1: Write `methods/SWOT.json`**
 
 ```json
 {
@@ -669,7 +669,7 @@ Goal: three real methods committed as JSON + Markdown, plus a standalone validat
 }
 ```
 
-- [ ] **Step 2: Write `methods/SWOT.md`**
+- [x] **Step 2: Write `methods/SWOT.md`**
 
 ```markdown
 # SWOT Analysis
@@ -714,7 +714,7 @@ initiative across four quadrants:
 - [Wikipedia: SWOT analysis](https://en.wikipedia.org/wiki/SWOT_analysis)
 ```
 
-- [ ] **Step 3: Validate manually**
+- [x] **Step 3: Validate manually**
 
 Run:
 ```
@@ -722,7 +722,7 @@ python -c "import json; from methodos.models import Method; Method.model_validat
 ```
 Expected: `OK`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```
 git add methods/SWOT.json methods/SWOT.md
@@ -737,7 +737,7 @@ git commit -m "feat(methods): add SWOT analysis"
 - Create: `methods/Porters_Five_Forces.json`
 - Create: `methods/Porters_Five_Forces.md`
 
-- [ ] **Step 1: Write `methods/Porters_Five_Forces.json`**
+- [x] **Step 1: Write `methods/Porters_Five_Forces.json`**
 
 ```json
 {
@@ -767,7 +767,7 @@ git commit -m "feat(methods): add SWOT analysis"
 }
 ```
 
-- [ ] **Step 2: Write `methods/Porters_Five_Forces.md`**
+- [x] **Step 2: Write `methods/Porters_Five_Forces.md`**
 
 ```markdown
 # Porter's Five Forces
@@ -816,12 +816,12 @@ and long-run attractiveness of an industry along five dimensions.
 - [Harvard Business Review: The Five Competitive Forces That Shape Strategy](https://hbr.org/2008/01/the-five-competitive-forces-that-shape-strategy)
 ```
 
-- [ ] **Step 3: Validate manually**
+- [x] **Step 3: Validate manually**
 
 Run: `python -c "import json; from methodos.models import Method; Method.model_validate(json.loads(open('methods/Porters_Five_Forces.json').read())); print('OK')"`
 Expected: `OK`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```
 git add methods/Porters_Five_Forces.json methods/Porters_Five_Forces.md
@@ -836,7 +836,7 @@ git commit -m "feat(methods): add Porter's Five Forces"
 - Create: `methods/DACI_Matrix.json`
 - Create: `methods/DACI_Matrix.md`
 
-- [ ] **Step 1: Write `methods/DACI_Matrix.json`**
+- [x] **Step 1: Write `methods/DACI_Matrix.json`**
 
 ```json
 {
@@ -866,7 +866,7 @@ git commit -m "feat(methods): add Porter's Five Forces"
 }
 ```
 
-- [ ] **Step 2: Write `methods/DACI_Matrix.md`**
+- [x] **Step 2: Write `methods/DACI_Matrix.md`**
 
 ```markdown
 # DACI Decision-Making Framework
@@ -912,7 +912,7 @@ A four-role assignment for cross-functional decisions.
 - [Atlassian Team Playbook: DACI](https://www.atlassian.com/team-playbook/plays/daci)
 ```
 
-- [ ] **Step 3: Validate manually + all three at once**
+- [x] **Step 3: Validate manually + all three at once**
 
 Run:
 ```
@@ -927,7 +927,7 @@ for p in Path('methods').glob('*.json'):
 ```
 Expected: `DACI_Matrix OK / Porters_Five_Forces OK / SWOT OK` (any order).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```
 git add methods/DACI_Matrix.json methods/DACI_Matrix.md
@@ -942,7 +942,7 @@ git commit -m "feat(methods): add DACI decision-making matrix"
 - Create: `scripts/validate_methods.py`
 - Create: `tests/test_validate_methods.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 import json
@@ -999,11 +999,11 @@ def test_rejects_filename_id_mismatch(tmp_path):
     assert "SWOT" in output and ("mismatch" in output.lower() or "must equal" in output.lower())
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_validate_methods.py -v`
 
-- [ ] **Step 3: Implement `scripts/validate_methods.py`**
+- [x] **Step 3: Implement `scripts/validate_methods.py`**
 
 ```python
 """Validate every method JSON in /methods/ against the Pydantic Method model.
@@ -1101,12 +1101,12 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_validate_methods.py -v`
 Expected: 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add scripts/validate_methods.py tests/test_validate_methods.py
@@ -1120,7 +1120,7 @@ git commit -m "feat(scripts): add validate_methods.py with id/filename + compani
 **Files:**
 - Create: `.github/workflows/pr-method-validate.yml`
 
-- [ ] **Step 1: Write workflow**
+- [x] **Step 1: Write workflow**
 
 ```yaml
 name: pr-method-validate
@@ -1150,7 +1150,7 @@ jobs:
           diff -u schemas/method_schema.json /tmp/schema_check.json
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```
 git add .github/workflows/pr-method-validate.yml
@@ -1170,7 +1170,7 @@ Goal: two `Protocol`s in `providers/base.py`, three concrete v1 implementations 
 - Create: `src/methodos/providers/base.py`
 - Create: `tests/test_providers.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 from methodos.providers.base import (
@@ -1195,11 +1195,11 @@ def test_errors_are_distinguishable():
     assert not issubclass(LLMError, EmbeddingError)
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_providers.py -v`
 
-- [ ] **Step 3: Implement `src/methodos/providers/base.py`**
+- [x] **Step 3: Implement `src/methodos/providers/base.py`**
 
 ```python
 """Provider Protocols — the only seam between application code and SDKs."""
@@ -1254,7 +1254,7 @@ class LLMProvider(Protocol):
         ...
 ```
 
-- [ ] **Step 4: Implement initial `src/methodos/providers/__init__.py` (factories TBD in Task 16)**
+- [x] **Step 4: Implement initial `src/methodos/providers/__init__.py` (factories TBD in Task 16)**
 
 ```python
 """Provider factories and re-exports."""
@@ -1268,11 +1268,11 @@ from methodos.providers.base import (
 __all__ = ["EmbeddingError", "EmbeddingProvider", "LLMError", "LLMProvider"]
 ```
 
-- [ ] **Step 5: Run tests, expect pass**
+- [x] **Step 5: Run tests, expect pass**
 
 Run: `pytest tests/test_providers.py -v`
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```
 git add src/methodos/providers/__init__.py src/methodos/providers/base.py tests/test_providers.py
@@ -1287,7 +1287,7 @@ git commit -m "feat(providers): add Protocols + LLMError/EmbeddingError"
 - Create: `tests/conftest.py`
 - Modify: `tests/test_providers.py` (extend with conformance tests)
 
-- [ ] **Step 1: Write `tests/conftest.py`**
+- [x] **Step 1: Write `tests/conftest.py`**
 
 ```python
 """Shared test fixtures: deterministic provider fakes and tmp Chroma."""
@@ -1359,7 +1359,7 @@ def tmp_chroma_path(tmp_path: Path) -> Path:
     return p
 ```
 
-- [ ] **Step 2: Append conformance tests to `tests/test_providers.py`**
+- [x] **Step 2: Append conformance tests to `tests/test_providers.py`**
 
 ```python
 def test_fake_llm_satisfies_protocol(fake_llm):
@@ -1379,12 +1379,12 @@ def test_fake_llm_records_calls(fake_llm):
     assert fake_llm.calls == [("S", "U"), ("S2", "U2")]
 ```
 
-- [ ] **Step 3: Run, expect pass**
+- [x] **Step 3: Run, expect pass**
 
 Run: `pytest tests/test_providers.py -v`
 Expected: all (existing 2 + new 4) pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```
 git add tests/conftest.py tests/test_providers.py
@@ -1399,7 +1399,7 @@ git commit -m "test: add FakeLLM and FakeEmbedding fixtures"
 - Create: `src/methodos/providers/llm_litellm.py`
 - Modify: `tests/test_providers.py`
 
-- [ ] **Step 1: Failing test (mocked, no network)**
+- [x] **Step 1: Failing test (mocked, no network)**
 
 ```python
 from unittest.mock import MagicMock, patch
@@ -1437,11 +1437,11 @@ def test_litellm_provider_wraps_exceptions_into_llmerror():
         assert "boom" in str(ei.value)
 ```
 
-- [ ] **Step 2: Run, expect failure (ImportError)**
+- [x] **Step 2: Run, expect failure (ImportError)**
 
 Run: `pytest tests/test_providers.py -v -k litellm`
 
-- [ ] **Step 3: Implement `src/methodos/providers/llm_litellm.py`**
+- [x] **Step 3: Implement `src/methodos/providers/llm_litellm.py`**
 
 ```python
 """litellm-backed LLMProvider — single class for all chat models."""
@@ -1499,11 +1499,11 @@ class LiteLLMProvider:
         return str(content)
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_providers.py -v -k litellm`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/providers/llm_litellm.py tests/test_providers.py
@@ -1518,7 +1518,7 @@ git commit -m "feat(providers): add LiteLLMProvider with LLMError wrapping"
 - Create: `src/methodos/providers/embedding_local.py`
 - Modify: `tests/test_providers.py`
 
-- [ ] **Step 1: Failing test (mocks the model load — no real model file needed in CI)**
+- [x] **Step 1: Failing test (mocks the model load — no real model file needed in CI)**
 
 ```python
 from unittest.mock import MagicMock, patch
@@ -1556,11 +1556,11 @@ def test_local_embedding_wraps_errors():
             p.embed(["x"])
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_providers.py -v -k local_embedding`
 
-- [ ] **Step 3: Implement `src/methodos/providers/embedding_local.py`**
+- [x] **Step 3: Implement `src/methodos/providers/embedding_local.py`**
 
 ```python
 """Local embeddings via sentence-transformers (CPU-friendly, offline)."""
@@ -1619,11 +1619,11 @@ class LocalEmbedding:
         return [list(map(float, v)) for v in vecs]
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_providers.py -v -k local_embedding`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/providers/embedding_local.py tests/test_providers.py
@@ -1638,7 +1638,7 @@ git commit -m "feat(providers): add LocalEmbedding (sentence-transformers, lazy-
 - Create: `src/methodos/providers/embedding_openai.py`
 - Modify: `tests/test_providers.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 from unittest.mock import MagicMock, patch
@@ -1674,11 +1674,11 @@ def test_openai_embedding_wraps_errors():
             p.embed(["a"])
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_providers.py -v -k openai_embedding`
 
-- [ ] **Step 3: Implement `src/methodos/providers/embedding_openai.py`**
+- [x] **Step 3: Implement `src/methodos/providers/embedding_openai.py`**
 
 ```python
 """OpenAI embeddings — opt-in cloud alternative to LocalEmbedding."""
@@ -1722,11 +1722,11 @@ class OpenAIEmbedding:
         return [list(item.embedding) for item in resp.data]
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_providers.py -v -k openai_embedding`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/providers/embedding_openai.py tests/test_providers.py
@@ -1741,7 +1741,7 @@ git commit -m "feat(providers): add OpenAIEmbedding with known-model dimension t
 - Modify: `src/methodos/providers/__init__.py`
 - Modify: `tests/test_providers.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 from methodos.config import Settings
@@ -1773,11 +1773,11 @@ def test_make_embedding_openai(monkeypatch):
     assert isinstance(e, OpenAIEmbedding)
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
 Run: `pytest tests/test_providers.py -v -k make_`
 
-- [ ] **Step 3: Update `src/methodos/providers/__init__.py`**
+- [x] **Step 3: Update `src/methodos/providers/__init__.py`**
 
 ```python
 """Provider factories and re-exports."""
@@ -1824,11 +1824,11 @@ __all__ = [
 ]
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_providers.py -v`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/providers/__init__.py tests/test_providers.py
@@ -1847,7 +1847,7 @@ Goal: a working `ingest` that loads `methods/*.json`, validates, embeds, and ups
 - Create: `src/methodos/ingest.py`
 - Create: `tests/test_ingest.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 import json
@@ -1951,11 +1951,11 @@ def test_ingest_persists_provider_metadata(tmp_path, fake_embedding):
     assert coll.metadata["embedding_dimensions"] == fake_embedding.dimensions
 ```
 
-- [ ] **Step 2: Run, expect failure (ImportError)**
+- [x] **Step 2: Run, expect failure (ImportError)**
 
 Run: `pytest tests/test_ingest.py -v`
 
-- [ ] **Step 3: Implement `src/methodos/ingest.py`**
+- [x] **Step 3: Implement `src/methodos/ingest.py`**
 
 ```python
 """Ingest /methods/*.json into a ChromaDB collection.
@@ -2125,12 +2125,12 @@ def ingest(
     )
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_ingest.py -v`
 Expected: 5 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/ingest.py tests/test_ingest.py
@@ -2151,7 +2151,7 @@ Goal: `retrieve()` over Chroma + `explain()` via LLM. Both gated behind a single
 - Create: `src/methodos/prompts/loader.py`
 - Create: `tests/test_prompts.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 from methodos.prompts.loader import load_prompt, render_explain_prompt
@@ -2190,9 +2190,9 @@ def test_split_into_system_and_user_sections():
     assert "x" in user_part
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Write `src/methodos/prompts/explain.txt`**
+- [x] **Step 3: Write `src/methodos/prompts/explain.txt`**
 
 ```
 SYSTEM:
@@ -2217,7 +2217,7 @@ Candidate methods (ranked by semantic similarity):
 Now: explain fit, contrast methods, recommend.
 ```
 
-- [ ] **Step 4: Implement `src/methodos/prompts/loader.py`**
+- [x] **Step 4: Implement `src/methodos/prompts/loader.py`**
 
 ```python
 """Load and render prompt templates."""
@@ -2272,9 +2272,9 @@ def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -
     return template.replace("{query}", query).replace("{candidates_block}", candidates_block)
 ```
 
-- [ ] **Step 5: Run tests, expect pass**
+- [x] **Step 5: Run tests, expect pass**
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```
 git add src/methodos/prompts/__init__.py src/methodos/prompts/explain.txt src/methodos/prompts/loader.py tests/test_prompts.py
@@ -2289,7 +2289,7 @@ git commit -m "feat(prompts): add explain template + render/split helpers"
 - Create: `src/methodos/search.py`
 - Create: `tests/test_search.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 import json
@@ -2380,9 +2380,9 @@ def test_search_with_no_llm_skips_explanation(tmp_path, fake_embedding, fake_llm
     assert fake_llm.calls == []
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Implement `src/methodos/search.py`**
+- [x] **Step 3: Implement `src/methodos/search.py`**
 
 ```python
 """Retrieval + LLM explanation. See ingest.py for the similarity-math comment block."""
@@ -2540,11 +2540,11 @@ def search(
     return SearchResult(candidates=candidates, explanation=explanation)
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
 Run: `pytest tests/test_search.py -v`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/search.py tests/test_search.py
@@ -2563,7 +2563,7 @@ Goal: `methodos` console script with subcommands `ingest`, `query`, `list`, `sho
 - Create: `src/methodos/cli.py`
 - Create: `tests/test_cli.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 import json
@@ -2610,9 +2610,9 @@ def test_ingest_command_runs(tmp_path, monkeypatch):
     assert "ingested" in res.stdout.lower()
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Implement initial `src/methodos/cli.py`**
+- [x] **Step 3: Implement initial `src/methodos/cli.py`**
 
 ```python
 """Methodos CLI — Typer + Rich.
@@ -2704,9 +2704,9 @@ def ingest(
     )
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/cli.py tests/test_cli.py
@@ -2721,7 +2721,7 @@ git commit -m "feat(cli): scaffold Typer app with --version and ingest"
 - Modify: `src/methodos/cli.py`
 - Modify: `tests/test_cli.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 def test_query_no_llm_renders_results(tmp_path, monkeypatch):
@@ -2764,9 +2764,9 @@ def test_query_with_llm_calls_llm(tmp_path, monkeypatch):
     assert "canned explanation" in res.stdout
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Add `query` command + rendering helpers to `src/methodos/cli.py`**
+- [x] **Step 3: Add `query` command + rendering helpers to `src/methodos/cli.py`**
 
 Append:
 ```python
@@ -2837,9 +2837,9 @@ def query(
         )
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/cli.py tests/test_cli.py
@@ -2854,7 +2854,7 @@ git commit -m "feat(cli): add query command with Rich rendering and TTY hint"
 - Modify: `src/methodos/cli.py`
 - Modify: `tests/test_cli.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 REPO_METHODS = str(Path(__file__).parent.parent / "methods")
@@ -2887,9 +2887,9 @@ def test_show_unknown_id_errors():
     assert "Nonexistent" in res.stdout
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Add commands to `src/methodos/cli.py`**
+- [x] **Step 3: Add commands to `src/methodos/cli.py`**
 
 Append:
 ```python
@@ -2949,9 +2949,9 @@ def show(
     console.print(Markdown(md.read_text(encoding="utf-8")))
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/cli.py tests/test_cli.py
@@ -2970,7 +2970,7 @@ Goal: `feedback.py` with append-only JSONL, `feedback` and `stats` CLI commands,
 - Create: `src/methodos/feedback.py`
 - Create: `tests/test_feedback.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 import json
@@ -3045,9 +3045,9 @@ def test_stats_aggregates(tmp_path):
     assert s["DACI_Matrix"].rating_count == 1
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Implement `src/methodos/feedback.py`**
+- [x] **Step 3: Implement `src/methodos/feedback.py`**
 
 ```python
 """Feedback loop placeholder — append-only JSONL of recommendations and ratings.
@@ -3200,9 +3200,9 @@ def stats(path: Path) -> dict[str, MethodStats]:
     return dict(out)
 ```
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/feedback.py tests/test_feedback.py
@@ -3217,7 +3217,7 @@ git commit -m "feat(feedback): add JSONL log + stats with lenient reader"
 - Modify: `src/methodos/cli.py`
 - Modify: `tests/test_cli.py`
 
-- [ ] **Step 1: Failing test**
+- [x] **Step 1: Failing test**
 
 ```python
 def test_feedback_command_appends_rating(tmp_path, monkeypatch):
@@ -3276,9 +3276,9 @@ def test_stats_command_prints_table(tmp_path, monkeypatch):
     assert "SWOT" in res.stdout
 ```
 
-- [ ] **Step 2: Run, expect failure**
+- [x] **Step 2: Run, expect failure**
 
-- [ ] **Step 3: Add `feedback` and `stats` commands; mint query_id in `query`**
+- [x] **Step 3: Add `feedback` and `stats` commands; mint query_id in `query`**
 
 Modify `cli.py`:
 
@@ -3351,9 +3351,9 @@ def stats_cmd() -> None:
 
 The decorator argument `"stats"` registers the command as `methodos stats` (overriding the function name). The Python function name remains `stats_cmd` to avoid shadowing the imported `stats` symbol from `methodos.feedback`.
 
-- [ ] **Step 4: Run tests, expect pass**
+- [x] **Step 4: Run tests, expect pass**
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add src/methodos/cli.py tests/test_cli.py
@@ -3371,7 +3371,7 @@ Goal: a real README, the CLAUDE.md from the spec, CONTRIBUTING.md, and a LICENSE
 **Files:**
 - Create: `README.md`
 
-- [ ] **Step 1: Write `README.md`** (concise; use spec section 1 + quickstart)
+- [x] **Step 1: Write `README.md`** (concise; use spec section 1 + quickstart)
 
 ```markdown
 # Methodos AI
@@ -3445,7 +3445,7 @@ the right choice.
 MIT. See [LICENSE](LICENSE).
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```
 git add README.md
@@ -3459,7 +3459,7 @@ git commit -m "docs: add README"
 **Files:**
 - Create: `CLAUDE.md`
 
-- [ ] **Step 1: Write `CLAUDE.md`** (verbatim from spec section 10, with the worktree-specific working-directory note)
+- [x] **Step 1: Write `CLAUDE.md`** (verbatim from spec section 10, with the worktree-specific working-directory note)
 
 ```markdown
 # CLAUDE.md — Working with Methodos AI
@@ -3514,7 +3514,7 @@ make demo       # ingest + a sample query, end-to-end smoke
 - Plan: `docs/superpowers/plans/2026-05-07-methodos-ai.md`
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```
 git add CLAUDE.md
@@ -3529,7 +3529,7 @@ git commit -m "docs: add CLAUDE.md for AI-assisted development"
 - Create: `CONTRIBUTING.md`
 - Create: `LICENSE`
 
-- [ ] **Step 1: Write `CONTRIBUTING.md`**
+- [x] **Step 1: Write `CONTRIBUTING.md`**
 
 ```markdown
 # Contributing to Methodos AI
@@ -3581,7 +3581,7 @@ python scripts/regenerate_schema.py && git diff schemas/  # should be empty
 Conventional commits: `feat:`, `fix:`, `chore:`, `test:`, `docs:`, `ci:`.
 ```
 
-- [ ] **Step 2: Write `LICENSE`** (MIT)
+- [x] **Step 2: Write `LICENSE`** (MIT)
 
 ```
 MIT License
@@ -3607,7 +3607,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add CONTRIBUTING.md LICENSE
@@ -3621,7 +3621,7 @@ git commit -m "docs: add CONTRIBUTING and MIT LICENSE"
 **Files:**
 - Modify: `Makefile` (already has `demo` target — verify it works)
 
-- [ ] **Step 1: Run `make demo`** in a venv that has `[dev,local]` installed
+- [x] **Step 1: Run `make demo`** in a venv that has `[dev,local]` installed
 
 Run:
 ```
@@ -3629,12 +3629,12 @@ make demo
 ```
 Expected: ingests three methods, then prints retrieval results for the demo query (with `--no-llm`, so no LLM call needed). Exit code 0.
 
-- [ ] **Step 2: Run the full test suite**
+- [x] **Step 2: Run the full test suite**
 
 Run: `pytest -q`
 Expected: all tests pass (no integration tests run by default).
 
-- [ ] **Step 3: Verify CI fixtures**
+- [x] **Step 3: Verify CI fixtures**
 
 Run:
 ```
@@ -3646,7 +3646,7 @@ python scripts/validate_methods.py
 ```
 Expected: every step exits 0 with no diff.
 
-- [ ] **Step 4: Final commit if anything was tweaked**
+- [x] **Step 4: Final commit if anything was tweaked**
 
 If any of the above produced changes (e.g. ruff format auto-fixes), commit them:
 ```
