@@ -45,6 +45,7 @@ class Candidate:
         return {
             "name": self.name,
             "similarity": self.similarity,
+            "rerank_score": self.rerank_score,
             "complexity_score": self.complexity_score,
             "use_case": self.use_case,
             "strengths": self.strengths,

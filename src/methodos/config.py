@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -41,9 +42,11 @@ class Settings(BaseSettings):
 
     chroma_path: Path = Path("data/chroma")
     feedback_path: Path = Path("data/feedback.jsonl")
-    top_k: int = 3
+    top_k: int = Field(default=3, ge=1)
+    """Multiplied by overfetch_factor to form Chroma's n_results, which
+    rejects zero and negatives with an opaque TypeError — so bound it here."""
 
-    overfetch_factor: int = 2
+    overfetch_factor: int = Field(default=2, ge=1)
     """Chroma returns top_k * this, then the shortlist is truncated to top_k.
     Raising it gives a reranker more to work with, at linear cost in rerank
     time; without a reranker it changes nothing but the query size."""
