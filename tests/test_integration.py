@@ -31,6 +31,19 @@ from methodos.search import search
 
 pytestmark = pytest.mark.integration
 
+
+def _openai_models() -> list[str]:
+    """Model names to probe, read from the table under test.
+
+    Imported inside the function, not at module scope: `pytest --collect-only
+    -m integration` runs in CI with only the `dev` extra, and the provider
+    module must stay importable there (it lazy-imports `openai` itself).
+    """
+    from methodos.providers.embedding_openai import _KNOWN_DIMS
+
+    return sorted(_KNOWN_DIMS)
+
+
 REPO_ROOT = Path(__file__).parent.parent
 REPO_METHODS = REPO_ROOT / "methods"
 
@@ -437,3 +450,56 @@ def test_rerank_leaves_the_retrieval_similarity_intact(real_index, real_embeddin
     for c in out:
         assert -1.0 <= c.similarity <= 1.0, "cosine similarity must stay in range"
         assert c.rerank_score is not None
+
+
+def test_switching_provider_without_reingest_is_a_stale_index(real_index):
+    """local → openai without a rebuild must be caught before any API call.
+
+    OpenAIEmbedding reads its dimensionality from a static table, so it can be
+    constructed and compared without credentials — which is exactly why this
+    guard is reachable offline and worth pinning here: the failure it prevents
+    is querying 384d vectors with a 1536d model and getting silent nonsense
+    back rather than an error.
+    """
+    from methodos.providers.embedding_openai import OpenAIEmbedding
+    from methodos.search import StaleIndexError, retrieve
+
+    with pytest.raises(StaleIndexError) as excinfo:
+        retrieve(
+            query="anything",
+            embedding=OpenAIEmbedding(model_name="text-embedding-3-small"),
+            chroma_path=real_index,
+            top_k=2,
+        )
+    message = str(excinfo.value)
+    assert "local:all-MiniLM-L6-v2" in message, "must name the provider the index was built with"
+    assert "openai:text-embedding-3-small" in message, "must name the provider now configured"
+    assert "ingest" in message, "must say how to fix it"
+
+
+@pytest.mark.skipif(
+    not os.environ.get("OPENAI_API_KEY"),
+    reason="needs a real OPENAI_API_KEY; OpenAIEmbedding is otherwise only seen by mocks",
+)
+@pytest.mark.parametrize("model_name", _openai_models())
+def test_openai_embedding_dimensions_match_the_api(model_name):
+    """_KNOWN_DIMS is hand-maintained, so verify it against what the API returns.
+
+    A wrong entry here does not raise: ingest would write vectors of one width
+    while `dimensions` reports another, and the mismatch only shows up later as
+    bad retrieval. The unit suite mocks the client, so this is the only place
+    the table is checked against reality.
+    """
+    from methodos.providers.embedding_openai import _KNOWN_DIMS, OpenAIEmbedding
+
+    provider = OpenAIEmbedding(model_name=model_name)
+    vectors = provider.embed(["a short probe sentence for dimensionality"])
+
+    assert len(vectors) == 1
+    assert len(vectors[0]) == _KNOWN_DIMS[model_name], (
+        f"_KNOWN_DIMS says {model_name} is {_KNOWN_DIMS[model_name]}d, "
+        f"API returned {len(vectors[0])}d"
+    )
+    assert provider.dimensions == len(vectors[0]), (
+        "declared dimensions must match what embed returns"
+    )
