@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "RICE_Scoring",
+  "name": "RICE Scoring",
+  "category": "prioritization",
+  "use_case": "A quantitative scoring model that ranks competing roadmap or backlog items by Reach times Impact times Confidence divided by Effort, turning an argument about opinions into a comparison of explicit estimates. Best used when a product or engineering team has more candidate work than capacity, stakeholders each advocate for their own item, and the ordering needs to be defensible and revisitable rather than decided by whoever argues hardest.",
+  "strengths": [
+    "makes the reasoning behind an ordering explicit and auditable",
+    "the confidence term forces teams to admit which estimates are guesses",
+    "dividing by effort exposes cheap high-value work that intuition misses",
+    "re-scoring is fast once the inputs are agreed"
+  ],
+  "weaknesses": [
+    "a precise-looking number can hide very soft underlying estimates",
+    "reach and impact are easy to game in favour of a preferred item",
+    "poor fit for work whose value is strategic rather than countable",
+    "ignores dependencies and sequencing between items"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/",
+    "https://en.wikipedia.org/wiki/Prioritization"
+  ]
+}

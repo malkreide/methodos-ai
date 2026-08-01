@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Pre_Mortem",
+  "name": "Pre-Mortem Analysis",
+  "category": "analysis",
+  "use_case": "A prospective-hindsight exercise in which the team imagines that a plan has already failed badly and then writes the story of how that happened, surfacing risks that optimism and group consensus normally suppress. Best used just before committing to a launch, a migration or a large investment, when the plan looks agreed and nobody is voicing doubts, which is exactly the moment when unspoken concerns are most expensive to leave unspoken.",
+  "strengths": [
+    "licenses dissent by making failure the premise instead of an accusation",
+    "prospective hindsight measurably improves how specific risk statements are",
+    "catches risks that a confident, cohesive group would otherwise suppress",
+    "cheap relative to the size of decision it protects"
+  ],
+  "weaknesses": [
+    "needs genuine psychological safety or it produces only polite risks",
+    "generates a risk list with no inherent prioritization or ownership",
+    "can degenerate into pessimism theatre if run too late to change anything",
+    "loses its effect when repeated on the same plan with the same people"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 150
+  },
+  "references": [
+    "https://hbr.org/2007/09/performing-a-project-premortem",
+    "https://en.wikipedia.org/wiki/Pre-mortem"
+  ]
+}

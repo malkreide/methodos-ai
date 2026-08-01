@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Start_Stop_Continue",
+  "name": "Start, Stop, Continue Retrospective",
+  "category": "retrospective",
+  "use_case": "A team retrospective format that collects concrete behaviours under three headings — what we should start doing, what we should stop doing, and what is working and should continue — producing action items rather than a list of grievances. Best used at the end of a sprint, a project phase or a quarter, when the team wants to improve how it works together and needs a low-ceremony format that reliably converts discussion into named commitments.",
+  "strengths": [
+    "the three prompts push contributions toward actions, not complaints",
+    "the Continue column protects practices that are quietly working",
+    "no preparation or materials needed beyond a shared surface",
+    "short enough to run every iteration without fatigue"
+  ],
+  "weaknesses": [
+    "surfaces symptoms; pair it with a root-cause method for recurring issues",
+    "becomes stale if run unchanged for many iterations in a row",
+    "quiet team members are easily drowned out without silent writing first",
+    "worthless if the Start items are never assigned an owner"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Retrospective",
+    "https://www.atlassian.com/team-playbook/plays/retrospective"
+  ]
+}

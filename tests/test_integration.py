@@ -63,10 +63,18 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
     return chroma_path
 
 
-# Only problems whose intended method wins by a wide margin are pinned here.
-# "internal strengths and weaknesses vs external opportunities and threats"
-# looks like the obvious SWOT probe, but it scores 0.468 against Porter's
-# 0.427 — too close to assert on without inviting a flaky test.
+# One probe per method, phrased as a user would state the problem — never by
+# naming the method or echoing its vocabulary, which would test the query
+# rather than the catalog.
+#
+# Each probe was measured against the full catalog before being pinned, and
+# only those winning by a wide margin are here. Two rejected candidates, kept
+# as a warning to whoever extends this list:
+#   "internal strengths and weaknesses vs external opportunities and threats"
+#       -> SWOT by 0.041 over Porter's. The four-quadrant vocabulary is shared.
+#   "the same defect keeps coming back after every fix"
+#       -> Five_Whys by 0.110 over Ishikawa. Both are root-cause methods; a
+#          probe has to name the *symptom-vs-cause* framing to separate them.
 @pytest.mark.parametrize(
     ("problem", "expected_top"),
     [
@@ -76,12 +84,45 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
             "Porters_Five_Forces",
         ),
         (
-            "nobody knows who actually owns this decision and it has been stuck for weeks",
-            "DACI_Matrix",
+            "strategic planning kickoff: assess our own position and the "
+            "external landscape in four quadrants",
+            "SWOT",
         ),
         (
             "who is the approver for this cross-functional decision",
             "DACI_Matrix",
+        ),
+        (
+            "this decision keeps bouncing between teams because no single "
+            "person has the authority to approve it",
+            "DACI_Matrix",
+        ),
+        (
+            "we keep fixing the symptom of this recurring failure instead of "
+            "what actually causes it",
+            "Five_Whys",
+        ),
+        (
+            "many possible causes across people process equipment and "
+            "materials, we need to map them",
+            "Ishikawa_Diagram",
+        ),
+        (
+            "we have more backlog items than capacity and need a defensible ranked order",
+            "RICE_Scoring",
+        ),
+        (
+            "fixed release date, we must agree now which requirements get dropped",
+            "MoSCoW_Method",
+        ),
+        (
+            "end of sprint team retrospective, what should we start and stop doing",
+            "Start_Stop_Continue",
+        ),
+        (
+            "before we commit to this launch, imagine it failed and surface "
+            "the risks nobody is voicing",
+            "Pre_Mortem",
         ),
     ],
 )
@@ -102,8 +143,9 @@ def test_query_path_ranks_the_right_method_first(real_index, real_embedding, pro
         f"{[(c.id, round(c.similarity, 3)) for c in result.candidates]}"
     )
     # A real model should be decisive here, not win by rounding noise. Observed
-    # margins for these probes are >0.35; 0.10 leaves room for model updates
-    # while still failing if a `use_case` rewrite blurs the distinction.
+    # margins for these probes range from 0.13 to 0.36; 0.10 leaves room for
+    # model updates and for the catalog growing denser, while still failing if
+    # a `use_case` rewrite blurs the distinction between two methods.
     assert top.similarity - runner_up.similarity > 0.10, (
         f"{expected_top} won by only {top.similarity - runner_up.similarity:.3f}"
     )
