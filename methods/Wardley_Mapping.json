@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Wardley_Mapping",
+  "name": "Wardley Mapping",
+  "category": "strategy",
+  "use_case": "A map that positions every component a user need depends on along two axes: how visible it is to the user, and how far it has evolved from novel and custom-built toward standardised commodity. Best used when deciding what to build versus buy versus outsource, when the same capability is being reinvented in several teams, or when a roadmap keeps investing engineering effort into components that the market has already turned into utilities.",
+  "strengths": [
+    "the evolution axis shows what to stop building because the market commoditised it",
+    "anchoring on user need prevents maps that flatter internal org structure",
+    "makes build-buy-outsource arguments visual instead of rhetorical",
+    "exposes where two teams are independently reinventing the same component"
+  ],
+  "weaknesses": [
+    "placing components on the evolution axis is subjective and hotly argued",
+    "steep learning curve; a first map is usually wrong and needs iterating",
+    "few practitioners, so facilitation is hard to source",
+    "goes stale as components evolve, so it needs periodic redrawing"
+  ],
+  "complexity_score": 5,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 1200
+  },
+  "references": [
+    "https://learnwardleymapping.com/",
+    "https://en.wikipedia.org/wiki/Wardley_map"
+  ]
+}

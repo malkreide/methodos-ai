@@ -80,6 +80,10 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
 #          probe has to name the symptom-vs-cause framing to separate them.
 #   "which external forces beyond our competitors should we monitor"
 #       -> PESTEL by 0.057 over Porter's. Naming the actual forces separates them.
+#   "we keep spending engineering effort on infrastructure that is now a
+#    standard utility" -> Wardley only reached #2. Its problem-shaped phrasings
+#    lose to Porter's and PESTEL on shared market vocabulary; the build-buy-
+#    outsource question is what separates it.
 #   "this decision bounces between teams, nobody has authority to approve it"
 #       -> was a second DACI probe, fell to 0.022 over Cynefin once Cynefin's
 #          use_case was made problem-shaped ("teams that cannot agree how to
@@ -111,6 +115,17 @@ PROBES = [
         0.10,
     ),
     (
+        "should we build this component ourselves, buy it off the shelf, or outsource it",
+        "Wardley_Mapping",
+        0.10,
+    ),
+    (
+        "we cannot forecast a single number for this decade, which choices "
+        "hold up across several plausible futures",
+        "Scenario_Planning",
+        0.10,
+    ),
+    (
         "who is the approver for this cross-functional decision",
         "DACI_Matrix",
         0.10,
@@ -125,6 +140,12 @@ PROBES = [
         "express the costs and the benefits in money, discount them, and "
         "compare the net present value of each option",
         "Cost_Benefit_Analysis",
+        0.10,
+    ),
+    (
+        "the discussion has split into advocates and critics and the same "
+        "person is always the sceptic",
+        "Six_Thinking_Hats",
         0.10,
     ),
     (
@@ -154,6 +175,12 @@ PROBES = [
         "Jobs_To_Be_Done",
         0.10,
     ),
+    (
+        "what is resisting this change, and how do we weaken the restraints "
+        "instead of pushing harder",
+        "Force_Field_Analysis",
+        0.10,
+    ),
     # Prioritization is the most crowded corner of the catalog: RICE, MoSCoW,
     # Eisenhower and Value Stream Mapping all speak about too much work and not
     # enough capacity. RICE's distinguishing feature is quantified scoring, and
@@ -171,6 +198,12 @@ PROBES = [
         0.10,
     ),
     (
+        "which features are table stakes that earn no credit and which would "
+        "actually delight customers",
+        "Kano_Model",
+        0.10,
+    ),
+    (
         "my week is eaten by interruptions and the important work never gets started",
         "Eisenhower_Matrix",
         0.10,
@@ -178,6 +211,16 @@ PROBES = [
     (
         "end of sprint team retrospective, what should we start and stop doing",
         "Start_Stop_Continue",
+        0.10,
+    ),
+    # Two retrospective formats sit close together by construction; this probe
+    # leans on the "one picture" framing to separate them and still only clears
+    # the bar by a little. Expect it to need re-measuring if more retrospective
+    # formats are added.
+    (
+        "the team has gone quiet in our usual list-based retrospectives, we "
+        "need goal drag and upcoming risks in one picture",
+        "Sailboat_Retrospective",
         0.10,
     ),
     (

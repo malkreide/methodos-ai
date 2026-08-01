@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Scenario_Planning",
+  "name": "Scenario Planning",
+  "category": "strategy",
+  "use_case": "A technique that builds several internally consistent stories of how the future might unfold, usually by crossing the two most uncertain and most consequential driving forces into a grid of four worlds, then testing the current strategy against each. Best used for long-horizon commitments where forecasting a single number is dishonest, and the useful question is not what will happen but which choices survive across several plausible futures.",
+  "strengths": [
+    "replaces a single false forecast with a set of testable futures",
+    "reveals which strategic choices are robust across all worlds",
+    "gives an organisation language for futures it otherwise refuses to discuss",
+    "the early-warning indicators keep working long after the workshop"
+  ],
+  "weaknesses": [
+    "expensive: real scenario work runs for weeks, not an afternoon",
+    "produces narratives that are easy to admire and hard to act on",
+    "picking only two axes discards uncertainties that later dominate",
+    "tempts groups toward a best case, worst case and a comfortable middle"
+  ],
+  "complexity_score": 5,
+  "estimated_duration": {
+    "min_minutes": 600,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://hbr.org/2013/05/living-in-the-futures",
+    "https://en.wikipedia.org/wiki/Scenario_planning"
+  ]
+}
