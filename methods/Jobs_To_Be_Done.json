@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Jobs_To_Be_Done",
+  "name": "Jobs To Be Done",
+  "category": "analysis",
+  "use_case": "An interview-driven technique for understanding the progress a customer was trying to make when they hired a product, focusing on the situation and the struggle that triggered the switch rather than on demographics or feature requests. Best used when a team keeps building requested features that do not move adoption, or when it needs to understand what customers actually replaced and why they gave up on the previous way of doing it.",
+  "strengths": [
+    "reframes competition around the customer's goal, not the product category",
+    "the switch interview surfaces the trigger moment that surveys miss",
+    "stops roadmaps being driven by whoever requested loudest",
+    "findings stay valid longer than feature-level preferences"
+  ],
+  "weaknesses": [
+    "depends on skilled interviewing; leading questions destroy the data",
+    "recruiting recent switchers is slow and often the binding constraint",
+    "qualitative output resists the sizing that finance will ask for",
+    "easily reduced to a template sentence that carries no real insight"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 300,
+    "max_minutes": 2400
+  },
+  "references": [
+    "https://hbr.org/2016/09/know-your-customers-jobs-to-be-done",
+    "https://en.wikipedia.org/wiki/Outcome-Driven_Innovation"
+  ]
+}

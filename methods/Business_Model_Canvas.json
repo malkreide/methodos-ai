@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Business_Model_Canvas",
+  "name": "Business Model Canvas",
+  "category": "strategy",
+  "use_case": "A single-page template that lays out how a venture creates, delivers and captures value across nine linked building blocks: customer segments, value propositions, channels, customer relationships, revenue streams, key resources, key activities, key partners and cost structure. Best used when a new product, startup or internal venture needs its whole commercial logic visible at once, so the team can see which blocks are assumptions rather than facts and where the model breaks if one of them is wrong.",
+  "strengths": [
+    "puts the entire commercial logic on one page a team can argue over",
+    "the links between blocks expose which assumptions the model depends on",
+    "fast enough to sketch several competing models and compare them",
+    "shared vocabulary across product, finance and sales"
+  ],
+  "weaknesses": [
+    "describes the model but does not test whether customers want it",
+    "no competitive dimension at all — pair it with an industry analysis",
+    "the one-page constraint hides operational detail that later matters",
+    "easy to fill in plausibly and mistake the artifact for validation"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 300
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Business_Model_Canvas",
+    "https://www.strategyzer.com/library/the-business-model-canvas"
+  ]
+}

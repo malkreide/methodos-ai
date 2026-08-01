@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Cost_Benefit_Analysis",
+  "name": "Cost-Benefit Analysis",
+  "category": "decision-making",
+  "use_case": "A financial appraisal that expresses every expected cost and every expected benefit of an option in monetary terms over a defined horizon, discounts them to present value, and compares the resulting net figures across alternatives. Best used for capital expenditure, procurement and infrastructure choices that must be justified to a budget holder or an auditor, where an explicit money figure and a stated discount rate are required rather than a qualitative preference.",
+  "strengths": [
+    "produces a defensible number for budget holders and auditors",
+    "the discount rate makes the time value of long payback periods explicit",
+    "forces hidden operating and decommissioning costs into the open",
+    "sensitivity analysis shows which single assumption drives the answer"
+  ],
+  "weaknesses": [
+    "systematically undervalues benefits that resist being priced",
+    "the result is only as good as the forecasts feeding it",
+    "small changes to the discount rate can flip the recommendation",
+    "invites motivated reasoning when the preferred answer is known in advance"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 2400
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Cost%E2%80%93benefit_analysis",
+    "https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-governent"
+  ]
+}

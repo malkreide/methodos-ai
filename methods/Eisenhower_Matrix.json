@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Eisenhower_Matrix",
+  "name": "Eisenhower Matrix",
+  "category": "prioritization",
+  "use_case": "A two-by-two split of tasks by urgency and importance, producing four handling rules: do the urgent and important now, schedule the important but not urgent, delegate the urgent but unimportant, and delete the rest. Best used by an individual or a lead whose day is consumed by interruptions and who needs to see how little time is reaching the important-but-not-urgent quadrant where the durable work actually lives.",
+  "strengths": [
+    "separates urgency from importance, which people routinely conflate",
+    "makes visible how little time reaches genuinely important work",
+    "applies to a personal task list, no team or meeting required",
+    "the delete quadrant gives explicit permission to drop things"
+  ],
+  "weaknesses": [
+    "importance is self-assessed and drifts toward whatever feels pressing",
+    "no notion of effort, dependency or sequence",
+    "delegation assumes someone to delegate to",
+    "suited to tasks, not to comparing large pieces of product work"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method",
+    "https://www.eisenhower.me/eisenhower-matrix/"
+  ]
+}

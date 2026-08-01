@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "PESTEL_Analysis",
+  "name": "PESTEL Analysis",
+  "category": "strategy",
+  "use_case": "A scan of the macro-environment surrounding an organisation across six external forces it cannot control: political, economic, social, technological, environmental and legal. Best used before a long-horizon commitment such as entering a country, planning a multi-year investment or reviewing regulatory exposure, when the risks that matter originate outside the industry entirely and would otherwise never come up in a competitor-focused discussion.",
+  "strengths": [
+    "covers forces outside the industry that competitor analysis never reaches",
+    "the six prompts reliably surface regulatory and demographic blind spots",
+    "well suited to long horizons where the macro picture dominates",
+    "output feeds directly into scenario planning"
+  ],
+  "weaknesses": [
+    "produces a long list with no weighting or probability",
+    "goes stale quickly in volatile political or regulatory environments",
+    "tempts teams into cataloguing headlines rather than analysing impact",
+    "says nothing about what the organisation should actually do"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 600
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/PEST_analysis",
+    "https://www.cipd.org/uk/knowledge/factsheets/pestle-analysis-factsheet/"
+  ]
+}

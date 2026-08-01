@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "After_Action_Review",
+  "name": "After Action Review",
+  "category": "retrospective",
+  "use_case": "A structured debrief of one specific completed event built on four questions: what did we expect to happen, what actually happened, why did those differ, and what will we do differently next time. Best used immediately after a discrete event such as a launch, an incident response, an exercise or a customer escalation, when the goal is to convert that single episode into transferable lessons while recollection is still accurate.",
+  "strengths": [
+    "anchored on one event, so it stays concrete and evidence-based",
+    "the expected-versus-actual gap is where the real learning sits",
+    "works across ranks when the facilitator suspends hierarchy",
+    "short enough to run while memories are fresh"
+  ],
+  "weaknesses": [
+    "covers a single event, so it misses slow-building systemic patterns",
+    "degrades into blame assignment without disciplined facilitation",
+    "loses accuracy quickly if postponed by more than a few days",
+    "lessons evaporate unless someone owns carrying them to the next event"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/After-action_review",
+    "https://hbr.org/2005/07/learning-in-the-thick-of-it"
+  ]
+}

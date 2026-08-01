@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Value_Stream_Mapping",
+  "name": "Value Stream Mapping",
+  "category": "analysis",
+  "use_case": "A flow diagram of every step a unit of work passes through from request to delivery, annotated with processing time and waiting time at each step, so the ratio of value-adding work to queueing becomes visible. Best used when lead time is the complaint — tickets, orders or features take weeks although the hands-on work is hours — and the team needs to see where the item is actually sitting idle rather than guessing which step is slow.",
+  "strengths": [
+    "exposes waiting time, which is usually the dominant share of lead time",
+    "measures the end-to-end flow instead of optimising one team's local step",
+    "the current-state map is evidence, not opinion, about where delay lives",
+    "hand-off points between teams become impossible to ignore"
+  ],
+  "weaknesses": [
+    "mapping the current state accurately takes real observation, not a workshop",
+    "the map ages as soon as the process changes",
+    "manufacturing notation needs adapting for knowledge work",
+    "shows where delay occurs but not why, so pair it with a cause analysis"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 1200
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Value-stream_mapping",
+    "https://www.lean.org/lexicon-terms/value-stream-mapping/"
+  ]
+}
