@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Cynefin_Framework",
+  "name": "Cynefin Framework",
+  "category": "decision-making",
+  "use_case": "A sense-making framework for teams that cannot agree on how to tackle a problem because they disagree about what kind of problem it is. It sorts the situation into clear, complicated, complex or chaotic, and only then prescribes the response: apply best practice, bring in expert analysis, run small safe-to-fail experiments, or stabilise first and diagnose later. Best used when one group demands a detailed up-front plan while another wants to start experimenting, or when a proven best practice keeps failing because the situation is genuinely unpredictable rather than merely difficult.",
+  "strengths": [
+    "stops teams applying best practice to problems that have none",
+    "gives permission to experiment when the answer is genuinely unknowable",
+    "explains why one team wants analysis and another wants to just try something",
+    "the chaotic domain justifies acting before understanding, which plans rarely allow"
+  ],
+  "weaknesses": [
+    "classification itself is contested and often argued longer than the problem",
+    "abstract enough that groups need a facilitator who has used it before",
+    "offers no concrete technique once the domain is named",
+    "misclassifying complex as complicated produces confident, wrong plans"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 300
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Cynefin_framework",
+    "https://hbr.org/2007/11/a-leaders-framework-for-decision-making"
+  ]
+}

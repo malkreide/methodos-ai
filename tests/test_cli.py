@@ -81,7 +81,14 @@ def test_query_no_llm_renders_results(tmp_path, monkeypatch):
     runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
     res = runner.invoke(app, ["query", "evaluate strengths and weaknesses", "--no-llm", "-k", "2"])
     assert res.exit_code == 0, res.stdout
-    assert any(name in res.stdout for name in ("SWOT", "Porter", "DACI"))
+
+    # FakeEmbedding hashes text, so *which* methods rank top is arbitrary and
+    # changes whenever the catalog does. Assert on the rendering contract —
+    # k panels, each with a similarity and a doc path — not on catalog content.
+    # Semantic ranking is the integration suite's job.
+    assert res.stdout.count("(sim ") == 2
+    assert res.stdout.count("methods/") >= 2
+    assert "complexity" in res.stdout
 
 
 def test_query_with_llm_calls_llm(tmp_path, monkeypatch):
