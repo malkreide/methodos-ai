@@ -316,11 +316,18 @@ def test_cross_encoder_short_circuits_on_empty_documents():
 
 
 def test_make_reranker_is_on_by_default(monkeypatch):
+    """Asserts the policy, not the machine.
+
+    find_spec is patched so this reads the same whether or not the `local` extra
+    is installed — otherwise the test would pass on a dev box and fail in CI,
+    which installs `[dev]` only.
+    """
     from methodos.providers import make_reranker
     from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
 
     monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
-    assert isinstance(make_reranker(Settings(_env_file=None)), CrossEncoderRerank)
+    with patch("methodos.providers.find_spec", return_value=object()):
+        assert isinstance(make_reranker(Settings(_env_file=None)), CrossEncoderRerank)
 
 
 def test_make_reranker_returns_none_when_explicitly_disabled(monkeypatch):
