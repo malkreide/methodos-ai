@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Ishikawa_Diagram",
+  "name": "Ishikawa (Fishbone) Diagram",
+  "category": "analysis",
+  "use_case": "A structured cause-mapping diagram that sorts every candidate cause of a problem into fixed categories — people, process, equipment, materials, environment and measurement — so a group can see the full space of explanations at once instead of committing to the first one. Best used when a defect or quality problem has many plausible contributing factors, several teams each blame a different one, and the discussion needs a shared map before anyone starts collecting data.",
+  "strengths": [
+    "surfaces many parallel causes rather than a single chain",
+    "category prompts stop the group from circling one favourite explanation",
+    "the finished diagram is a durable artifact for later data collection",
+    "works well with mixed groups because every discipline owns a branch"
+  ],
+  "weaknesses": [
+    "produces breadth without any ranking of which cause matters most",
+    "the standard categories fit manufacturing better than knowledge work",
+    "large diagrams become unreadable and stall the conversation",
+    "risks cataloguing speculation unless each branch is later tested"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Ishikawa_diagram",
+    "https://asq.org/quality-resources/fishbone"
+  ]
+}

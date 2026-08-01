@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Five_Whys",
+  "name": "Five Whys",
+  "category": "analysis",
+  "use_case": "An iterative root-cause technique that asks 'why did that happen?' repeatedly against a single observed failure until the answer stops being a symptom and starts being a fixable cause. Best used right after an incident, an outage, a recurring defect, or a missed deadline, when the team can describe what went wrong but keeps fixing the surface rather than the underlying condition that produced it.",
+  "strengths": [
+    "needs no tooling, template, or facilitator training",
+    "keeps a single failure in focus instead of drifting into general complaints",
+    "exposes process and system causes that a blame-first discussion hides",
+    "fast enough to run inside an existing incident review"
+  ],
+  "weaknesses": [
+    "follows one causal chain, so parallel contributing causes get dropped",
+    "quality depends entirely on the participants' knowledge of the system",
+    "stops wherever the group runs out of insight, which may be short of the real cause",
+    "invites a plausible narrative that nobody verifies against evidence"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Five_whys",
+    "https://www.toyota-global.com/company/toyota_traditions/quality/mar_apr_2006.html"
+  ]
+}

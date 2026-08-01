@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "MoSCoW_Method",
+  "name": "MoSCoW Prioritization",
+  "category": "prioritization",
+  "use_case": "A scope-negotiation technique that sorts requirements into Must have, Should have, Could have and Won't have this time, so a fixed deadline is met by agreeing in advance what gets dropped rather than by discovering it under pressure. Best used with stakeholders at the start of a time-boxed delivery, when the release date is immovable, the wish list exceeds the budget, and someone needs to say out loud which items are genuinely non-negotiable.",
+  "strengths": [
+    "the explicit Won't-have list makes descoping a decision instead of a failure",
+    "categories are understandable to non-technical stakeholders immediately",
+    "pairs naturally with fixed-date, variable-scope delivery",
+    "very fast for a first pass over a large requirement list"
+  ],
+  "weaknesses": [
+    "everything drifts into Must have unless someone enforces a cap",
+    "gives no ordering inside a category, so it can't sequence the work",
+    "no notion of cost or effort, only of desirability",
+    "the boundary between Should and Could is often argued rather than reasoned"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/MoSCoW_method",
+    "https://www.agilebusiness.org/dsdm-project-framework/moscow-prioririsation.html"
+  ]
+}
