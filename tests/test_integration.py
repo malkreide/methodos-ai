@@ -503,3 +503,85 @@ def test_openai_embedding_dimensions_match_the_api(model_name):
     assert provider.dimensions == len(vectors[0]), (
         "declared dimensions must match what embed returns"
     )
+
+
+def _first_mention(text: str, method_name: str) -> int | None:
+    """Index where `method_name` is first referred to, or None.
+
+    Matches on the leading word only ("SWOT", "Porter", "PESTEL"): models write
+    "Porter's Five Forces", "the Five Forces model" or just "Porter's", and an
+    exact-name search would miss all but the first. Trailing possessives and
+    punctuation are stripped so "Porter's" and "Porter" both hit.
+    """
+    token = method_name.split()[0].removesuffix("'s").strip(".,:;'\"").lower()
+    idx = text.lower().find(token.lower())
+    return None if idx < 0 else idx
+
+
+@pytest.mark.skipif(
+    os.environ.get("METHODOS_INTEGRATION_LLM") != "1",
+    reason="needs a reachable LLM backend; set METHODOS_INTEGRATION_LLM=1 to run",
+)
+def test_real_llm_leads_with_the_reranked_top_not_the_most_similar(
+    real_index, real_embedding, real_reranker
+):
+    """The behavioural half of the `{ranking_basis}` change.
+
+    `render_explain_prompt` tells the model the list is ordered by cross-encoder
+    relevance and that the printed similarity is *not* the sort key. That text
+    exists to stop a model from "correcting" the order back to similarity. The
+    unit suite pins that the sentence renders; only a real completion can show
+    whether a model acts on it.
+
+    The proxy is which method the explanation introduces first. It is a weak
+    signal by construction — but a stable one, because models walk a numbered
+    list in the order they are given it, and it fails in exactly the case worth
+    catching: an explanation that opens with the highest-*similarity* candidate
+    after the reranker deliberately demoted it.
+
+    Non-deterministic wording, so nothing is asserted about content.
+    """
+    # Same query as scripts/verify_explain.py, and for the same reason: at
+    # top_k=3 the reranker puts SWOT (sim 0.457) above both Porter's (0.469)
+    # and PESTEL (0.465), so the prompt genuinely shows a top entry that is
+    # less similar than the ones under it.
+    query = "internal strengths and weaknesses vs external opportunities and threats"
+    settings = Settings()
+    result = search(
+        query=query,
+        embedding=real_embedding,
+        llm=make_llm(settings),
+        chroma_path=real_index,
+        top_k=3,
+        reranker=real_reranker,
+    )
+
+    top, rest = result.candidates[0], result.candidates[1:]
+    assert rest, "need at least two candidates for an ordering to exist"
+    # Precondition, not the thing under test: without a similarity/rerank
+    # conflict the model is never asked to trust the reranked order, and the
+    # assertion below would pass for the wrong reason. `test_rerank_rescues_*`
+    # pins that such conflicts exist at all; this one needs one specifically.
+    assert any(c.similarity > top.similarity for c in rest), (
+        f"query {query!r} no longer produces a rerank/similarity conflict — "
+        f"{[(c.id, round(c.similarity, 3), round(c.rerank_score or 0, 2)) for c in result.candidates]}. "
+        "Pick a query where the reranker promotes a lower-similarity method."
+    )
+
+    explanation = result.explanation
+    assert explanation is not None and explanation.strip()
+
+    top_at = _first_mention(explanation, top.name)
+    assert top_at is not None, (
+        f"explanation never mentions the top-ranked {top.name}: {explanation[:300]!r}"
+    )
+    for other in rest:
+        other_at = _first_mention(explanation, other.name)
+        if other_at is None:
+            continue
+        assert top_at < other_at, (
+            f"explanation leads with {other.name} (sim {other.similarity:.2f}) "
+            f"instead of the reranked top {top.name} (sim {top.similarity:.2f}, "
+            f"rerank {top.rerank_score:+.2f}) — the model appears to be sorting "
+            f"by similarity: {explanation[:300]!r}"
+        )
