@@ -26,9 +26,15 @@ class Settings(BaseSettings):
     """For provider='local': sentence-transformers model name.
     For provider='openai': e.g. 'text-embedding-3-small'."""
 
-    rerank_provider: Literal["none", "cross-encoder"] = "none"
-    """Off by default: reranking pulls a second model down on first use, and the
-    embedding-only path stays the documented offline baseline."""
+    rerank_provider: Literal["none", "cross-encoder"] = "cross-encoder"
+    """On by default: it measurably improves ranking on the shipped catalog.
+
+    It needs sentence-transformers (the `local` extra). When that is missing —
+    e.g. an OpenAI-embeddings install — `make_reranker` degrades to no
+    reranking rather than failing the query, because ranking quality is an
+    enhancement and a missing optional model should not break `methodos query`.
+    An explicit `--rerank` still fails loudly; see make_reranker(required=...).
+    """
 
     rerank_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
     """Only consulted when rerank_provider != 'none'."""

@@ -57,6 +57,7 @@ def test_ingest_command_runs(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda settings: fake)
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
 
     res = runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
     assert res.exit_code == 0, res.stdout
@@ -76,6 +77,7 @@ def test_query_no_llm_renders_results(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: fake)
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
 
     runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
@@ -106,6 +108,7 @@ def test_query_with_llm_calls_llm(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: fake_e)
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setattr(cli_mod, "make_llm", lambda s: fake_l)
     monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
 
@@ -190,6 +193,7 @@ def test_query_logs_recommendation(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: fake_e)
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setattr(cli_mod, "make_llm", lambda s: fake_l)
 
     fb = tmp_path / "fb.jsonl"
@@ -256,6 +260,7 @@ def test_ingest_reports_embedding_backend_failure(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: BrokenEmbedding())
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
 
     res = runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
@@ -285,10 +290,12 @@ def test_query_reports_embedding_backend_failure(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: working)
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
     runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: BrokenEmbedding())
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     res = runner.invoke(app, ["query", "how do we pick a strategy", "--no-llm"])
     assert res.exit_code == 2
     assert res.exception is None or isinstance(res.exception, SystemExit)
@@ -315,6 +322,7 @@ def test_query_reports_llm_failure(tmp_path, monkeypatch):
     import methodos.cli as cli_mod
 
     monkeypatch.setattr(cli_mod, "make_embedding", lambda s: FakeEmbedding(dimensions=8))
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
     monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
     runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
 
@@ -323,3 +331,90 @@ def test_query_reports_llm_failure(tmp_path, monkeypatch):
     assert res.exit_code == 2
     assert res.exception is None or isinstance(res.exception, SystemExit)
     assert "ollama not running" in res.stdout
+
+
+def test_query_renders_the_rerank_score_when_a_reranker_runs(tmp_path, monkeypatch):
+    """Both scores reach the panel; the reranker decides the order."""
+    from methodos.cli import app
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    import methodos.cli as cli_mod
+    from tests.conftest import FakeEmbedding, FakeReranker
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: FakeEmbedding(dimensions=8))
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+    runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: FakeReranker())
+    res = runner.invoke(app, ["query", "decision approval authority", "--no-llm", "-k", "2"])
+    assert res.exit_code == 0, res.stdout
+    assert "rerank" in res.stdout, "the rerank score must be visible next to sim"
+    assert res.stdout.count("sim ") == 2
+
+
+def test_query_reports_when_reranking_is_unavailable(tmp_path, monkeypatch):
+    """Default-on reranking degrades quietly, but the user is told."""
+    from methodos.cli import app
+
+    repo_root = Path(__file__).parent.parent
+    methods = tmp_path / "methods"
+    _seed_methods_fixture(repo_root, methods)
+
+    import methodos.cli as cli_mod
+    from tests.conftest import FakeEmbedding
+
+    monkeypatch.setattr(cli_mod, "make_embedding", lambda s: FakeEmbedding(dimensions=8))
+    monkeypatch.setattr(cli_mod, "make_reranker", lambda s, **kw: None)
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+    runner.invoke(app, ["ingest", "--methods-dir", str(methods)])
+
+    res = runner.invoke(app, ["query", "anything at all", "--no-llm", "-k", "2"])
+    assert res.exit_code == 0, res.stdout
+    assert "Reranking unavailable" in res.stdout
+
+
+def test_query_reports_explicit_rerank_that_cannot_run(tmp_path, monkeypatch):
+    """`--rerank` without the dependency must be a clean exit 2, not a traceback.
+
+    make_reranker raises at construction, outside the search() call, so it needs
+    its own guard — the same gap that used to let EmbeddingError escape.
+    """
+    import methodos.cli as cli_mod
+    from methodos.cli import app
+    from methodos.providers.base import RerankError
+
+    def _boom(settings, **kw):
+        raise RerankError("cross-encoder reranking needs sentence-transformers")
+
+    monkeypatch.setattr(cli_mod, "make_reranker", _boom)
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+
+    res = runner.invoke(app, ["query", "anything", "--no-llm", "--rerank"])
+    assert res.exit_code == 2
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "sentence-transformers" in res.stdout
+
+
+def test_error_messages_survive_rich_markup(tmp_path, monkeypatch):
+    """`[local]` in an error is a Rich tag unless escaped — and it got eaten once.
+
+    The install hint is the whole value of that message, so assert the brackets
+    reach stdout intact.
+    """
+    import methodos.cli as cli_mod
+    from methodos.cli import app
+    from methodos.providers.base import RerankError
+
+    def _boom(settings, **kw):
+        raise RerankError('needs sentence-transformers: pip install -e ".[local]"')
+
+    monkeypatch.setattr(cli_mod, "make_reranker", _boom)
+    monkeypatch.setenv("METHODOS_CHROMA_PATH", str(tmp_path / "chroma"))
+
+    res = runner.invoke(app, ["query", "anything", "--no-llm", "--rerank"])
+    assert res.exit_code == 2
+    assert ".[local]" in res.stdout, f"markup ate the hint: {res.stdout!r}"

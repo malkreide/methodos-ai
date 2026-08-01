@@ -15,6 +15,8 @@ def test_defaults_are_offline_friendly(monkeypatch):
     assert s.model.startswith("ollama/")
     assert s.embedding_provider == "local"
     assert s.top_k == 3
+    assert s.rerank_provider == "cross-encoder", "reranking ships on by default"
+    assert s.overfetch_factor == 2
     assert isinstance(s.chroma_path, Path)
 
 

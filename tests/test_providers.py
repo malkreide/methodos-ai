@@ -315,20 +315,51 @@ def test_cross_encoder_short_circuits_on_empty_documents():
     ld.assert_not_called()
 
 
-def test_make_reranker_returns_none_when_disabled(monkeypatch):
-    from methodos.providers import make_reranker
-
-    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
-    assert make_reranker(Settings(_env_file=None)) is None
-
-
-def test_make_reranker_builds_cross_encoder_when_enabled(monkeypatch):
+def test_make_reranker_is_on_by_default(monkeypatch):
     from methodos.providers import make_reranker
     from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
 
-    monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "cross-encoder")
-    r = make_reranker(Settings(_env_file=None))
-    assert isinstance(r, CrossEncoderRerank)
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    assert isinstance(make_reranker(Settings(_env_file=None)), CrossEncoderRerank)
+
+
+def test_make_reranker_returns_none_when_explicitly_disabled(monkeypatch):
+    from methodos.providers import make_reranker
+
+    monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "none")
+    assert make_reranker(Settings(_env_file=None)) is None
+
+
+def test_make_reranker_degrades_when_sentence_transformers_is_missing(monkeypatch):
+    """Base install + OpenAI embeddings must keep working, just without rerank."""
+    from methodos.providers import make_reranker
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=None):
+        assert make_reranker(Settings(_env_file=None)) is None
+
+
+def test_make_reranker_raises_when_explicitly_required_but_missing(monkeypatch):
+    """`--rerank` asked for it; silently ignoring that would be worse than failing."""
+    from methodos.providers import make_reranker
+    from methodos.providers.base import RerankError
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with (
+        patch("methodos.providers.find_spec", return_value=None),
+        pytest.raises(RerankError, match="sentence-transformers"),
+    ):
+        make_reranker(Settings(_env_file=None), required=True)
+
+
+def test_make_reranker_does_not_import_sentence_transformers_to_check(monkeypatch):
+    """Availability check must not import the heavy dep — hard rule 1."""
+    from methodos.providers import make_reranker
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=object()) as fs:
+        make_reranker(Settings(_env_file=None))
+    fs.assert_called_once_with("sentence_transformers")
 
 
 def test_make_reranker_rejects_unknown_provider(monkeypatch):

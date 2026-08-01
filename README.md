@@ -34,8 +34,9 @@ methodos ingest
 methodos query "we need to enter a new market without burning cash"
 ```
 
-The default config is **fully offline**: Ollama for the LLM (`ollama/llama3.1:8b`)
-and `sentence-transformers/all-MiniLM-L6-v2` for embeddings. One env var
+The default config is **fully offline**: Ollama for the LLM (`ollama/llama3.1:8b`),
+`sentence-transformers/all-MiniLM-L6-v2` for embeddings, and a cross-encoder
+rerank step on the shortlist. One env var
 (`METHODOS_MODEL`) swaps the LLM to any cloud provider supported by litellm.
 
 ## Recommended cloud LLM
@@ -66,17 +67,22 @@ whole corpus. So it runs on the shortlist only:
 Chroma returns top_k × overfetch_factor  →  cross-encoder rescores  →  top_k
 ```
 
-Off by default. Turn it on per query or in `.env`:
+**On by default.** Turn it off per query or permanently:
 
 ```bash
-methodos query "..." --rerank
+methodos query "..." --no-rerank
 # or
-echo 'METHODOS_RERANK_PROVIDER=cross-encoder' >> .env
+echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 ```
 
-Needs the `local` extra (it reuses sentence-transformers) and downloads
+It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/ms-marco-MiniLM-L-6-v2` (~80MB) on first use. Costs roughly
-120 ms per query over a 12-candidate shortlist, plus a one-off model load.
+66 ms per query over the default 6-candidate shortlist.
+
+If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
+queries do **not** fail. Reranking is a quality enhancement, so it degrades to
+embedding-only ranking and says so. An explicit `--rerank` still errors, because
+silently ignoring a direct request would be worse.
 
 Measured against the 23-method catalog: all 23 pinned retrieval probes keep
 ranking correctly, and it additionally resolves problem statements that
@@ -85,8 +91,11 @@ and weaknesses vs external opportunities and threats"*, which the embedding
 ranks 0.004 **behind** Porter's Five Forces and the reranker puts SWOT
 15.3 ahead of.
 
-Raise `METHODOS_OVERFETCH_FACTOR` to give the reranker a longer shortlist;
-cost grows linearly with it.
+`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 2, i.e.
+`top_k × 2`). On the current 23-method catalog, raising it buys nothing —
+factors 2, 3, 4 and 6 all score 23/23 on the pinned probes — while cost grows
+linearly (66 → 200 ms). It becomes worth raising as the catalog grows and the
+right answer starts landing further down the embedding ranking.
 
 ## Improvement potentials (planned)
 

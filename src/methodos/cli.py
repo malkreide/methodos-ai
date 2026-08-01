@@ -20,6 +20,7 @@ from typing import TYPE_CHECKING
 import typer
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.markup import escape
 from rich.panel import Panel
 from rich.table import Table
 
@@ -90,7 +91,7 @@ def ingest(
     try:
         embedding = make_embedding(settings)
     except Exception as e:
-        console.print(f"[red]Failed to construct embedding provider:[/] {e}")
+        console.print(f"[red]Failed to construct embedding provider:[/] {escape(str(e))}")
         raise typer.Exit(code=2) from e
 
     try:
@@ -100,12 +101,12 @@ def ingest(
             embedding=embedding,
         )
     except IngestError as e:
-        console.print(f"[red]Ingest failed:[/]\n{e}")
+        console.print(f"[red]Ingest failed:[/]\n{escape(str(e))}")
         raise typer.Exit(code=1) from e
     except EmbeddingError as e:
         # Providers load their backend lazily, so a missing model or unreachable
         # service only surfaces here — not at construction time above.
-        console.print(f"[red]Embedding provider failed:[/] {e}")
+        console.print(f"[red]Embedding provider failed:[/] {escape(str(e))}")
         raise typer.Exit(code=2) from e
 
     if summary.count == 0:
@@ -166,7 +167,19 @@ def query(
 
     embedding = make_embedding(settings)
     llm = None if no_llm else make_llm(settings)
-    reranker = make_reranker(settings)
+    # An explicit --rerank must fail loudly if it cannot run; the default
+    # silently degrades, so say so rather than quietly ranking differently.
+    try:
+        reranker = make_reranker(settings, required=rerank is True)
+    except RerankError as e:
+        # Raised at construction, outside the search() call below — so it needs
+        # its own guard, or it escapes as a traceback.
+        console.print(f"[red]Reranker unavailable:[/] {escape(str(e))}")
+        raise typer.Exit(code=2) from e
+    if reranker is None and settings.rerank_provider != "none":
+        console.print(
+            "[dim]Reranking unavailable (needs the `local` extra) — ranking by embedding only.[/]"
+        )
 
     try:
         result = search(
@@ -179,20 +192,20 @@ def query(
             overfetch_factor=settings.overfetch_factor,
         )
     except StaleIndexError as e:
-        console.print(f"[red]Stale index:[/] {e}")
+        console.print(f"[red]Stale index:[/] {escape(str(e))}")
         raise typer.Exit(code=1) from e
     except EmbeddingError as e:
         # Same lazy-load story as in `ingest`: the backend is only touched here.
-        console.print(f"[red]Embedding provider failed:[/] {e}")
+        console.print(f"[red]Embedding provider failed:[/] {escape(str(e))}")
         raise typer.Exit(code=2) from e
     except RerankError as e:
         console.print(
-            f"[red]Reranker failed:[/] {e}\n[dim]Retry with --no-rerank to rank by embedding only.[/]"
+            f"[red]Reranker failed:[/] {escape(str(e))}\n[dim]Retry with --no-rerank to rank by embedding only.[/]"
         )
         raise typer.Exit(code=2) from e
     except LLMError as e:
         console.print(
-            f"[red]LLM provider failed:[/] {e}\n[dim]Retry with --no-llm to rank only.[/]"
+            f"[red]LLM provider failed:[/] {escape(str(e))}\n[dim]Retry with --no-llm to rank only.[/]"
         )
         raise typer.Exit(code=2) from e
 
