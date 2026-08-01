@@ -33,6 +33,11 @@ dependencies = [
 [project.optional-dependencies]
 local = ["sentence-transformers>=2.7"]
 openai = ["openai>=1.30"]
+# >=2.0 is a hard floor, not caution: the server class was named FastMCP and
+# lived in mcp.server.fastmcp until 2.0 renamed it to MCPServer in
+# mcp.server.mcpserver. mcp_server.py imports the 2.x path and will not run
+# against 1.x.
+mcp = ["mcp>=2.0"]
 dev = [
   "pytest>=8",
   "pytest-cov>=5",
@@ -43,6 +48,7 @@ dev = [
 
 [project.scripts]
 methodos = "methodos.cli:app"
+methodos-mcp = "methodos.mcp_server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/methodos"]
