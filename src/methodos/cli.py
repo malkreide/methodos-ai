@@ -27,7 +27,7 @@ from rich.table import Table
 
 from methodos import __version__
 from methodos.config import Settings
-from methodos.providers import make_embedding, make_llm, make_reranker
+from methodos.providers import EmbeddingProvider, make_embedding, make_llm, make_reranker
 
 if TYPE_CHECKING:
     from methodos.models import Method
@@ -80,6 +80,27 @@ def _load_settings() -> Settings:
         raise typer.Exit(code=2) from e
 
 
+def _make_embedding_or_exit(settings: Settings) -> EmbeddingProvider:
+    """Construct the embedding provider, or report why it can't be built.
+
+    Construction is where a *configuration* problem shows up — an OpenAI model
+    with no dimension in _KNOWN_DIMS raises ValueError right here — as opposed
+    to EmbeddingError, which the providers only raise later, when their backend
+    is lazily loaded. Both are the user's environment rather than a bug, so
+    both exit 2; only the second one can wait for the search call to catch it.
+
+    `except Exception` is deliberately broad: this guards third-party
+    constructors, and the whole point is that nothing gets through as a
+    traceback. Callers that also touch the backend still need their own
+    EmbeddingError guard.
+    """
+    try:
+        return make_embedding(settings)
+    except Exception as e:
+        console.print(f"[red]Failed to construct embedding provider:[/] {escape(str(e))}")
+        raise typer.Exit(code=2) from e
+
+
 def _version_callback(value: bool) -> None:
     if value:
         s = _load_settings()
@@ -118,11 +139,7 @@ def ingest(
     from methodos.providers.base import EmbeddingError
 
     settings = _load_settings()
-    try:
-        embedding = make_embedding(settings)
-    except Exception as e:
-        console.print(f"[red]Failed to construct embedding provider:[/] {escape(str(e))}")
-        raise typer.Exit(code=2) from e
+    embedding = _make_embedding_or_exit(settings)
 
     try:
         summary = do_ingest(
@@ -195,7 +212,7 @@ def query(
     if top_k is None:
         top_k = settings.top_k
 
-    embedding = make_embedding(settings)
+    embedding = _make_embedding_or_exit(settings)
     llm = None if no_llm else make_llm(settings)
     # An explicit --rerank must fail loudly if it cannot run; the default
     # silently degrades, so say so rather than quietly ranking differently.
