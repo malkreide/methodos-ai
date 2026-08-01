@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "methodos"
-version = "0.4.0"
+version = "0.4.1"
 # Kept in sync with src/methodos/__init__.py:__version__ by tests/test_version.py.
 # Bump both in the same commit; the tag on main should match them.
 description = "An expert-level RAG catalog of management methods."
