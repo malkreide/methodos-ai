@@ -421,6 +421,28 @@ def test_error_messages_survive_rich_markup(tmp_path, monkeypatch):
     assert ".[local]" in res.stdout, f"markup ate the hint: {res.stdout!r}"
 
 
+@pytest.mark.parametrize("argv", [["ingest"], ["query", "x", "--no-llm"]], ids=["ingest", "query"])
+def test_provider_construction_failure_is_reported_not_raised(argv, monkeypatch, tmp_path):
+    """An embedding model the provider can't build must exit 2, not traceback.
+
+    `ingest` guarded this and `query` didn't, so the same METHODOS_EMBEDDING_MODEL
+    gave a clean message from one command and a ValueError stack from the other.
+    Parametrized rather than duplicated so a future command can't drift again.
+    """
+    from methodos.cli import app
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("METHODOS_EMBEDDING_PROVIDER", "openai")
+    monkeypatch.setenv("METHODOS_EMBEDDING_MODEL", "text-embedding-4")
+
+    res = runner.invoke(app, argv)
+    assert res.exit_code == 2, f"{argv} -> {res.exit_code}: {res.stdout!r}"
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "Failed to construct embedding provider" in res.stdout
+    # The unknown model name is the actionable part — don't let it get cut.
+    assert "text-embedding-4" in res.stdout
+
+
 def test_invalid_settings_name_the_offending_field(monkeypatch):
     """`METHODOS_OVERFETCH_FACTOR=0` used to exit 1 with a raw pydantic traceback.
 
