@@ -3,6 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 from typer.testing import CliRunner
 
 runner = CliRunner()
@@ -418,3 +419,78 @@ def test_error_messages_survive_rich_markup(tmp_path, monkeypatch):
     res = runner.invoke(app, ["query", "anything", "--no-llm", "--rerank"])
     assert res.exit_code == 2
     assert ".[local]" in res.stdout, f"markup ate the hint: {res.stdout!r}"
+
+
+def test_invalid_settings_name_the_offending_field(monkeypatch):
+    """`METHODOS_OVERFETCH_FACTOR=0` used to exit 1 with a raw pydantic traceback.
+
+    The field name is the whole payload of the message — without it you know the
+    config is wrong but not which knob, so assert on it rather than on exit 2 alone.
+    """
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_OVERFETCH_FACTOR", "0")
+
+    res = runner.invoke(app, ["query", "x", "--no-llm"])
+    assert res.exit_code == 2
+    assert res.exception is None or isinstance(res.exception, SystemExit)
+    assert "overfetch_factor" in res.stdout
+    assert "METHODOS_OVERFETCH_FACTOR" in res.stdout
+    assert "Traceback" not in res.stdout
+
+
+def test_invalid_settings_report_every_bad_field(monkeypatch):
+    """Fixing one env var at a time is a slow loop; list them all in one pass."""
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_OVERFETCH_FACTOR", "0")
+    monkeypatch.setenv("METHODOS_TOP_K", "0")
+    monkeypatch.setenv("METHODOS_EMBEDDING_PROVIDER", "elasticsearch")
+
+    res = runner.invoke(app, ["stats"])
+    assert res.exit_code == 2
+    for field in ("overfetch_factor", "top_k", "embedding_provider"):
+        assert field in res.stdout, f"{field} missing from: {res.stdout!r}"
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["--version"],
+        ["ingest"],
+        ["query", "x", "--no-llm"],
+        ["feedback", "SWOT", "-r", "4"],
+        ["stats"],
+    ],
+    ids=["version", "ingest", "query", "feedback", "stats"],
+)
+def test_every_command_reports_bad_settings_the_same_way(argv, monkeypatch, tmp_path):
+    """Each command builds its own Settings, so each is its own chance to regress.
+
+    `ingest` and `query` must fail here *before* touching a provider — a config
+    error should never surface as a missing-model error from sentence-transformers.
+    """
+    from methodos.cli import app
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("METHODOS_TOP_K", "not-a-number")
+
+    res = runner.invoke(app, argv)
+    assert res.exit_code == 2, f"{argv} -> {res.exit_code}: {res.stdout!r}"
+    assert "Invalid configuration" in res.stdout
+    assert "top_k" in res.stdout
+
+
+def test_settings_errors_survive_rich_markup(monkeypatch):
+    """Same trap as the RerankError hint: a bracketed *value* is Rich markup.
+
+    `METHODOS_EMBEDDING_PROVIDER='[local]'` is exactly the typo a reader of the
+    install docs makes, and swallowing the brackets hides what they actually set.
+    """
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_EMBEDDING_PROVIDER", "[local]")
+
+    res = runner.invoke(app, ["stats"])
+    assert res.exit_code == 2
+    assert "[local]" in res.stdout, f"markup ate the value: {res.stdout!r}"

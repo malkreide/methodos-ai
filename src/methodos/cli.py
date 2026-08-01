@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import typer
+from pydantic import ValidationError
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.markup import escape
@@ -50,9 +51,38 @@ app = typer.Typer(
 console = Console()
 
 
+def _load_settings() -> Settings:
+    """Build Settings, or report the bad env vars and exit 2.
+
+    Every command needs settings, and a raw `Settings()` lets pydantic's
+    ValidationError escape as a traceback — the one failure mode the provider
+    errors below were already careful to avoid. Exit 2 matches them: the
+    environment is wrong, not the catalog. Constructing settings through this
+    helper is the whole contract; adding a bare `Settings()` back into a
+    command re-opens the hole.
+    """
+    try:
+        return Settings()
+    except ValidationError as e:
+        prefix = Settings.model_config.get("env_prefix", "")
+        lines = []
+        for err in e.errors():
+            field = ".".join(str(part) for part in err["loc"])
+            # `loc` is empty only for model-level validators, of which there are
+            # none today — but an empty "(from METHODOS_='x')" would read as a bug.
+            source = f"{prefix}{field.upper()}={err['input']!r}" if field else "settings"
+            lines.append(f"  {field or '(settings)'} (from {source})\n    {err['msg']}")
+        # Rich treats square brackets as markup and pydantic messages carry them
+        # (list/tuple types render as `[...]`). Escape the interpolated text —
+        # never our own tags. See test_error_messages_survive_rich_markup.
+        body = escape("\n".join(lines))
+        console.print(f"[red]Invalid configuration[/] (check your environment and .env):\n{body}")
+        raise typer.Exit(code=2) from e
+
+
 def _version_callback(value: bool) -> None:
     if value:
-        s = Settings()
+        s = _load_settings()
         console.print(
             f"methodos {__version__}\n"
             f"  model:     {s.model}\n"
@@ -87,7 +117,7 @@ def ingest(
     from methodos.ingest import ingest as do_ingest
     from methodos.providers.base import EmbeddingError
 
-    settings = Settings()
+    settings = _load_settings()
     try:
         embedding = make_embedding(settings)
     except Exception as e:
@@ -155,7 +185,7 @@ def query(
     from methodos.providers.base import EmbeddingError, LLMError, RerankError
     from methodos.search import StaleIndexError, search
 
-    settings = Settings()
+    settings = _load_settings()
     if model is not None:
         settings = settings.model_copy(update={"model": model})
     if rerank is not None:
@@ -301,7 +331,7 @@ def feedback(
     """Record an outcome rating for a previously-recommended method."""
     from methodos.feedback import log_rating
 
-    settings = Settings()
+    settings = _load_settings()
     log_rating(
         method_id=method_id,
         rating=rating,
@@ -317,7 +347,7 @@ def stats_cmd() -> None:
     """Show aggregated method ratings."""
     from methodos.feedback import stats
 
-    settings = Settings()
+    settings = _load_settings()
     s = stats(settings.feedback_path)
     if not s:
         console.print("[yellow]No feedback yet.[/]")
