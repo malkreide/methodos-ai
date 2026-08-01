@@ -49,9 +49,33 @@ class FakeEmbedding:
         return out
 
 
+class FakeReranker:
+    """Deterministic rerank fake: score = number of query terms in the document.
+
+    Lexical overlap deliberately disagrees with FakeEmbedding's sha256 ordering,
+    so a test can tell whether reranking actually reordered anything rather than
+    happening to agree with retrieval.
+    """
+
+    name = "fake-reranker"
+
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, list[str]]] = []
+
+    def score(self, query: str, documents: Sequence[str]) -> list[float]:
+        self.calls.append((query, list(documents)))
+        terms = {t for t in query.lower().split() if t}
+        return [float(sum(1 for t in terms if t in doc.lower())) for doc in documents]
+
+
 @pytest.fixture
 def fake_llm() -> FakeLLM:
     return FakeLLM()
+
+
+@pytest.fixture
+def fake_reranker() -> FakeReranker:
+    return FakeReranker()
 
 
 @pytest.fixture

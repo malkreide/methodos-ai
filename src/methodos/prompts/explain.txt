@@ -13,7 +13,7 @@ Problem:
 {query}
 """
 
-Candidate methods (ranked by semantic similarity):
+Candidate methods (ranked by {ranking_basis}):
 
 {candidates_block}
 

@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
 from methodos.prompts.loader import render_explain_prompt, split_system_user
-from methodos.providers.base import EmbeddingProvider, LLMProvider
+from methodos.providers.base import (
+    EmbeddingProvider,
+    LLMProvider,
+    RerankError,
+    RerankProvider,
+)
 
 
 class StaleIndexError(Exception):
@@ -28,11 +33,19 @@ class Candidate:
     duration_max: int
     doc_path: str
     similarity: float
+    rerank_score: float | None = None
+    """Cross-encoder score when a reranker ran, else None.
+
+    Kept separate from `similarity` on purpose: the two are different scales
+    (cosine vs. model logits) and overwriting one with the other would make the
+    rendered numbers silently incomparable between runs.
+    """
 
     def to_render_dict(self) -> dict[str, Any]:
         return {
             "name": self.name,
             "similarity": self.similarity,
+            "rerank_score": self.rerank_score,
             "complexity_score": self.complexity_score,
             "use_case": self.use_case,
             "strengths": self.strengths,
@@ -90,20 +103,39 @@ def _open_collection(chroma_path: Path, embedding: EmbeddingProvider) -> Any:
     return coll
 
 
+def _rerank(query: str, candidates: list[Candidate], reranker: RerankProvider) -> list[Candidate]:
+    """Re-score the shortlist with a cross-encoder and re-sort by that score."""
+    scores = reranker.score(query, [c.use_case for c in candidates])
+    if len(scores) != len(candidates):
+        raise RerankError(
+            f"{reranker.name} returned {len(scores)} score(s) for {len(candidates)} document(s)"
+        )
+    rescored = [replace(c, rerank_score=s) for c, s in zip(candidates, scores, strict=True)]
+    # `sorted` is stable, so ties keep the retrieval order rather than shuffling.
+    return sorted(rescored, key=lambda c: c.rerank_score or 0.0, reverse=True)
+
+
 def retrieve(
     *,
     query: str,
     embedding: EmbeddingProvider,
     chroma_path: Path,
     top_k: int,
+    reranker: RerankProvider | None = None,
+    overfetch_factor: int = 2,
 ) -> list[Candidate]:
-    """Return up to top_k candidates sorted by similarity (descending)."""
+    """Return up to top_k candidates, best first.
+
+    Over-fetches `top_k * overfetch_factor` from Chroma so a reranker can
+    promote something the embedding ranked just below the cut. Without a
+    reranker the extra candidates are simply discarded, exactly as before.
+    """
     coll = _open_collection(chroma_path, embedding)
     q_vec = embedding.embed([query])[0]
 
     raw = coll.query(
         query_embeddings=[q_vec],
-        n_results=top_k * 2,
+        n_results=top_k * overfetch_factor,
         include=["metadatas", "documents", "distances"],
     )
     ids = raw["ids"][0]
@@ -115,6 +147,8 @@ def retrieve(
         _rehydrate(i, d, m, dist) for i, d, m, dist in zip(ids, docs, metas, dists, strict=True)
     ]
     candidates.sort(key=lambda c: c.similarity, reverse=True)
+    if reranker is not None:
+        candidates = _rerank(query, candidates, reranker)
     return candidates[:top_k]
 
 
@@ -140,9 +174,18 @@ def search(
     llm: LLMProvider | None,
     chroma_path: Path,
     top_k: int,
+    reranker: RerankProvider | None = None,
+    overfetch_factor: int = 2,
 ) -> SearchResult:
-    """End-to-end: retrieve top_k, then optionally LLM-explain."""
-    candidates = retrieve(query=query, embedding=embedding, chroma_path=chroma_path, top_k=top_k)
+    """End-to-end: retrieve top_k, optionally rerank, then optionally LLM-explain."""
+    candidates = retrieve(
+        query=query,
+        embedding=embedding,
+        chroma_path=chroma_path,
+        top_k=top_k,
+        reranker=reranker,
+        overfetch_factor=overfetch_factor,
+    )
     if llm is None or not candidates:
         return SearchResult(candidates=candidates, explanation=None)
     explanation = explain(query=query, candidates=candidates, llm=llm)

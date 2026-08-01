@@ -334,3 +334,106 @@ def test_every_method_in_the_catalog_has_a_probe():
         f"methods with no probe: {sorted(catalog - probed)}; "
         f"probes naming an unknown method: {sorted(probed - catalog)}"
     )
+
+
+# --- cross-encoder rerank --------------------------------------------------
+
+
+@pytest.fixture(scope="module")
+def real_reranker():
+    """The default cross-encoder. Skips if the `local` extra isn't installed."""
+    pytest.importorskip(
+        "sentence_transformers",
+        reason="needs the `local` extra: pip install -e '.[dev,local]'",
+    )
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    return CrossEncoderRerank()
+
+
+@pytest.mark.parametrize(("problem", "expected_top", "min_margin"), PROBES)
+def test_rerank_keeps_every_pinned_probe_correct(
+    real_index, real_embedding, real_reranker, problem, expected_top, min_margin
+):
+    """Reranking must not break what embedding-only retrieval already gets right.
+
+    `min_margin` is unused here on purpose: cross-encoder outputs are logits on
+    a different scale from cosine similarity, so the 0.10 bar does not transfer.
+    What matters is that the ordering survives.
+    """
+    from methodos.search import retrieve
+
+    out = retrieve(
+        query=problem,
+        embedding=real_embedding,
+        chroma_path=real_index,
+        top_k=3,
+        reranker=real_reranker,
+        overfetch_factor=4,
+    )
+    assert out[0].id == expected_top, (
+        f"rerank moved {expected_top} off the top for {problem!r}: "
+        f"{[(c.id, round(c.rerank_score or 0, 2)) for c in out]}"
+    )
+    assert all(c.rerank_score is not None for c in out)
+    scores = [c.rerank_score for c in out]
+    assert scores == sorted(scores, reverse=True)
+
+
+# Probes that embedding-only retrieval cannot separate — each was rejected
+# during PR #12/#13 for landing under the 0.10 bar or missing outright, which
+# forced the pinned probe to be reworded. Measured against the 23-method
+# catalog with overfetch_factor=4:
+#
+#   SWOT probe    : embedding 0.004 behind Porter's (miss) -> rerank +15.3 ahead
+#   Wardley probe : embedding 0.009 behind (miss)          -> rerank  +9.3 ahead
+#
+# These assert only the reranked outcome. Asserting the embedding-only failure
+# too would turn a future embedding improvement into a spurious test failure.
+@pytest.mark.parametrize(
+    ("problem", "expected_top"),
+    [
+        (
+            "internal strengths and weaknesses vs external opportunities and threats",
+            "SWOT",
+        ),
+        (
+            "we keep spending engineering effort on infrastructure that is now a standard utility",
+            "Wardley_Mapping",
+        ),
+    ],
+)
+def test_rerank_rescues_probes_the_embedding_cannot_separate(
+    real_index, real_embedding, real_reranker, problem, expected_top
+):
+    from methodos.search import retrieve
+
+    out = retrieve(
+        query=problem,
+        embedding=real_embedding,
+        chroma_path=real_index,
+        top_k=3,
+        reranker=real_reranker,
+        overfetch_factor=4,
+    )
+    assert out[0].id == expected_top, (
+        f"expected {expected_top} first for {problem!r}, got "
+        f"{[(c.id, round(c.rerank_score or 0, 2)) for c in out]}"
+    )
+
+
+def test_rerank_leaves_the_retrieval_similarity_intact(real_index, real_embedding, real_reranker):
+    """Both scores survive to the renderer; neither overwrites the other."""
+    from methodos.search import retrieve
+
+    out = retrieve(
+        query="who is the approver for this cross-functional decision",
+        embedding=real_embedding,
+        chroma_path=real_index,
+        top_k=3,
+        reranker=real_reranker,
+        overfetch_factor=4,
+    )
+    for c in out:
+        assert -1.0 <= c.similarity <= 1.0, "cosine similarity must stay in range"
+        assert c.rerank_score is not None

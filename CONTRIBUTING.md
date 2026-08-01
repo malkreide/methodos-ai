@@ -11,11 +11,11 @@ The `<Id>` must match the JSON `id` field and starts with a capital letter.
 
 ## 2. Add a provider
 
-Implement the `LLMProvider` or `EmbeddingProvider` Protocol from
-`src/methodos/providers/base.py`. Add a test in `tests/test_providers.py`
+Implement the `LLMProvider`, `EmbeddingProvider` or `RerankProvider` Protocol
+from `src/methodos/providers/base.py`. Add a test in `tests/test_providers.py`
 asserting `isinstance(my_provider, LLMProvider)`. Wire it into
-`providers/__init__.py:make_llm` or `make_embedding` if you want it
-selectable via env var.
+`providers/__init__.py:make_llm`, `make_embedding` or `make_reranker` if you
+want it selectable via env var.
 
 Lazy-import any heavy SDK dependencies inside the provider class. Top-level
 imports break the offline-by-default guarantee.

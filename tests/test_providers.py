@@ -218,3 +218,160 @@ def test_make_embedding_openai(monkeypatch):
     s = Settings(_env_file=None)
     e = make_embedding(s)
     assert isinstance(e, OpenAIEmbedding)
+
+
+# --- rerank ----------------------------------------------------------------
+
+
+def test_rerank_protocol_is_runtime_checkable(fake_reranker):
+    from methodos.providers.base import RerankProvider
+
+    assert isinstance(fake_reranker, RerankProvider)
+
+
+def test_rerank_error_is_distinguishable():
+    from methodos.providers.base import EmbeddingError, LLMError, RerankError
+
+    assert issubclass(RerankError, Exception)
+    assert not issubclass(RerankError, EmbeddingError)
+    assert not issubclass(RerankError, LLMError)
+
+
+def test_cross_encoder_satisfies_protocol_without_loading():
+    """Constructing must not touch sentence-transformers — same rule as embeddings."""
+    from methodos.providers.base import RerankProvider
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    p = CrossEncoderRerank(model_name="cross-encoder/ms-marco-MiniLM-L-6-v2")
+    assert isinstance(p, RerankProvider)
+    assert p.name == "cross-encoder:cross-encoder/ms-marco-MiniLM-L-6-v2"
+    assert getattr(p, "_model", None) is None
+
+
+def test_cross_encoder_scores_query_document_pairs():
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    fake = MagicMock(spec=["predict"])
+    fake.predict.return_value = [2.5, -1.0]
+    with patch(
+        "methodos.providers.rerank_cross_encoder._load_cross_encoder", return_value=fake
+    ) as ld:
+        p = CrossEncoderRerank(model_name="m")
+        out = p.score("a query", ["doc one", "doc two"])
+
+    assert out == [2.5, -1.0]
+    ld.assert_called_once_with("m")
+    # The model must see (query, document) pairs, not documents alone.
+    assert fake.predict.call_args[0][0] == [("a query", "doc one"), ("a query", "doc two")]
+
+
+def test_cross_encoder_returns_plain_floats():
+    """sentence-transformers hands back numpy scalars; callers get float."""
+    import array
+
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    fake = MagicMock(spec=["predict"])
+    fake.predict.return_value = array.array("d", [1.5, 0.5])
+    with patch("methodos.providers.rerank_cross_encoder._load_cross_encoder", return_value=fake):
+        out = CrossEncoderRerank(model_name="m").score("q", ["a", "b"])
+    assert out == [1.5, 0.5]
+    assert all(type(x) is float for x in out)
+
+
+def test_cross_encoder_wraps_load_errors():
+    from methodos.providers.base import RerankError
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    with (
+        patch(
+            "methodos.providers.rerank_cross_encoder._load_cross_encoder",
+            side_effect=RuntimeError("model not found"),
+        ),
+        pytest.raises(RerankError, match="model not found"),
+    ):
+        CrossEncoderRerank(model_name="bogus").score("q", ["a"])
+
+
+def test_cross_encoder_wraps_predict_errors():
+    from methodos.providers.base import RerankError
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    fake = MagicMock(spec=["predict"])
+    fake.predict.side_effect = RuntimeError("boom")
+    with (
+        patch("methodos.providers.rerank_cross_encoder._load_cross_encoder", return_value=fake),
+        pytest.raises(RerankError, match="boom"),
+    ):
+        CrossEncoderRerank(model_name="m").score("q", ["a"])
+
+
+def test_cross_encoder_short_circuits_on_empty_documents():
+    """No documents means no model load — reranking an empty shortlist is free."""
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    with patch("methodos.providers.rerank_cross_encoder._load_cross_encoder") as ld:
+        assert CrossEncoderRerank(model_name="m").score("q", []) == []
+    ld.assert_not_called()
+
+
+def test_make_reranker_is_on_by_default(monkeypatch):
+    """Asserts the policy, not the machine.
+
+    find_spec is patched so this reads the same whether or not the `local` extra
+    is installed — otherwise the test would pass on a dev box and fail in CI,
+    which installs `[dev]` only.
+    """
+    from methodos.providers import make_reranker
+    from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=object()):
+        assert isinstance(make_reranker(Settings(_env_file=None)), CrossEncoderRerank)
+
+
+def test_make_reranker_returns_none_when_explicitly_disabled(monkeypatch):
+    from methodos.providers import make_reranker
+
+    monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "none")
+    assert make_reranker(Settings(_env_file=None)) is None
+
+
+def test_make_reranker_degrades_when_sentence_transformers_is_missing(monkeypatch):
+    """Base install + OpenAI embeddings must keep working, just without rerank."""
+    from methodos.providers import make_reranker
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=None):
+        assert make_reranker(Settings(_env_file=None)) is None
+
+
+def test_make_reranker_raises_when_explicitly_required_but_missing(monkeypatch):
+    """`--rerank` asked for it; silently ignoring that would be worse than failing."""
+    from methodos.providers import make_reranker
+    from methodos.providers.base import RerankError
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with (
+        patch("methodos.providers.find_spec", return_value=None),
+        pytest.raises(RerankError, match="sentence-transformers"),
+    ):
+        make_reranker(Settings(_env_file=None), required=True)
+
+
+def test_make_reranker_does_not_import_sentence_transformers_to_check(monkeypatch):
+    """Availability check must not import the heavy dep — hard rule 1."""
+    from methodos.providers import make_reranker
+
+    monkeypatch.delenv("METHODOS_RERANK_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=object()) as fs:
+        make_reranker(Settings(_env_file=None))
+    fs.assert_called_once_with("sentence_transformers")
+
+
+def test_make_reranker_rejects_unknown_provider(monkeypatch):
+    from pydantic import ValidationError
+
+    monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "magic")
+    with pytest.raises(ValidationError):
+        Settings(_env_file=None)

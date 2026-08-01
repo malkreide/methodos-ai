@@ -32,7 +32,7 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
 
 ## How to add a new provider
 1. Implement the Protocol in `src/methodos/providers/`
-2. Wire it in `providers/__init__.py:make_llm` or `make_embedding`
+2. Wire it in `providers/__init__.py:make_llm`, `make_embedding` or `make_reranker`
 3. Add a test in `test_providers.py` asserting Protocol conformance
 4. Lazy-import any heavy deps inside `__init__`
 
@@ -46,7 +46,9 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
 ## Things to leave alone
 - The math comment block in `ingest.py` / `search.py` (spec requirement).
 - The TTY-only feedback hint (intentional UX choice).
-- The over-fetch-then-rerank shape in `search.py` (extension hook).
+- The over-fetch-then-rerank shape in `search.py` — now occupied by the
+  cross-encoder reranker. `retrieve()` keeps working with `reranker=None`;
+  don't collapse the two paths.
 
 ## Where to find the design
 - Spec: `docs/superpowers/specs/2026-05-07-methodos-ai-design.md`

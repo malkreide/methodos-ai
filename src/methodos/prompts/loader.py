@@ -30,9 +30,11 @@ def split_system_user(text: str) -> tuple[str, str]:
 def _format_candidate(c: dict[str, Any]) -> str:
     strengths_b = "\n".join(f"  - {s}" for s in c["strengths"])
     weaknesses_b = "\n".join(f"  - {w}" for w in c["weaknesses"])
+    score = f"similarity: {c['similarity']:.2f}"
+    if c.get("rerank_score") is not None:
+        score += f", rerank: {c['rerank_score']:+.2f}"
     return (
-        f"### {c['name']}  (similarity: {c['similarity']:.2f}, "
-        f"complexity: {c['complexity_score']}/5)\n"
+        f"### {c['name']}  ({score}, complexity: {c['complexity_score']}/5)\n"
         f"Use case: {c['use_case']}\n"
         f"Strengths:\n{strengths_b}\n"
         f"Weaknesses:\n{weaknesses_b}\n"
@@ -49,4 +51,19 @@ def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -
     """
     template = load_prompt("explain")
     candidates_block = "\n".join(_format_candidate(c) for c in candidates)
-    return template.replace("{query}", query).replace("{candidates_block}", candidates_block)
+    # After reranking the list is no longer in similarity order, and the top
+    # entry can show a *lower* similarity than the one below it. Telling the
+    # model it is "ranked by semantic similarity" would invite it to undo the
+    # reranking, so state the actual basis.
+    reranked = any(c.get("rerank_score") is not None for c in candidates)
+    basis = (
+        "cross-encoder relevance; the similarity shown is the retrieval score "
+        "and is deliberately not the sort key"
+        if reranked
+        else "semantic similarity"
+    )
+    return (
+        template.replace("{query}", query)
+        .replace("{candidates_block}", candidates_block)
+        .replace("{ranking_basis}", basis)
+    )
