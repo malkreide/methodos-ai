@@ -1,11 +1,13 @@
 """Tool logic behind the MCP server, with no `mcp` dependency.
 
-Split from `mcp_server.py` on purpose. CI installs `".[dev]"` only, so anything
-that imports the `mcp` package cannot be exercised there — and this repo has
-already been bitten once by a path CI never installed (the OpenAI embedding
-provider, unverified until it was tested explicitly). Keeping the contract here
-means the part worth testing runs on every PR, and `mcp_server.py` stays thin
-enough that its correctness is visible by reading it.
+Split from `mcp_server.py` on purpose: nothing here imports the `mcp` package,
+so the contract is verifiable wherever the repo is checked out, whether or not
+the SDK is installed. CI does install the extra — mypy type-checks
+`mcp_server.py` and cannot see the SDK otherwise — but this repo has already
+been bitten once by a path CI never installed (the OpenAI embedding provider,
+unverified until it was tested explicitly), and the contract below is the last
+thing that should go dark if the install line changes again. `mcp_server.py`
+stays thin enough that its correctness is visible by reading it.
 
 The result models are the actual deliverable. A retrieval tool talking to a
 model has a failure mode a CLI does not: the caller cannot see what it was not

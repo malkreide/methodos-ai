@@ -1,7 +1,9 @@
 """Wiring checks for the MCP server itself.
 
-Skipped without the `mcp` extra, which means skipped in CI — the reason the
-contract lives in `mcp_tools` and is tested in `test_mcp_tools.py` instead.
+Skipped without the `mcp` extra. CI installs it, so these do run there — but
+`test_mcp_tools.py` carries the contract precisely so that it would survive the
+extra being dropped from the install.
+
 What is left here is what only the real server object can answer: that the
 tools are registered, that their schemas reached the protocol layer, and that
 they are declared read-only.

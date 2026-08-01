@@ -1,9 +1,15 @@
 """Contract tests for the MCP tool layer.
 
-These use fakes and never import `mcp`, so they run in CI on `".[dev]"`. That
-is the point of the mcp_tools / mcp_server split: the fields that stop a calling
-model from being silently misled are worth more than the decorator wiring, and
-only one of the two can be covered by the default install.
+These use fakes and never import `mcp`. That is the point of the mcp_tools /
+mcp_server split: the fields that stop a calling model from being silently
+misled do not depend on the SDK being installed, so they stay verifiable
+wherever the package is checked out.
+
+CI does install `".[dev,mcp]"` — mypy type-checks `mcp_server.py` and cannot
+see the SDK otherwise — so the wiring tests run there too. That makes the split
+belt and braces rather than the only line of defence, which is the right shape:
+the contract is the part that must not go dark if the extra is ever dropped
+from the install again.
 
 What is asserted here is the *contract*, not the ranking — ranking quality is
 `test_search.py`'s job with fakes and `test_integration.py`'s with real models.
