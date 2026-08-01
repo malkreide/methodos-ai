@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Force_Field_Analysis",
+  "name": "Force Field Analysis",
+  "category": "analysis",
+  "use_case": "A change-readiness technique that lists the forces pushing a proposed change forward and the forces holding it back, weights each one, and directs effort at weakening the restraints rather than adding more pressure. Best used when a change has stalled despite obvious benefits and repeated encouragement, because the reason it is stuck is almost always a restraining force nobody has named out loud.",
+  "strengths": [
+    "reframes a stalled change from adding pressure to removing friction",
+    "weighting stops the loudest force being treated as the strongest",
+    "restraining forces are often invisible until the exercise names them",
+    "quick, and needs no data beyond the people in the room"
+  ],
+  "weaknesses": [
+    "forces are estimated subjectively and rarely validated",
+    "a snapshot: the balance shifts as the change proceeds",
+    "says nothing about sequencing or who acts",
+    "encourages tidy symmetric lists that hide one dominant restraint"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 150
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Force-field_analysis",
+    "https://www.mindtools.com/ajm9l1e/force-field-analysis"
+  ]
+}

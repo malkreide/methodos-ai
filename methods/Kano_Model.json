@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Kano_Model",
+  "name": "Kano Model",
+  "category": "prioritization",
+  "use_case": "A survey-based classification of product attributes by how their presence or absence affects customer satisfaction, sorting them into must-be features whose absence causes anger, one-dimensional features where more is better, and delighters that please precisely because nobody expected them. Best used when deciding how much to invest in polish versus novelty, and when a team cannot tell which items are table stakes that earn no credit and which will actually differentiate.",
+  "strengths": [
+    "distinguishes features that earn credit from those that merely avoid anger",
+    "the paired functional and dysfunctional questions resist wishful answers",
+    "explains why heavy investment in must-be attributes moves no metric",
+    "tracks how delighters decay into expectations over time"
+  ],
+  "weaknesses": [
+    "requires a real survey with real customers, not a workshop guess",
+    "the questionnaire is easy to word badly and hard to interpret",
+    "classifies attributes but says nothing about cost or effort",
+    "categories drift as the market matures, so results need refreshing"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 300,
+    "max_minutes": 2400
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Kano_model",
+    "https://www.uxbooth.com/articles/the-kano-model/"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Six_Thinking_Hats",
+  "name": "Six Thinking Hats",
+  "category": "decision-making",
+  "use_case": "A meeting protocol in which everyone deliberately adopts the same mode of thinking at the same time — facts, feelings, caution, optimism, creativity, or process — rather than each person defending a fixed position. Best used when a discussion has polarised into advocates and critics, when the same sceptic is dismissed every time, or when a group needs to explore an idea properly before judging it.",
+  "strengths": [
+    "separates critique from generation so ideas are not killed on arrival",
+    "everyone criticises together, so the sceptic is not the designated villain",
+    "the feelings mode legitimises intuition that would otherwise stay unsaid",
+    "keeps meetings moving because everyone is doing the same thing at once"
+  ],
+  "weaknesses": [
+    "feels contrived and needs a facilitator willing to hold the frame",
+    "the metaphor is easily mocked in cultures that dislike ceremony",
+    "produces a rich discussion but no ranking or decision by itself",
+    "poor fit for a two-person conversation"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Six_Thinking_Hats",
+    "https://www.debonogroup.com/services/core-programs/six-thinking-hats/"
+  ]
+}

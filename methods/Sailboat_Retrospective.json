@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "Sailboat_Retrospective",
+  "name": "Sailboat Retrospective",
+  "category": "retrospective",
+  "use_case": "A visual retrospective built on a boat metaphor: wind pushing the team forward, anchors slowing it down, rocks ahead as risks, and an island as the shared goal. Best used when a team has grown tired of list-based retrospectives and stopped contributing, or when the discussion needs to hold goals, momentum, drag and upcoming risk in one picture rather than treating them as separate agenda items.",
+  "strengths": [
+    "the metaphor revives contribution in teams bored of list formats",
+    "risks ahead and drag behind appear in the same picture",
+    "the island keeps the conversation anchored to the shared goal",
+    "visual format draws in people who stay quiet in verbal rounds"
+  ],
+  "weaknesses": [
+    "the metaphor obscures rather than helps for some participants",
+    "drifts into decoration unless the facilitator forces concrete items",
+    "no built-in prioritization of anchors or rocks",
+    "needs a drawing surface, which makes it awkward for audio-only teams"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Retrospective",
+    "https://www.atlassian.com/team-playbook/plays/retrospective"
+  ]
+}

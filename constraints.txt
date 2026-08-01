@@ -52,7 +52,11 @@ httptools==0.8.0
 httpx==0.28.1
 huggingface_hub==1.26.0
 idna==3.18
-importlib_metadata==9.0.0
+# Capped by litellm, which requires importlib-metadata>=8.0.0,<9.0. A bump to
+# 9.0.0 was merged in #10 and made `pip install -c constraints.txt` unresolvable
+# for every branch. Leave this pin alone until litellm lifts its ceiling; a
+# Dependabot PR proposing 9.x will fail CI for the same reason.
+importlib_metadata==8.9.0
 importlib_resources==7.1.0
 iniconfig==2.3.0
 Jinja2==3.1.6
