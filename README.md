@@ -55,11 +55,43 @@ the right choice.
 3. `methodos ingest && methodos query "<your test problem>"`
 4. Open a PR. CI validates the JSON against `schemas/method_schema.json`.
 
+## Cross-encoder reranking (optional)
+
+Retrieval compares a query vector against document vectors that were embedded
+independently. A cross-encoder instead feeds the query and each candidate
+through one model together — much more accurate, far too slow to run over a
+whole corpus. So it runs on the shortlist only:
+
+```
+Chroma returns top_k × overfetch_factor  →  cross-encoder rescores  →  top_k
+```
+
+Off by default. Turn it on per query or in `.env`:
+
+```bash
+methodos query "..." --rerank
+# or
+echo 'METHODOS_RERANK_PROVIDER=cross-encoder' >> .env
+```
+
+Needs the `local` extra (it reuses sentence-transformers) and downloads
+`cross-encoder/ms-marco-MiniLM-L-6-v2` (~80MB) on first use. Costs roughly
+120 ms per query over a 12-candidate shortlist, plus a one-off model load.
+
+Measured against the 23-method catalog: all 23 pinned retrieval probes keep
+ranking correctly, and it additionally resolves problem statements that
+embedding-only retrieval cannot separate — for example *"internal strengths
+and weaknesses vs external opportunities and threats"*, which the embedding
+ranks 0.004 **behind** Porter's Five Forces and the reranker puts SWOT
+15.3 ahead of.
+
+Raise `METHODOS_OVERFETCH_FACTOR` to give the reranker a longer shortlist;
+cost grows linearly with it.
+
 ## Improvement potentials (planned)
 
 1. Online learning re-ranker informed by feedback ratings.
-2. Cross-encoder re-rank step before the LLM.
-3. JSONL → SQLite migration when feedback volume grows.
+2. JSONL → SQLite migration when feedback volume grows.
 4. Hybrid search (BM25 over name/category + semantic).
 5. Multilingual embeddings.
 6. MCP server exposing `methodos query` as a tool.

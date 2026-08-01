@@ -8,6 +8,8 @@ from methodos.providers.base import (
     EmbeddingProvider,
     LLMError,
     LLMProvider,
+    RerankError,
+    RerankProvider,
 )
 
 
@@ -31,11 +33,29 @@ def make_embedding(settings: Settings) -> EmbeddingProvider:
     raise ValueError(f"unknown embedding_provider: {settings.embedding_provider}")
 
 
+def make_reranker(settings: Settings) -> RerankProvider | None:
+    """Construct a reranker per settings, or None when reranking is off.
+
+    Returning None rather than a no-op provider keeps the "did we rerank?"
+    question answerable from the call site, which the CLI reports to the user.
+    """
+    if settings.rerank_provider == "none":
+        return None
+    if settings.rerank_provider == "cross-encoder":
+        from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
+
+        return CrossEncoderRerank(model_name=settings.rerank_model)
+    raise ValueError(f"unknown rerank_provider: {settings.rerank_provider}")
+
+
 __all__ = [
     "EmbeddingError",
     "EmbeddingProvider",
     "LLMError",
     "LLMProvider",
+    "RerankError",
+    "RerankProvider",
     "make_embedding",
     "make_llm",
+    "make_reranker",
 ]

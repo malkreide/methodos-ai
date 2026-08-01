@@ -25,7 +25,7 @@ from rich.table import Table
 
 from methodos import __version__
 from methodos.config import Settings
-from methodos.providers import make_embedding, make_llm
+from methodos.providers import make_embedding, make_llm, make_reranker
 
 if TYPE_CHECKING:
     from methodos.models import Method
@@ -56,6 +56,7 @@ def _version_callback(value: bool) -> None:
             f"methodos {__version__}\n"
             f"  model:     {s.model}\n"
             f"  embedding: {s.embedding_provider}:{s.embedding_model}\n"
+            f"  rerank:    {s.rerank_model if s.rerank_provider != 'none' else 'off'}\n"
             f"  chroma:    {s.chroma_path}"
         )
         raise typer.Exit()
@@ -122,10 +123,12 @@ def _complexity_dots(score: int) -> str:
 
 def _render_candidates(candidates: list[Candidate]) -> None:
     for i, c in enumerate(candidates, 1):
-        header = (
-            f"#{i}  {c.name}  (sim {c.similarity:.2f})  "
-            f"complexity {_complexity_dots(c.complexity_score)}"
-        )
+        score = f"sim {c.similarity:.2f}"
+        if c.rerank_score is not None:
+            # Both numbers, never one replacing the other: they are different
+            # scales, and seeing them disagree is the point of reranking.
+            score += f" · rerank {c.rerank_score:+.2f}"
+        header = f"#{i}  {c.name}  ({score})  complexity {_complexity_dots(c.complexity_score)}"
         body_lines = [
             "[bold]Strengths:[/] " + " · ".join(c.strengths[:3]),
             f"[bold]Duration:[/] {c.duration_min}–{c.duration_max} min",  # noqa: RUF001
@@ -141,19 +144,29 @@ def query(
     top_k: int | None = typer.Option(None, "--top-k", "-k", help="Number of methods to recommend"),
     no_llm: bool = typer.Option(False, "--no-llm", help="Skip LLM explanation"),
     model: str | None = typer.Option(None, "--model", help="Override LLM model string"),
+    rerank: bool | None = typer.Option(
+        None,
+        "--rerank/--no-rerank",
+        help="Cross-encoder rerank of the shortlist (default: METHODOS_RERANK_PROVIDER)",
+    ),
 ) -> None:
     """Recommend methods for a problem."""
-    from methodos.providers.base import EmbeddingError, LLMError
+    from methodos.providers.base import EmbeddingError, LLMError, RerankError
     from methodos.search import StaleIndexError, search
 
     settings = Settings()
     if model is not None:
         settings = settings.model_copy(update={"model": model})
+    if rerank is not None:
+        settings = settings.model_copy(
+            update={"rerank_provider": "cross-encoder" if rerank else "none"}
+        )
     if top_k is None:
         top_k = settings.top_k
 
     embedding = make_embedding(settings)
     llm = None if no_llm else make_llm(settings)
+    reranker = make_reranker(settings)
 
     try:
         result = search(
@@ -162,6 +175,8 @@ def query(
             llm=llm,
             chroma_path=settings.chroma_path,
             top_k=top_k,
+            reranker=reranker,
+            overfetch_factor=settings.overfetch_factor,
         )
     except StaleIndexError as e:
         console.print(f"[red]Stale index:[/] {e}")
@@ -169,6 +184,11 @@ def query(
     except EmbeddingError as e:
         # Same lazy-load story as in `ingest`: the backend is only touched here.
         console.print(f"[red]Embedding provider failed:[/] {e}")
+        raise typer.Exit(code=2) from e
+    except RerankError as e:
+        console.print(
+            f"[red]Reranker failed:[/] {e}\n[dim]Retry with --no-rerank to rank by embedding only.[/]"
+        )
         raise typer.Exit(code=2) from e
     except LLMError as e:
         console.print(

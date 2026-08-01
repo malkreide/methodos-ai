@@ -26,6 +26,18 @@ class Settings(BaseSettings):
     """For provider='local': sentence-transformers model name.
     For provider='openai': e.g. 'text-embedding-3-small'."""
 
+    rerank_provider: Literal["none", "cross-encoder"] = "none"
+    """Off by default: reranking pulls a second model down on first use, and the
+    embedding-only path stays the documented offline baseline."""
+
+    rerank_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    """Only consulted when rerank_provider != 'none'."""
+
     chroma_path: Path = Path("data/chroma")
     feedback_path: Path = Path("data/feedback.jsonl")
     top_k: int = 3
+
+    overfetch_factor: int = 2
+    """Chroma returns top_k * this, then the shortlist is truncated to top_k.
+    Raising it gives a reranker more to work with, at linear cost in rerank
+    time; without a reranker it changes nothing but the query size."""
