@@ -1,0 +1,22 @@
+version: 2
+
+updates:
+  # Keeps constraints.txt current. Without this, pinning would just freeze the
+  # project on old dependencies instead of controlling *when* it moves.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      # One PR per month for routine bumps; majors stay separate so a breaking
+      # release is reviewed on its own.
+      dev-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
