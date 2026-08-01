@@ -22,7 +22,12 @@ jobs:
           python -m pip install --upgrade pip
           # -c constraints.txt pins the environment so a dependency release
           # can't turn a green branch red on its own. See constraints.txt.
-          pip install -e ".[dev]" -c constraints.txt
+          # `mcp` is in here, not just `dev`, because mypy type-checks
+          # src/methodos/mcp_server.py and cannot see the SDK without it. It
+          # also un-skips tests/test_mcp_server.py. `local` stays out: torch is
+          # far too heavy for a lint job, which is why the MCP tool contract
+          # lives in mcp_tools.py with no `mcp` import at all.
+          pip install -e ".[dev,mcp]" -c constraints.txt
       - name: Ruff lint
         run: ruff check src tests scripts
       - name: Ruff format check
