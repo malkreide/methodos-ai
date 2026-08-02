@@ -10,23 +10,28 @@
 # so `pip install methodos` stays flexible for downstream users — the pins
 # apply to this repo's CI and contributors only.
 #
-#     pip install -e ".[dev]" -c constraints.txt
+#     pip install -e ".[dev,mcp]" -c constraints.txt
 #
-# Covers the `dev` extra on Python 3.11 and 3.12 (the CI matrix). The `local`
-# extra is deliberately not pinned: torch/sentence-transformers resolve
-# differently per platform and are not installed in CI.
+# Covers `dev` and `mcp` on Python 3.11 and 3.12 (the CI matrix). The rule is
+# simply what CI installs: `mcp` is pinned because CI type-checks and imports
+# it, `local` is not because torch/sentence-transformers resolve differently
+# per platform and never reach CI.
 #
 # Not pinned is not the same as ignored, though. `make install` installs
 # ".[dev,local]" against this file, so a pin here must not *contradict* the
 # local extra where the two share a transitive dependency — see `tokenizers`.
 #
 # To refresh (Dependabot also opens PRs for this file):
-#     python -m venv /tmp/pin && /tmp/pin/bin/pip install -e ".[dev]"
+#     python -m venv /tmp/pin && /tmp/pin/bin/pip install -e ".[dev,mcp]"
 #     /tmp/pin/bin/pip freeze --exclude-editable | sort
 # Re-run under both 3.11 and 3.12; add a marker for anything that differs.
-# Then check the result against the extra CI never installs, which is where a
-# freeze of ".[dev]" alone can silently produce an unresolvable file:
-#     pip install --dry-run -e ".[dev,local]" -c constraints.txt
+#
+# Do NOT paste that freeze in wholesale. It is produced without the `local`
+# extra, so it will happily propose a `tokenizers` that only the local extra
+# objects to — the exact regression #20 fixed. Diff it against this file,
+# reapply the commented pins below, and then prove the result still works for
+# the extra the freeze could not see:
+#     pip install --dry-run -e ".[dev,local,mcp]" -c constraints.txt
 
 aiohappyeyeballs==2.7.1
 aiohttp==3.14.3
@@ -39,10 +44,12 @@ attrs==26.1.0
 bcrypt==5.0.0
 build==1.5.0
 certifi==2026.7.22
+cffi==2.1.0
 charset-normalizer==3.4.9
 chromadb==1.5.9
 click==8.4.2
 coverage==7.15.2
+cryptography==50.0.0
 distro==1.9.0
 durationpy==0.10
 fastuuid==0.14.0
@@ -55,8 +62,10 @@ grpcio==1.83.0
 h11==0.16.0
 hf-xet==1.5.2
 httpcore==1.0.9
+httpcore2==2.9.1
 httptools==0.8.0
 httpx==0.28.1
+httpx2==2.9.1
 huggingface_hub==1.26.0
 idna==3.18
 # Capped by litellm, which requires importlib-metadata>=8.0.0,<9.0. A bump to
@@ -75,6 +84,8 @@ librt==0.13.0
 litellm==1.94.1
 markdown-it-py==4.2.0
 MarkupSafe==3.0.3
+mcp==2.0.0
+mcp-types==2.0.0
 mdurl==0.1.2
 mmh3==5.2.1
 multidict==6.7.1
@@ -99,16 +110,19 @@ pluggy==1.6.0
 propcache==0.5.2
 protobuf==7.35.1
 pybase64==1.4.3
+pycparser==3.0
 pydantic==2.13.4
 pydantic-settings==2.14.2
 pydantic_core==2.46.4
 Pygments==2.20.0
+PyJWT==2.13.0
 PyPika==0.51.1
 pyproject_hooks==1.2.0
 pytest==9.1.1
 pytest-cov==7.1.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
+python-multipart==0.0.32
 python-ulid==4.0.1
 PyYAML==6.0.3
 referencing==0.37.0
@@ -121,6 +135,8 @@ ruff==0.16.1
 shellingham==1.5.4
 six==1.17.0
 sniffio==1.3.1
+sse-starlette==3.4.6
+starlette==1.3.1
 tenacity==9.1.4
 tiktoken==0.13.0
 # Capped by transformers (pulled in by the `local` extra), which requires
@@ -134,9 +150,12 @@ tiktoken==0.13.0
 # *numpy* conflict — which is why this looked like a numpy problem for a while.
 # Leave this pin alone until transformers lifts its ceiling; a Dependabot PR
 # proposing 0.23.1 will break contributor setup without failing CI, because CI
-# installs ".[dev]" only.
+# installs ".[dev,mcp]" and neither of those extras caps tokenizers. A refresh
+# freeze will propose 0.23.1 every time for the same reason — it is not a
+# signal that the ceiling lifted.
 tokenizers==0.22.2
 tqdm==4.70.0
+truststore==0.10.4
 typer==0.27.0
 types-jsonschema==4.26.0.20260518
 typing-inspection==0.4.2

@@ -35,6 +35,13 @@ open ranges — the pins are for this repo, not for people installing methodos.
 Dependabot opens monthly PRs to move them; refresh instructions are in the
 file's header.
 
+Add `mcp` to the extras (`".[dev,local,mcp]"`) to work on the MCP server.
+Without it `tests/test_mcp_server.py` skips — but `tests/test_mcp_tools.py`,
+which holds the actual tool contract, runs either way, because it imports no
+`mcp` package at all. CI installs `".[dev,mcp]"` (mypy type-checks
+`mcp_server.py` and needs the SDK to do it), so both suites run there; the
+split exists so the contract would still be verified if that ever changed.
+
 ## Integration tests
 
 `make test` runs the offline suite only — tests marked `integration` are

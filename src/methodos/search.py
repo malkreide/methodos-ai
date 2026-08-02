@@ -115,6 +115,24 @@ def _rerank(query: str, candidates: list[Candidate], reranker: RerankProvider) -
     return sorted(rescored, key=lambda c: c.rerank_score or 0.0, reverse=True)
 
 
+def collection_size(
+    chroma_path: Path,
+    embedding: EmbeddingProvider,
+    *,
+    where: dict[str, Any] | None = None,
+) -> int:
+    """How many methods the index holds, optionally within a metadata filter.
+
+    Exists so a caller can report "3 of 23" rather than just handing back three
+    results: a consumer that only ever sees `top_k` entries has no way to tell a
+    small catalog from a truncated view of a large one.
+    """
+    coll = _open_collection(chroma_path, embedding)
+    if where is None:
+        return int(coll.count())
+    return len(coll.get(where=where, include=[])["ids"])
+
+
 def retrieve(
     *,
     query: str,
@@ -123,12 +141,18 @@ def retrieve(
     top_k: int,
     reranker: RerankProvider | None = None,
     overfetch_factor: int = 2,
+    where: dict[str, Any] | None = None,
 ) -> list[Candidate]:
     """Return up to top_k candidates, best first.
 
     Over-fetches `top_k * overfetch_factor` from Chroma so a reranker can
     promote something the embedding ranked just below the cut. Without a
     reranker the extra candidates are simply discarded, exactly as before.
+
+    `where` is handed to Chroma as a metadata filter, so the restriction applies
+    *before* the nearest-neighbour cut. Filtering the returned list instead
+    would quietly under-deliver — a top_k of 5 that happens to contain one
+    strategy method would look like the catalog holds one.
     """
     coll = _open_collection(chroma_path, embedding)
     q_vec = embedding.embed([query])[0]
@@ -137,6 +161,7 @@ def retrieve(
         query_embeddings=[q_vec],
         n_results=top_k * overfetch_factor,
         include=["metadatas", "documents", "distances"],
+        **({"where": where} if where else {}),
     )
     ids = raw["ids"][0]
     docs = raw["documents"][0]

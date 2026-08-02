@@ -97,13 +97,72 @@ factors 2, 3, 4 and 6 all score 23/23 on the pinned probes — while cost grows
 linearly (66 → 200 ms). It becomes worth raising as the catalog grows and the
 right answer starts landing further down the embedding ranking.
 
+## MCP server
+
+Exposes the catalog to an MCP client (Claude Desktop, Claude Code, any other)
+as three read-only tools:
+
+| Tool | What it does |
+|---|---|
+| `recommend_methods` | Semantic search over the indexed catalog |
+| `list_methods` | The complete catalog — no search, no truncation |
+| `get_method` | One method's full Markdown documentation |
+
+```bash
+pip install -e ".[mcp,local]"
+methodos ingest          # the server reads the index, it does not build one
+```
+
+```jsonc
+// claude_desktop_config.json
+{
+  "mcpServers": {
+    "methodos": {
+      "command": "methodos-mcp",
+      "env": { "METHODOS_METHODS_DIR": "/abs/path/to/methods",
+               "METHODOS_CHROMA_PATH": "/abs/path/to/data/chroma" }
+    }
+  }
+}
+```
+
+Both paths are worth setting explicitly: a client launches the server from an
+arbitrary working directory, where the relative defaults resolve to nothing.
+
+**Retrieval only — the server never calls an LLM.** `methodos query` runs a
+completion to explain its ranking, but here the caller already *is* a model
+holding the user's full context. A second model explaining the ranking to the
+first would cost an extra call and an API key to produce a worse explanation.
+
+**`ingest` is deliberately not a tool.** It mutates state and can disturb a
+running instance; it stays a CLI command.
+
+### What the results tell you
+
+A vector search answers *every* query with its nearest neighbours and never
+returns an empty list — so "no results" never appears, and a bad question comes
+back looking exactly like a good one. Three fields exist so the calling model
+can tell the difference rather than guess:
+
+- **`returned` / `total_in_scope` / `total_indexed`** — a caller shown 3 methods
+  cannot otherwise tell a 3-method catalog from a truncated view of 23.
+- **`ranking_basis`** — `cross-encoder` means `similarity` is *not* the sort
+  key and a lower-similarity method may rank above a higher one on purpose.
+  Without the `local` extra the reranker degrades to nothing, and this field is
+  how the caller learns the order changed meaning.
+- **`guidance`** — set when the best match falls below 0.25, with a concrete
+  next step. That floor is measured, not guessed: the weakest of the 23 pinned
+  integration probes scores 0.321, while questions the catalog genuinely does
+  not cover reach 0.127 at most (*"how do I fix my bicycle chain"* → Five Whys
+  at 0.106). Weak matches are still returned — `guidance` is a caveat, never a
+  filter, because an empty list is what a model fills in from memory.
+
 ## Improvement potentials (planned)
 
 1. Online learning re-ranker informed by feedback ratings.
 2. JSONL → SQLite migration when feedback volume grows.
 4. Hybrid search (BM25 over name/category + semantic).
 5. Multilingual embeddings.
-6. MCP server exposing `methodos query` as a tool.
 
 ## License
 
