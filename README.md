@@ -164,6 +164,19 @@ can tell the difference rather than guess:
 4. Hybrid search (BM25 over name/category + semantic).
 5. Multilingual embeddings.
 
+## Known gaps
+
+**The LLM explain path has never been verified against a live backend** ([#22]).
+The `METHODOS_INTEGRATION_LLM=1` tests exist and are opt-in, but they were
+written where no model was reachable — they have never passed, only failed at
+the litellm call with everything upstream holding. That covers both whether the
+call works at all and, more interestingly, whether a real model honours the
+`ranking_basis` sentence instead of re-sorting the candidates by similarity.
+`scripts/verify_explain.py` is the tool for answering the second one against
+whatever model you deploy.
+
+[#22]: https://github.com/malkreide/methodos-ai/issues/22
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
