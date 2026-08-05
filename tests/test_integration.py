@@ -540,6 +540,10 @@ def test_real_llm_leads_with_the_reranked_top_not_the_most_similar(
     after the reranker deliberately demoted it.
 
     Non-deterministic wording, so nothing is asserted about content.
+
+    NOTE: this has never passed. It was written where no backend was reachable,
+    so it has only ever failed at the litellm call with retrieval and the
+    precondition below both holding. First green run is real news — see #22.
     """
     # Same query as scripts/verify_explain.py, and for the same reason: at
     # top_k=3 the reranker puts SWOT (sim 0.457) above both Porter's (0.469)

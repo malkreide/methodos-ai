@@ -55,8 +55,30 @@ METHODOS_INTEGRATION_LLM=1 pytest -m integration   # also hits a real LLM
 ```
 
 Without the `local` extra they skip rather than fail, so CI (which installs
-only `[dev]`) still collects them as a parse check. Run them after changing a
-method's `use_case`, the ingest pipeline, or the retrieval math.
+`[dev,mcp]` — not `local`, torch is too heavy for a lint job) still collects
+them as a parse check. Run them after changing a method's `use_case`, the
+ingest pipeline, or the retrieval math.
+
+### The LLM half has never actually run — see #22
+
+`METHODOS_INTEGRATION_LLM=1` is opt-in for a reason beyond cost. Both tests
+behind it were written in an environment with no reachable model, so they have
+never passed — only failed at the litellm call, with retrieval and the
+rerank/similarity precondition holding right up to it.
+
+Treat a first green run as new information rather than a formality. The order
+assertion encodes a claim about *model behaviour* — that a model introduces
+the reranked top before the candidate the embedding preferred — and that is a
+property of the model you configure, not of this repo. It needs re-checking
+whenever the model changes, which is what `scripts/verify_explain.py` is for:
+
+```bash
+python scripts/verify_explain.py --model ollama/llama3.1:8b --model openai/gpt-4o-mini
+```
+
+It prints the ranking beside each model's explanation instead of asserting, so
+you can judge the prose. Nothing here asserts wording; it is not reliably
+assertable.
 
 ## Pre-commit checks
 
