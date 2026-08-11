@@ -1,0 +1,22 @@
+# Keep the build context small and, more importantly, keep secrets and local
+# state out of it: .env and data/ would otherwise be copied into a layer.
+.git/
+.github/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+.env
+data/
+docs/
+tests/
+# scripts/ is deliberately NOT ignored: verify_explain.py is the documented way
+# to check whether a deployed model honours the reranked order, which is a
+# question you can only ask of a running deployment.
