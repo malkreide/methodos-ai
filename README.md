@@ -73,8 +73,12 @@ cp .env.example .env        # set ANTHROPIC_API_KEY
 docker compose up --build   # http://localhost:8000
 ```
 
-The image ships the sentence-transformers weights, so a started container needs
-no egress except to Anthropic. The Chroma index is *not* shipped: `methods/` is
+The image ships the sentence-transformers weights and runs with
+`HF_HUB_OFFLINE=1`, so a started container needs no egress except to Anthropic.
+(Without that flag it would still HEAD huggingface.co on every model load and
+fail to start when that request fails — set `HF_HUB_OFFLINE=0` only when you
+have overridden `METHODOS_EMBEDDING_MODEL` or `METHODOS_RERANK_MODEL` to a model
+that is not baked in.) The Chroma index is *not* shipped: `methods/` is
 bind-mounted and the entrypoint re-ingests on every start, so editing a method
 and running `docker compose restart methodos` is the whole edit loop. Feedback
 survives restarts in a named volume.

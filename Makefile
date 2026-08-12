@@ -29,8 +29,11 @@ demo: ingest
 serve:
 	uvicorn methodos.api:app --host 127.0.0.1 --port 8000 --reload
 
+# `docker compose build` would refuse without ANTHROPIC_API_KEY — compose
+# interpolates the whole file before it knows you only asked to build, and the
+# service definition requires the key. Building needs no key, so build directly.
 docker-build:
-	docker compose build
+	docker build -t methodos-ai:local .
 
 docker-up:
 	docker compose up
