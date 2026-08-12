@@ -46,6 +46,18 @@ CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')"
 
 FROM python:3.12-slim
 
+# Without this the container does not start offline, despite shipping the
+# weights: sentence-transformers HEADs huggingface.co on every model load to
+# check for a newer revision, and a failure there aborts the entrypoint's ingest
+# before the server is ever reached. Measured, not assumed — the first
+# containerised run died on exactly that request.
+#
+# The cost is that overriding METHODOS_EMBEDDING_MODEL or METHODOS_RERANK_MODEL
+# to a model that is not baked in now fails fast instead of downloading it.
+# That is the right default for a deployment; pass `-e HF_HUB_OFFLINE=0` when
+# you do want a different model.
+ENV HF_HUB_OFFLINE=1
+
 ENV PATH="/opt/venv/bin:$PATH" \
     HF_HOME=/opt/hf \
     PYTHONUNBUFFERED=1 \
