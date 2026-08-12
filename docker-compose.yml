@@ -1,0 +1,52 @@
+# Methodos AI, served over HTTP with Anthropic as the explain-step LLM.
+#
+#     cp .env.example .env      # put your ANTHROPIC_API_KEY in it
+#     docker compose up --build # http://localhost:8000
+#
+# Compose reads .env from this directory for the substitutions below, so the
+# same file configures the container and a local `pip install -e .` checkout.
+
+services:
+  methodos:
+    build: .
+    image: methodos-ai:local
+    ports:
+      - "${METHODOS_PORT:-8000}:8000"
+    environment:
+      # `:?` fails the up with this message rather than starting a server that
+      # ranks fine and then errors on every explanation.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?set ANTHROPIC_API_KEY (cp .env.example .env)}
+      METHODOS_MODEL: ${METHODOS_MODEL:-anthropic/claude-opus-5}
+      METHODOS_TOP_K: ${METHODOS_TOP_K:-3}
+      METHODOS_RERANK_PROVIDER: ${METHODOS_RERANK_PROVIDER:-cross-encoder}
+      METHODOS_OVERFETCH_FACTOR: ${METHODOS_OVERFETCH_FACTOR:-2}
+    volumes:
+      # Read-only and bind-mounted: edit a method on the host, `docker compose
+      # restart methodos`, and the entrypoint re-ingests it. Writes stay the
+      # image's business.
+      - ./methods:/app/methods:ro
+      # The index is rewritten on every start; feedback.jsonl is what actually
+      # needs to survive, and it is why this is a named volume rather than tmpfs.
+      - methodos-data:/data
+    restart: unless-stopped
+
+  # One-off CLI in the same image and against the same data:
+  #     docker compose run --rm cli query "our release keeps slipping" --no-llm
+  #     docker compose run --rm cli stats
+  # Skips ingest on purpose — the server owns the index while it is running.
+  cli:
+    build: .
+    image: methodos-ai:local
+    profiles: ["cli"]
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      METHODOS_MODEL: ${METHODOS_MODEL:-anthropic/claude-opus-5}
+      METHODOS_SKIP_INGEST: "1"
+    volumes:
+      - ./methods:/app/methods:ro
+      - methodos-data:/data
+    entrypoint: ["/usr/local/bin/entrypoint.sh", "methodos"]
+    command: ["--help"]
+
+volumes:
+  methodos-data:

@@ -11,6 +11,10 @@ problem stated in natural language.
 - **`schemas/method_schema.json`** — generated from a Pydantic model; CI
   enforces freshness.
 - **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`.
+- **HTTP API + browser console** — `docker compose up`, then ask, read and rate
+  at `http://localhost:8000`. See [Deploy](#deploy-http--docker).
+- **MCP server** — the catalog as three read-only tools for Claude Desktop or
+  any other MCP client.
 - **Provider-neutral** — Anthropic, OpenAI, Google, Mistral, Ollama, etc., via
   one `LLMProvider` Protocol (litellm-backed).
 
@@ -23,8 +27,8 @@ cd methodos-ai
 python -m venv .venv && source .venv/bin/activate   # or .venv\Scripts\activate
 pip install -e ".[dev,local]"
 
-# 2. (Optional) pick a cloud LLM, e.g. Anthropic Haiku
-echo 'METHODOS_MODEL=anthropic/claude-3-5-haiku-20241022' > .env
+# 2. (Optional) pick a cloud LLM, e.g. Anthropic
+echo 'METHODOS_MODEL=anthropic/claude-opus-5' > .env
 echo 'ANTHROPIC_API_KEY=sk-ant-...' >> .env
 
 # 3. Build the index
@@ -41,10 +45,73 @@ rerank step on the shortlist. One env var
 
 ## Recommended cloud LLM
 
-We recommend Anthropic's Haiku family for the explanation step — fast, cheap,
-and good at structured comparisons. Set `METHODOS_MODEL=anthropic/<current haiku>`
-and `ANTHROPIC_API_KEY=...`. As of this writing, `claude-3-5-haiku-20241022` is
-the right choice.
+Anthropic for the explanation step: set `METHODOS_MODEL` and `ANTHROPIC_API_KEY`.
+
+| Model | When |
+|---|---|
+| `anthropic/claude-opus-5` | Default. Best at the comparison itself — weighing three methods against one problem and against each other. |
+| `anthropic/claude-haiku-4-5` | Cheapest and fastest, at some cost in the quality of the prose. Worth it for high query volume. |
+
+Only the explain step is affected. Retrieval, ranking and the MCP server never
+call an LLM, so the model choice cannot change which methods come back — only
+how the ranking is described.
+
+> Earlier revisions of this README recommended `claude-3-5-haiku-20241022`.
+> That model was retired in February 2026 and now returns 404; the ids above
+> replace it.
+
+**Embeddings are a separate question.** Anthropic has no embedding endpoint, so
+a cloud LLM does not remove the local sentence-transformers dependency — the
+`local` extra is still what powers retrieval and reranking. Dropping it means
+switching `METHODOS_EMBEDDING_PROVIDER=openai`, which trades one local model for
+a second API key.
+
+## Deploy (HTTP + Docker)
+
+```bash
+cp .env.example .env        # set ANTHROPIC_API_KEY
+docker compose up --build   # http://localhost:8000
+```
+
+The image ships the sentence-transformers weights, so a started container needs
+no egress except to Anthropic. The Chroma index is *not* shipped: `methods/` is
+bind-mounted and the entrypoint re-ingests on every start, so editing a method
+and running `docker compose restart methodos` is the whole edit loop. Feedback
+survives restarts in a named volume.
+
+| Endpoint | |
+|---|---|
+| `GET /` | Browser console — ask, read the explanation, rate a method |
+| `GET /docs` | OpenAPI, with every field documented |
+| `POST /query` | `{problem, top_k, category, explain, rerank}` → matches + explanation + `query_id` |
+| `GET /health` | Config, provider names, index size. No LLM call — backs the container health check |
+| `POST /llm/check` | One real completion. **This is the yes/no on whether your key and model work.** |
+| `GET /methods`, `GET /methods/{id}` | The catalog and one method's full Markdown |
+| `POST /feedback`, `GET /stats` | The same JSONL loop the CLI writes |
+
+`/query` returns the MCP server's payload — `ranking_basis`, `guidance`,
+`total_in_scope` — plus the explanation. It carries the same meaning here, and
+[What the results tell you](#what-the-results-tell-you) applies unchanged.
+
+**A failing LLM does not fail a query.** Retrieval and explanation are
+independent, so a rejected key returns HTTP 200 with the matches intact and the
+provider's error in `explanation_error` — hiding a working ranking behind an LLM
+outage would be the worse failure. `POST /llm/check` is the endpoint that fails
+loudly, and `"explain": false` is the API's `--no-llm`.
+
+Without Docker:
+
+```bash
+pip install -e ".[dev,local,api]"
+methodos ingest && make serve      # the server reads the index, it does not build one
+```
+
+One-off CLI against the same data as a running server:
+
+```bash
+docker compose run --rm cli query "our release keeps slipping" --no-llm
+docker compose run --rm cli stats
+```
 
 ## Add a method (the most common contribution)
 
@@ -174,6 +241,19 @@ call works at all and, more interestingly, whether a real model honours the
 `ranking_basis` sentence instead of re-sorting the candidates by similarity.
 `scripts/verify_explain.py` is the tool for answering the second one against
 whatever model you deploy.
+
+The HTTP deployment does not close this gap, but it makes it cheap to close,
+in that order:
+
+```bash
+docker compose up -d
+curl -sX POST localhost:8000/llm/check   # does the key/model work at all?
+docker compose run --rm --entrypoint python cli scripts/verify_explain.py
+```
+
+The first is a yes/no. The second prints the reranked order next to the model's
+prose and a verdict line, for a human to judge — there is no threshold at which
+an explanation is "correct", which is why it is a script and not a test.
 
 [#22]: https://github.com/malkreide/methodos-ai/issues/22
 

@@ -168,7 +168,7 @@ def load_catalog(methods_dir: Path) -> list[Method]:
     )
 
 
-def recommend_methods(
+def recommend_with_candidates(
     *,
     problem: str,
     embedding: EmbeddingProvider,
@@ -177,8 +177,15 @@ def recommend_methods(
     category: str | None = None,
     reranker: RerankProvider | None = None,
     overfetch_factor: int = 2,
-) -> RecommendResult:
-    """Semantic search over the indexed catalog, with the narrowings reported."""
+) -> tuple[RecommendResult, list[Candidate]]:
+    """`recommend_methods`, plus the raw candidates it was built from.
+
+    The HTTP API needs both: the result for its payload, and the candidates
+    again to feed `search.explain`, which takes Candidates rather than the
+    serialisable MethodMatch. Returning the pair keeps the guidance and
+    ranking_basis rules below as the single implementation — the alternative
+    was a second retrieval in the API that would drift from this one.
+    """
     where = {"category": category} if category else None
     candidates = retrieve(
         query=problem,
@@ -209,7 +216,7 @@ def recommend_methods(
             total=total_indexed,
         )
 
-    return RecommendResult(
+    result = RecommendResult(
         problem=problem,
         returned=len(candidates),
         total_in_scope=total_in_scope,
@@ -226,6 +233,30 @@ def recommend_methods(
         matches=[_to_match(c) for c in candidates],
         guidance=guidance,
     )
+    return result, candidates
+
+
+def recommend_methods(
+    *,
+    problem: str,
+    embedding: EmbeddingProvider,
+    chroma_path: Path,
+    top_k: int = 5,
+    category: str | None = None,
+    reranker: RerankProvider | None = None,
+    overfetch_factor: int = 2,
+) -> RecommendResult:
+    """Semantic search over the indexed catalog, with the narrowings reported."""
+    result, _ = recommend_with_candidates(
+        problem=problem,
+        embedding=embedding,
+        chroma_path=chroma_path,
+        top_k=top_k,
+        category=category,
+        reranker=reranker,
+        overfetch_factor=overfetch_factor,
+    )
+    return result
 
 
 def list_methods(*, methods_dir: Path, category: str | None = None) -> CatalogResult:

@@ -24,7 +24,7 @@ imports break the offline-by-default guarantee.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev,local]" -c constraints.txt
+pip install -e ".[dev,local,api]" -c constraints.txt   # == make install
 make test
 make lint
 ```
@@ -35,12 +35,31 @@ open ranges — the pins are for this repo, not for people installing methodos.
 Dependabot opens monthly PRs to move them; refresh instructions are in the
 file's header.
 
-Add `mcp` to the extras (`".[dev,local,mcp]"`) to work on the MCP server.
+Add `mcp` to the extras (`".[dev,local,mcp,api]"`) to work on the MCP server.
 Without it `tests/test_mcp_server.py` skips — but `tests/test_mcp_tools.py`,
 which holds the actual tool contract, runs either way, because it imports no
-`mcp` package at all. CI installs `".[dev,mcp]"` (mypy type-checks
-`mcp_server.py` and needs the SDK to do it), so both suites run there; the
-split exists so the contract would still be verified if that ever changed.
+`mcp` package at all. CI installs `".[dev,mcp,api]"` (mypy type-checks
+`mcp_server.py` and `api.py` and needs both to do it), so all three suites run
+there; the split exists so the contract would still be verified if that ever
+changed.
+
+`api` works the same way: without it `tests/test_api.py` skips. The HTTP layer
+is thin on purpose — everything it reports about a ranking comes from
+`mcp_tools.recommend_with_candidates`, so the fields it returns are covered by
+`test_mcp_tools.py` whether or not fastapi is installed.
+
+## Running the deployment
+
+```bash
+make ingest && make serve          # http://127.0.0.1:8000, reload on save
+make docker-build && make docker-up
+```
+
+The container re-ingests on every start (Chroma is a derived artifact), so a
+method edited on the host is live after `docker compose restart methodos`. If
+you change anything a running server reads, remember the one-off CLI service
+skips ingest on purpose — two processes writing one Chroma directory is how you
+corrupt it.
 
 ## Integration tests
 

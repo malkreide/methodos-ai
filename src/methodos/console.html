@@ -1,0 +1,250 @@
+<!doctype html>
+<!--
+  Test console for the Methodos HTTP API.
+
+  Deliberately one self-contained file with no build step and no external
+  requests: it ships inside the Python package, is served from `/`, and has to
+  work in a container with no egress. Everything it does is a fetch against an
+  endpoint documented at /docs — it holds no logic of its own about ranking,
+  and the raw JSON stays one click away so the page can never be mistaken for
+  the API's actual contract.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodos AI</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1c1b19; --muted: #6b6a66; --line: #e2dfd9;
+    --card: #ffffff; --accent: #7a5c3e; --bad: #a3341f; --good: #3d6b45;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614; --fg: #ece9e4; --muted: #9c9890; --line: #2f2d29;
+      --card: #1f1e1b; --accent: #c69b6d; --bad: #e0866f; --good: #86b28f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1.25rem 4rem; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 52rem; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 1.5rem; font-size: .9rem; }
+  .sub a { color: var(--accent); }
+  fieldset { border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin: 0 0 1rem; background: var(--card); }
+  legend { padding: 0 .4rem; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+  textarea, input, select {
+    width: 100%; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--bg); color: var(--fg); font: inherit;
+  }
+  textarea { min-height: 4.5rem; resize: vertical; }
+  .row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: end; margin-top: .75rem; }
+  .row > label { flex: 1 1 8rem; font-size: .8rem; color: var(--muted); }
+  .checks { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: .75rem; font-size: .85rem; }
+  .checks label { display: flex; gap: .4rem; align-items: center; color: var(--fg); }
+  .checks input { width: auto; }
+  button {
+    padding: .6rem 1.1rem; border: 1px solid var(--accent); border-radius: 7px;
+    background: var(--accent); color: var(--bg); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  button.ghost { background: transparent; color: var(--accent); font-weight: 500; }
+  button:disabled { opacity: .55; cursor: progress; }
+  #status { font-size: .82rem; color: var(--muted); margin: 0 0 1.25rem; }
+  #status .warn { color: var(--bad); }
+  .card { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px;
+          padding: .85rem 1rem; margin: 0 0 .75rem; background: var(--card); }
+  .card h3 { margin: 0 0 .2rem; font-size: 1rem; }
+  .meta { color: var(--muted); font-size: .8rem; margin-bottom: .5rem; }
+  .meta code { background: transparent; }
+  ul { margin: .3rem 0; padding-left: 1.1rem; }
+  .rate { display: flex; gap: .35rem; align-items: center; margin-top: .6rem; font-size: .8rem; color: var(--muted); }
+  .rate button { padding: .15rem .5rem; font-size: .8rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .note { border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: var(--card); }
+  .note.err { border-color: var(--bad); color: var(--bad); }
+  .note.warn { border-color: var(--accent); }
+  pre { overflow-x: auto; background: var(--card); border: 1px solid var(--line);
+        border-radius: 8px; padding: .8rem; font-size: .8rem; }
+  details { margin-top: 1rem; }
+  summary { cursor: pointer; color: var(--muted); font-size: .85rem; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.75rem 0 .6rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Methodos AI</h1>
+  <p class="sub">Which management method fits this problem? &middot;
+    <a href="/docs">OpenAPI</a> &middot; <a href="/methods">catalog</a></p>
+
+  <p id="status">checking…</p>
+
+  <form id="form">
+    <fieldset>
+      <legend>Problem</legend>
+      <textarea id="problem" required minlength="3"
+        placeholder="Describe the decision or the symptom — not a method. e.g. tickets take six weeks end to end but the actual work is only a few hours"></textarea>
+      <div class="row">
+        <label>Results
+          <input type="number" id="top_k" value="3" min="1" max="25">
+        </label>
+        <label>Category
+          <select id="category"><option value="">all</option></select>
+        </label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="explain" checked> LLM explanation</label>
+        <label><input type="checkbox" id="rerank" checked> cross-encoder rerank</label>
+        <button type="submit" id="go">Ask</button>
+        <button type="button" class="ghost" id="llmcheck">Test LLM connection</button>
+      </div>
+    </fieldset>
+  </form>
+
+  <div id="out"></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let lastQueryId = null;
+
+async function api(path, opts) {
+  const res = await fetch(path, opts);
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `${res.status} ${res.statusText}`);
+  return body;
+}
+
+async function refreshStatus() {
+  try {
+    const h = await api('/health');
+    const bits = [
+      `v${esc(h.version)}`,
+      `model <b>${esc(h.model)}</b>`,
+      `embedding ${esc(h.embedding)}`,
+      `rerank ${h.reranker ? esc(h.reranker) : 'off'}`,
+      h.index_error ? `<span class="warn">index: ${esc(h.index_error)}</span>`
+                    : `${h.indexed_methods} methods indexed`,
+    ];
+    $('status').innerHTML = bits.join(' &middot; ');
+  } catch (e) {
+    $('status').innerHTML = `<span class="warn">/health failed: ${esc(e.message)}</span>`;
+  }
+}
+
+async function loadCategories() {
+  try {
+    const c = await api('/methods');
+    for (const name of c.categories) {
+      const o = document.createElement('option');
+      o.value = o.textContent = name;
+      $('category').appendChild(o);
+    }
+  } catch { /* the form still works without the filter */ }
+}
+
+function renderMatch(m, i) {
+  const dots = '&#9679;'.repeat(m.complexity_score) + '&#9675;'.repeat(5 - m.complexity_score);
+  const score = m.rerank_score === null || m.rerank_score === undefined
+    ? `sim ${m.similarity.toFixed(3)}`
+    : `sim ${m.similarity.toFixed(3)} &middot; rerank ${m.rerank_score >= 0 ? '+' : ''}${m.rerank_score.toFixed(2)}`;
+  return `<div class="card">
+    <h3>#${i + 1} ${esc(m.name)}</h3>
+    <div class="meta">${score} &middot; complexity ${dots} &middot; ${esc(m.category)}
+      &middot; ${m.duration_min}&ndash;${m.duration_max} min &middot; <code>${esc(m.id)}</code></div>
+    <div>${esc(m.use_case)}</div>
+    <ul>${m.strengths.slice(0, 3).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
+    <div class="rate" data-id="${esc(m.id)}">Did it help?
+      ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-rating="${n}">${n}</button>`).join('')}
+    </div>
+  </div>`;
+}
+
+function render(data) {
+  const parts = [];
+
+  if (data.guidance) parts.push(`<div class="note warn">${esc(data.guidance)}</div>`);
+
+  parts.push(`<h2>${data.returned} of ${data.total_in_scope} in scope
+    (${data.total_indexed} indexed) &middot; ordered by ${esc(data.ranking_basis)}</h2>`);
+  parts.push(data.matches.map(renderMatch).join(''));
+
+  if (data.explanation_error) {
+    parts.push(`<h2>Explanation</h2><div class="note err">
+      LLM step failed &mdash; the ranking above is unaffected.<br>${esc(data.explanation_error)}</div>`);
+  } else if (data.explanation) {
+    parts.push(`<h2>Explanation &middot; ${esc(data.explanation_model || '')}</h2>
+      <div class="note">${esc(data.explanation).replace(/\n/g, '<br>')}</div>`);
+  }
+
+  parts.push(`<details><summary>Raw JSON</summary><pre>${esc(JSON.stringify(data, null, 2))}</pre></details>`);
+  $('out').innerHTML = parts.join('');
+}
+
+$('form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  $('go').disabled = true;
+  $('out').innerHTML = '<p class="sub">thinking…</p>';
+  try {
+    const data = await api('/query', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        problem: $('problem').value,
+        top_k: Number($('top_k').value),
+        category: $('category').value || null,
+        explain: $('explain').checked,
+        rerank: $('rerank').checked,
+      }),
+    });
+    lastQueryId = data.query_id;
+    render(data);
+  } catch (e) {
+    $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
+  } finally {
+    $('go').disabled = false;
+  }
+});
+
+$('llmcheck').addEventListener('click', async () => {
+  $('llmcheck').disabled = true;
+  $('out').innerHTML = '<p class="sub">calling the model…</p>';
+  try {
+    const r = await api('/llm/check', { method: 'POST' });
+    $('out').innerHTML = `<div class="note"><b>${esc(r.model)}</b> answered
+      &ldquo;${esc(r.reply)}&rdquo; in ${r.latency_ms} ms.</div>`;
+  } catch (e) {
+    $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
+  } finally {
+    $('llmcheck').disabled = false;
+  }
+});
+
+// One delegated listener: the rating buttons are re-created on every query.
+$('out').addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-rating]');
+  if (!btn) return;
+  const row = btn.closest('.rate');
+  try {
+    await api('/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        method_id: row.dataset.id,
+        rating: Number(btn.dataset.rating),
+        query_id: lastQueryId,
+      }),
+    });
+    row.innerHTML = `recorded ${esc(btn.dataset.rating)}/5 &middot; see <a href="/stats">/stats</a>`;
+  } catch (e) {
+    row.innerHTML = `<span style="color:var(--bad)">${esc(e.message)}</span>`;
+  }
+});
+
+refreshStatus();
+loadCategories();
+</script>
+</body>
+</html>

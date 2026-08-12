@@ -13,6 +13,8 @@ make lint       # ruff + mypy
 make ingest     # rebuild local Chroma from /methods
 make schema     # regenerate schemas/method_schema.json from Pydantic
 make demo       # ingest + a sample query, end-to-end smoke
+make serve      # HTTP API + browser console on :8000 (needs `make ingest` first)
+make docker-up  # the same thing containerised, ingest included
 ```
 
 On Windows without `make`: run the inner commands directly (`pytest`, `ruff check src tests scripts`, etc.).
@@ -42,6 +44,17 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
 3. Always-rebuild ingest. Chroma is a derived artifact.
 4. Determinism in tests. Fakes, not mocks.
 5. JSONL feedback is the placeholder. Don't pre-build a SQLite migration.
+
+## Surfaces, and what each one may do
+| | LLM call? | Why |
+|---|---|---|
+| CLI `query` | yes | Nothing else would write the explanation. |
+| HTTP `/query` | yes | Same — plus it is the surface that exists to exercise the explain path. |
+| MCP server | **never** | The caller already is a model with the user's context. |
+
+`api.py` and `mcp_server.py` are both thin translators over `mcp_tools`. Ranking
+decisions — `guidance`, `ranking_basis`, the scope totals — belong in
+`mcp_tools.recommend_with_candidates` so the two surfaces cannot drift apart.
 
 ## Things to leave alone
 - The math comment block in `ingest.py` / `search.py` (spec requirement).
