@@ -134,7 +134,7 @@ requests==2.34.2
 requests-oauthlib==2.0.0
 rich==15.0.0
 rpds-py==2026.6.3
-ruff==0.16.1
+ruff==0.16.8
 shellingham==1.5.4
 six==1.17.0
 sniffio==1.3.1
