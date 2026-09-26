@@ -14,6 +14,14 @@ updates:
       dev-dependencies:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    ignore:
+      # transformers (the `local` extra) caps tokenizers<=0.23.0, and 0.23.0
+      # never shipped as a final — see the note above the pin in
+      # constraints.txt. CI never installs the `local` extra and stays green,
+      # so without this rule every monthly run proposes 0.23.x and breaks
+      # `make install` silently. Remove it once transformers lifts the ceiling.
+      - dependency-name: "tokenizers"
+        versions: [">=0.23"]
 
   - package-ecosystem: github-actions
     directory: "/"
