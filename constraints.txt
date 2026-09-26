@@ -153,9 +153,10 @@ tiktoken==0.13.0
 # *numpy* conflict — which is why this looked like a numpy problem for a while.
 # Leave this pin alone until transformers lifts its ceiling; a Dependabot PR
 # proposing 0.23.1 will break contributor setup without failing CI, because CI
-# installs ".[dev,mcp]" and neither of those extras caps tokenizers. A refresh
-# freeze will propose 0.23.1 every time for the same reason — it is not a
-# signal that the ceiling lifted.
+# installs ".[dev,mcp]" and neither of those extras caps tokenizers. That is
+# why .github/dependabot.yml ignores tokenizers>=0.23 — drop that rule together
+# with this pin. A refresh freeze will propose 0.23.1 every time for the same
+# reason — it is not a signal that the ceiling lifted.
 tokenizers==0.22.2
 tqdm==4.70.0
 truststore==0.10.4
