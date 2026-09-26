@@ -56,7 +56,7 @@ durationpy==0.10
 # independently. fastapi is not in the base install — see the `api` extra.
 fastapi==0.141.1
 fastuuid==0.14.0
-filelock==3.32.2
+filelock==4.0.1
 flatbuffers==25.12.19
 frozenlist==1.8.0
 fsspec==2026.7.0
