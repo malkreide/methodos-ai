@@ -13,7 +13,7 @@
   "weaknesses": [
     "everything drifts into Must have unless someone enforces a cap",
     "gives no ordering inside a category, so it can't sequence the work",
-    "no notion of cost or effort, only of desirability",
+    "items are bucketed by desirability; effort enters only through the cap on Must-haves, so it cannot compare value for money",
     "the boundary between Should and Could is often argued rather than reasoned"
   ],
   "complexity_score": 1,
@@ -23,6 +23,22 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/MoSCoW_method",
-    "https://www.agilebusiness.org/dsdm-project-framework/moscow-prioririsation.html"
-  ]
+    "https://www.agilebusiness.org/resource/what-is-moscow-prioritization/"
+  ],
+  "use_cases": [
+    "A government agency has to switch on a new online service on a date written into law, and the legal, policy and IT stakeholders each insist their requirements cannot wait.",
+    "Midway through a fixed-length project, unplanned work has surfaced and the team must decide which already-agreed items it pushes out so the go-live date still holds.",
+    "A student team with a fixed hand-in date for its semester project keeps adding features and needs to agree which ones the submission cannot do without.",
+    "A school moving to a new learning platform before the start of term has to settle with teachers which functions must work on day one and which can follow later."
+  ],
+  "contexts": [
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

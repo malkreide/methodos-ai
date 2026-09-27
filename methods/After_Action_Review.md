@@ -9,6 +9,11 @@ Four questions about one event, asked while people still remember it accurately.
 
 Question 3 is the review. Questions 1 and 2 exist to make it answerable.
 
+It comes in two sizes. An **informal** AAR is short and held on site straight
+after the event, led by the people who ran it. A **formal** AAR is scheduled,
+usually has an outside facilitator and a scribe, and ends in a written report
+whose recommendations go to management. Plan either one when you plan the event.
+
 ## When to use
 
 - Right after a launch, incident response, exercise, or customer escalation
@@ -18,7 +23,8 @@ Question 3 is the review. Questions 1 and 2 exist to make it answerable.
 ## When *not* to use
 
 - For slow-building patterns across many iterations — use [Start, Stop, Continue](Start_Stop_Continue.md)
-- More than a few days late; recall degrades and reconstruction takes over
+- Weeks after the event; recall degrades and reconstruction takes over. Hold it as
+  soon as possible — USAID's guidance puts the outer limit at about two weeks
 - While the incident is still running
 
 ## Facilitation outline (60 min)
@@ -40,4 +46,6 @@ Question 3 is the review. Questions 1 and 2 exist to make it answerable.
 
 - [Start, Stop, Continue](Start_Stop_Continue.md) — for recurring team habits rather than one event
 - [Five Whys](Five_Whys.md) — to drill into a single gap surfaced at step 4
+- [USAID (2006), After-Action Review Technical Guidance](https://fs-prod-nwcg.s3.us-gov-west-1.amazonaws.com/s3fs-public/2023-06/usaid-aar-guide.pdf) — civilian adaptation of the US Army's TC 25-20
+- [Darling, Parry & Moore (2005), Learning in the Thick of It, *HBR*](https://hbr.org/2005/07/learning-in-the-thick-of-it)
 - [Wikipedia: After-action review](https://en.wikipedia.org/wiki/After-action_review)

@@ -20,6 +20,27 @@
   "estimated_duration": { "min_minutes": 60, "max_minutes": 180 },
   "references": [
     "https://en.wikipedia.org/wiki/SWOT_analysis",
-    "https://hbr.org/1982/05/the-strategy-process"
-  ]
+    "https://doi.org/10.1016/j.lrp.2023.102304",
+    "https://doi.org/10.1016/0024-6301(82)90120-0",
+    "https://files.eric.ed.gov/fulltext/ED543801.pdf",
+    "https://edu.wyoming.gov/wp-content/uploads/2022/09/2022-WDE-School-Improvement-Planning-Process-Guide-2.pdf"
+  ],
+  "use_cases": [
+    "A school leadership team drafting its improvement plan wants teachers and parents to take honest stock of where the school stands before it picks its priorities.",
+    "A university department reviewing a degree programme wants students and faculty to say what works, what is missing, and which outside changes could affect it.",
+    "A public agency starting its multi-year plan needs staff from different units to agree on what the organisation does well, where it falls short, and what around it could help or hurt.",
+    "At a mid-point review, a project team suspects its original assumptions about its own capabilities and its surroundings no longer hold and wants to re-examine them together."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }
