@@ -265,6 +265,25 @@ METHODOS_RERANK_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
 2. JSONL → SQLite migration when feedback volume grows.
 4. Hybrid search (BM25 over name/category + semantic).
 
+## Privacy
+
+What leaves the user's hands, and where it goes:
+
+| Data | Stored | Sent elsewhere |
+|---|---|---|
+| The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
+| Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
+| Client IP | not by Methodos; uvicorn's access log prints it to stdout | depends on your log shipping |
+
+The MCP server logs nothing and calls no LLM.
+
+The console, the OpenAPI field descriptions and the CLI help all tell the person
+typing to leave out personal data. That is a notice, not a filter: nothing
+scrubs names out of free text. If you operate a public instance you are the one
+processing that data, so publish a privacy notice that names the LLM provider,
+set a retention period for `feedback.jsonl`, and run uvicorn with
+`--no-access-log` if you do not need IPs.
+
 ## Known gaps
 
 **The LLM explain path has never been verified against a live backend** ([#22]).

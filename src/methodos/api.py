@@ -118,7 +118,9 @@ class QueryRequest(BaseModel):
     problem: str = Field(
         min_length=3,
         description="The problem in plain language. Describe the decision or the "
-        "symptom, not a method — the search matches on problem descriptions.",
+        "symptom, not a method — the search matches on problem descriptions. "
+        "Stored verbatim in the feedback log, and sent to the LLM provider when "
+        "`explain` is true: leave out personal data.",
         examples=["we need to enter a new market without burning cash"],
     )
     top_k: int = Field(default=3, ge=1, le=25, description="How many methods to return.")
@@ -194,7 +196,11 @@ class LLMCheckResponse(BaseModel):
 class FeedbackRequest(BaseModel):
     method_id: str = Field(description="Exact method id, e.g. 'SWOT'.")
     rating: int = Field(ge=1, le=5)
-    note: str | None = None
+    note: str | None = Field(
+        default=None,
+        description="Free-text comment, stored verbatim in the feedback log. "
+        "Leave out personal data.",
+    )
     query_id: str | None = Field(
         default=None, description="The query_id from /query, to tie the rating to a query."
     )

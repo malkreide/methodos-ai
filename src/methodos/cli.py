@@ -198,7 +198,11 @@ def query(
         help="Cross-encoder rerank of the shortlist (default: METHODOS_RERANK_PROVIDER)",
     ),
 ) -> None:
-    """Recommend methods for a problem."""
+    """Recommend methods for a problem.
+
+    The problem text is appended to the feedback log (METHODOS_FEEDBACK_PATH)
+    and, unless --no-llm, sent to the configured LLM provider.
+    """
     from methodos.providers.base import EmbeddingError, LLMError, RerankError
     from methodos.search import StaleIndexError, search
 
@@ -347,7 +351,9 @@ def show(
 def feedback(
     method_id: str = typer.Argument(..., help="Method id (e.g. SWOT)"),
     rating: int = typer.Option(..., "--rating", "-r", min=1, max=5),
-    note: str | None = typer.Option(None, "--note", "-n"),
+    note: str | None = typer.Option(
+        None, "--note", "-n", help="Stored verbatim in the feedback log; leave out personal data."
+    ),
     query_id: str | None = typer.Option(None, "--query-id", "-q"),
 ) -> None:
     """Record an outcome rating for a previously-recommended method."""

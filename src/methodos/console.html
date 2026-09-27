@@ -62,6 +62,7 @@
   ul { margin: .3rem 0; padding-left: 1.1rem; }
   .rate { display: flex; gap: .35rem; align-items: center; margin-top: .6rem; font-size: .8rem; color: var(--muted); }
   .rate button { padding: .15rem .5rem; font-size: .8rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .privacy { color: var(--muted); font-size: .8rem; margin: .4rem 0 0; }
   .note { border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: var(--card); }
   .note.err { border-color: var(--bad); color: var(--bad); }
   .note.warn { border-color: var(--accent); }
@@ -85,6 +86,12 @@
       <legend>Problem</legend>
       <textarea id="problem" required minlength="3"
         placeholder="Describe the decision or the symptom — not a method. e.g. tickets take six weeks end to end but the actual work is only a few hours"></textarea>
+      <p class="privacy" id="privacy">
+        Please leave out names and anything that identifies a person. Your question
+        and any rating are <b>stored in plain text</b> on this server to improve the
+        catalog, and with <i>LLM explanation</i> on, the question is also
+        <b>sent to the configured model provider</b>.
+      </p>
       <div class="row">
         <label>Results
           <input type="number" id="top_k" value="3" min="1" max="25">

@@ -4,6 +4,11 @@ Designed to outgrow itself: when volume justifies it, a one-shot import script
 turns this file into a SQLite database without changing the writer API. Until
 then, JSONL gives us crash-safety, git-friendly diffs, and trivial concurrent
 appends.
+
+Privacy: `RecommendationEvent.query` and `RatingEvent.note` are free text typed
+by users and stored verbatim — whatever personal data someone types ends up
+here. Every surface that writes them says so to the person typing (console,
+OpenAPI descriptions, CLI help); see "Privacy" in the README for operators.
 """
 
 from __future__ import annotations
