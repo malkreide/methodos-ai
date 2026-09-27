@@ -1,5 +1,89 @@
 {
   "$defs": {
+    "Asset": {
+      "description": "Supporting material for a method: a template, a board, a slide deck.\n\nExactly one of `path` and `url`. A `path` is a file shipped in this\nrepository under `methods/assets/<Id>/`; a `url` points elsewhere. Premium\nassets must use `url` \u2014 see AssetAccess.",
+      "properties": {
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/AssetKind"
+        },
+        "access": {
+          "$ref": "#/$defs/AssetAccess",
+          "default": "open"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]*(/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "pattern": "^https://",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "license": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License"
+        }
+      },
+      "required": [
+        "title",
+        "kind"
+      ],
+      "title": "Asset",
+      "type": "object"
+    },
+    "AssetAccess": {
+      "description": "Who may use an asset.\n\n`open` assets are part of the public catalog. `premium` assets are not: the\ncatalog only *points* at them, and the file itself lives wherever it is\nsold or licensed \u2014 never in this repository, which is public.",
+      "enum": [
+        "open",
+        "premium"
+      ],
+      "title": "AssetAccess",
+      "type": "string"
+    },
+    "AssetKind": {
+      "enum": [
+        "template",
+        "worksheet",
+        "slides",
+        "board",
+        "checklist",
+        "video",
+        "other"
+      ],
+      "title": "AssetKind",
+      "type": "string"
+    },
     "Category": {
       "description": "Coarse-grained categorization of methods.\n\nAdding a category is a non-breaking schema change; bump `schema_version`\nonly when a *required* field changes.",
       "enum": [
@@ -7,9 +91,23 @@
         "decision-making",
         "analysis",
         "prioritization",
-        "retrospective"
+        "retrospective",
+        "facilitation",
+        "change-management"
       ],
       "title": "Category",
+      "type": "string"
+    },
+    "Context": {
+      "description": "The kind of organisation a method has been shown to work in.\n\nDeliberately coarse: it answers \"is this for us at all?\", not \"which\ndepartment\". Finer distinctions belong in `use_cases`, where the search\ncan see them.",
+      "enum": [
+        "business",
+        "public-sector",
+        "education",
+        "nonprofit",
+        "personal"
+      ],
+      "title": "Context",
       "type": "string"
     },
     "Duration": {
@@ -33,6 +131,40 @@
         "max_minutes"
       ],
       "title": "Duration",
+      "type": "object"
+    },
+    "Format": {
+      "description": "How the method can be run.",
+      "enum": [
+        "in-person",
+        "hybrid",
+        "remote",
+        "async"
+      ],
+      "title": "Format",
+      "type": "string"
+    },
+    "GroupSize": {
+      "description": "How many participants the method works for.",
+      "properties": {
+        "min_people": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Min People",
+          "type": "integer"
+        },
+        "max_people": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max People",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "min_people",
+        "max_people"
+      ],
+      "title": "GroupSize",
       "type": "object"
     }
   },
@@ -60,6 +192,15 @@
       "minLength": 40,
       "title": "Use Case",
       "type": "string"
+    },
+    "use_cases": {
+      "items": {
+        "minLength": 40,
+        "type": "string"
+      },
+      "maxItems": 20,
+      "title": "Use Cases",
+      "type": "array"
     },
     "strengths": {
       "items": {
@@ -96,6 +237,79 @@
       },
       "title": "References",
       "type": "array"
+    },
+    "contexts": {
+      "items": {
+        "$ref": "#/$defs/Context"
+      },
+      "title": "Contexts",
+      "type": "array"
+    },
+    "formats": {
+      "items": {
+        "$ref": "#/$defs/Format"
+      },
+      "title": "Formats",
+      "type": "array"
+    },
+    "group_size": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GroupSize"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "audience": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 12,
+      "title": "Audience",
+      "type": "array"
+    },
+    "language": {
+      "default": "en",
+      "pattern": "^[a-z]{2}$",
+      "title": "Language",
+      "type": "string"
+    },
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/Asset"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "owner": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Owner"
+    },
+    "last_reviewed": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Reviewed"
     }
   },
   "required": [

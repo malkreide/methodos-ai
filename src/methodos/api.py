@@ -74,7 +74,7 @@ class Providers:
 
     Construction is cheap — every provider loads its backend lazily — but it is
     not free to *repeat*: a per-request `make_embedding` would hand each request
-    a fresh LocalEmbedding whose `_model` is None, re-loading ~80MB of weights
+    a fresh LocalEmbedding whose `_model` is None, re-loading ~470MB of weights
     on every call. One instance per process keeps the loaded model resident.
     """
 
@@ -118,7 +118,9 @@ class QueryRequest(BaseModel):
     problem: str = Field(
         min_length=3,
         description="The problem in plain language. Describe the decision or the "
-        "symptom, not a method — the search matches on problem descriptions.",
+        "symptom, not a method — the search matches on problem descriptions. "
+        "Stored verbatim in the feedback log, and sent to the LLM provider when "
+        "`explain` is true: leave out personal data.",
         examples=["we need to enter a new market without burning cash"],
     )
     top_k: int = Field(default=3, ge=1, le=25, description="How many methods to return.")
@@ -194,7 +196,11 @@ class LLMCheckResponse(BaseModel):
 class FeedbackRequest(BaseModel):
     method_id: str = Field(description="Exact method id, e.g. 'SWOT'.")
     rating: int = Field(ge=1, le=5)
-    note: str | None = None
+    note: str | None = Field(
+        default=None,
+        description="Free-text comment, stored verbatim in the feedback log. "
+        "Leave out personal data.",
+    )
     query_id: str | None = Field(
         default=None, description="The query_id from /query, to tie the rating to a query."
     )
@@ -359,10 +365,15 @@ def query(req: QueryRequest, providers: ProvidersDep) -> QueryResponse:
 
 
 @app.get("/methods", response_model=CatalogResult)
-def list_methods(category: str | None = None) -> CatalogResult:
+def list_methods(category: str | None = None, context: str | None = None) -> CatalogResult:
     """The complete catalog — no search, no ranking, no truncation."""
     _check_category(category)
-    return mcp_tools.list_methods(methods_dir=methods_dir(), category=category)
+    if context is not None and context not in mcp_tools.valid_contexts():
+        raise HTTPException(
+            status_code=422,
+            detail=f"unknown context {context!r}. Valid: {', '.join(mcp_tools.valid_contexts())}",
+        )
+    return mcp_tools.list_methods(methods_dir=methods_dir(), category=category, context=context)
 
 
 @app.get("/methods/{method_id}", response_model=MethodDetail)

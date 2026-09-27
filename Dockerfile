@@ -3,9 +3,10 @@
 # Two things are baked in at build time, both so that a started container needs
 # no egress except to the LLM provider:
 #
-#   * the sentence-transformers weights (~160MB across the embedding model and
-#     the cross-encoder), which otherwise download from HuggingFace on the
-#     first query and would make a cold start look like a hang;
+#   * the sentence-transformers weights (~930MB across the multilingual
+#     embedding model and the multilingual cross-encoder), which otherwise
+#     download from HuggingFace on the first query and would make a cold start
+#     look like a hang;
 #   * CPU-only torch, because the GPU wheels are several gigabytes and nothing
 #     here would use them.
 #
@@ -40,8 +41,8 @@ RUN pip install --extra-index-url https://download.pytorch.org/whl/cpu \
 # then costs a download on first use.
 RUN python -c "\
 from sentence_transformers import CrossEncoder, SentenceTransformer; \
-SentenceTransformer('all-MiniLM-L6-v2'); \
-CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')"
+SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2'); \
+CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1')"
 
 
 FROM python:3.12-slim

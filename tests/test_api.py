@@ -251,7 +251,7 @@ def test_methods_dir_follows_the_env_var(tmp_path, monkeypatch):
 
 
 def test_providers_are_built_once_per_process():
-    """A fresh provider per request would re-load ~80MB of weights every call."""
+    """A fresh provider per request would re-load ~470MB of weights every call."""
     api_mod._build_providers.cache_clear()
     try:
         first = api_mod._build_providers()

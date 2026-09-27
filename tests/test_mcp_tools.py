@@ -204,10 +204,12 @@ def test_guidance_never_explains_away_a_weak_result(indexed, fake_embedding, mon
 def test_weak_match_floor_sits_between_the_two_measured_populations():
     """Pins the constant's justification, so a casual bump has to argue with it.
 
-    Measured on the shipped catalog: the weakest pinned integration probe tops
-    out at 0.321, and queries the catalog does not cover reach 0.127 at most.
+    Measured on the shipped catalog with the multilingual default embedding:
+    the weakest of the 46 pinned integration probes (English and German) tops
+    out at 0.380, and queries the catalog does not cover reach 0.287 at most.
+    The integration suite checks both sides against the real model.
     """
-    assert 0.127 < WEAK_MATCH_SIMILARITY < 0.321
+    assert 0.287 < WEAK_MATCH_SIMILARITY < 0.380
 
 
 # --- errors that a model has to be able to act on ----------------------------
@@ -259,3 +261,47 @@ def test_missing_companion_is_reported_as_a_sync_problem(catalog):
     with pytest.raises(MethodNotFoundError) as excinfo:
         get_method(method_id="Alpha", methods_dir=catalog)
     assert "out of sync" in str(excinfo.value)
+
+
+# --- optional metadata -------------------------------------------------------
+
+
+def _annotate(catalog: Path, id: str, **fields: object) -> None:
+    path = catalog / f"{id}.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data.update(fields)
+    path.write_text(json.dumps(data), encoding="utf-8")
+
+
+def test_context_filter_excludes_unclassified_methods_but_total_counts_them(catalog):
+    _annotate(catalog, "Alpha", contexts=["education", "business"])
+    _annotate(catalog, "Beta", contexts=["business"])
+    result = list_methods(methods_dir=catalog, context="education")
+    assert [m.id for m in result.methods] == ["Alpha"]
+    assert result.total == 3
+    assert result.context == "education"
+    assert result.methods[0].contexts == ["education", "business"]
+
+
+def test_get_method_carries_the_new_metadata(catalog):
+    _annotate(
+        catalog,
+        "Alpha",
+        use_cases=["A second situation described in more than forty characters."],
+        formats=["remote"],
+        language="de",
+        owner="Hayal Özkan",
+        last_reviewed="2026-09-01",
+    )
+    detail = get_method(method_id="Alpha", methods_dir=catalog)
+    assert detail.use_cases == ["A second situation described in more than forty characters."]
+    assert detail.formats == ["remote"]
+    assert detail.language == "de"
+    assert detail.owner == "Hayal Özkan"
+    assert detail.last_reviewed == "2026-09-01"
+
+
+def test_unannotated_method_reports_empty_metadata_not_missing_fields(catalog):
+    detail = get_method(method_id="Beta", methods_dir=catalog)
+    assert detail.contexts == [] and detail.assets == []
+    assert detail.last_reviewed is None

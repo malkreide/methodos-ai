@@ -35,13 +35,15 @@ def _read_dimensions(model: Any) -> int:
 class LocalEmbedding:
     """Lazy-loaded sentence-transformers model.
 
-    The model file (~80MB for all-MiniLM-L6-v2) downloads on first use into
+    The model file (~470MB for the multilingual default) downloads on first use into
     HuggingFace's standard cache. After that, fully offline.
 
     The `_model` attribute starts as None; populated on first `embed()` call.
     """
 
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2") -> None:
+    def __init__(
+        self, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    ) -> None:
         self.name = f"local:{model_name}"
         self._model_name = model_name
         self._model: Any = None

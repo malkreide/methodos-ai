@@ -9,6 +9,11 @@ pure function of the JSON files on disk.
 # Embeddings map each method's `use_case` (natural-language description)
 # into R^<provider.dimensions> via <provider.name>.
 #
+# A method with further `use_cases` gets one vector per use case. search.py
+# collapses them again, scoring each method by its best-matching use case:
+#
+#     sim(q, method) = max_i cos(q, d_i)
+#
 # At query time, ChromaDB ranks documents by cosine similarity:
 #
 #     cos(q, d) = (q · d) / (||q|| * ||d||)
@@ -51,10 +56,14 @@ class IngestSummary:
     ids: list[str]
     provider_name: str
     dimensions: int
+    documents: int = 0
+    """Vectors written: one per use case, so >= count."""
 
 
 def _flatten_metadata(method: Method) -> dict[str, Any]:
     return {
+        "method_id": method.id,
+        "use_case": method.use_case,
         "name": method.name,
         "category": method.category.value,
         "complexity_score": method.complexity_score,
@@ -65,6 +74,31 @@ def _flatten_metadata(method: Method) -> dict[str, Any]:
         "references_json": json.dumps(method.references),
         "doc_path": method.doc_path,
     }
+
+
+def asset_problems(method: Method, methods_dir: Path) -> list[str]:
+    """Shipped assets whose file is missing from `methods/assets/<Id>/`.
+
+    The model can check an asset's shape but not the filesystem, and a dangling
+    path would only surface when someone clicked it.
+    """
+    root = methods_dir / "assets" / method.id
+    return [
+        f"asset {a.title!r}: {root / a.path} does not exist"
+        for a in method.assets
+        if a.path is not None and not (root / a.path).is_file()
+    ]
+
+
+def _documents(method: Method) -> list[tuple[str, str]]:
+    """(chroma id, text) for every use case of a method.
+
+    The canonical `use_case` keeps the bare method id, so an index holding no
+    extra use cases is id-for-id what it was before they existed.
+    """
+    return [(method.id, method.use_case)] + [
+        (f"{method.id}#{n}", text) for n, text in enumerate(method.use_cases, 1)
+    ]
 
 
 def _load_and_validate(methods_dir: Path) -> list[Method]:
@@ -96,6 +130,9 @@ def _load_and_validate(methods_dir: Path) -> list[Method]:
             continue
         if not path.with_suffix(".md").exists():
             errors.append(f"{path}: missing companion {path.stem}.md")
+            continue
+        if missing := asset_problems(method, methods_dir):
+            errors.extend(f"{path}: {m}" for m in missing)
             continue
         if method.id in seen:
             errors.append(f"{path}: duplicate id '{method.id}' (also in {seen[method.id]})")
@@ -142,22 +179,35 @@ def ingest(
             "hnsw:space": "cosine",
             "embedding_provider_name": embedding.name,
             "embedding_dimensions": embedding.dimensions,
-            "schema_version": 1,
+            "schema_version": 2,
+            # search.py over-fetches by these so that collapsing a method's use
+            # cases back into one candidate cannot shrink the shortlist.
+            "extra_documents": sum(len(m.use_cases) for m in methods),
+            "max_documents_per_method": 1 + max(len(m.use_cases) for m in methods),
         },
     )
 
-    use_cases = [m.use_case for m in methods]
-    vectors = embedding.embed(use_cases)
+    doc_ids: list[str] = []
+    texts: list[str] = []
+    metadatas: list[dict[str, Any]] = []
+    for m in methods:
+        meta = _flatten_metadata(m)
+        for doc_id, text in _documents(m):
+            doc_ids.append(doc_id)
+            texts.append(text)
+            metadatas.append(meta)
+
+    vectors = embedding.embed(texts)
     if any(len(v) != embedding.dimensions for v in vectors):
         raise IngestError(
             f"embedding provider returned wrong dimensionality (expected {embedding.dimensions})"
         )
 
     collection.upsert(
-        ids=[m.id for m in methods],
+        ids=doc_ids,
         embeddings=cast(Any, vectors),
-        documents=use_cases,
-        metadatas=[_flatten_metadata(m) for m in methods],
+        documents=texts,
+        metadatas=cast(Any, metadatas),
     )
 
     return IngestSummary(
@@ -165,4 +215,5 @@ def ingest(
         ids=[m.id for m in methods],
         provider_name=embedding.name,
         dimensions=embedding.dimensions,
+        documents=len(doc_ids),
     )

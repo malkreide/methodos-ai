@@ -33,9 +33,12 @@ def _format_candidate(c: dict[str, Any]) -> str:
     score = f"similarity: {c['similarity']:.2f}"
     if c.get("rerank_score") is not None:
         score += f", rerank: {c['rerank_score']:+.2f}"
+    matched = c.get("matched_use_case")
+    matched_line = f"Matched use case: {matched}\n" if matched else ""
     return (
         f"### {c['name']}  ({score}, complexity: {c['complexity_score']}/5)\n"
         f"Use case: {c['use_case']}\n"
+        f"{matched_line}"
         f"Strengths:\n{strengths_b}\n"
         f"Weaknesses:\n{weaknesses_b}\n"
         f"Duration: {c['duration_min']}-{c['duration_max']} minutes\n"
