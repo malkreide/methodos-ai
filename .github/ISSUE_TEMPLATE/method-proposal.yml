@@ -1,0 +1,43 @@
+name: Propose a method
+description: Suggest a management method the catalog is missing, or a new situation for an existing one.
+title: "Method: "
+labels: ["method-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Proposals are turned into a draft pull request by the
+        `method-author` agent and reviewed by the maintainer.
+        **Please don't paste text you did not write** — a link to the source is enough.
+  - type: input
+    id: name
+    attributes:
+      label: Method name
+      placeholder: e.g. Lean Coffee
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Which problem does it solve?
+      description: Describe the situation someone is in when they need it — not the method itself.
+    validations:
+      required: true
+  - type: dropdown
+    id: contexts
+    attributes:
+      label: Where have you seen it work?
+      multiple: true
+      options: [business, public-sector, education, nonprofit, personal]
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Original author, book, article or standard. At least one.
+    validations:
+      required: true
+  - type: dropdown
+    id: existing
+    attributes:
+      label: Is this a new situation for a method already in the catalog?
+      options: ["No, it is a new method", "Yes (name it above)"]
