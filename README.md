@@ -318,4 +318,10 @@ an explanation is "correct", which is why it is a script and not a test.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+- **Code** (everything outside `methods/`): MIT, see [LICENSE](LICENSE).
+- **Method catalog** (`methods/`, including assets): CC BY-SA 4.0, see
+  [methods/LICENSE](methods/LICENSE). Reuse it commercially if you like, with
+  attribution, and share your changes under the same licence.
+
+Releases up to 0.5.0 shipped the catalog under MIT as well; those copies keep
+those terms.

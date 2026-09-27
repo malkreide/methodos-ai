@@ -9,6 +9,7 @@ body:
         Thanks! Proposals are turned into a draft pull request by the
         `method-author` agent and reviewed by the maintainer.
         **Please don't paste text you did not write** — a link to the source is enough.
+        The catalog is published under CC BY-SA 4.0; what you write here may be used in it.
   - type: input
     id: name
     attributes:
