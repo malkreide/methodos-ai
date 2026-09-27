@@ -58,3 +58,7 @@ that text, so each entry should stand on its own.
 - `access: premium` **must** use `url`. The repository is public, so anything in
   it is open by definition; premium material is only ever referenced.
 - Assets are never embedded — search runs on `use_case` and `use_cases` only.
+- Everything under `methods/` is CC BY-SA 4.0 (`methods/LICENSE`). Set an
+  asset's `license` only when it differs — for example a CC BY image you did not
+  make. Material that cannot be shared under a compatible licence does not go in
+  the repository.

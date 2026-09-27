@@ -37,7 +37,7 @@ Kataloge.
 | **Open** | Entwickler, Selbst-Hoster | GitHub, `pip`, Docker, lokaler MCP-Server | gratis |
 | **Public** | alle | öffentliche Web-Konsole und gehosteter MCP-Endpunkt, **nur Suche, ohne LLM-Erklärung**, mit Rate Limit | gratis |
 | **Pro** | Beraterinnen, Moderatoren, Führungskräfte | API-Key, LLM-Erklärung, Premium-Kits (Vorlagen, Moderationsfolien), höhere Limits | Abo |
-| **Team** | Schulen, Verwaltungen, Unternehmen | eigener Katalog über dem öffentlichen, Hosting in der Schweiz oder EU, SSO, Auswertungen, SLA | Jahreslizenz |
+| **Team** | Schulen, Verwaltungen, Unternehmen | eigener Katalog über dem öffentlichen, Hosting in der EU (Schweiz auf Wunsch), SSO, Auswertungen, SLA | Jahreslizenz |
 | **Services** | Organisationen | Einführung, Workshops, Kuratierung eigener Methoden | Aufwand |
 
 Warum *Public* ohne LLM läuft: Jede Erklärung kostet einen Modellaufruf. Eine
@@ -47,12 +47,16 @@ natürliche Grund für ein Upgrade.
 
 ## 3. Entscheide, die vor dem ersten Franken fallen müssen
 
-### 3.1 Lizenz des Katalogs (dringend)
+### 3.1 Lizenz des Katalogs: entschieden
 
-Heute steht **alles unter MIT**, auch `methods/`. Das erlaubt jedem, den
-ganzen Katalog zu nehmen und als eigenes Produkt zu verkaufen. Für bereits
-veröffentlichte Versionen lässt sich das **nicht rückgängig machen**. Jeder
-weitere Commit unter MIT vergrössert das, was frei weiterverkauft werden darf.
+**Entscheid (27.09.2026): Code MIT, Katalog CC BY-SA 4.0** (`methods/LICENSE`).
+
+Bis und mit Release 0.5.0 stand auch `methods/` unter MIT. Wer den Katalog in
+dieser Fassung bezogen hat, darf ihn weiterhin unter MIT nutzen. Das lässt sich
+nicht rückgängig machen. Ab dem Lizenzwechsel gilt CC BY-SA 4.0 für alles Neue
+und für jede Überarbeitung.
+
+Die geprüften Optionen:
 
 | Option | Wirkung | Einschätzung |
 |---|---|---|
@@ -64,13 +68,21 @@ Premium-Material (Vorlagen, Kits) steht ohnehin nicht im Repository. Das
 Datenmodell erzwingt das: `access: premium` verlangt eine `url` und
 verbietet eine Datei.
 
-### 3.2 Beiträge Dritter
+### 3.2 Beiträge Dritter: entschieden
 
-Sobald andere Personen Methoden beisteuern, gehört ihr Text ihnen. Wer später
-die Lizenz wechseln oder doppelt lizenzieren will, braucht dafür vorher ihre
-Zustimmung. Das geht über ein **Contributor License Agreement** oder
-mindestens das **Developer Certificate of Origin** (DCO, `Signed-off-by`). Das
-muss eingeführt sein, bevor der erste externe Pull Request gemergt wird.
+**Entscheid (27.09.2026): Beiträge sind erwünscht, abgesichert über das
+Developer Certificate of Origin (DCO).** Jeder Commit einer externen Person
+trägt ein `Signed-off-by`. Der Workflow `.github/workflows/dco.yml` prüft das.
+Owner, Mitwirkende und Bots sind ausgenommen.
+
+Die Wahl fiel bewusst auf das DCO und gegen ein Contributor License Agreement
+(CLA): Es ist eine Zeile im Commit statt eines Vertrags, und das Ziel ist
+schnelles Wachstum. Der Preis ist, dass Beiträge unter derselben Lizenz
+hereinkommen, unter der der Katalog hinausgeht (CC BY-SA 4.0). Eine spätere
+**Doppellizenzierung des Inhalts**, etwa eine proprietäre Fassung, ist damit
+für fremde Beiträge **ausgeschlossen**. Für Open Core ist das kein Verlust,
+denn verkauft werden Betrieb, Premium-Material und eigene Kataloge, nicht der
+offene Text.
 
 ### 3.3 Rollenklarheit
 
@@ -114,7 +126,7 @@ Datenschutzhinweise.
 **Phase 1: Fundament und Nachfrage messen.**
 Lizenz entscheiden (3.1), DCO einführen (3.2), Rollen klären (3.3).
 API-Keys und Rate Limits bauen. Public-Stufe betreiben (Suche ohne LLM, Hosting
-in der Schweiz oder EU).
+in der EU).
 *Weiter, wenn* über drei Monate regelmässig Anfragen kommen und Besucher
 wiederkehren. *Sonst* bleibt es ein offenes Projekt, und die Frage ist
 beantwortet, ohne Geld verbrannt zu haben.
@@ -129,10 +141,10 @@ Katalog-Überlagerung, Mandantentrennung, SSO. Erst bauen, wenn eine konkrete
 Organisation dafür bezahlen will. Ein Pilot finanziert die Entwicklung, nicht
 umgekehrt.
 
-## 6. Offene Fragen an den Owner
+## 6. Entscheide
 
-1. Katalog-Lizenz: CC BY-SA 4.0 wie empfohlen, oder eine andere Option aus 3.1?
-2. Sollen öffentliche Beiträge von Anfang an möglich sein (dann zuerst DCO),
-   oder bleibt der Katalog vorerst in Eigenregie?
-3. Hosting-Anforderung: Schweiz zwingend (Verkaufsargument gegenüber Schulen
-   und Verwaltungen), oder genügt die EU?
+| Datum | Frage | Entscheid |
+|---|---|---|
+| 27.09.2026 | Lizenz des Katalogs | CC BY-SA 4.0; Code bleibt MIT |
+| 27.09.2026 | Beiträge Dritter | von Anfang an erlaubt, DCO statt CLA |
+| 27.09.2026 | Hosting | EU genügt; Schweiz nur, wenn ein Kunde es verlangt |

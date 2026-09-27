@@ -12,3 +12,6 @@ dist/
 data/
 .coverage
 htmlcov/
+
+# Claude Code agent worktrees
+.claude/worktrees/
