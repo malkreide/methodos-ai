@@ -1,7 +1,8 @@
 # Porter's Five Forces
 
-A structural framework (Porter, 1979) for analyzing the competitive intensity
-and long-run attractiveness of an industry along five dimensions.
+A structural framework (Porter, 1979; revised by Porter in 2008) for analyzing
+the competitive intensity and long-run attractiveness of an industry along five
+dimensions.
 
 ## The five forces
 
@@ -37,8 +38,13 @@ and long-run attractiveness of an industry along five dimensions.
 - Drawing the industry boundary too broad (everything looks attractive) or too narrow (you have a monopoly of one)
 - Confusing your *firm's* strengths with the *industry's* attractiveness
 - Treating buyer/supplier power as binary instead of analyzing concentration, switching cost, and information asymmetry separately
+- Adding industry growth, government, technology or complements as a sixth force. They matter through the way they shift the five, so trace each one to the force it strengthens or weakens; the wider macro picture is a job for [PESTEL](PESTEL_Analysis.md)
 
 ## See also
 
 - [SWOT Analysis](SWOT.md) — Porter's gives the "Threats" cell rigor
-- [Harvard Business Review: The Five Competitive Forces That Shape Strategy](https://hbr.org/2008/01/the-five-competitive-forces-that-shape-strategy)
+- [Harvard Business Review: How Competitive Forces Shape Strategy](https://hbr.org/1979/03/how-competitive-forces-shape-strategy) (1979, the original)
+- [Harvard Business Review: The Five Competitive Forces That Shape Strategy](https://hbr.org/2008/01/the-five-competitive-forces-that-shape-strategy) (2008 revision; paywalled)
+- [HBS Institute for Strategy and Competitiveness: The Five Forces](https://www.isc.hbs.edu/strategy/business-strategy/Pages/the-five-forces.aspx) — open summary from Porter's institute
+- [University of Minnesota Strategic Innovation Office: Porter's Five Forces](https://latisstrategy.umn.edu/porters-five-forces-analysis) — the forces applied to a university and its programmes
+- Pringle & Huisman (2011), [Understanding universities in Ontario: an industry analysis using Porter's five forces](https://eric.ed.gov/?id=EJ959453), *Canadian Journal of Higher Education* 41(3), doi:10.47678/cjhe.v41i3.2489

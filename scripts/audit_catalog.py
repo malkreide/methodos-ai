@@ -11,7 +11,7 @@ Findings, most urgent first:
   never-reviewed  no `last_reviewed`
   stale           `last_reviewed` older than --max-age-days
   broken-link     a reference URL that does not answer, or that redirects to
-                  another site's shallower page (only with --check-links)
+                  another site's shallower page, or loops (only with --check-links)
   unclassified    no `contexts` or no `formats`
   single-use-case no further `use_cases` — the method is findable one way only
   no-owner        no `owner`
@@ -83,8 +83,10 @@ def _link_ok(url: str, timeout: float) -> bool:
         with urllib.request.urlopen(req, timeout=timeout) as res:
             return bool(res.status < 400) and not _landed_elsewhere(url, res.geturl())
     except urllib.error.HTTPError as e:
-        # Some sites refuse HEAD but serve GET; only a real 404/410 is "broken".
-        return e.code not in (404, 410)
+        # Some sites refuse HEAD but serve GET, so a 403 or 405 is not proof of
+        # anything. A 404/410 is. So is a 3xx: urllib only surfaces one as an
+        # error after following redirects failed, i.e. a loop no client escapes.
+        return e.code not in (404, 410) and not 300 <= e.code < 400
     except (urllib.error.URLError, http.client.HTTPException, OSError, ValueError):
         # OSError covers timeouts and resets; HTTPException covers a server that
         # drops the connection mid-response. Either way one bad site must not

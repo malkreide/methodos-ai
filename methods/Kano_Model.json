@@ -22,7 +22,27 @@
     "max_minutes": 2400
   },
   "references": [
+    "https://www.jstage.jst.go.jp/article/quality/14/2/14_KJ00002952366/_article/-char/en",
+    "https://www.walden-family.com/public/cqm-journal/2-4-Whole-Issue.pdf",
     "https://en.wikipedia.org/wiki/Kano_model",
-    "https://www.uxbooth.com/articles/the-kano-model/"
-  ]
+    "https://doi.org/10.1371/journal.pone.0319707",
+    "https://doi.org/10.1186/s12912-023-01485-5"
+  ],
+  "use_cases": [
+    "Residents keep complaining about the city's online services portal, and the digital team wants to learn which service features people simply expect to work and which extras would genuinely raise their satisfaction.",
+    "A nursing school is redesigning its clinical placements and wants the students to tell it which parts of the training they take for granted and which additions would make the experience noticeably better.",
+    "We spent a year making the product faster and more reliable, yet customer satisfaction scores did not move, and we want to understand why that investment earned no credit with users.",
+    "A hotel chain wants to know whether guests are still pleased by free Wi-Fi and early check-in, or whether those amenities have become basic expectations that only draw complaints when they are missing."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "async",
+    "in-person"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

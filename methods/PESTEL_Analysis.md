@@ -12,6 +12,12 @@ would never come up in a discussion about competitors.
 | **E**nvironmental | climate exposure, resource cost, disclosure duties |
 | **L**egal | regulation, liability, employment and data law |
 
+The scan is usually traced to Francis Aguilar's 1967 work on environmental
+scanning. PEST, PESTLE, STEEP and STEEPLE are the same idea with the factors
+cut or ordered differently; pick one and use it consistently. Public bodies
+use it the same way: the UK Government Office for Science's Futures Toolkit
+sorts horizon-scanning findings into PESTLE categories.
+
 ## When to use
 
 - Entering a new country or heavily regulated market
@@ -31,6 +37,8 @@ would never come up in a discussion about competitors.
 3. (45 min) For each item, rate likelihood and impact over the chosen horizon.
 4. (30 min) Keep only the high-high items. Everything else goes into an appendix.
 5. (30 min) Convert survivors into either a monitored indicator or a planning assumption.
+   Items that matter a lot but could go either way are the drivers to carry
+   into [Scenario Planning](Scenario_Planning.md).
 
 ## Common pitfalls
 
@@ -44,3 +52,5 @@ would never come up in a discussion about competitors.
 - [Porter's Five Forces](Porters_Five_Forces.md) — industry structure, one level down
 - [SWOT Analysis](SWOT.md) — folds these findings into the Opportunities and Threats cells
 - [CIPD: PESTLE analysis](https://www.cipd.org/uk/knowledge/factsheets/pestle-analysis-factsheet/)
+- [UK Government Office for Science: The Futures Toolkit](https://www.gov.uk/government/publications/futures-toolkit-for-policy-makers-and-analysts/the-futures-toolkit-html) — horizon scanning and driver mapping with PESTLE
+- Tanna & Chugh (2026), [PESTLE analysis of Australian university annual reports](https://doi.org/10.1080/23322969.2025.2604500), *Policy Reviews in Higher Education*

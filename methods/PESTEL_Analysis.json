@@ -23,6 +23,25 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/PEST_analysis",
-    "https://www.cipd.org/uk/knowledge/factsheets/pestle-analysis-factsheet/"
-  ]
+    "https://www.cipd.org/uk/knowledge/factsheets/pestle-analysis-factsheet/",
+    "https://www.gov.uk/government/publications/futures-toolkit-for-policy-makers-and-analysts/the-futures-toolkit-html",
+    "https://doi.org/10.1080/23322969.2025.2604500"
+  ],
+  "use_cases": [
+    "A ministry's policy team is starting a horizon scan and needs a structured way to sort the political, social, technological, legal and environmental changes that could affect the programme it runs.",
+    "A university's leadership wants to understand how shifts in government funding, student visa rules, inflation and sustainability expectations will affect enrolment and budgets in the coming years.",
+    "A manufacturer faces new carbon-disclosure rules, rising energy prices and an ageing workforce, and its leadership wants to see which of these outside pressures matter most for its operations.",
+    "A regional health authority wants to anticipate how an ageing population, new data-protection law and changing government priorities will shape demand for its services."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }
