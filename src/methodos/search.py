@@ -190,13 +190,17 @@ def retrieve(
     q_vec = embedding.embed([query])[0]
 
     shortlist = top_k * overfetch_factor
-    # Worst case, every extra vector belongs to a method already on the list;
-    # fetching that many more guarantees `shortlist` distinct methods survive
-    # the collapse below whenever the catalog has them.
-    extra = int((coll.metadata or {}).get("extra_documents", 0))
+    # Collapsing a method's use cases into one candidate (below) must not leave
+    # fewer than `shortlist` distinct methods. Either bound guarantees that:
+    # every extra vector could belong to a method already listed, and no method
+    # has more than `per_method` vectors. Take the smaller, so query size grows
+    # with the widest method rather than with the whole catalog.
+    meta = coll.metadata or {}
+    extra = int(meta.get("extra_documents", 0))
+    per_method = int(meta.get("max_documents_per_method", 1))
     raw = coll.query(
         query_embeddings=[q_vec],
-        n_results=shortlist + extra,
+        n_results=min(shortlist + extra, shortlist * per_method),
         include=["metadatas", "documents", "distances"],
         **({"where": where} if where else {}),
     )

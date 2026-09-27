@@ -180,10 +180,10 @@ def ingest(
             "embedding_provider_name": embedding.name,
             "embedding_dimensions": embedding.dimensions,
             "schema_version": 2,
-            # How many vectors exceed one per method. search.py over-fetches by
-            # this much so that collapsing a method's use cases back into one
-            # candidate cannot shrink the shortlist below top_k.
+            # search.py over-fetches by these so that collapsing a method's use
+            # cases back into one candidate cannot shrink the shortlist.
             "extra_documents": sum(len(m.use_cases) for m in methods),
+            "max_documents_per_method": 1 + max(len(m.use_cases) for m in methods),
         },
     )
 
