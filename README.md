@@ -17,6 +17,12 @@ problem stated in natural language.
   any other MCP client.
 - **Provider-neutral** — Anthropic, OpenAI, Google, Mistral, Ollama, etc., via
   one `LLMProvider` Protocol (litellm-backed).
+- **Multilingual** — ask in German (or ~50 other languages), get the right method.
+- **Agent-curated** — an audit script and two Claude Code agents keep the
+  catalog current as reviewable pull requests ([docs/curation.md](docs/curation.md)).
+
+Access tiers and the path to a paid offering are in
+[docs/strategie-zugang-monetarisierung.md](docs/strategie-zugang-monetarisierung.md) (German).
 
 ## Quickstart
 
