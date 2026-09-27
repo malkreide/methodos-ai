@@ -22,7 +22,26 @@
     "max_minutes": 60
   },
   "references": [
-    "https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method",
-    "https://www.eisenhower.me/eisenhower-matrix/"
-  ]
+    "https://en.wikipedia.org/wiki/Time_management#Eisenhower_method",
+    "https://www.eisenhower.me/eisenhower-matrix/",
+    "https://www.presidency.ucsb.edu/documents/address-the-second-assembly-the-world-council-churches-evanston-illinois",
+    "https://www.franklincovey.com/courses/the-7-habits/habit-3/"
+  ],
+  "use_cases": [
+    "A teacher at the start of term is buried in marking, parent emails and administrative requests and wants to separate what genuinely needs them from what only feels pressing.",
+    "A university student juggling coursework deadlines, a part-time job and exam revision wants to see which tasks actually move their studies forward and which can be dropped.",
+    "A newly promoted manager still does much of their former hands-on work and must decide which requests to pass to colleagues and which only they can handle.",
+    "Back from two weeks of leave to an overflowing inbox, a professional needs a quick way to decide what to answer today, what to book time for later, and what to ignore."
+  ],
+  "contexts": [
+    "business",
+    "education",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }
