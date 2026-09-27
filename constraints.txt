@@ -118,7 +118,12 @@ pybase64==1.4.3
 pycparser==3.0
 pydantic==2.13.4
 pydantic-settings==2.14.2
-pydantic_core==2.46.4
+# pydantic_core is deliberately NOT pinned here. pydantic pins it exactly
+# (pydantic 2.13.4 requires pydantic-core==2.46.4), so a line for it adds no
+# control, only a second number that has to match. Dependabot bumps every line
+# of this file independently: #32 and #37 moved pydantic to 2.13.5 and
+# pydantic_core to 2.49.0, which no install can satisfy. A refresh freeze will
+# list pydantic_core again — leave it out.
 Pygments==2.20.0
 PyJWT==2.13.0
 PyPika==0.51.1
