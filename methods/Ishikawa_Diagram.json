@@ -23,6 +23,27 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Ishikawa_diagram",
-    "https://asq.org/quality-resources/fishbone"
-  ]
+    "https://asq.org/quality-resources/fishbone",
+    "https://www.ihi.org/library/tools/cause-and-effect-diagram",
+    "https://aqua.nhs.uk/wp-content/uploads/2023/07/qsir-cause-and-effect-fishbone.pdf",
+    "https://www.carnegiefoundation.org/consolidating-your-understanding-of-a-problem-using-a-fishbone-diagram/"
+  ],
+  "use_cases": [
+    "A hospital ward has logged several medication errors this year, and prescribing software, pharmacy supply, staffing and ward layout could each be contributing; the safety group wants every factor laid out before it audits anything.",
+    "Attendance at a secondary school has fallen, and staff suggest transport, family circumstances, the timetable and how absences are followed up; the leadership team wants all of these explanations on one page before choosing what data to gather.",
+    "About one new account in ten fails to complete onboarding in our software product, and the cause could sit in data quality, integrations, documentation or the handover to support.",
+    "Most planning applications reaching a council arrive incomplete, and the form design, the online guidance, the validation checks and applicants' own circumstances might all play a part."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }
