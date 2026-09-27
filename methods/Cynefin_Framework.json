@@ -23,6 +23,25 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Cynefin_framework",
-    "https://hbr.org/2007/11/a-leaders-framework-for-decision-making"
-  ]
+    "https://hbr.org/2007/11/a-leaders-framework-for-decision-making",
+    "https://cynefin.io/wiki/Cynefin_Domains",
+    "https://publications.jrc.ec.europa.eu/repository/handle/JRC123629"
+  ],
+  "use_cases": [
+    "A health authority facing a fast-spreading outbreak must decide whether to act at once to contain it or first gather data, while its own experts disagree about how predictable the situation is.",
+    "A ministry is asked for a detailed multi-year implementation plan for a social problem where nobody can say in advance how families and services will respond to any intervention.",
+    "A leadership team keeps talking past each other about a stalled transformation programme and needs a shared way to tell which parts are routine, which need specialists and which are genuinely uncertain.",
+    "An IT operations group wants to sort its incident types into those a fixed runbook can handle, those that need a specialist's diagnosis, and those where the only way forward is to try small changes and watch."
+  ],
+  "contexts": [
+    "business",
+    "public-sector"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

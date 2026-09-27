@@ -23,6 +23,25 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Cost%E2%80%93benefit_analysis",
-    "https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-governent"
-  ]
+    "https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government",
+    "https://ec.europa.eu/regional_policy/sources/studies/cba_guide.pdf",
+    "https://www.reginfo.gov/public/jsp/Utilities/circular-a-4_regulatory-impact-analysis-a-primer.pdf",
+    "https://www.cbcse.org/"
+  ],
+  "use_cases": [
+    "A town council has to choose between refurbishing its ageing swimming pool, building a new one or closing it, and the finance committee wants each option's lifetime costs and gains set against carrying on as now.",
+    "A regulator drafting a new rule has to show whether the gains to the public outweigh the compliance burden it puts on businesses and households.",
+    "A school board choosing between hiring reading tutors and cutting class sizes wants to compare what each costs per pupil with the long-run gains in attainment and later earnings.",
+    "A manufacturer considering automating a production line wants to know whether savings over the equipment's life justify the purchase once maintenance, retraining and downtime are counted."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

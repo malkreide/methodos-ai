@@ -9,7 +9,11 @@ applying a complicated-domain response to a complex-domain problem.
 | **Complicated** | knowable with expertise | sense → analyse → respond; consult experts, good practice |
 | **Complex** | only visible in hindsight | probe → sense → respond; safe-to-fail experiments |
 | **Chaotic** | none discernible | act → sense → respond; stabilise first, analyse later |
-| **Confused** | you do not know which applies | break the situation into parts and place each one |
+| **Confusion** | you do not know which applies | break the situation into parts and place each one |
+
+Naming has shifted over the years: the Clear domain was called *Simple* (as in
+the 2007 HBR article) and later *Obvious*, and the centre was called *Disorder*
+before *Confusion*. Older material uses the older names for the same ideas.
 
 ## When to use
 
@@ -36,9 +40,13 @@ applying a complicated-domain response to a complex-domain problem.
 - Classifying complex as complicated because a plan is politically expected
 - Arguing classification for an hour without ever reaching step 4
 - Forgetting that domains shift; a stabilised chaotic situation becomes complex
+- Complacency in the Clear domain: routines that are never questioned can fail
+  suddenly and drop the situation straight into Chaotic rather than into Complicated
 
 ## See also
 
 - [DACI Decision-Making Framework](DACI_Matrix.md) — once you know *how* to decide, for *who* decides
 - [Pre-Mortem Analysis](Pre_Mortem.md) — for the complex domain, before committing
 - [HBR: A Leader's Framework for Decision Making](https://hbr.org/2007/11/a-leaders-framework-for-decision-making)
+- [Cynefin.io: Cynefin Domains](https://cynefin.io/wiki/Cynefin_Domains) — the current domain names and boundaries
+- [EU JRC: Managing complexity (and chaos) in times of crisis](https://publications.jrc.ec.europa.eu/repository/handle/JRC123629) — a field guide for public decision makers
