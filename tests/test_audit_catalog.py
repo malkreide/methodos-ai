@@ -163,3 +163,21 @@ def test_redirect_to_a_generic_page_counts_as_broken(monkeypatch, requested, lan
         audit_catalog.urllib.request, "urlopen", lambda *_a, **_k: _Response(landed)
     )
     assert audit_catalog._link_ok(requested, timeout=1) is ok
+
+
+@pytest.mark.parametrize("code", [301, 302, 307, 308])
+def test_a_redirect_loop_is_a_broken_link(monkeypatch, code):
+    """urllib gives up on a redirect loop with an HTTPError carrying the 3xx code.
+
+    Treating it like a refused HEAD (any non-404) passed the UXBooth Kano page,
+    which redirects between its slash and no-slash forms forever.
+    """
+    import urllib.error
+
+    def loop(req, **_k):
+        raise urllib.error.HTTPError(
+            req.full_url, code, "redirect error that would lead to an infinite loop", {}, None
+        )
+
+    monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", loop)
+    assert audit_catalog._link_ok("https://example.org/x", timeout=1) is False
