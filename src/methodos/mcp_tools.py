@@ -30,7 +30,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from methodos.models import Category, Method
+from methodos.models import Asset, Category, Context, Format, GroupSize, Method
 from methodos.providers.base import EmbeddingProvider, RerankProvider
 from methodos.search import Candidate, collection_size, retrieve
 
@@ -67,6 +67,11 @@ class MethodMatch(BaseModel):
     category: str
     complexity_score: int = Field(ge=1, le=5)
     use_case: str
+    matched_use_case: str | None = Field(
+        default=None,
+        description="The further use case of this method the problem matched, "
+        "when it was not `use_case` itself. Scores refer to this text.",
+    )
     strengths: list[str]
     weaknesses: list[str]
     duration_min: int
@@ -111,12 +116,20 @@ class CatalogEntry(BaseModel):
     complexity_score: int
     duration_min: int
     duration_max: int
+    contexts: list[Context] = Field(
+        default_factory=list, description="Empty means not yet classified, not 'none'."
+    )
+    formats: list[Format] = Field(default_factory=list)
+    language: str
 
 
 class CatalogResult(BaseModel):
     returned: int
-    total: int = Field(description="Methods in the catalog overall, ignoring `category`.")
+    total: int = Field(
+        description="Methods in the catalog overall, ignoring `category` and `context`."
+    )
     category: str | None = None
+    context: str | None = None
     categories: list[str] = Field(description="Every category present in the catalog.")
     methods: list[CatalogEntry]
 
@@ -132,6 +145,19 @@ class MethodDetail(BaseModel):
     duration_min: int
     duration_max: int
     references: list[str]
+    use_cases: list[str] = Field(default_factory=list)
+    contexts: list[Context] = Field(default_factory=list)
+    formats: list[Format] = Field(default_factory=list)
+    group_size: GroupSize | None = None
+    audience: list[str] = Field(default_factory=list)
+    language: str = "en"
+    assets: list[Asset] = Field(
+        default_factory=list,
+        description="Supporting material. `path` is relative to methods/assets/<id>/; "
+        "`access: premium` assets are licensed separately.",
+    )
+    owner: str | None = None
+    last_reviewed: str | None = Field(default=None, description="ISO date, or null.")
     documentation: str = Field(description="Full Markdown companion document.")
 
 
@@ -146,6 +172,7 @@ def _to_match(c: Candidate) -> MethodMatch:
         category=c.category,
         complexity_score=c.complexity_score,
         use_case=c.use_case,
+        matched_use_case=c.matched_use_case,
         strengths=c.strengths,
         weaknesses=c.weaknesses,
         duration_min=c.duration_min,
@@ -259,14 +286,27 @@ def recommend_methods(
     return result
 
 
-def list_methods(*, methods_dir: Path, category: str | None = None) -> CatalogResult:
-    """The whole catalog. No search, no ranking, no truncation."""
+def list_methods(
+    *, methods_dir: Path, category: str | None = None, context: str | None = None
+) -> CatalogResult:
+    """The whole catalog. No search, no ranking, no truncation.
+
+    `context` keeps only methods that declare it. A method without any
+    `contexts` is unclassified rather than context-free, so it is excluded by
+    the filter — the payload's `total` still counts it.
+    """
     catalog = load_catalog(methods_dir)
-    selected = [m for m in catalog if category is None or m.category.value == category]
+    selected = [
+        m
+        for m in catalog
+        if (category is None or m.category.value == category)
+        and (context is None or context in m.contexts)
+    ]
     return CatalogResult(
         returned=len(selected),
         total=len(catalog),
         category=category,
+        context=context,
         categories=sorted({m.category.value for m in catalog}),
         methods=[
             CatalogEntry(
@@ -276,6 +316,9 @@ def list_methods(*, methods_dir: Path, category: str | None = None) -> CatalogRe
                 complexity_score=m.complexity_score,
                 duration_min=m.estimated_duration.min_minutes,
                 duration_max=m.estimated_duration.max_minutes,
+                contexts=m.contexts,
+                formats=m.formats,
+                language=m.language,
             )
             for m in selected
         ],
@@ -315,9 +358,22 @@ def get_method(*, method_id: str, methods_dir: Path) -> MethodDetail:
         duration_min=found.estimated_duration.min_minutes,
         duration_max=found.estimated_duration.max_minutes,
         references=found.references,
+        use_cases=found.use_cases,
+        contexts=found.contexts,
+        formats=found.formats,
+        group_size=found.group_size,
+        audience=found.audience,
+        language=found.language,
+        assets=found.assets,
+        owner=found.owner,
+        last_reviewed=found.last_reviewed.isoformat() if found.last_reviewed else None,
         documentation=doc.read_text(encoding="utf-8"),
     )
 
 
 def valid_categories() -> list[str]:
     return sorted(c.value for c in Category)
+
+
+def valid_contexts() -> list[str]:
+    return sorted(c.value for c in Context)

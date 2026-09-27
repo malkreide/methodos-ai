@@ -137,12 +137,24 @@ def list_methods(
             f"{', '.join(mcp_tools.valid_categories())}."
         ),
     ] = None,
+    context: Annotated[
+        str | None,
+        Field(
+            description="Keep only methods declared for this kind of organisation. "
+            "Methods not yet classified are excluded, so check `total` too. Valid "
+            f"values: {', '.join(mcp_tools.valid_contexts())}."
+        ),
+    ] = None,
 ) -> CatalogResult:
     if category is not None and category not in mcp_tools.valid_categories():
         raise ValueError(
             f"unknown category {category!r}. Valid: {', '.join(mcp_tools.valid_categories())}"
         )
-    return mcp_tools.list_methods(methods_dir=_methods_dir(), category=category)
+    if context is not None and context not in mcp_tools.valid_contexts():
+        raise ValueError(
+            f"unknown context {context!r}. Valid: {', '.join(mcp_tools.valid_contexts())}"
+        )
+    return mcp_tools.list_methods(methods_dir=_methods_dir(), category=category, context=context)
 
 
 @server.tool(

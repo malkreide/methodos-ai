@@ -359,10 +359,15 @@ def query(req: QueryRequest, providers: ProvidersDep) -> QueryResponse:
 
 
 @app.get("/methods", response_model=CatalogResult)
-def list_methods(category: str | None = None) -> CatalogResult:
+def list_methods(category: str | None = None, context: str | None = None) -> CatalogResult:
     """The complete catalog — no search, no ranking, no truncation."""
     _check_category(category)
-    return mcp_tools.list_methods(methods_dir=methods_dir(), category=category)
+    if context is not None and context not in mcp_tools.valid_contexts():
+        raise HTTPException(
+            status_code=422,
+            detail=f"unknown context {context!r}. Valid: {', '.join(mcp_tools.valid_contexts())}",
+        )
+    return mcp_tools.list_methods(methods_dir=methods_dir(), category=category, context=context)
 
 
 @app.get("/methods/{method_id}", response_model=MethodDetail)

@@ -259,3 +259,47 @@ def test_missing_companion_is_reported_as_a_sync_problem(catalog):
     with pytest.raises(MethodNotFoundError) as excinfo:
         get_method(method_id="Alpha", methods_dir=catalog)
     assert "out of sync" in str(excinfo.value)
+
+
+# --- optional metadata -------------------------------------------------------
+
+
+def _annotate(catalog: Path, id: str, **fields: object) -> None:
+    path = catalog / f"{id}.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data.update(fields)
+    path.write_text(json.dumps(data), encoding="utf-8")
+
+
+def test_context_filter_excludes_unclassified_methods_but_total_counts_them(catalog):
+    _annotate(catalog, "Alpha", contexts=["education", "business"])
+    _annotate(catalog, "Beta", contexts=["business"])
+    result = list_methods(methods_dir=catalog, context="education")
+    assert [m.id for m in result.methods] == ["Alpha"]
+    assert result.total == 3
+    assert result.context == "education"
+    assert result.methods[0].contexts == ["education", "business"]
+
+
+def test_get_method_carries_the_new_metadata(catalog):
+    _annotate(
+        catalog,
+        "Alpha",
+        use_cases=["A second situation described in more than forty characters."],
+        formats=["remote"],
+        language="de",
+        owner="Hayal Özkan",
+        last_reviewed="2026-09-01",
+    )
+    detail = get_method(method_id="Alpha", methods_dir=catalog)
+    assert detail.use_cases == ["A second situation described in more than forty characters."]
+    assert detail.formats == ["remote"]
+    assert detail.language == "de"
+    assert detail.owner == "Hayal Özkan"
+    assert detail.last_reviewed == "2026-09-01"
+
+
+def test_unannotated_method_reports_empty_metadata_not_missing_fields(catalog):
+    detail = get_method(method_id="Beta", methods_dir=catalog)
+    assert detail.contexts == [] and detail.assets == []
+    assert detail.last_reviewed is None

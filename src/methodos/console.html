@@ -155,6 +155,7 @@ function renderMatch(m, i) {
     <div class="meta">${score} &middot; complexity ${dots} &middot; ${esc(m.category)}
       &middot; ${m.duration_min}&ndash;${m.duration_max} min &middot; <code>${esc(m.id)}</code></div>
     <div>${esc(m.use_case)}</div>
+    ${m.matched_use_case ? `<div class="meta">matched: ${esc(m.matched_use_case)}</div>` : ''}
     <ul>${m.strengths.slice(0, 3).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
     <div class="rate" data-id="${esc(m.id)}">Did it help?
       ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-rating="${n}">${n}</button>`).join('')}

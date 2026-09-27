@@ -20,6 +20,7 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
+from methodos.ingest import asset_problems
 from methodos.models import Method
 
 
@@ -67,6 +68,10 @@ def main() -> int:
         md = path.with_suffix(".md")
         if not md.exists():
             errors.append(f"{path}: missing companion {md.name}")
+            continue
+
+        if missing := asset_problems(method, args.methods_dir):
+            errors.extend(f"{path}: {m}" for m in missing)
             continue
 
         if method.id in seen_ids:
