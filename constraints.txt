@@ -100,6 +100,9 @@ numpy==2.4.6; python_version < "3.12"
 numpy==2.5.1; python_version >= "3.12"
 oauthlib==3.3.1
 onnxruntime==1.28.0
+# Capped by litellm, which requires openai>=2.20.0,<3.0.0. The 3.x bump in #33
+# was unresolvable; .github/dependabot.yml ignores openai>=3 until litellm
+# lifts the ceiling — drop that rule together with this note.
 openai==2.52.0
 opentelemetry-api==1.44.0
 opentelemetry-exporter-otlp-proto-common==1.44.0

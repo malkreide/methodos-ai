@@ -27,6 +27,10 @@ updates:
       # branch. Remove this rule once litellm lifts the ceiling.
       - dependency-name: "importlib-metadata"
         versions: [">=9"]
+      # litellm requires openai>=2.20.0,<3.0.0, so every openai 3.x bump (#33)
+      # is unresolvable. Remove this rule once litellm accepts openai 3.
+      - dependency-name: "openai"
+        versions: [">=3"]
 
   - package-ecosystem: github-actions
     directory: "/"
