@@ -13,7 +13,7 @@
   "weaknesses": [
     "covers a single event, so it misses slow-building systemic patterns",
     "degrades into blame assignment without disciplined facilitation",
-    "loses accuracy quickly if postponed by more than a few days",
+    "loses accuracy the longer it is postponed, as recollection gives way to reconstruction",
     "lessons evaporate unless someone owns carrying them to the next event"
   ],
   "complexity_score": 2,
@@ -23,6 +23,25 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/After-action_review",
-    "https://hbr.org/2005/07/learning-in-the-thick-of-it"
-  ]
+    "https://hbr.org/2005/07/learning-in-the-thick-of-it",
+    "https://fs-prod-nwcg.s3.us-gov-west-1.amazonaws.com/s3fs-public/2023-06/usaid-aar-guide.pdf"
+  ],
+  "use_cases": [
+    "A civil protection agency has just run a large emergency exercise with several services and needs to capture where the plan held and where it broke down before everyone disperses.",
+    "A school has carried out its first evacuation or lockdown drill of the year, and staff want to compare what the emergency plan said with what actually happened in the building.",
+    "The outage is over and service is restored; the on-call engineers and support staff want to walk through how the response unfolded against the runbook while it is fresh.",
+    "A development programme has finished a field distribution or training round, and partner staff want lessons written down for colleagues planning similar activities elsewhere."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }
