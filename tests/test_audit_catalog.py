@@ -9,6 +9,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import pytest
+
 REPO = Path(__file__).parent.parent
 SCRIPT = REPO / "scripts" / "audit_catalog.py"
 
@@ -114,3 +116,50 @@ def test_cli_runs_against_the_shipped_catalog():
     res = subprocess.run([sys.executable, str(SCRIPT)], cwd=REPO, capture_output=True, text=True)
     assert res.returncode == 0, res.stderr
     assert res.stdout.startswith(("# Catalog audit", "All "))
+
+
+def test_a_dropped_connection_is_a_broken_link_not_a_crash(monkeypatch):
+    """One site closing the socket must not take the whole weekly audit down."""
+    import http.client
+
+    def drop(*_a, **_k):
+        raise http.client.RemoteDisconnected("Remote end closed connection without response")
+
+    monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", drop)
+    assert audit_catalog._link_ok("https://example.org/x", timeout=1) is False
+
+
+class _Response:
+    def __init__(self, url: str, status: int = 200) -> None:
+        self._url, self.status = url, status
+
+    def geturl(self) -> str:
+        return self._url
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_exc):
+        return False
+
+
+@pytest.mark.parametrize(
+    ("requested", "landed", "ok"),
+    [
+        # A deep page swallowed by a site's generic landing page: gone.
+        (
+            "https://www.toyota-global.com/company/toyota_traditions/quality/mar_apr_2006.html",
+            "https://global.toyota/en/company/",
+            False,
+        ),
+        # Routine redirects that keep the content: fine.
+        ("http://example.org/a/b", "https://example.org/a/b", True),
+        ("https://example.org/a/b", "https://www.example.org/a/b/", True),
+        ("https://old.example.org/guide/moscow", "https://new.example.com/guide/moscow-2", True),
+    ],
+)
+def test_redirect_to_a_generic_page_counts_as_broken(monkeypatch, requested, landed, ok):
+    monkeypatch.setattr(
+        audit_catalog.urllib.request, "urlopen", lambda *_a, **_k: _Response(landed)
+    )
+    assert audit_catalog._link_ok(requested, timeout=1) is ok

@@ -10,7 +10,8 @@ Findings, most urgent first:
   low-rating      avg rating < 3 over at least --min-ratings ratings
   never-reviewed  no `last_reviewed`
   stale           `last_reviewed` older than --max-age-days
-  broken-link     a reference URL that does not answer (only with --check-links)
+  broken-link     a reference URL that does not answer, or that redirects to
+                  another site's shallower page (only with --check-links)
   unclassified    no `contexts` or no `formats`
   single-use-case no further `use_cases` — the method is findable one way only
   no-owner        no `owner`
@@ -26,9 +27,11 @@ Exit code is 0 whatever it finds: a backlog is not a failure.
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass
 from datetime import date
@@ -55,15 +58,37 @@ class Finding:
     detail: str
 
 
+def _host(netloc: str) -> str:
+    return netloc.lower().removeprefix("www.")
+
+
+def _depth(path: str) -> int:
+    return len([seg for seg in path.split("/") if seg])
+
+
+def _landed_elsewhere(requested: str, landed: str) -> bool:
+    """A redirect to another site's shallower page: the content is gone.
+
+    Deep pages that a site retires often redirect to its home or section page
+    with a 200, which a status check calls healthy. Scheme, `www.` and trailing
+    slashes are routine; a new host *and* a shallower path is not.
+    """
+    a, b = urllib.parse.urlsplit(requested), urllib.parse.urlsplit(landed)
+    return _host(a.netloc) != _host(b.netloc) and _depth(b.path) < _depth(a.path)
+
+
 def _link_ok(url: str, timeout: float) -> bool:
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "methodos-audit"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as res:
-            return bool(res.status < 400)
+            return bool(res.status < 400) and not _landed_elsewhere(url, res.geturl())
     except urllib.error.HTTPError as e:
         # Some sites refuse HEAD but serve GET; only a real 404/410 is "broken".
         return e.code not in (404, 410)
-    except (urllib.error.URLError, TimeoutError, ValueError):
+    except (urllib.error.URLError, http.client.HTTPException, OSError, ValueError):
+        # OSError covers timeouts and resets; HTTPException covers a server that
+        # drops the connection mid-response. Either way one bad site must not
+        # abort the audit of every other method.
         return False
 
 
