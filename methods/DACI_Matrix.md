@@ -17,7 +17,7 @@ A four-role assignment for cross-functional decisions.
 
 ## When *not* to use
 
-- The disagreement is substantive (about *what* to decide), not procedural (about *who* decides). Use SWOT or Five Forces first.
+- The disagreement is substantive (about *what* to decide), not procedural (about *who* decides). Work the substance first — [Cost-Benefit Analysis](Cost_Benefit_Analysis.md) to compare options on evidence, or [Six Thinking Hats](Six_Thinking_Hats.md) when the discussion has polarised.
 - For everyday small decisions inside a single team
 - When the right answer is obvious — DACI is overhead, not decoration
 
@@ -25,7 +25,7 @@ A four-role assignment for cross-functional decisions.
 
 1. (5 min) Write the decision in one sentence: "Should we [verb] [object]?"
 2. (10 min) Assign D and A by name, not by role. Get the A's verbal commitment.
-3. (15 min) List Contributors and what they will contribute (data, opinion, veto over a sub-area).
+3. (15 min) List Contributors and what they will contribute (data, expertise, a recommendation). They are heard, but the call stays with the Approver.
 4. (5 min) List Informed parties and the channel/cadence of notification.
 5. (Async) Driver runs the process; Approver decides; everyone else either contributes once or just gets the memo.
 
@@ -38,4 +38,4 @@ A four-role assignment for cross-functional decisions.
 ## See also
 
 - [RACI matrix](https://en.wikipedia.org/wiki/Responsibility_assignment_matrix) — DACI's older cousin; better for ongoing responsibilities than one-shot decisions
-- [Atlassian Team Playbook: DACI](https://www.atlassian.com/team-playbook/plays/daci)
+- [Atlassian Team Playbook: DACI](https://www.atlassian.com/team-playbook/plays/daci) — step-by-step play, with the decision recorded in a shared document

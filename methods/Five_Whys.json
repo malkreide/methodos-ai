@@ -23,6 +23,29 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Five_whys",
-    "https://www.toyota-global.com/company/toyota_traditions/quality/mar_apr_2006.html"
-  ]
+    "https://www.lean.org/lexicon-terms/5-whys/",
+    "https://www.ihi.org/library/tools/5-whys-finding-root-cause",
+    "https://doi.org/10.1136/bmjqs-2016-005849",
+    "https://psnet.ahrq.gov/issue/problem-5-whys",
+    "https://ies.ed.gov/rel-northwest/2025/01/multi-tiered-system-supports-reading-mtss-r-practices-facilitator-guide"
+  ],
+  "use_cases": [
+    "A council benefits office keeps sending letters with the wrong payment date, and each correction to the template has failed to stop the next batch going out wrong.",
+    "A packaging line keeps halting on the same jam; operators clear it every time and the shift supervisor wants to find the condition upstream that keeps producing it.",
+    "A GP practice sent a referral that never reached the hospital, and the practice team wants to trace which administrative step let it slip before it happens to another patient.",
+    "A school literacy team sees reading results in one year group stall despite a new intervention, and wants to get past blaming pupil motivation to what in its own support system is not working.",
+    "Complaints about late deliveries keep arriving from one region, and the operations manager wants the frontline team to follow one concrete late order back to where it went wrong."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

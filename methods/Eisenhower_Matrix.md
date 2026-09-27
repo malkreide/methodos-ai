@@ -3,6 +3,12 @@
 Two axes, four rules. The insight is not the grid — it is noticing how little
 of your week reaches the important-but-not-urgent quadrant.
 
+The name comes from a 1954 speech in which Dwight D. Eisenhower passed on a
+former college president's remark that urgent problems are rarely the
+important ones; he did not claim the idea as his own. The four-quadrant grid
+was popularised later, most widely as the time-management matrix in Stephen
+Covey's *The 7 Habits of Highly Effective People* (1989).
+
 |  | **Urgent** | **Not urgent** |
 |---|---|---|
 | **Important** | Do now | **Schedule** — the quadrant that decays quietly |
@@ -38,4 +44,6 @@ of your week reaches the important-but-not-urgent quadrant.
 
 - [MoSCoW Prioritization](MoSCoW_Method.md) — for scope under a deadline, at team level
 - [RICE Scoring](RICE_Scoring.md) — when items need a ranked order rather than buckets
-- [Wikipedia: The Eisenhower Method](https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method)
+- [Wikipedia: Eisenhower method](https://en.wikipedia.org/wiki/Time_management#Eisenhower_method)
+- [Eisenhower's 1954 address, American Presidency Project](https://www.presidency.ucsb.edu/documents/address-the-second-assembly-the-world-council-churches-evanston-illinois) — the source of the urgent/important remark
+- [FranklinCovey: Habit 3, Put First Things First](https://www.franklincovey.com/courses/the-7-habits/habit-3/) — the four quadrants of time management
