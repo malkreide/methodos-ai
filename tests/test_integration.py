@@ -13,8 +13,8 @@ addopts. Run them explicitly:
     pytest -m integration
 
 Requires the `local` extra (`pip install -e ".[dev,local]"`). The first run
-downloads ~80MB of model weights into the HuggingFace cache; after that it is
-offline. The LLM test needs a reachable backend on top of that and is opted
+downloads ~930MB of model weights (multilingual embedding + cross-encoder) into
+the HuggingFace cache; after that it is offline. The LLM test needs a reachable backend on top of that and is opted
 into separately with METHODOS_INTEGRATION_LLM=1.
 """
 
@@ -26,6 +26,7 @@ from pathlib import Path
 import pytest
 
 from methodos.config import Settings
+from methodos.mcp_tools import WEAK_MATCH_SIMILARITY
 from methodos.providers import make_llm
 from methodos.search import search
 
@@ -57,7 +58,7 @@ def real_embedding():
     )
     from methodos.providers.embedding_local import LocalEmbedding
 
-    return LocalEmbedding(model_name="all-MiniLM-L6-v2")
+    return LocalEmbedding(model_name=Settings().embedding_model)
 
 
 @pytest.fixture(scope="module")
@@ -72,7 +73,7 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
         embedding=real_embedding,
     )
     assert summary.count >= 3, "expected the shipped catalog to ingest"
-    assert summary.dimensions == 384, f"all-MiniLM-L6-v2 is 384d, got {summary.dimensions}"
+    assert summary.dimensions == 384, f"the default model is 384d, got {summary.dimensions}"
     return chroma_path
 
 
@@ -80,12 +81,24 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
 # naming the method or echoing its vocabulary, which would test the query
 # rather than the catalog.
 #
-# Third element is the minimum margin over the runner-up. 0.10 is the default;
-# a lower value is an explicit statement that two methods in the catalog are
-# genuinely adjacent, not a licence to weaken a failing probe. Every value here
-# was measured against the full catalog.
+# What each probe must achieve changed with the move to multilingual models
+# (paraphrase-multilingual-MiniLM-L12-v2 + mMARCO cross-encoder). Measured
+# against the 23-method catalog:
 #
-# Rejected candidates, kept so they don't get re-added:
+#                         English probes   German probes
+#   old embedding only        23/23            7/23      (all-MiniLM-L6-v2)
+#   new embedding only        20/23           19/23
+#   new embedding + rerank    23/23           23/23
+#
+# The multilingual embedding is the weaker *ranker* and a far better
+# *retriever*: it puts the right method at position <= 4 for every probe in
+# both languages, and the cross-encoder does the ordering. So the embedding is
+# now held to "on the shortlist the reranker sees", the pipeline to "first".
+# The old per-probe cosine margins (0.10 over the runner-up) do not survive
+# that change and were dropped rather than lowered until they passed.
+#
+# Rejected phrasings below were measured against the old English-only model
+# and are kept so they don't get re-added without re-measuring:
 #   "internal strengths and weaknesses vs external opportunities and threats"
 #       -> SWOT by 0.041 over Porter's. The four-quadrant vocabulary is shared.
 #   "the same defect keeps coming back after every fix"
@@ -108,167 +121,278 @@ PROBES = [
         "should we enter this industry? how defensible is the position "
         "against competitors and new entrants",
         "Porters_Five_Forces",
-        0.10,
     ),
     (
         "strategic planning kickoff: assess our own position and the "
         "external landscape in four quadrants",
         "SWOT",
-        0.10,
     ),
     (
         "scan the wider environment: legislation, demographics, climate "
         "exposure and macroeconomic conditions",
         "PESTEL_Analysis",
-        0.10,
     ),
     (
         "map out how this new venture creates and captures value on one page",
         "Business_Model_Canvas",
-        0.10,
     ),
     (
         "should we build this component ourselves, buy it off the shelf, or outsource it",
         "Wardley_Mapping",
-        0.10,
     ),
     (
         "we cannot forecast a single number for this decade, which choices "
         "hold up across several plausible futures",
         "Scenario_Planning",
-        0.10,
     ),
     (
         "who is the approver for this cross-functional decision",
         "DACI_Matrix",
-        0.10,
     ),
     (
         "one group wants a detailed plan up front and another wants to start "
         "experimenting, we disagree on what kind of problem this is",
         "Cynefin_Framework",
-        0.10,
     ),
     (
         "express the costs and the benefits in money, discount them, and "
         "compare the net present value of each option",
         "Cost_Benefit_Analysis",
-        0.10,
     ),
     (
         "the discussion has split into advocates and critics and the same "
         "person is always the sceptic",
         "Six_Thinking_Hats",
-        0.10,
     ),
     (
         "we keep fixing the symptom of this recurring failure instead of what actually causes it",
         "Five_Whys",
-        0.10,
     ),
     (
         "many possible causes across people process equipment and materials, we need to map them",
         "Ishikawa_Diagram",
-        0.10,
     ),
     (
         "before we commit to this launch, imagine it failed and surface "
         "the risks nobody is voicing",
         "Pre_Mortem",
-        0.10,
     ),
     (
         "tickets take six weeks end to end but the actual work is only a few hours",
         "Value_Stream_Mapping",
-        0.10,
     ),
     (
         "interview customers about what they were struggling with when they "
         "switched and what they stopped using",
         "Jobs_To_Be_Done",
-        0.10,
     ),
     (
         "what is resisting this change, and how do we weaken the restraints "
         "instead of pushing harder",
         "Force_Field_Analysis",
-        0.10,
     ),
     # Prioritization is the most crowded corner of the catalog: RICE, MoSCoW,
     # Eisenhower and Value Stream Mapping all speak about too much work and not
     # enough capacity. RICE's distinguishing feature is quantified scoring, and
     # a probe only surfaces that by naming reach/impact/effort — which would be
-    # testing the query. So this probe keeps the user's phrasing and accepts a
-    # narrower margin instead.
+    # testing the query. The embedding alone ranks it second (EN) or fourth
+    # (DE); the reranker is what puts it first.
     (
         "we have more backlog items than capacity and need a defensible ranked order",
         "RICE_Scoring",
-        0.05,
     ),
     (
         "fixed release date, we must agree now which requirements get dropped",
         "MoSCoW_Method",
-        0.10,
     ),
     (
         "which features are table stakes that earn no credit and which would "
         "actually delight customers",
         "Kano_Model",
-        0.10,
     ),
     (
         "my week is eaten by interruptions and the important work never gets started",
         "Eisenhower_Matrix",
-        0.10,
     ),
     (
         "end of sprint team retrospective, what should we start and stop doing",
         "Start_Stop_Continue",
-        0.10,
     ),
     # Two retrospective formats sit close together by construction; this probe
-    # leans on the "one picture" framing to separate them and still only clears
-    # the bar by a little. Expect it to need re-measuring if more retrospective
-    # formats are added.
+    # leans on the "one picture" framing to separate them. The embedding alone
+    # ranks it fourth in English. Expect it to need re-measuring if more
+    # retrospective formats are added.
     (
         "the team has gone quiet in our usual list-based retrospectives, we "
         "need goal drag and upcoming risks in one picture",
         "Sailboat_Retrospective",
-        0.10,
     ),
     (
         "debrief the launch we just finished: what did we expect versus what happened",
         "After_Action_Review",
-        0.10,
     ),
 ]
 
+# The same 23 problems as a German-speaking user would put them. Not literal
+# translations where Swiss usage differs ("Pendenzen", "Lancierung", Franken):
+# the point is to probe the language users will actually type.
+PROBES_DE = [
+    (
+        "Sollen wir in diese Branche einsteigen? Wie gut lässt sich die Position "
+        "gegen Konkurrenten und Neueinsteiger verteidigen",
+        "Porters_Five_Forces",
+    ),
+    (
+        "Auftakt der Strategieplanung: unsere eigene Position und das externe "
+        "Umfeld in vier Quadranten beurteilen",
+        "SWOT",
+    ),
+    (
+        "das weitere Umfeld absuchen: Gesetzgebung, Demografie, Klimarisiken und "
+        "gesamtwirtschaftliche Lage",
+        "PESTEL_Analysis",
+    ),
+    (
+        "auf einer Seite darstellen, wie dieses neue Vorhaben Wert schafft und abschöpft",
+        "Business_Model_Canvas",
+    ),
+    (
+        "sollen wir diese Komponente selbst bauen, fertig einkaufen oder auslagern",
+        "Wardley_Mapping",
+    ),
+    (
+        "wir können für dieses Jahrzehnt keine einzelne Zahl prognostizieren, welche "
+        "Entscheidungen halten über mehrere plausible Zukünfte",
+        "Scenario_Planning",
+    ),
+    ("wer genehmigt diesen bereichsübergreifenden Entscheid", "DACI_Matrix"),
+    (
+        "eine Gruppe will vorab einen detaillierten Plan, eine andere will "
+        "experimentieren, wir sind uns uneinig, was für ein Problem das ist",
+        "Cynefin_Framework",
+    ),
+    (
+        "Kosten und Nutzen in Franken ausdrücken, abzinsen und den Kapitalwert "
+        "jeder Option vergleichen",
+        "Cost_Benefit_Analysis",
+    ),
+    (
+        "die Diskussion hat sich in Befürworter und Kritiker gespalten und immer "
+        "dieselbe Person ist die Skeptikerin",
+        "Six_Thinking_Hats",
+    ),
+    (
+        "wir beheben bei diesem wiederkehrenden Fehler immer das Symptom statt der "
+        "eigentlichen Ursache",
+        "Five_Whys",
+    ),
+    (
+        "viele mögliche Ursachen bei Menschen, Prozessen, Geräten und Material, wir "
+        "müssen sie abbilden",
+        "Ishikawa_Diagram",
+    ),
+    (
+        "bevor wir uns auf diese Lancierung festlegen, stellen wir uns vor, sie sei "
+        "gescheitert, und holen die Risiken hervor, die niemand anspricht",
+        "Pre_Mortem",
+    ),
+    (
+        "Tickets brauchen von Anfang bis Ende sechs Wochen, aber die eigentliche "
+        "Arbeit dauert nur ein paar Stunden",
+        "Value_Stream_Mapping",
+    ),
+    (
+        "Kundinnen und Kunden befragen, womit sie kämpften, als sie wechselten, und "
+        "was sie nicht mehr nutzen",
+        "Jobs_To_Be_Done",
+    ),
+    (
+        "was steht dieser Veränderung entgegen, und wie schwächen wir die "
+        "Widerstände, statt stärker zu drücken",
+        "Force_Field_Analysis",
+    ),
+    (
+        "wir haben mehr Pendenzen als Kapazität und brauchen eine begründbare Rangfolge",
+        "RICE_Scoring",
+    ),
+    (
+        "fixer Releasetermin, wir müssen jetzt festlegen, welche Anforderungen wegfallen",
+        "MoSCoW_Method",
+    ),
+    (
+        "welche Funktionen sind selbstverständlich und bringen keine Anerkennung, und "
+        "welche würden Kunden begeistern",
+        "Kano_Model",
+    ),
+    (
+        "meine Woche wird von Unterbrechungen aufgefressen und die wichtige Arbeit beginnt nie",
+        "Eisenhower_Matrix",
+    ),
+    (
+        "Retrospektive am Ende des Sprints, was sollen wir anfangen und was aufhören",
+        "Start_Stop_Continue",
+    ),
+    (
+        "das Team ist in unseren üblichen listenbasierten Retrospektiven verstummt, "
+        "wir brauchen Bremsklötze, Ziel und kommende Risiken in einem Bild",
+        "Sailboat_Retrospective",
+    ),
+    (
+        "Nachbesprechung der eben abgeschlossenen Lancierung: was haben wir "
+        "erwartet und was ist passiert",
+        "After_Action_Review",
+    ),
+]
 
-@pytest.mark.parametrize(("problem", "expected_top", "min_margin"), PROBES)
-def test_query_path_ranks_the_right_method_first(
-    real_index, real_embedding, problem, expected_top, min_margin
+ALL_PROBES = PROBES + PROBES_DE
+
+# Questions the catalog does not cover. The weak-match floor in mcp_tools must
+# sit above all of these and below every probe, in both languages.
+OFF_TOPIC = [
+    "how do I fix my bicycle chain",
+    "what is the capital of France",
+    "wie flicke ich meine Velokette",
+    "was ist die Hauptstadt von Frankreich",
+    "Rezept für Zürcher Geschnetzeltes",
+]
+
+
+@pytest.mark.parametrize(("problem", "expected"), ALL_PROBES)
+def test_embedding_puts_the_right_method_on_the_shortlist(
+    real_index, real_embedding, problem, expected
 ):
+    """The retrieval half: the reranker can only promote what it is shown."""
+    settings = Settings()
+    shortlist = settings.top_k * settings.overfetch_factor
     result = search(
         query=problem,
         embedding=real_embedding,
         llm=None,
         chroma_path=real_index,
-        top_k=3,
+        top_k=shortlist,
     )
 
     assert result.explanation is None, "llm=None must skip the explanation call"
-    assert len(result.candidates) == 3
-    top, runner_up = result.candidates[0], result.candidates[1]
-    assert top.id == expected_top, (
-        f"expected {expected_top} first for {problem!r}, got "
+    ids = [c.id for c in result.candidates]
+    assert expected in ids, (
+        f"{expected} not in the {shortlist}-method shortlist for {problem!r}: "
         f"{[(c.id, round(c.similarity, 3)) for c in result.candidates]}"
     )
-    # A real model should be decisive here, not win by rounding noise. The bar
-    # leaves room for model updates and for the catalog growing denser, while
-    # still failing if a `use_case` rewrite blurs two methods together.
-    margin = top.similarity - runner_up.similarity
-    assert margin > min_margin, (
-        f"{expected_top} won by only {margin:.3f} over {runner_up.id} (bar {min_margin})"
+    assert result.candidates[0].similarity >= WEAK_MATCH_SIMILARITY, (
+        f"a probe the catalog covers scored {result.candidates[0].similarity:.3f}, "
+        f"below the weak-match floor {WEAK_MATCH_SIMILARITY}"
+    )
+
+
+@pytest.mark.parametrize("problem", OFF_TOPIC)
+def test_uncovered_questions_stay_below_the_weak_match_floor(real_index, real_embedding, problem):
+    """The other side of the floor: these must trigger `guidance`."""
+    top = search(
+        query=problem, embedding=real_embedding, llm=None, chroma_path=real_index, top_k=1
+    ).candidates[0]
+    assert top.similarity < WEAK_MATCH_SIMILARITY, (
+        f"{problem!r} reached {top.similarity:.3f} ({top.id}), at or above the floor "
+        f"{WEAK_MATCH_SIMILARITY} — guidance would stay silent on an uncovered question"
     )
 
 
@@ -342,7 +466,9 @@ def test_every_method_in_the_catalog_has_a_probe():
     nothing here would notice.
     """
     catalog = {p.stem for p in REPO_METHODS.glob("*.json")}
-    probed = {expected for _, expected, _ in PROBES}
+    probed = {expected for _, expected in PROBES}
+    probed_de = {expected for _, expected in PROBES_DE}
+    assert probed_de == probed, f"German probes out of step: {sorted(probed ^ probed_de)}"
     assert catalog == probed, (
         f"methods with no probe: {sorted(catalog - probed)}; "
         f"probes naming an unknown method: {sorted(probed - catalog)}"
@@ -361,32 +487,28 @@ def real_reranker():
     )
     from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
 
-    return CrossEncoderRerank()
+    return CrossEncoderRerank(model_name=Settings().rerank_model)
 
 
-@pytest.mark.parametrize(("problem", "expected_top", "min_margin"), PROBES)
-def test_rerank_keeps_every_pinned_probe_correct(
-    real_index, real_embedding, real_reranker, problem, expected_top, min_margin
+@pytest.mark.parametrize(("problem", "expected"), ALL_PROBES)
+def test_rerank_puts_every_pinned_probe_first(
+    real_index, real_embedding, real_reranker, problem, expected
 ):
-    """Reranking must not break what embedding-only retrieval already gets right.
-
-    `min_margin` is unused here on purpose: cross-encoder outputs are logits on
-    a different scale from cosine similarity, so the 0.10 bar does not transfer.
-    What matters is that the ordering survives.
-    """
+    """The pipeline as shipped — default top_k and overfetch — ranks it first."""
     from methodos.search import retrieve
 
+    settings = Settings()
     out = retrieve(
         query=problem,
         embedding=real_embedding,
         chroma_path=real_index,
-        top_k=3,
+        top_k=settings.top_k,
         reranker=real_reranker,
-        overfetch_factor=4,
+        overfetch_factor=settings.overfetch_factor,
     )
-    assert out[0].id == expected_top, (
-        f"rerank moved {expected_top} off the top for {problem!r}: "
-        f"{[(c.id, round(c.rerank_score or 0, 2)) for c in out]}"
+    assert out[0].id == expected, (
+        f"expected {expected} first for {problem!r}, got "
+        f"{[(c.id, round(c.similarity, 3), round(c.rerank_score or 0, 2)) for c in out]}"
     )
     assert all(c.rerank_score is not None for c in out)
     scores = [c.rerank_score for c in out]
@@ -396,10 +518,13 @@ def test_rerank_keeps_every_pinned_probe_correct(
 # Probes that embedding-only retrieval cannot separate — each was rejected
 # during PR #12/#13 for landing under the 0.10 bar or missing outright, which
 # forced the pinned probe to be reworded. Measured against the 23-method
-# catalog with overfetch_factor=4:
+# catalog with overfetch_factor=4, under the English-only models:
 #
 #   SWOT probe    : embedding 0.004 behind Porter's (miss) -> rerank +15.3 ahead
 #   Wardley probe : embedding 0.009 behind (miss)          -> rerank  +9.3 ahead
+#
+# Both still hold with the multilingual pair; the SWOT probe is now ranked
+# third by the embedding (0.526, behind PESTEL 0.609 and Porter's 0.562).
 #
 # These assert only the reranked outcome. Asserting the embedding-only failure
 # too would turn a future embedding improvement into a spurious test failure.
@@ -452,7 +577,7 @@ def test_rerank_leaves_the_retrieval_similarity_intact(real_index, real_embeddin
         assert c.rerank_score is not None
 
 
-def test_switching_provider_without_reingest_is_a_stale_index(real_index):
+def test_switching_provider_without_reingest_is_a_stale_index(real_index, real_embedding):
     """local → openai without a rebuild must be caught before any API call.
 
     OpenAIEmbedding reads its dimensionality from a static table, so it can be
@@ -472,7 +597,7 @@ def test_switching_provider_without_reingest_is_a_stale_index(real_index):
             top_k=2,
         )
     message = str(excinfo.value)
-    assert "local:all-MiniLM-L6-v2" in message, "must name the provider the index was built with"
+    assert real_embedding.name in message, "must name the provider the index was built with"
     assert "openai:text-embedding-3-small" in message, "must name the provider now configured"
     assert "ingest" in message, "must say how to fix it"
 
@@ -546,8 +671,8 @@ def test_real_llm_leads_with_the_reranked_top_not_the_most_similar(
     precondition below both holding. First green run is real news — see #22.
     """
     # Same query as scripts/verify_explain.py, and for the same reason: at
-    # top_k=3 the reranker puts SWOT (sim 0.457) above both Porter's (0.469)
-    # and PESTEL (0.465), so the prompt genuinely shows a top entry that is
+    # top_k=3 the reranker puts SWOT (sim 0.526) above both PESTEL (0.609)
+    # and Porter's (0.562), so the prompt genuinely shows a top entry that is
     # less similar than the ones under it.
     query = "internal strengths and weaknesses vs external opportunities and threats"
     settings = Settings()

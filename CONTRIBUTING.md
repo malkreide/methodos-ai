@@ -8,6 +8,12 @@ Create `methods/<Id>.json` and `methods/<Id>.md`. Validate locally with
 `python scripts/validate_methods.py`. Open a PR. CI does the rest.
 
 The `<Id>` must match the JSON `id` field and starts with a capital letter.
+Field reference, including the optional metadata and assets:
+[docs/method-format.md](docs/method-format.md).
+
+Every method needs one English and one German probe in
+`tests/test_integration.py` (`PROBES` and `PROBES_DE`) — a test fails without
+them.
 
 ## 2. Add a provider
 
@@ -69,7 +75,7 @@ model against the real `methods/` catalog, so they catch a `use_case` that has
 stopped matching the problems it should match:
 
 ```bash
-pytest -m integration                        # needs the `local` extra
+pytest -m integration                        # needs the `local` extra (~930MB of weights)
 METHODOS_INTEGRATION_LLM=1 pytest -m integration   # also hits a real LLM
 ```
 

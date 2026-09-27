@@ -23,8 +23,12 @@ class Settings(BaseSettings):
     """Litellm model string in the form '<provider>/<model>'."""
 
     embedding_provider: Literal["local", "openai"] = "local"
-    embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     """For provider='local': sentence-transformers model name.
+
+    Multilingual by default: a German question has to find an English method
+    and vice versa. The English-only all-MiniLM-L6-v2 this replaced ranked 7 of
+    23 German probes correctly; see tests/test_integration.py for the numbers.
     For provider='openai': e.g. 'text-embedding-3-small'."""
 
     rerank_provider: Literal["none", "cross-encoder"] = "cross-encoder"
@@ -37,7 +41,7 @@ class Settings(BaseSettings):
     An explicit `--rerank` still fails loudly; see make_reranker(required=...).
     """
 
-    rerank_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    rerank_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
     """Only consulted when rerank_provider != 'none'."""
 
     chroma_path: Path = Path("data/chroma")

@@ -38,9 +38,11 @@ methodos ingest
 methodos query "we need to enter a new market without burning cash"
 ```
 
-The default config is **fully offline**: Ollama for the LLM (`ollama/llama3.1:8b`),
-`sentence-transformers/all-MiniLM-L6-v2` for embeddings, and a cross-encoder
-rerank step on the shortlist. One env var
+The default config is **fully offline** and **multilingual**: Ollama for the LLM
+(`ollama/llama3.1:8b`), `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+for embeddings, and the multilingual cross-encoder
+`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` as a rerank step on the shortlist.
+Ask in German, get the right English method — see [Languages](#languages). One env var
 (`METHODOS_MODEL`) swaps the LLM to any cloud provider supported by litellm.
 
 ## Recommended cloud LLM
@@ -125,7 +127,12 @@ docker compose run --rm cli stats
    python scripts/validate_methods.py
    ```
 3. `methodos ingest && methodos query "<your test problem>"`
-4. Open a PR. CI validates the JSON against `schemas/method_schema.json`.
+4. Add one English and one German probe to `tests/test_integration.py` and run
+   `pytest -m integration`.
+5. Open a PR. CI validates the JSON against `schemas/method_schema.json`.
+
+Every field — including the optional ones for further use cases, contexts,
+formats and assets — is described in [docs/method-format.md](docs/method-format.md).
 
 ## Cross-encoder reranking (optional)
 
@@ -147,25 +154,24 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 ```
 
 It reuses sentence-transformers from the `local` extra and downloads
-`cross-encoder/ms-marco-MiniLM-L-6-v2` (~80MB) on first use. Costs roughly
-66 ms per query over the default 6-candidate shortlist.
+`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Costs
+roughly 110 ms per query over the default 6-candidate shortlist on a CPU.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
 queries do **not** fail. Reranking is a quality enhancement, so it degrades to
 embedding-only ranking and says so. An explicit `--rerank` still errors, because
 silently ignoring a direct request would be worse.
 
-Measured against the 23-method catalog: all 23 pinned retrieval probes keep
-ranking correctly, and it additionally resolves problem statements that
-embedding-only retrieval cannot separate — for example *"internal strengths
-and weaknesses vs external opportunities and threats"*, which the embedding
-ranks 0.004 **behind** Porter's Five Forces and the reranker puts SWOT
-15.3 ahead of.
+With the multilingual models the reranker is no longer optional polish — it
+does the ordering. The embedding alone ranks 20 of 23 English and 19 of 23
+German probes first, but puts the right method within the top four every time;
+the cross-encoder then ranks all 46 first. Turning reranking off still works
+and still degrades gracefully, but expect noticeably worse ordering.
 
 `METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 2, i.e.
 `top_k × 2`). On the current 23-method catalog, raising it buys nothing —
-factors 2, 3, 4 and 6 all score 23/23 on the pinned probes — while cost grows
-linearly (66 → 200 ms). It becomes worth raising as the catalog grows and the
+the right method never lands below position four on the pinned probes — while
+cost grows linearly with the shortlist. It becomes worth raising as the catalog grows and the
 right answer starts landing further down the embedding ranking.
 
 ## MCP server
@@ -221,19 +227,43 @@ can tell the difference rather than guess:
   key and a lower-similarity method may rank above a higher one on purpose.
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
-- **`guidance`** — set when the best match falls below 0.25, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 23 pinned
-  integration probes scores 0.321, while questions the catalog genuinely does
-  not cover reach 0.127 at most (*"how do I fix my bicycle chain"* → Five Whys
-  at 0.106). Weak matches are still returned — `guidance` is a caveat, never a
+- **`guidance`** — set when the best match falls below 0.33, with a concrete
+  next step. That floor is measured, not guessed: the weakest of the 46 pinned
+  integration probes (English and German) scores 0.380, while questions the
+  catalog genuinely does not cover reach 0.287 at most (*"Rezept für Zürcher
+  Geschnetzeltes"*). Weak matches are still returned — `guidance` is a caveat, never a
   filter, because an empty list is what a model fills in from memory.
+
+## Languages
+
+The catalog is written in English; questions can be asked in any of the ~50
+languages the models cover. Measured on the 23 pinned problems, phrased once in
+English and once in Swiss-German usage:
+
+| | English | German |
+|---|---|---|
+| previous default (`all-MiniLM-L6-v2`, English-only) | 23/23 | 7/23 |
+| multilingual embedding + multilingual reranker | 23/23 | 23/23 |
+
+The LLM explanation answers in the language of the question. The switch costs
+image size (model weights ~160MB → ~930MB) and about 40 ms per query.
+
+**Existing installs must re-ingest** after upgrading: the index records which
+model built it, and a query against an index from the old model fails with a
+`StaleIndexError` naming both, rather than returning nonsense.
+
+To go back to the English-only models:
+
+```bash
+METHODOS_EMBEDDING_MODEL=all-MiniLM-L6-v2
+METHODOS_RERANK_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
+```
 
 ## Improvement potentials (planned)
 
 1. Online learning re-ranker informed by feedback ratings.
 2. JSONL → SQLite migration when feedback volume grows.
 4. Hybrid search (BM25 over name/category + semantic).
-5. Multilingual embeddings.
 
 ## Known gaps
 

@@ -19,8 +19,8 @@ Three such narrowings exist here, and each has a field:
   * vector search never returns empty -> `guidance` when the best match is weak
 
 That last one is the important one. `retrieve()` answers every query with its
-nearest neighbours, so "how do I fix my bicycle chain" comes back with Five
-Whys at similarity 0.106 and looks exactly like a real hit.
+nearest neighbours, so "how do I fix my bicycle chain" comes back with a
+method at similarity 0.146 and looks exactly like a real hit.
 """
 
 from __future__ import annotations
@@ -34,14 +34,20 @@ from methodos.models import Asset, Category, Context, Format, GroupSize, Method
 from methodos.providers.base import EmbeddingProvider, RerankProvider
 from methodos.search import Candidate, collection_size, retrieve
 
-WEAK_MATCH_SIMILARITY = 0.25
+WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
-Measured against the shipped 23-method catalog, not guessed. The weakest of the
-23 pinned integration probes tops out at 0.321 (Value Stream Mapping); queries
-the catalog genuinely does not cover land far lower — 0.106 for "how do I fix
-my bicycle chain", 0.048 for "what is the capital of France". 0.25 sits in the
-empty band between those two populations.
+Measured against the shipped 23-method catalog with the default multilingual
+embedding, not guessed. Every one of the 46 pinned integration probes (23
+English, 23 German) reaches at least 0.380 with its best match; questions the
+catalog genuinely does not cover top out at 0.287 ("Rezept für Zürcher
+Geschnetzeltes"), with "wie flicke ich meine Velokette" at 0.265 and "how do I
+fix my bicycle chain" at 0.146. 0.33 sits in the empty band between those two
+populations. tests/test_integration.py pins both sides.
+
+The band is narrower than it was under the English-only model (0.127-0.321),
+because a multilingual model maps more of everyday language near *something*.
+Re-measure after changing the embedding model or adding many methods.
 
 It is a hint threshold, never a filter: results below it are still returned,
 because a weak match plus a stated caveat is more useful than an empty list

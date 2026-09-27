@@ -74,7 +74,7 @@ class Providers:
 
     Construction is cheap — every provider loads its backend lazily — but it is
     not free to *repeat*: a per-request `make_embedding` would hand each request
-    a fresh LocalEmbedding whose `_model` is None, re-loading ~80MB of weights
+    a fresh LocalEmbedding whose `_model` is None, re-loading ~470MB of weights
     on every call. One instance per process keeps the loaded model resident.
     """
 
