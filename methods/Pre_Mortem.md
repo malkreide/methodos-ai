@@ -9,6 +9,9 @@ people say the thing they were not going to say.
 - Just before a launch, migration, reorganisation, or large investment
 - When the plan looks agreed and nobody is raising objections — the danger sign
 - Early enough that the answers can still change the plan
+- Before handing a programme to people who were not in the planning room —
+  invite those who will deliver it and those it is for, not only its designers
+  (the "implementation premortem" used in public-health programmes)
 
 ## When *not* to use
 
@@ -39,4 +42,8 @@ people say the thing they were not going to say.
 
 - [Ishikawa (Fishbone) Diagram](Ishikawa_Diagram.md) — same breadth, applied after a failure
 - [SWOT Analysis](SWOT.md) — the Threats quadrant, done with more rigour
-- [HBR: Performing a Project Premortem](https://hbr.org/2007/09/performing-a-project-premortem)
+- Gary Klein, [Performing a Project Premortem](https://hbr.org/2007/09/performing-a-project-premortem) (HBR, 2007) — the original description
+- Mitchell, Russo & Pennington, [Back to the future](https://doi.org/10.1002/bdm.3960020103)
+  (1989) — the research behind treating the outcome as certain
+- Wippold et al., [The implementation premortem](https://pmc.ncbi.nlm.nih.gov/articles/PMC12330140/)
+  (2025) — running it with implementers and recipients
