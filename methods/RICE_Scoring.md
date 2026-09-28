@@ -21,6 +21,8 @@ RICE =  ────────────────────────
 - More candidate work than capacity, and stakeholders each favour their own item
 - The ordering will be questioned later and needs to be reconstructable
 - Comparing items of genuinely different shapes and sizes
+- Public services too: Reach can be claimants, applicants or residents served
+  per period, as in state workforce agencies ranking which notices to rewrite
 
 ## When *not* to use
 
@@ -47,4 +49,5 @@ RICE =  ────────────────────────
 
 - [MoSCoW Prioritization](MoSCoW_Method.md) — when the constraint is a deadline, not a ranking
 - [DACI Decision-Making Framework](DACI_Matrix.md) — for who decides once the scores are in
-- [Intercom: RICE](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/)
+- Sean McBride, [RICE: Simple prioritization for product managers](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/) (Intercom, 2018) — the original, with the scales above
+- NASWA, [Prioritizing for Impact: Using the RICE Framework](https://www.naswa.org/newsletter/prioritizing-for-impact-using-the-rice-framework) — applied in state workforce agencies
