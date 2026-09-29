@@ -6,7 +6,7 @@
   "use_case": "A prospective-hindsight exercise in which the team imagines that a plan has already failed badly and then writes the story of how that happened, surfacing risks that optimism and group consensus normally suppress. Best used just before committing to a launch, a migration or a large investment, when the plan looks agreed and nobody is voicing doubts, which is exactly the moment when unspoken concerns are most expensive to leave unspoken.",
   "strengths": [
     "licenses dissent by making failure the premise instead of an accusation",
-    "prospective hindsight measurably improves how specific risk statements are",
+    "treating the failure as certain draws out longer, more concrete explanations than asking what might go wrong",
     "catches risks that a confident, cohesive group would otherwise suppress",
     "cheap relative to the size of decision it protects"
   ],
@@ -23,6 +23,28 @@
   },
   "references": [
     "https://hbr.org/2007/09/performing-a-project-premortem",
-    "https://en.wikipedia.org/wiki/Pre-mortem"
-  ]
+    "https://en.wikipedia.org/wiki/Pre-mortem",
+    "https://doi.org/10.1002/bdm.3960020103",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12330140/",
+    "https://crpe.org/hindsight-is-2024-a-premortem-on-districts-return-to-school/",
+    "https://www.atlassian.com/team-playbook/plays/pre-mortem"
+  ],
+  "use_cases": [
+    "A public agency is weeks away from rolling out a new benefit scheme or digital service to citizens and wants to learn, before go-live, how it could end up failing the people it is meant to serve.",
+    "A school district or school leadership team is about to spend a one-off funding grant on a multi-year programme and wants to find out now why it might have produced no improvement by the time the money runs out.",
+    "A health or community programme was designed by specialists, and before it starts the staff who will deliver it and the people who will receive it should say why they think it will not work in practice.",
+    "An executive board is on the verge of a large investment or acquisition that every member appears to back, and the chair wants the private doubts on the table before the money is committed."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-28"
 }
