@@ -17,6 +17,10 @@ person defending a fixed role for the whole meeting.
 - A discussion has hardened into advocates versus critics
 - The same person is always cast as the sceptic and dismissed accordingly
 - An idea needs proper exploration before judgement
+- After an idea-gathering session, to weigh each candidate change before
+  picking which to pilot (the NHS improvement library uses it this way)
+- Teaching: students analyse a case one mode at a time, in a seminar or in an
+  online forum where each hat becomes a thread or a posting round
 
 ## When *not* to use
 
@@ -44,4 +48,7 @@ person defending a fixed role for the whole meeting.
 
 - [DACI Decision-Making Framework](DACI_Matrix.md) — to turn the discussion into a decision
 - [Pre-Mortem Analysis](Pre_Mortem.md) — a stronger instrument for the Black hat alone
-- [Wikipedia: Six Thinking Hats](https://en.wikipedia.org/wiki/Six_Thinking_Hats)
+- [Wikipedia: Six Thinking Hats](https://en.wikipedia.org/wiki/Six_Thinking_Hats) — origin (de Bono, 1985) and typical hat sequences
+- [de Bono Group: Six Thinking Hats](https://www.debonogroup.com/services/core-programs/six-thinking-hats/) — the rights holder's description; the name is a registered trademark
+- [NHS England QSIR: Six Thinking Hats](https://aqua.nhs.uk/wp-content/uploads/2023/07/qsir-six-thinking-hats.pdf) — use in health-service improvement
+- [King's College London: Six thinking hats](https://blogs.kcl.ac.uk/activelearning/2019/05/17/six-thinking-hats/) — use in higher-education teaching, including forums and webinars

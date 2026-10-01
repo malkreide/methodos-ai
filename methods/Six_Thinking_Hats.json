@@ -23,6 +23,25 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Six_Thinking_Hats",
-    "https://www.debonogroup.com/services/core-programs/six-thinking-hats/"
-  ]
+    "https://www.debonogroup.com/services/core-programs/six-thinking-hats/",
+    "https://aqua.nhs.uk/wp-content/uploads/2023/07/qsir-six-thinking-hats.pdf",
+    "https://blogs.kcl.ac.uk/activelearning/2019/05/17/six-thinking-hats/"
+  ],
+  "use_cases": [
+    "A hospital improvement team has gathered a long list of ideas for changing how patients move through a clinic and wants to examine each one from several angles before choosing which to test.",
+    "A lecturer wants students in a seminar or an online discussion forum to work through a case by looking at facts, feelings, risks, benefits and alternatives in turn instead of arguing for one side.",
+    "New proposals in our meetings get shot down within minutes because the critics always speak first, so promising ideas never get a fair hearing."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-01"
 }
