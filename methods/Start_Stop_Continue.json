@@ -22,7 +22,24 @@
     "max_minutes": 90
   },
   "references": [
-    "https://en.wikipedia.org/wiki/Retrospective",
+    "https://www.retrium.com/retrospective-techniques/start-stop-continue",
+    "https://doi.org/10.1080/02602938.2014.956282",
+    "https://eric.ed.gov/?id=EJ1064740",
     "https://www.atlassian.com/team-playbook/plays/retrospective"
-  ]
+  ],
+  "use_cases": [
+    "A lecturer wants mid-semester feedback from students that says what to change in the course, rather than a satisfaction score or a handful of vague comments.",
+    "A department that does not work in sprints wants a short quarterly review of its own routines, such as meetings and handovers, that ends with a few named changes."
+  ],
+  "contexts": [
+    "business",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-01"
 }

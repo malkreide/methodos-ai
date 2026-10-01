@@ -12,6 +12,9 @@ differently", in under an hour.
 - End of a sprint, project phase, or quarter
 - After a team composition or process change, to check what settled
 - As a recurring low-ceremony habit between deeper retrospectives
+- Course feedback: asking students what the teacher should start, stop and
+  continue draws more specific, usable comments than an open text box
+  (Hoon et al., 2015). Works as a written form, so nobody needs to be in the room
 
 ## When *not* to use
 
@@ -40,4 +43,6 @@ differently", in under an hour.
 
 - [Five Whys](Five_Whys.md) — when a theme keeps reappearing across rounds
 - [DACI Decision-Making Framework](DACI_Matrix.md) — when the retro reveals unclear ownership
-- [Atlassian Team Playbook: Retrospective](https://www.atlassian.com/team-playbook/plays/retrospective)
+- [Retrium: Start, Stop, Continue](https://www.retrium.com/retrospective-techniques/start-stop-continue) — the format as an action-oriented retrospective
+- [Hoon, Oliver, Szpakowska and Newton (2015)](https://doi.org/10.1080/02602938.2014.956282), Assessment & Evaluation in Higher Education 40(5) — Stop/Start/Continue for student feedback ([ERIC record](https://eric.ed.gov/?id=EJ1064740))
+- [Atlassian Team Playbook: Retrospective](https://www.atlassian.com/team-playbook/plays/retrospective) — general background on running retrospectives; it does not use this format
