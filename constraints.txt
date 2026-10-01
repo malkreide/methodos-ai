@@ -69,7 +69,7 @@ httpcore2==2.13.1
 httptools==0.8.0
 httpx==0.28.1
 httpx2==2.13.1
-huggingface_hub==1.33.0
+huggingface_hub==2.0.0
 idna==3.20
 # Capped by litellm, which requires importlib-metadata>=8.0.0,<9.0. A bump to
 # 9.0.0 was merged in #10 and made `pip install -c constraints.txt` unresolvable
