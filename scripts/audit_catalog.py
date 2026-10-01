@@ -77,21 +77,27 @@ def _landed_elsewhere(requested: str, landed: str) -> bool:
     return _host(a.netloc) != _host(b.netloc) and _depth(b.path) < _depth(a.path)
 
 
-def _link_ok(url: str, timeout: float) -> bool:
+def _link_ok(url: str, timeout: float, attempts: int = 3) -> bool:
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "methodos-audit"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as res:
-            return bool(res.status < 400) and not _landed_elsewhere(url, res.geturl())
-    except urllib.error.HTTPError as e:
-        # Some sites refuse HEAD but serve GET, so a 403 or 405 is not proof of
-        # anything. A 404/410 is. So is a 3xx: urllib only surfaces one as an
-        # error after following redirects failed, i.e. a loop no client escapes.
-        return e.code not in (404, 410) and not 300 <= e.code < 400
-    except (urllib.error.URLError, http.client.HTTPException, OSError, ValueError):
-        # OSError covers timeouts and resets; HTTPException covers a server that
-        # drops the connection mid-response. Either way one bad site must not
-        # abort the audit of every other method.
-        return False
+    for _ in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as res:
+                return bool(res.status < 400) and not _landed_elsewhere(url, res.geturl())
+        except urllib.error.HTTPError as e:
+            # A definite answer, so no retry. Some sites refuse HEAD but serve
+            # GET, so a 403 or 405 is not proof of anything. A 404/410 is. So is
+            # a 3xx: urllib only surfaces one as an error after following
+            # redirects failed, i.e. a loop no client escapes.
+            return e.code not in (404, 410) and not 300 <= e.code < 400
+        except ValueError:
+            return False  # not a URL urllib can open; retrying will not change that
+        except (urllib.error.URLError, http.client.HTTPException, OSError):
+            # Timeouts, resets, a server dropping the connection mid-response.
+            # These are often transient: aqua.nhs.uk times out the TLS handshake
+            # on about half of all attempts, which flagged a live NHS PDF twice.
+            # Only a link that fails every attempt counts as broken.
+            continue
+    return False
 
 
 def audit(

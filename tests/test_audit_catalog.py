@@ -181,3 +181,48 @@ def test_a_redirect_loop_is_a_broken_link(monkeypatch, code):
 
     monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", loop)
     assert audit_catalog._link_ok("https://example.org/x", timeout=1) is False
+
+
+def test_a_flaky_connection_gets_retried_before_it_counts_as_broken(monkeypatch):
+    """aqua.nhs.uk times out the TLS handshake on roughly half of all attempts.
+
+    One failed attempt flagged a live NHS PDF as broken in two curation runs.
+    Connection-level failures are retried; a definite answer is not.
+    """
+    import urllib.error
+
+    attempts = []
+
+    def flaky(*_a, **_k):
+        attempts.append(1)
+        if len(attempts) < 3:
+            raise urllib.error.URLError("_ssl.c:999: The handshake operation timed out")
+        return _Response("https://example.org/x")
+
+    monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", flaky)
+    assert audit_catalog._link_ok("https://example.org/x", timeout=1) is True
+    assert len(attempts) == 3
+
+
+def test_a_link_that_never_connects_is_still_broken(monkeypatch):
+    import urllib.error
+
+    def down(*_a, **_k):
+        raise urllib.error.URLError("connection refused")
+
+    monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", down)
+    assert audit_catalog._link_ok("https://example.org/x", timeout=1) is False
+
+
+def test_a_definite_404_is_not_retried(monkeypatch):
+    import urllib.error
+
+    attempts = []
+
+    def gone(req, **_k):
+        attempts.append(1)
+        raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(audit_catalog.urllib.request, "urlopen", gone)
+    assert audit_catalog._link_ok("https://example.org/x", timeout=1) is False
+    assert len(attempts) == 1
