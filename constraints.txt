@@ -98,7 +98,7 @@ mypy==2.3.1
 mypy_extensions==1.1.0
 numpy==2.4.6; python_version < "3.12"
 numpy==2.5.1; python_version >= "3.12"
-oauthlib==3.3.1
+oauthlib==4.0.0
 onnxruntime==1.30.0
 # Capped by litellm, which requires openai>=2.20.0,<3.0.0. The 3.x bump in #33
 # was unresolvable; .github/dependabot.yml ignores openai>=3 until litellm
