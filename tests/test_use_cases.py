@@ -117,3 +117,53 @@ def test_ingest_rejects_a_missing_asset_file(tmp_path, fake_embedding):
     assert (
         ingest(methods_dir=methods, chroma_path=tmp_path / "c", embedding=fake_embedding).count == 1
     )
+
+
+class _TableReranker:
+    """Scores from a fixed table, so the test states exactly what the cross-encoder thinks."""
+
+    name = "table-reranker"
+
+    def __init__(self, table: dict[str, float]) -> None:
+        self.table = table
+        self.calls: list[list[str]] = []
+
+    def score(self, query: str, documents) -> list[float]:
+        self.calls.append(list(documents))
+        return [self.table.get(d, 0.0) for d in documents]
+
+
+ALPHA = "alpha alpha alpha alpha alpha alpha alpha alpha alpha"
+ALPHA_EXTRA = "An executive board cutting the project portfolio to fit next year's budget."
+BETA = "beta beta beta beta beta beta beta beta beta beta beta"
+
+
+def test_a_method_is_reranked_on_its_best_text_not_its_nearest(seeded, fake_embedding):
+    """The query is Alpha's canonical text, so the embedding picks that text.
+
+    The cross-encoder rates it low and Alpha's further use case high. Scoring
+    only the nearest text would rank Beta first; scoring every text must not.
+    """
+    _, chroma = seeded
+    reranker = _TableReranker({ALPHA: 1.0, ALPHA_EXTRA: 9.0, BETA: 5.0})
+    out = retrieve(
+        query=ALPHA, embedding=fake_embedding, chroma_path=chroma, top_k=3, reranker=reranker
+    )
+    assert [c.id for c in out][:2] == ["Alpha", "Beta"]
+    assert out[0].rerank_score == 9.0
+    assert out[0].matched_use_case == ALPHA_EXTRA, "report the text that won"
+    assert out[0].similarity == pytest.approx(1.0), "similarity stays the embedding's"
+    scored = reranker.calls[0]
+    assert {ALPHA, ALPHA_EXTRA, SCHOOL, BETA} <= set(scored), "every text of a method is scored"
+
+
+def test_the_canonical_text_winning_reports_no_further_match(seeded, fake_embedding):
+    _, chroma = seeded
+    reranker = _TableReranker({ALPHA: 9.0, ALPHA_EXTRA: 1.0, SCHOOL: 1.0})
+    top = retrieve(
+        query=SCHOOL, embedding=fake_embedding, chroma_path=chroma, top_k=1, reranker=reranker
+    )[0]
+    assert top.id == "Alpha"
+    assert top.matched_use_case is None, (
+        "the embedding matched SCHOOL, the reranker preferred use_case"
+    )

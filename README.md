@@ -148,8 +148,21 @@ through one model together — much more accurate, far too slow to run over a
 whole corpus. So it runs on the shortlist only:
 
 ```
-Chroma returns top_k × overfetch_factor  →  cross-encoder rescores  →  top_k
+Chroma returns top_k × overfetch_factor methods
+  →  cross-encoder scores every text of each (use_case + use_cases)
+  →  each method keeps its best score  →  top_k
 ```
+
+Scoring every text, rather than only the one the embedding found nearest, is
+what makes adding a use case safe: a method can only gain from another text,
+never lose. Under nearest-text scoring a loosely phrased use case that sat
+closer to a query than the canonical description could replace it in front of
+the cross-encoder and drag the method down — measured on RICE, one added use
+case cut its English probe margin from 16.8 to 6.4 and its German one from 4.0
+to 1.7. With best-text scoring the same addition changes nothing, and a better
+one lifts the German probe from 4.0 to 6.1. The price is fairer competition:
+rivals are scored on their best text too, so margins over the runner-up fell
+on 16 of 48 probes (at most 2.8, all still first).
 
 **On by default.** Turn it off per query or permanently:
 
@@ -160,8 +173,10 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 ```
 
 It reuses sentence-transformers from the `local` extra and downloads
-`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Costs
-roughly 110 ms per query over the default 6-candidate shortlist on a CPU.
+`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
+grows with the number of texts on the shortlist — about 27 for the default
+6-method shortlist of the current catalog, up from 6 when only one text per
+method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
 queries do **not** fail. Reranking is a quality enhancement, so it degrades to

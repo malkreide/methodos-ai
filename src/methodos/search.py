@@ -34,10 +34,12 @@ class Candidate:
     doc_path: str
     similarity: float
     matched_use_case: str | None = None
-    """The further use case the query matched, or None if it was `use_case`.
+    """The further use case that won, or None if it was `use_case` itself.
 
-    Similarity (and the reranker's score) are computed against this text when
-    it is set, so it is the evidence for the ranking and worth showing.
+    Without a reranker this is the text nearest the query in embedding space.
+    With one it is the text the cross-encoder scored highest, which is what
+    `rerank_score` refers to; `similarity` stays the embedding score of the
+    method's nearest text. Either way it is the evidence for the ranking.
     """
     rerank_score: float | None = None
     """Cross-encoder score when a reranker ran, else None.
@@ -118,14 +120,63 @@ def _open_collection(chroma_path: Path, embedding: EmbeddingProvider) -> Any:
     return coll
 
 
-def _rerank(query: str, candidates: list[Candidate], reranker: RerankProvider) -> list[Candidate]:
-    """Re-score the shortlist with a cross-encoder and re-sort by that score."""
-    scores = reranker.score(query, [c.matched_use_case or c.use_case for c in candidates])
-    if len(scores) != len(candidates):
+def _method_texts(coll: Any, candidates: list[Candidate]) -> dict[str, list[str]]:
+    """Every indexed text (canonical use_case and further use_cases) per method.
+
+    Indexes built before `method_id` was stored in metadata cannot be filtered
+    by it; they hold one text per method, so the candidate's own text is all
+    there is and the fallback below loses nothing.
+    """
+    ids = [c.id for c in candidates]
+    texts: dict[str, list[str]] = {c.id: [] for c in candidates}
+    got = coll.get(where={"method_id": {"$in": ids}}, include=["documents", "metadatas"])
+    for doc, meta in zip(got["documents"] or [], got["metadatas"] or [], strict=True):
+        mid = (meta or {}).get("method_id")
+        if mid in texts and doc:
+            texts[mid].append(doc)
+    for c in candidates:
+        if not texts[c.id]:
+            texts[c.id] = [c.matched_use_case or c.use_case]
+    return texts
+
+
+def _rerank(
+    query: str,
+    candidates: list[Candidate],
+    reranker: RerankProvider,
+    texts: dict[str, list[str]] | None = None,
+) -> list[Candidate]:
+    """Re-score the shortlist with a cross-encoder and re-sort by that score.
+
+    A method is scored by its *best* text, not by the one the embedding found
+    closest. The two disagree more often than one would hope: a short,
+    loosely phrased further use case can sit nearer a query in embedding space
+    than the canonical description and still be the text the cross-encoder
+    likes least, so handing over only the nearest text could demote a method
+    for having more use cases. `texts` maps method id to all its texts; without
+    it each candidate is scored on the text that retrieved it.
+    """
+    per_method = [texts[c.id] if texts else [c.matched_use_case or c.use_case] for c in candidates]
+    flat = [t for group in per_method for t in group]
+    scores = reranker.score(query, flat)
+    if len(scores) != len(flat):
         raise RerankError(
-            f"{reranker.name} returned {len(scores)} score(s) for {len(candidates)} document(s)"
+            f"{reranker.name} returned {len(scores)} score(s) for {len(flat)} document(s)"
         )
-    rescored = [replace(c, rerank_score=s) for c, s in zip(candidates, scores, strict=True)]
+    rescored: list[Candidate] = []
+    i = 0
+    for c, group in zip(candidates, per_method, strict=True):
+        group_scores = scores[i : i + len(group)]
+        i += len(group)
+        best = max(range(len(group)), key=lambda j: group_scores[j])
+        text = group[best]
+        rescored.append(
+            replace(
+                c,
+                rerank_score=group_scores[best],
+                matched_use_case=None if text == c.use_case else text,
+            )
+        )
     # `sorted` is stable, so ties keep the retrieval order rather than shuffling.
     return sorted(rescored, key=lambda c: c.rerank_score or 0.0, reverse=True)
 
@@ -215,7 +266,7 @@ def retrieve(
     candidates.sort(key=lambda c: c.similarity, reverse=True)
     candidates = _best_per_method(candidates)[:shortlist]
     if reranker is not None:
-        candidates = _rerank(query, candidates, reranker)
+        candidates = _rerank(query, candidates, reranker, _method_texts(coll, candidates))
     return candidates[:top_k]
 
 
