@@ -22,7 +22,27 @@
     "max_minutes": 1200
   },
   "references": [
-    "https://learnwardleymapping.com/",
-    "https://en.wikipedia.org/wiki/Wardley_map"
-  ]
+    "https://www.swardleymaps.com/posts/2016-08-10-finding-a-path",
+    "https://www.swardleymaps.com/posts/2016-08-16-doctrine",
+    "https://www.swardleymaps.com/posts/2017-08-23-better-for-less",
+    "https://learnwardleymapping.com/landscape/",
+    "https://en.wikipedia.org/wiki/Wardley_map",
+    "https://governmenttechnology.blog.gov.uk/2014/04/16/guest-post-mapping-the-way-to-a-strategy/",
+    "https://miro.com/blog/wardley-maps-whiteboard-canvas/"
+  ],
+  "use_cases": [
+    "Several government departments each pay for and run their own version of the same IT system, and the central digital team wants to show which of these should become one shared service or be bought as a standard product.",
+    "The CIO of a public body wants technology strategy conversations to start from why each system exists and how mature it is in the market, instead of from the usual box-and-line architecture diagrams.",
+    "A buyer is drafting a single fixed-price outsourcing contract for an entire system and suspects some of its components are too novel for a supplier to price, which would lead to costly change requests later."
+  ],
+  "contexts": [
+    "business",
+    "public-sector"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-02"
 }
