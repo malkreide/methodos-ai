@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Theory_of_Change",
+  "name": "Theory of Change (and Logic Model)",
+  "category": "strategy",
+  "use_case": "A programme or project has activities, staff and a budget, but nobody can explain step by step how what it does is supposed to produce the long-term effect it promises. Funders ask what difference it makes, evaluators do not know what to measure, and managers cannot tell whether a disappointing result means the work was done badly or the idea behind it was wrong. Working backwards from the intended long-term outcome, the team spells out the chain of intermediate results that must happen first, the assumptions linking each step, and the evidence that would show whether the chain is holding.",
+  "strengths": [
+    "makes the reasoning behind a programme explicit, so it can be questioned before money is spent",
+    "tells evaluators which intermediate results to measure, not just the final outcome",
+    "separates failure of implementation from failure of the underlying idea",
+    "gives funders, staff and partners one shared account of what the work is for",
+    "the logic model variant fits on one page and is what many funders already ask for"
+  ],
+  "weaknesses": [
+    "easily becomes a box-ticking diagram written for a funding application and never used again",
+    "drawn as a tidy linear chain, while real social change has feedback loops, delays and outside influences",
+    "the assumptions are the most important part and the part most often left out",
+    "can take several workshops to agree, and the result is only as good as the evidence brought to it",
+    "shows how change is expected to happen, not whether the programme is worth its cost"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 720
+  },
+  "references": [
+    "https://www.theoryofchange.org/what-is-theory-of-change/",
+    "https://www.theoryofchange.org/what-is-theory-of-change/toc-background/toc-origins/",
+    "https://www.aspeninstitute.org/publications/new-approaches-evaluating-community-initiatives-volume-1-concepts-methods-contexts/",
+    "https://www.aspeninstitute.org/publications/community-builders-approach-theory-change-practical-guide-theory-development/",
+    "https://wkkf.issuelab.org/resource/logic-model-development-guide.html",
+    "https://www.betterevaluation.org/methods-approaches/themes/theory-change",
+    "https://assets.publishing.service.gov.uk/media/57a08a5ded915d3cfd00071a/DFID_ToC_Review_VogelV7.pdf",
+    "https://www.wiley.com/en-us/Purposeful+Program+Theory%3A+Effective+Use+of+Theories+of+Change+and+Logic+Models-p-9780470478578"
+  ],
+  "use_cases": [
+    "A charity is applying for a multi-year grant, and the funder wants to see how its mentoring sessions are expected to lead to young people finding and keeping work, not just how many sessions it will run.",
+    "A school has introduced a reading programme with tutoring and a parent evening, and the governing board asks how exactly this should improve pupils' results by the end of primary school and what to check along the way.",
+    "A municipal employment service has run the same job-coaching scheme for years; the council wants an evaluation, but no one has written down what the scheme is meant to change or what would count as evidence that it works.",
+    "An evaluator is commissioned to assess a public-health initiative and must first agree with the programme team which short- and medium-term results should appear if the initiative is on track.",
+    "Several partner organisations in a community initiative each run their own activities, and they need a common account of how their separate efforts are meant to add up to one long-term goal."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 20
+  },
+  "audience": [
+    "programme managers",
+    "nonprofit leadership",
+    "funders and grant makers",
+    "evaluators",
+    "school leadership",
+    "public administration"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

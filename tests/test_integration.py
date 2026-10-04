@@ -251,6 +251,11 @@ PROBES = [
         "waiting for unanimity just drags things out",
         "Consent_Decision_Making",
     ),
+    (
+        "the foundation wants to know how all the things our project does are supposed "
+        "to bring about the effect we are aiming for, and nobody here can explain it",
+        "Theory_of_Change",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -381,6 +386,11 @@ PROBES_DE = [
         "Im Vorstand wird jeder Mehrheitsentscheid an der nächsten Sitzung wieder "
         "aufgerollt, und Einstimmigkeit erreichen wir nie",
         "Consent_Decision_Making",
+    ),
+    (
+        "unser Projekt hat Budget und viele Aktivitäten, aber niemand kann erklären, "
+        "wie daraus die angestrebte Wirkung entstehen soll, und die Stiftung will das wissen",
+        "Theory_of_Change",
     ),
 ]
 
