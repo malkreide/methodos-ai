@@ -276,6 +276,12 @@ PROBES = [
         "organisations when the famous names dominate every meeting",
         "Delphi_Method",
     ),
+    (
+        "we are hosting an evening for about 150 residents and do not want another night "
+        "of speeches, people should discuss a few big questions in depth with each other "
+        "and mix with people they do not know",
+        "World_Cafe",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -433,6 +439,12 @@ PROBES_DE = [
         "Zahlen belegen; wir wollen das Urteil von Fachleuten aus mehreren Hochschulen, "
         "ohne dass die bekannteste Professorin allen die Meinung vorgibt",
         "Delphi_Method",
+    ),
+    (
+        "am Elternabend mit gut hundert Leuten wollen wir keine Referate, sondern dass "
+        "sich alle in wechselnden kleinen Runden über ein paar grosse Fragen zur Schule "
+        "austauschen",
+        "World_Cafe",
     ),
 ]
 

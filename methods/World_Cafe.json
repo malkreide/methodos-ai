@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "World_Cafe",
+  "name": "World Café",
+  "category": "facilitation",
+  "use_case": "We are organising a large event, anywhere from thirty to a few hundred people, for an evening or half a day, and we do not want the programme to be speeches and a panel. Participants should explore two or three important questions in depth in small conversation circles, change groups between rounds so that ideas travel and combine across the event, and finish with a shared picture of the themes that emerged.",
+  "strengths": [
+    "turns a large audience into dozens of parallel small conversations at once",
+    "moving between tables lets ideas travel and combine across the whole room",
+    "relaxed, informal setting lowers the threshold for people who never speak at public meetings",
+    "scales from a few dozen to several hundred people with the same simple rules",
+    "the paper on each table leaves a visible trace that can be gathered into a shared picture"
+  ],
+  "weaknesses": [
+    "explores and connects ideas but produces no decision or ranked priorities on its own",
+    "stands or falls with the quality of the questions; vague or closed questions give small talk",
+    "the closing harvest is hard to do well with hundreds of people and is often rushed",
+    "needs a large room, many tables and at least an hour and a half to do the rounds justice",
+    "people with little time or a pressing operational issue may find the open format too loose"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 75,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://theworldcafe.com/key-concepts-resources/world-cafe-method/",
+    "https://theworldcafe.com/key-concepts-resources/design-principles/",
+    "https://theworldcafe.com/about-us/history/",
+    "https://books.google.com/books/about/The_World_Caf%C3%A9.html?id=Oqbjw1Z4_tYC",
+    "https://doi.org/10.1177/1609406920916976",
+    "https://www.sessionlab.com/methods/world-cafe"
+  ],
+  "use_cases": [
+    "A school wants its annual parents' evening to be more than the head teacher presenting slides: parents, teachers and pupils should talk together about what makes the school a good place to learn.",
+    "A municipality is consulting residents on the future of a neighbourhood and wants a public event where a hundred and fifty citizens actually exchange views with each other, not a hearing with questions from the floor.",
+    "Our annual staff conference is all keynotes and slide decks; this year leadership wants the two hundred employees to discuss the big questions facing the organisation among themselves.",
+    "A regional health network gathers patients, carers, clinicians and social workers for one afternoon to explore how care could be better joined up, before any plan is drafted.",
+    "A university department invites students, lecturers and administrators to rethink its study programme together and wants many perspectives to meet and build on one another."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 12,
+    "max_people": 1000
+  },
+  "audience": [
+    "event and conference organisers",
+    "school leadership",
+    "community engagement officers",
+    "civic participation teams",
+    "organisational development practitioners",
+    "workshop hosts"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}
