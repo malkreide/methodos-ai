@@ -266,6 +266,11 @@ PROBES = [
         "things we really want to discuss never come up, and one point eats the whole hour",
         "Lean_Coffee",
     ),
+    (
+        "we keep rolling out new ideas to every department at once and never find out "
+        "whether they actually helped, how can we try them out on a small scale first",
+        "PDCA_Cycle",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -412,6 +417,11 @@ PROBES_DE = [
         "reden, was uns unter den Nägeln brennt, kommt nie dran, und ein Punkt frisst "
         "die ganze Stunde",
         "Lean_Coffee",
+    ),
+    (
+        "Neue Ideen führen wir immer gleich im ganzen Schulhaus ein und merken nie, ob "
+        "sie überhaupt etwas gebracht haben. Wie probieren wir sie zuerst im Kleinen aus?",
+        "PDCA_Cycle",
     ),
 ]
 
