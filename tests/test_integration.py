@@ -293,6 +293,11 @@ PROBES = [
         "before comparing the offers",
         "Weighted_Decision_Matrix",
     ),
+    (
+        "every improvement plan at our school starts from what we're failing at and the "
+        "teachers have lost all motivation; I want to build on what we already do well",
+        "Appreciative_Inquiry",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -468,6 +473,11 @@ PROBES_DE = [
         "endet beim Bauchgefühl, wir wollen vorher festlegen, was uns wie wichtig ist, "
         "und dann alle Angebote gleich beurteilen",
         "Weighted_Decision_Matrix",
+    ),
+    (
+        "bei uns im Team wird nur noch über Mängel geredet und alle sind demotiviert; "
+        "wir möchten die Entwicklung auf dem aufbauen, was schon gut läuft",
+        "Appreciative_Inquiry",
     ),
 ]
 
