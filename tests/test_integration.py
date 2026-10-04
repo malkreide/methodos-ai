@@ -256,6 +256,11 @@ PROBES = [
         "to bring about the effect we are aiming for, and nobody here can explain it",
         "Theory_of_Change",
     ),
+    (
+        "everyone here is flat out, yet at year end nobody can say what all that work "
+        "actually changed, and our plans are just long lists of tasks",
+        "OKR",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -391,6 +396,11 @@ PROBES_DE = [
         "unser Projekt hat Budget und viele Aktivitäten, aber niemand kann erklären, "
         "wie daraus die angestrebte Wirkung entstehen soll, und die Stiftung will das wissen",
         "Theory_of_Change",
+    ),
+    (
+        "Alle sind dauernd ausgelastet, aber Ende Jahr kann niemand sagen, was die ganze "
+        "Arbeit eigentlich bewirkt hat, und unsere Planung ist bloss eine lange Pendenzenliste",
+        "OKR",
     ),
 ]
 
