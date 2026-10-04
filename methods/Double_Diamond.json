@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "Double_Diamond",
+  "name": "Double Diamond",
+  "category": "strategy",
+  "use_case": "A team is about to build a new app, form, service or programme on the strength of its own assumptions, and earlier projects like it ended up barely used because nobody checked what the people it was meant for actually struggle with. It needs a project structure that first opens up research into the users' situation and narrows it to one clearly stated problem, and only then opens up many possible answers and narrows them through small tests to the one worth delivering.",
+  "strengths": [
+    "stops a team from committing to a solution before the problem is understood",
+    "makes the two kinds of thinking explicit, so the group knows when to widen and when to cut",
+    "the agreed problem statement gives a shared yardstick for judging ideas later",
+    "simple enough to explain to sponsors, residents and pupils alike",
+    "scales from a two-day sprint to a multi-month service redesign"
+  ],
+  "weaknesses": [
+    "a frame for a project, not a technique: each phase still needs its own research and ideation methods",
+    "the tidy diagram suggests a single linear pass, while real projects loop back",
+    "discovery is easily cut when budgets or deadlines tighten, which removes the point of the method",
+    "sponsors who arrived with a fixed solution may resist reopening the question"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 960,
+    "max_minutes": 9600
+  },
+  "references": [
+    "https://www.designcouncil.org.uk/our-resources/the-double-diamond/",
+    "https://www.designcouncil.org.uk/our-resources/the-double-diamond/history-of-the-double-diamond/",
+    "https://www.designcouncil.org.uk/our-resources/framework-for-innovation/",
+    "https://www.designcouncil.org.uk/fileadmin/uploads/dc/Documents/ElevenLessons_Design_Council%2520%25282%2529.pdf",
+    "https://en.wikipedia.org/wiki/Double_Diamond_(design_process_model)",
+    "https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works"
+  ],
+  "use_cases": [
+    "A city department wants to redesign how residents apply for a benefit or permit, and before anyone drafts a new online form it needs to learn where applicants actually get stuck and agree on which of those difficulties to fix.",
+    "A school or education authority plans to replace the way parents register children for daycare or after-school care, and wants to hear from families first instead of digitising the existing paper process as it is.",
+    "Our product team has a list of feature ideas from management, but none of us has spoken to users about the underlying need, and we want a structured path from open user research to a tested concept.",
+    "A university teaching team wants students to work through an open-ended project in stages, researching the people affected and framing the problem before they are allowed to propose and prototype solutions."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "service design team",
+    "public administration",
+    "product team",
+    "school and education authority",
+    "students and teachers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

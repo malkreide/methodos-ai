@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Weighted_Decision_Matrix",
+  "name": "Weighted Decision Matrix",
+  "category": "decision-making",
+  "use_case": "A structured way to choose one option from several alternatives, such as suppliers, sites, software products or applicants, when a handful of criteria matter to different degrees. The group agrees the criteria and their relative weights before anyone looks at the options, then rates every option against every criterion and multiplies each rating by its weight, so the choice rests on visible, agreed reasons instead of gut feeling, seniority or whoever speaks loudest. Best used when the discussion keeps circling between favourites and the selection has to be explained afterwards to those who were not chosen or to an oversight body.",
+  "strengths": [
+    "separates the argument about what matters from the argument about which option is best",
+    "fixing the weights before rating makes it harder to tailor them to a favourite afterwards",
+    "leaves a written record of why an option won that can be shown to losing bidders or auditors",
+    "a quick sensitivity check shows whether the winner survives reasonable changes to the weights",
+    "every participant's view enters through the same table, not through airtime"
+  ],
+  "weaknesses": [
+    "totals with decimals suggest a precision the underlying judgements do not have",
+    "weights can be quietly tuned to justify an option someone already prefers",
+    "overlapping criteria count the same advantage twice and distort the result",
+    "a strong total can hide a fatal weakness on one criterion unless knock-out conditions are set first",
+    "adds little when one option is clearly better or the choice is easy to reverse"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Decision-matrix_method",
+    "https://openlibrary.org/isbn/0201416395",
+    "https://en.wikipedia.org/wiki/Multiple-criteria_decision_analysis",
+    "https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy",
+    "https://asq.org/quality-resources/decision-matrix",
+    "https://www.fedlex.admin.ch/eli/cc/2020/126/de",
+    "https://eur-lex.europa.eu/eli/dir/2014/24/oj"
+  ],
+  "use_cases": [
+    "A municipal procurement office has to publish its award criteria and their weighting in the tender documents, then evaluate every bid against them in a way that holds up if an unsuccessful bidder appeals.",
+    "A school leadership team must pick one of three learning platforms, and teachers, IT staff and the finance office each care about usability, cost and data protection to a different extent.",
+    "A company is choosing where to open its next warehouse among four candidate sites and has to trade rent, transport links, available staff and room to expand against each other.",
+    "An engineering team has sketched several design concepts for a new product and wants to compare each one with the current design, criterion by criterion, to see which are worth developing further.",
+    "A selection panel keeps drifting towards the applicant who interviewed most confidently and wants to settle beforehand what the role really requires and how much each requirement counts."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "procurement teams",
+    "school leadership",
+    "project steering committees",
+    "engineering design teams",
+    "selection panels"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

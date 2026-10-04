@@ -251,6 +251,69 @@ PROBES = [
         "waiting for unanimity just drags things out",
         "Consent_Decision_Making",
     ),
+    (
+        "the foundation wants to know how all the things our project does are supposed "
+        "to bring about the effect we are aiming for, and nobody here can explain it",
+        "Theory_of_Change",
+    ),
+    (
+        "everyone here is flat out, yet at year end nobody can say what all that work "
+        "actually changed, and our plans are just long lists of tasks",
+        "OKR",
+    ),
+    (
+        "in our weekly team meeting the boss always decides what we talk about, the "
+        "things we really want to discuss never come up, and one point eats the whole hour",
+        "Lean_Coffee",
+    ),
+    (
+        "we keep rolling out new ideas to every department at once and never find out "
+        "whether they actually helped, how can we try them out on a small scale first",
+        "PDCA_Cycle",
+    ),
+    (
+        "how do I get a reliable estimate from a group of specialists in different "
+        "organisations when the famous names dominate every meeting",
+        "Delphi_Method",
+    ),
+    (
+        "we are hosting an evening for about 150 residents and do not want another night "
+        "of speeches, people should discuss a few big questions in depth with each other "
+        "and mix with people they do not know",
+        "World_Cafe",
+    ),
+    (
+        "management already decided we need a new app, but nobody has asked the users "
+        "what problem they actually have",
+        "Double_Diamond",
+    ),
+    (
+        "we have to pick one of four suppliers and every meeting ends with people "
+        "defending their favourite on instinct, we want to agree what matters most "
+        "before comparing the offers",
+        "Weighted_Decision_Matrix",
+    ),
+    (
+        "every improvement plan at our school starts from what we're failing at and the "
+        "teachers have lost all motivation; I want to build on what we already do well",
+        "Appreciative_Inquiry",
+    ),
+    (
+        "every office says its own part of the permit process works fine, yet "
+        "applicants keep getting lost between them and giving up; nobody has "
+        "ever gone through it the way they do",
+        "Customer_Journey_Map",
+    ),
+    (
+        "every measure we take against this problem seems to make it worse a few "
+        "months later, and nobody can explain why",
+        "Causal_Loop_Diagram",
+    ),
+    (
+        "we have dozens of things that might go wrong on this programme, no idea "
+        "which ones deserve money and attention, and nobody knows who handles which",
+        "Risk_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -381,6 +444,72 @@ PROBES_DE = [
         "Im Vorstand wird jeder Mehrheitsentscheid an der nächsten Sitzung wieder "
         "aufgerollt, und Einstimmigkeit erreichen wir nie",
         "Consent_Decision_Making",
+    ),
+    (
+        "unser Projekt hat Budget und viele Aktivitäten, aber niemand kann erklären, "
+        "wie daraus die angestrebte Wirkung entstehen soll, und die Stiftung will das wissen",
+        "Theory_of_Change",
+    ),
+    (
+        "Alle sind dauernd ausgelastet, aber Ende Jahr kann niemand sagen, was die ganze "
+        "Arbeit eigentlich bewirkt hat, und unsere Planung ist bloss eine lange Pendenzenliste",
+        "OKR",
+    ),
+    (
+        "in unserer wöchentlichen Teamsitzung bestimmt immer die Chefin, worüber wir "
+        "reden, was uns unter den Nägeln brennt, kommt nie dran, und ein Punkt frisst "
+        "die ganze Stunde",
+        "Lean_Coffee",
+    ),
+    (
+        "Neue Ideen führen wir immer gleich im ganzen Schulhaus ein und merken nie, ob "
+        "sie überhaupt etwas gebracht haben. Wie probieren wir sie zuerst im Kleinen aus?",
+        "PDCA_Cycle",
+    ),
+    (
+        "Welche Kompetenzen Lernende in zwanzig Jahren brauchen, lässt sich mit keinen "
+        "Zahlen belegen; wir wollen das Urteil von Fachleuten aus mehreren Hochschulen, "
+        "ohne dass die bekannteste Professorin allen die Meinung vorgibt",
+        "Delphi_Method",
+    ),
+    (
+        "am Elternabend mit gut hundert Leuten wollen wir keine Referate, sondern dass "
+        "sich alle in wechselnden kleinen Runden über ein paar grosse Fragen zur Schule "
+        "austauschen",
+        "World_Cafe",
+    ),
+    (
+        "Die Stadt hat eine neue App für die Anmeldung lanciert, aber kaum jemand nutzt "
+        "sie. Bevor wir das nächste Angebot bauen, wollen wir verstehen, was die "
+        "Bevölkerung wirklich braucht",
+        "Double_Diamond",
+    ),
+    (
+        "wir müssen uns für eine von drei Schulsoftwares entscheiden und jede Sitzung "
+        "endet beim Bauchgefühl, wir wollen vorher festlegen, was uns wie wichtig ist, "
+        "und dann alle Angebote gleich beurteilen",
+        "Weighted_Decision_Matrix",
+    ),
+    (
+        "bei uns im Team wird nur noch über Mängel geredet und alle sind demotiviert; "
+        "wir möchten die Entwicklung auf dem aufbauen, was schon gut läuft",
+        "Appreciative_Inquiry",
+    ),
+    (
+        "Jedes Amt sagt, sein Teil des Bewilligungsverfahrens funktioniere, trotzdem "
+        "verlieren sich Gesuchsteller zwischen den Stellen und geben auf; niemand "
+        "hat es je so durchlaufen wie sie",
+        "Customer_Journey_Map",
+    ),
+    (
+        "Was immer wir gegen das Problem tun, es kommt ein paar Monate später grösser "
+        "zurück, und niemand kann erklären, warum",
+        "Causal_Loop_Diagram",
+    ),
+    (
+        "bei diesem Vorhaben könnten Dutzende Dinge schiefgehen, wir wissen nicht, "
+        "welche Geld und Aufmerksamkeit verdienen, und niemand weiss, wer sich um was kümmert",
+        "Risk_Matrix",
     ),
 ]
 

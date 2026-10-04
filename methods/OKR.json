@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "OKR",
+  "name": "Objectives and Key Results (OKR)",
+  "category": "strategy",
+  "use_case": "Everyone is fully occupied, yet management cannot say what all that effort is supposed to achieve in the coming months, plans describe activities rather than results, and nobody checks whether anything changed until the year is over. It commits each department to a few outcomes for a fixed period, each with measurable evidence of success agreed in advance and tracked openly every week or two.",
+  "strengths": [
+    "forces a choice of a few outcomes instead of a wish list of everything",
+    "separates the result that matters from the activities meant to produce it",
+    "makes priorities visible across teams, which exposes duplication and conflicts",
+    "short cycles and regular check-ins surface drift months before a year-end review",
+    "deliberately ambitious targets encourage teams to look past incremental improvements"
+  ],
+  "weaknesses": [
+    "linking scores to pay or appraisal turns ambitious targets into safe ones and invites gaming",
+    "teams routinely set too many objectives and key results, which recreates the original sprawl",
+    "key results drift into to-do lists of activities that can be ticked off without changing anything",
+    "outcomes that are hard to quantify get replaced by countable proxies that then become the target",
+    "needs sustained management attention; without check-ins it decays into a planning ritual",
+    "cascading every goal down the hierarchy adds bureaucracy and slows the cycle"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Objectives_and_key_results",
+    "https://en.wikipedia.org/wiki/High_Output_Management",
+    "https://www.whatmatters.com/faqs/okr-meaning-definition-example",
+    "https://rework.withgoogle.com/en/guides/set-goals-with-okrs",
+    "https://doi.org/10.1037/0003-066X.57.9.705",
+    "https://doi.org/10.5465/amp.2009.37007999",
+    "https://en.wikipedia.org/wiki/Goodhart%27s_law",
+    "https://oecd-opsi.org/innovations/implementation-of-okrs-methodology-in-national-agency-on-corruption-prevention/"
+  ],
+  "use_cases": [
+    "A software company with six product groups cannot say what their combined output achieved last quarter, and leadership wants each group to commit to a few measurable results for the next one.",
+    "A national agency has a multi-year strategy on paper, but its departments plan their year as lists of tasks and nobody can tell in spring whether the strategy is on track; the director wants quarterly targets each unit reviews with the others.",
+    "A university's central student-services division wants its admissions, IT and advising units to agree on three improvements students should actually notice this semester and to check every few weeks whether the numbers are moving.",
+    "A charity's annual plan lists forty initiatives with no indication of which matter most, and the board wants the staff to pick a handful of measurable changes for the next three months and report on them openly.",
+    "A product group ships something every sprint but has no shared sense of what success would look like for its users, and the head of product wants each quarter framed around a few measurable changes in user behaviour rather than features delivered."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 40
+  },
+  "audience": [
+    "leadership team",
+    "department heads",
+    "product team",
+    "agency management",
+    "nonprofit board and staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

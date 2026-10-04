@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Causal_Loop_Diagram",
+  "name": "Causal Loop Diagram",
+  "category": "analysis",
+  "use_case": "A problem keeps returning or grows worse even though people keep acting on it, because the actions themselves feed back into the situation: overtime to clear a backlog wears staff out and the backlog grows, tighter controls erode trust and invite more workarounds, a quick relief now costs more later. No single cause explains the pattern, so the group needs to draw how the variables drive each other in circles, which circles amplify and which hold things in check, and where delays hide the consequences, before choosing where to intervene.",
+  "strengths": [
+    "explains why well-meant interventions backfire, which single-cause analysis cannot",
+    "makes delays visible, so a group stops judging an action by its first effect",
+    "a recognised set of recurring patterns (archetypes) gives a head start on common traps",
+    "moves a blaming discussion towards the structure that produces everyone's behaviour",
+    "needs only paper and pens, and can later seed a quantitative simulation"
+  ],
+  "weaknesses": [
+    "diagrams grow tangled quickly and lose the group if not kept to the essential loops",
+    "shows direction of influence but not magnitude, so it cannot say which loop dominates",
+    "a confident but untested diagram can lend false authority to a story",
+    "polarity notation and loop labelling take practice and confuse newcomers",
+    "points to leverage but does not by itself produce an action plan"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Causal_loop_diagram",
+    "https://en.wikipedia.org/wiki/The_Fifth_Discipline",
+    "https://en.wikipedia.org/wiki/System_archetype",
+    "https://systemdynamics.org/what-is-system-dynamics/",
+    "https://doi.org/10.2307/41166098",
+    "https://thesystemsthinker.com/guidelines-for-drawing-causal-loop-diagrams-2/",
+    "https://www.gov.uk/government/publications/systems-thinking-for-civil-servants"
+  ],
+  "use_cases": [
+    "A council added caseworkers to shorten the waiting list for social care assessments; the quicker service drew in more referrals, and two years on the queue is as long as it was.",
+    "Every quarter the sales team discounts to hit its number, customers have learned to hold off until the discount arrives, and full-price orders shrink so each new discount has to be deeper.",
+    "A school tightened its sanctions after a difficult term, excluded pupils fall further behind and return more disruptive, and staff want to understand why the stricter regime seems to be making behaviour worse.",
+    "A hospital unit covers vacancies with agency nurses, the permanent staff carry the extra induction and coordination load, more of them resign, and the agency bill climbs every year.",
+    "A charity's success in one district attracts most of the new funding, the other districts lose staff and results, and the board wonders why the gap between them keeps widening."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 12
+  },
+  "audience": [
+    "leadership teams",
+    "policy and public-service teams",
+    "school leadership",
+    "operations managers",
+    "strategy and transformation teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Delphi_Method",
+  "name": "Delphi Method",
+  "category": "decision-making",
+  "use_case": "A structured way to obtain a considered judgement or forecast from a panel of experts on a question where hard data is missing, without the panel ever meeting. Experts answer a written questionnaire on their own, see an anonymous summary of how the whole panel answered and why, and then reconsider their answers over two to four rounds. Best used when the knowledge sits with specialists scattered across organisations, and when a face-to-face meeting would let reputation, seniority or the urge to agree decide the outcome instead of the arguments; the result is either a converged estimate or a clearly documented, reasoned disagreement.",
+  "strengths": [
+    "anonymity lets a junior specialist contradict a famous one without cost",
+    "every expert's view counts, not only the views of the most confident talkers",
+    "the written reasons for outlying answers are often the most valuable output",
+    "panelists can be spread across institutions, cities and time zones",
+    "leaves an auditable record of how the panel reached its judgement"
+  ],
+  "weaknesses": [
+    "slow: several rounds usually take weeks to months of calendar time",
+    "panel attrition between rounds can quietly bias the result",
+    "convergence may reflect fatigue or conformity rather than real agreement",
+    "the quality of the outcome depends heavily on who is chosen as an expert",
+    "a badly worded first-round question cannot be repaired by later rounds"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 480,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://doi.org/10.1287/mnsc.9.3.458",
+    "https://www.rand.org/pubs/research_memoranda/RM727z1.html",
+    "https://www.rand.org/pubs/research_memoranda/RM5888.html",
+    "https://www.researchgate.net/publication/237035943_The_Delphi_Method_Techniques_and_Applications",
+    "https://www.rand.org/pubs/tools/TLA3082-1.html",
+    "https://doi.org/10.1016/S0169-2070(99)00018-7",
+    "https://doi.org/10.1046/j.1365-2648.2000.t01-1-01567.x",
+    "https://doi.org/10.7275/pdz9-th90",
+    "https://doi.org/10.1371/journal.pone.0020476",
+    "https://pubmed.ncbi.nlm.nih.gov/28190381/",
+    "https://en.wikipedia.org/wiki/Delphi_method"
+  ],
+  "use_cases": [
+    "An education ministry wants to know which competences school leavers will need in fifteen years, and asks researchers, teachers and employers from across the country for their judgement, because no dataset can answer the question.",
+    "A public health agency must agree on a set of quality indicators for a service, and needs clinicians, managers and patient representatives to rate each candidate indicator without the most senior physician setting the tone.",
+    "A government department has to estimate how likely and how soon a technology or a regulatory change will arrive, and the specialists who could judge it work for competing institutions and would not speak freely in one room.",
+    "A university or professional body is defining what graduates of a programme should be able to do, and wants a documented agreement among scattered practitioners and academics that it can defend to an accreditation panel.",
+    "A company needs a long-range estimate, such as future demand or the cost of an unproven process, and past attempts with an expert workshop simply adopted the opinion of whoever had the highest rank."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "async",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 8,
+    "max_people": 60
+  },
+  "audience": [
+    "policy and strategy units",
+    "education administrations",
+    "public health agencies",
+    "research and evaluation teams",
+    "professional and accreditation bodies",
+    "foresight and planning teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

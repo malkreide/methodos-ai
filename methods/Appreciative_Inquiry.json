@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Appreciative_Inquiry",
+  "name": "Appreciative Inquiry",
+  "category": "change-management",
+  "use_case": "For an organisation, school or team caught in deficit talk: every discussion about getting better starts from what is broken, morale has sunk and people no longer believe things can improve. People interview each other about their best experiences at work, identify what made those successes possible, and design the future and concrete next steps around them, so that improvement grows out of what already works rather than out of repairing faults.",
+  "strengths": [
+    "turns attention from blame to what people are proud of, which often restores energy in a demoralised group",
+    "every participant contributes a first-hand story, so quiet staff and frontline voices carry weight",
+    "the future it designs is grounded in practices that have already worked here, not imported from elsewhere",
+    "scales from a single team to a whole-system summit with hundreds of stakeholders",
+    "builds relationships across hierarchies and departments through the paired interviews"
+  ],
+  "weaknesses": [
+    "not a diagnostic: it will not find the cause of an acute failure, a safety risk or a compliance breach",
+    "an insistence on the positive can silence legitimate criticism and leave real grievances unspoken",
+    "reads as naive or manipulative where trust in leadership is low and problems are being glossed over",
+    "the uplifting summit is the easy part; without owners and follow-through the energy fades within weeks",
+    "evidence is dominated by practitioner case reports; controlled studies are few and show mixed transformational effects"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 1440
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Appreciative_inquiry",
+    "https://doi.org/10.1177/0021886304270337",
+    "https://doi.org/10.1177/1476750306070103",
+    "https://doi.org/10.1177/1056492609349349",
+    "https://www.gervasebushe.ca/appinq.html",
+    "https://www.iriss.org.uk/resources/insights/forming-new-futures-through-appreciative-inquiry",
+    "https://doi.org/10.1002/cjas.70042"
+  ],
+  "use_cases": [
+    "Teachers have grown cynical because every school development plan begins with what pupils and staff are failing at, and the head wants to start instead from the lessons and projects the staff are genuinely proud of.",
+    "In a long-established administrative unit, staff meetings have turned into rounds of complaints about workload and other departments; motivation is low, and the head of unit wants the unit's next steps to grow out of the work its people do best.",
+    "A social-services department keeps being told by inspections what it gets wrong; managers want frontline workers to identify the cases where they made a real difference and build the next service plan around those practices.",
+    "Two merged nursing wards still speak about each other with suspicion, and the ward manager wants staff to share their proudest moments of patient care and discover what each side does well.",
+    "A municipality wants residents, associations and council staff to shape a vision for a neighbourhood from what people value about it today, rather than from a list of complaints.",
+    "A nonprofit's volunteers have lost heart after several funding setbacks, and the board wants to rekindle commitment by recalling the moments the organisation was at its best and planning from there."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 6,
+    "max_people": 300
+  },
+  "audience": [
+    "school staff",
+    "school leadership",
+    "public service teams",
+    "health-care teams",
+    "nonprofit boards and volunteers",
+    "organisation development facilitators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

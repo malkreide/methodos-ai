@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "PDCA_Cycle",
+  "name": "PDCA / PDSA Cycle",
+  "category": "change-management",
+  "use_case": "An improvement idea, such as a new procedure, rule or teaching practice, is about to be introduced everywhere at once without any evidence that it works in this setting, or changes are made and nobody ever measures whether they helped. The method replaces the full rollout with a series of small trials: the expected result is written down first, the change is tried in one place for a short time, the outcome is compared with the expectation, and only then is it adopted, adjusted or dropped and tried a little more widely.",
+  "strengths": [
+    "small trials keep the cost of a bad idea low and the learning fast",
+    "writing the prediction down first turns opinion into something that can be proven wrong",
+    "each round builds on the last, so a change is shaped by evidence before it is scaled up",
+    "simple enough for frontline staff and teachers to run without specialist support",
+    "widely used in health care, manufacturing and school improvement, so guidance and worksheets are easy to find"
+  ],
+  "weaknesses": [
+    "often reduced to a single pass, which drops the repetition that makes it work",
+    "needs a measure that responds within days or weeks; slow-moving outcomes stall the cycle",
+    "says how to test a change, not which change to test or why the problem exists",
+    "small-scale results can mislead when the trial setting is unusually favourable",
+    "documentation and data collection are routinely under-resourced, so cycles go unrecorded"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.ihi.org/library/model-for-improvement",
+    "https://www.ihi.org/library/tools/plan-do-study-act-pdsa-worksheet",
+    "https://deming.org/explore/pdsa/",
+    "https://asq.org/quality-resources/pdca-cycle",
+    "https://www.lean.org/lexicon-terms/pdca/",
+    "https://www.carnegiefoundation.org/our-ideas/six-core-principles-improvement/",
+    "https://doi.org/10.1136/bmjqs-2013-001862",
+    "https://doi.org/10.1136/bmjqs-2015-005076",
+    "https://en.wikipedia.org/wiki/PDCA"
+  ],
+  "use_cases": [
+    "A school wants to change how homework feedback or reading support is given, and instead of introducing it in every class at once, one teacher tries it with one group for two weeks and the staff look at the results before the next class joins.",
+    "A municipal service counter wants to shorten waiting times with a new appointment rule, and tries it on a single morning at one office, measuring the effect before deciding whether to extend it to the other branches.",
+    "A hospital ward or care home has agreed on a new routine for handovers or medication rounds and wants evidence from a few shifts that it actually reduces errors before writing it into the standard procedure.",
+    "A public agency's quality framework requires every service change to be evaluated, and staff need a lightweight routine for recording what each change should achieve and whether the figures afterwards bear that out."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "quality and process improvement teams",
+    "school leadership and teaching teams",
+    "public-service managers",
+    "clinical and care teams",
+    "operations teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}
