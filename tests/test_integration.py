@@ -236,6 +236,11 @@ PROBES = [
         "and everyone else just nods along, how do I get input from all of them",
         "One_Two_Four_All",
     ),
+    (
+        "before we announce the reform, who could stop it or carry it, and which "
+        "groups do we bring in early versus just keep updated",
+        "Stakeholder_Map",
+    ),
 ]
 
 # The same 23 problems as a German-speaking user would put them. Not literal
@@ -351,6 +356,11 @@ PROBES_DE = [
         "bei unseren Besprechungen reden immer die gleichen zwei, drei Leute und der "
         "Rest hört nur zu, wie bekomme ich von allen Ideen",
         "One_Two_Four_All",
+    ),
+    (
+        "bevor wir die Reform ankündigen: wer könnte sie zu Fall bringen oder mittragen, "
+        "und welche Gruppen binden wir früh ein, welche halten wir nur auf dem Laufenden",
+        "Stakeholder_Map",
     ),
 ]
 

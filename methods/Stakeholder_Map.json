@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Stakeholder_Map",
+  "name": "Stakeholder Mapping (Power/Interest Grid)",
+  "category": "analysis",
+  "use_case": "Before launching a project, policy or reform, the people behind it do not know which individuals and groups could block it, which could carry it, and how much attention each one deserves. The method lists everyone who is affected by the initiative or can affect it, places each on a grid of their power over the outcome against how much the outcome matters to them, and turns those positions into a plan for whom to involve closely, whom to keep satisfied, whom to keep informed and whom simply to watch.",
+  "strengths": [
+    "makes the political side of a plan explicit before it meets resistance",
+    "quick to build with sticky notes and a wall, no data required",
+    "separates groups that need a seat at the table from those that need updates",
+    "surfaces powerful but disengaged parties who could wake up late and stop the effort",
+    "works as well for a council reform or a school change as for a company project"
+  ],
+  "weaknesses": [
+    "placements are judgements by the planning group and can reflect its blind spots",
+    "a snapshot: interest and power shift once the plan becomes public",
+    "the two axes say nothing about whether a party supports or opposes the change",
+    "the map is sensitive and can damage trust if circulated carelessly",
+    "can be used to manage people around a decision rather than to listen to them"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://doi.org/10.1080/14719030410001675722",
+    "https://doi.org/10.4135/9781446217153",
+    "https://aisel.aisnet.org/icis1981/20/",
+    "https://media.odi.org/documents/6459.pdf",
+    "https://en.wikipedia.org/wiki/Stakeholder_analysis"
+  ],
+  "use_cases": [
+    "A school authority plans to merge two primary schools and redraw catchment areas, and the head needs to know in advance which parent groups, teacher representatives and local politicians could stop it and who must be involved from the first meeting.",
+    "A city administration is preparing a traffic and parking reform for the old town and wants to find out, before it goes to the council, which shopkeepers, residents' associations, political parties and higher authorities could derail it and how to engage each of them.",
+    "A hospital introducing a new shift model has to work out how the nurses' union, senior doctors, the board and patient representatives each relate to it before the formal consultation period opens.",
+    "An IT lead about to roll out a company-wide system must decide which department heads, works council members and key users should help shape it, and which only need regular news about progress.",
+    "A charity campaigning for a change in housing law wants to tell apart the officials who decide, the allies who care but carry little weight, and the influential groups that are not yet paying attention."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 10
+  },
+  "audience": [
+    "project sponsors",
+    "programme and change managers",
+    "public administration and policy teams",
+    "school leadership",
+    "nonprofit campaign teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}
