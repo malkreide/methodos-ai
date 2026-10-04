@@ -271,6 +271,11 @@ PROBES = [
         "whether they actually helped, how can we try them out on a small scale first",
         "PDCA_Cycle",
     ),
+    (
+        "how do I get a reliable estimate from a group of specialists in different "
+        "organisations when the famous names dominate every meeting",
+        "Delphi_Method",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -422,6 +427,12 @@ PROBES_DE = [
         "Neue Ideen führen wir immer gleich im ganzen Schulhaus ein und merken nie, ob "
         "sie überhaupt etwas gebracht haben. Wie probieren wir sie zuerst im Kleinen aus?",
         "PDCA_Cycle",
+    ),
+    (
+        "Welche Kompetenzen Lernende in zwanzig Jahren brauchen, lässt sich mit keinen "
+        "Zahlen belegen; wir wollen das Urteil von Fachleuten aus mehreren Hochschulen, "
+        "ohne dass die bekannteste Professorin allen die Meinung vorgibt",
+        "Delphi_Method",
     ),
 ]
 
