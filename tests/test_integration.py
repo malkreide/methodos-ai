@@ -231,9 +231,29 @@ PROBES = [
         "debrief the launch we just finished: what did we expect versus what happened",
         "After_Action_Review",
     ),
+    (
+        "whenever we discuss something as a group the same two or three people talk "
+        "and everyone else just nods along, how do I get input from all of them",
+        "One_Two_Four_All",
+    ),
+    (
+        "before we announce the reform, who could stop it or carry it, and which "
+        "groups do we bring in early versus just keep updated",
+        "Stakeholder_Map",
+    ),
+    (
+        "every company-wide initiative we launch fizzles out within a year and staff "
+        "drift back to the old ways",
+        "Kotter_Eight_Steps",
+    ),
+    (
+        "every time we vote the losing side reopens it at the next meeting, and "
+        "waiting for unanimity just drags things out",
+        "Consent_Decision_Making",
+    ),
 ]
 
-# The same 23 problems as a German-speaking user would put them. Not literal
+# The same problems as a German-speaking user would put them. Not literal
 # translations where Swiss usage differs ("Pendenzen", "Lancierung", Franken):
 # the point is to probe the language users will actually type.
 PROBES_DE = [
@@ -341,6 +361,26 @@ PROBES_DE = [
         "Nachbesprechung der eben abgeschlossenen Lancierung: was haben wir "
         "erwartet und was ist passiert",
         "After_Action_Review",
+    ),
+    (
+        "bei unseren Besprechungen reden immer die gleichen zwei, drei Leute und der "
+        "Rest hört nur zu, wie bekomme ich von allen Ideen",
+        "One_Two_Four_All",
+    ),
+    (
+        "bevor wir die Reform ankündigen: wer könnte sie zu Fall bringen oder mittragen, "
+        "und welche Gruppen binden wir früh ein, welche halten wir nur auf dem Laufenden",
+        "Stakeholder_Map",
+    ),
+    (
+        "unsere organisationsweiten Initiativen verlaufen nach dem Kickoff jedes Mal "
+        "im Sand und alle kehren zu den alten Gewohnheiten zurück",
+        "Kotter_Eight_Steps",
+    ),
+    (
+        "Im Vorstand wird jeder Mehrheitsentscheid an der nächsten Sitzung wieder "
+        "aufgerollt, und Einstimmigkeit erreichen wir nie",
+        "Consent_Decision_Making",
     ),
 ]
 

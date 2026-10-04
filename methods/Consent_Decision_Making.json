@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Consent_Decision_Making",
+  "name": "Consent Decision-Making",
+  "category": "decision-making",
+  "use_case": "A group decision procedure for when waiting for unanimous agreement drags a decision out indefinitely, or when a majority vote leaves an outvoted minority that keeps reopening or ignoring the outcome. A proposal is adopted once nobody has a reasoned objection to it, rather than once everybody actively prefers it, and each objection is treated as information that improves the proposal instead of as a veto. Best used for policies, working agreements and operational rules that can be revisited on a set review date, where an answer that is good enough for now and safe enough to try beats holding out for the perfect one.",
+  "strengths": [
+    "ends open-ended debate without overruling anyone: silence is not enough, but enthusiasm is not required",
+    "every member can stop a harmful proposal, so minorities are protected without a majority being able to override them",
+    "turns disagreement into concrete amendments, because an objection has to say what harm it prevents",
+    "a built-in review date lowers the stakes and makes it easier to agree on a first version",
+    "the round structure gives quieter members the same airtime as confident ones"
+  ],
+  "weaknesses": [
+    "depends on a facilitator who can tell a reasoned objection from a personal preference without dismissing either",
+    "groups new to it confuse it with consensus and treat every objection as a veto, which recreates the deadlock",
+    "needs a shared, written purpose; without one there is no yardstick for testing objections",
+    "people may withhold objections to avoid conflict, so consent can be given without real agreement",
+    "unsuited to irreversible or one-shot choices where a later review cannot correct a mistake"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://patterns.sociocracy30.org/consent-decision-making.html",
+    "https://patterns.sociocracy30.org/objection.html",
+    "https://books.google.com/books/about/Sociocracy.html?id=Vzr9AAAACAAJ",
+    "https://doi.org/10.1287/orsc.1050.0169",
+    "https://doi.org/10.1080/01900692.2016.1263206",
+    "https://en.wikipedia.org/wiki/Sociocracy"
+  ],
+  "use_cases": [
+    "A school's teaching staff has spent three staff meetings on a new homework policy; waiting until every teacher is convinced has stalled it, and an earlier show of hands left half the staff disregarding the result.",
+    "A town council keeps splitting along party lines, the losing side reopens every vote at the next session, and the council wants a way of deciding that the minority can genuinely live with.",
+    "The board of a volunteer association sees outvoted members resign or stop helping after contested votes, and wants to adopt rules that nobody has a serious reason to resist.",
+    "A class or student council is setting its own rules, and the teacher wants every pupil's concerns weighed so that neither a few loud voices nor a bare majority decides for everyone.",
+    "A self-managing group with no boss to break a deadlock wants to adopt a new rule quickly and revise it after a trial period, instead of arguing until every member is enthusiastic."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "self-organising teams",
+    "school staff and leadership teams",
+    "boards and committees",
+    "councils and working groups",
+    "student councils",
+    "volunteer associations"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

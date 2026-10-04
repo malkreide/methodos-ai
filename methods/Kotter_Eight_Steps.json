@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "Kotter_Eight_Steps",
+  "name": "Kotter's 8-Step Change Model",
+  "category": "change-management",
+  "use_case": "For leaders whose organisation-wide change, such as a new system, a restructuring or a new way of working, keeps losing momentum: the top approves it, staff agree in principle, and a year later little is different because the old habits quietly returned. It sequences the leadership work across the whole programme, from making the need felt and assembling a group with the weight to drive it, through a vision people can repeat and early visible results, to keeping going until the new way is simply how the organisation works.",
+  "strengths": [
+    "gives leaders a shared vocabulary for where a large change programme is weak",
+    "names the failure modes that sink most transformations, such as declaring victory too early",
+    "insists on visible early results, which keeps sceptics and funders on board",
+    "treats the final step, making the change part of everyday practice, as real work rather than an afterthought",
+    "widely known, so boards and sponsors accept it without a long explanation"
+  ],
+  "weaknesses": [
+    "leader-driven by design; the people affected appear mainly as an audience to persuade",
+    "drawn as a linear sequence, while real programmes run several steps at once and loop back",
+    "evidence comes largely from the author's consulting experience; the whole sequence has not been tested empirically",
+    "manufactured urgency can read as alarmism and harden resistance instead",
+    "a planning frame, not a diagnostic: it says what leaders should do, not why a particular group is resisting"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://hbr.org/1995/03/leading-change-why-transformation-efforts-fail-2",
+    "https://www.kotterinc.com/methodology/8-steps/",
+    "https://hbr.org/2012/11/accelerate",
+    "https://doi.org/10.1108/02621711211253231",
+    "https://doi.org/10.1007/s11213-014-9317-0"
+  ],
+  "use_cases": [
+    "A city administration is moving every department onto one digital case-management system; two earlier rollouts started with fanfare and then faded as offices went back to paper files.",
+    "A school district wants all its schools to adopt a new approach to teaching and assessment over several years, and needs principals and teachers still committed long after the first-year enthusiasm has worn off.",
+    "After a merger the board announced a new operating model, but middle managers keep running their units the old way and the executive team has no plan for carrying the change through the whole organisation.",
+    "A hospital group's executive team has to lead a multi-year transformation of how its departments work together, and previous initiatives were declared a success too early and then unravelled.",
+    "A university leadership wants every faculty to move to a new blended-teaching model and must win over sceptical deans and build a broad base of support before the change is announced campus-wide."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 5,
+    "max_people": 25
+  },
+  "audience": [
+    "executive team",
+    "change sponsors",
+    "school district leadership",
+    "public administration leadership",
+    "transformation programme office"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}
