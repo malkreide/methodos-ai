@@ -261,6 +261,11 @@ PROBES = [
         "actually changed, and our plans are just long lists of tasks",
         "OKR",
     ),
+    (
+        "in our weekly team meeting the boss always decides what we talk about, the "
+        "things we really want to discuss never come up, and one point eats the whole hour",
+        "Lean_Coffee",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -401,6 +406,12 @@ PROBES_DE = [
         "Alle sind dauernd ausgelastet, aber Ende Jahr kann niemand sagen, was die ganze "
         "Arbeit eigentlich bewirkt hat, und unsere Planung ist bloss eine lange Pendenzenliste",
         "OKR",
+    ),
+    (
+        "in unserer wöchentlichen Teamsitzung bestimmt immer die Chefin, worüber wir "
+        "reden, was uns unter den Nägeln brennt, kommt nie dran, und ein Punkt frisst "
+        "die ganze Stunde",
+        "Lean_Coffee",
     ),
 ]
 
