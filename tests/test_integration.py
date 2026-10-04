@@ -282,6 +282,11 @@ PROBES = [
         "and mix with people they do not know",
         "World_Cafe",
     ),
+    (
+        "management already decided we need a new app, but nobody has asked the users "
+        "what problem they actually have",
+        "Double_Diamond",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -445,6 +450,12 @@ PROBES_DE = [
         "sich alle in wechselnden kleinen Runden über ein paar grosse Fragen zur Schule "
         "austauschen",
         "World_Cafe",
+    ),
+    (
+        "Die Stadt hat eine neue App für die Anmeldung lanciert, aber kaum jemand nutzt "
+        "sie. Bevor wir das nächste Angebot bauen, wollen wir verstehen, was die "
+        "Bevölkerung wirklich braucht",
+        "Double_Diamond",
     ),
 ]
 
