@@ -304,6 +304,11 @@ PROBES = [
         "ever gone through it the way they do",
         "Customer_Journey_Map",
     ),
+    (
+        "every measure we take against this problem seems to make it worse a few "
+        "months later, and nobody can explain why",
+        "Causal_Loop_Diagram",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -490,6 +495,11 @@ PROBES_DE = [
         "verlieren sich Gesuchsteller zwischen den Stellen und geben auf; niemand "
         "hat es je so durchlaufen wie sie",
         "Customer_Journey_Map",
+    ),
+    (
+        "Was immer wir gegen das Problem tun, es kommt ein paar Monate später grösser "
+        "zurück, und niemand kann erklären, warum",
+        "Causal_Loop_Diagram",
     ),
 ]
 
