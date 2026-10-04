@@ -309,6 +309,11 @@ PROBES = [
         "months later, and nobody can explain why",
         "Causal_Loop_Diagram",
     ),
+    (
+        "we have dozens of things that might go wrong on this programme, no idea "
+        "which ones deserve money and attention, and nobody knows who handles which",
+        "Risk_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -500,6 +505,11 @@ PROBES_DE = [
         "Was immer wir gegen das Problem tun, es kommt ein paar Monate später grösser "
         "zurück, und niemand kann erklären, warum",
         "Causal_Loop_Diagram",
+    ),
+    (
+        "bei diesem Vorhaben könnten Dutzende Dinge schiefgehen, wir wissen nicht, "
+        "welche Geld und Aufmerksamkeit verdienen, und niemand weiss, wer sich um was kümmert",
+        "Risk_Matrix",
     ),
 ]
 
