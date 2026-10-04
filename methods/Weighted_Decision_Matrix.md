@@ -11,7 +11,9 @@ presented in 1981 and set out in *Total Design* (1991): each design concept is
 compared with a reference design and marked better, worse or the same on each
 criterion. The weighted-sum version used here belongs to the wider family of
 multi-criteria decision analysis, which governments use for appraisal and which
-public procurement law builds on: Swiss federal law (BöB, Art. 29) and the EU
+public procurement law builds on: Swiss procurement law (BöB, Art. 29, for the
+Confederation; the identical Art. 29 of the intercantonal IVöB for cantons and
+municipalities) and the EU
 procurement directive (2014/24/EU, Art. 67) both require contracting
 authorities to announce their award criteria and, as a rule, how they are
 weighted before any bid is assessed.

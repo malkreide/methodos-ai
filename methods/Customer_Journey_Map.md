@@ -77,6 +77,7 @@ collect complaint data, call-centre logs or drop-off figures where they exist.
 - [Jobs To Be Done](Jobs_To_Be_Done.md) — why people turn to a service in the first place
 - [Stakeholder Map](Stakeholder_Map.md) — the organisations and units involved in the journey
 - [Five Whys](Five_Whys.md) — for the cause behind a pain point the map reveals
+- [Double Diamond](Double_Diamond.md) — the wider design cycle in which a journey map is one Discover tool
 - [Stickdorn, M. and Schneider, J. (2010). *This is Service Design Thinking: Basics, Tools, Cases*. BIS Publishers; Wiley edition 2012](https://www.wiley.com/en-us/This+is+Service+Design+Thinking%3A+Basics%2C+Tools%2C+Cases-p-9781118156308)
 - [Nielsen Norman Group: Journey Mapping 101](https://www.nngroup.com/articles/journey-mapping-101/)
 - [Nielsen Norman Group: When and How to Create Customer Journey Maps](https://www.nngroup.com/articles/customer-journey-mapping/)

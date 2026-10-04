@@ -14,11 +14,12 @@ problem worth solving, then to one solution that has survived testing.
 
 ## Origin
 
-The UK Design Council drew the model in 2003–2004, when its design and
-innovation team reviewed its own projects to find a common way of describing
-how designers work, and began presenting it publicly in 2004. The council's
-study of design practice in large companies (*Eleven Lessons*) was organised
-around it. In 2019 the council placed the diamond at the centre of a wider
+The UK Design Council developed the model in-house in the mid-2000s, when its
+design and innovation team looked for a common way of describing how designers
+work. The council's own accounts differ on the year: its history page dates the
+first drawings to 2003–2004, while its 2007 study of design practice in eleven
+large companies (*Eleven Lessons*), which is organised around the model, gives
+2005. In 2019 the council placed the diamond at the centre of a wider
 Framework for Innovation that adds design principles (put people first,
 communicate visually, co-create, iterate), a bank of methods, and the
 leadership and engagement an organisation needs around the process. The
@@ -96,6 +97,8 @@ can feel it once. Interviews or observation should happen before day 1.
 - [Kano Model](Kano_Model.md) — to sort which features of a concept users expect and which delight
 - [Value Stream Mapping](Value_Stream_Mapping.md) — when the complaint is delay in an existing process rather than the wrong product
 - [Business Model Canvas](Business_Model_Canvas.md) — to test whether a delivered concept can be sustained
+- [Customer Journey Map](Customer_Journey_Map.md) — to make the current experience visible during Discover
+- [PDCA Cycle](PDCA_Cycle.md) — to improve an existing process step by step through measured trials
 - [Design Council: The Double Diamond](https://www.designcouncil.org.uk/our-resources/the-double-diamond/)
 - [Design Council: History of the Double Diamond](https://www.designcouncil.org.uk/our-resources/the-double-diamond/history-of-the-double-diamond/)
 - [Design Council: Framework for Innovation](https://www.designcouncil.org.uk/our-resources/framework-for-innovation/)

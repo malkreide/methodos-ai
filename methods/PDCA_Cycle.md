@@ -87,9 +87,10 @@ including problems and side effects, not only the measure.
   defend the change instead of studying it
 - Choosing a measure that will not move for months
 - Treating "Act" as "implement everywhere" after a single favourable trial
-- Not writing cycles down; reviews of published PDSA work find that iteration,
-  prediction and documentation are the steps most often dropped (Taylor et
-  al., 2014; Reed & Card, 2016)
+- Running one cycle and calling it done; a systematic review of published PDSA
+  projects found that fewer than one in five documented a sequence of iterative
+  cycles, and few kept to small-scale tests or tracked data often enough to
+  steer the next cycle (Taylor et al., 2014)
 
 ## See also
 

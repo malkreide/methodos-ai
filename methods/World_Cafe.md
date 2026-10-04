@@ -42,7 +42,7 @@ and are not covered here.
   hear from every person in the room: [1-2-4-All](One_Two_Four_All.md) does
   that faster
 - A small team's regular meeting with topics proposed on the spot by the
-  participants is better served by Lean Coffee
+  participants is better served by [Lean Coffee](Lean_Coffee.md)
 - The questions have already been answered by management and the event would
   only be for show; participants notice quickly and trust suffers
 - You need to know who has influence over a change and how to involve them;
@@ -98,8 +98,9 @@ rounds loses some of its energy, so keep rounds shorter and the groups small.
 
 - [1-2-4-All](One_Two_Four_All.md) — a quarter of an hour, one question, every
   voice heard; often used as a warm-up or as the harvest of a café
-- Lean Coffee — a small group sets its own topics on the spot and works through
-  them by vote; for recurring meetings rather than one-off large events
+- [Lean Coffee](Lean_Coffee.md) — a small group sets its own topics on the
+  spot and works through them by vote; for recurring meetings rather than
+  one-off large events
 - [Six Thinking Hats](Six_Thinking_Hats.md) — when one idea needs examining from
   several angles rather than many ideas being explored
 - [Scenario Planning](Scenario_Planning.md) — a café round is a common way to

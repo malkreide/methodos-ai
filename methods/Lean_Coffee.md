@@ -100,6 +100,7 @@ in threads one at a time.
 - [Consent Decision-Making](Consent_Decision_Making.md) — when a discussed topic needs a decision the group can live with
 - [Start, Stop, Continue](Start_Stop_Continue.md) — when the meeting is a structured look back at how the team worked
 - [Six Thinking Hats](Six_Thinking_Hats.md) — when one chosen topic deserves a deeper, multi-angle examination
+- [World Café](World_Cafe.md) — when a large one-off event, not a small recurring group, needs to explore a few questions together
 - [Lean Coffee (leancoffee.org)](https://leancoffee.org/) — the originators' site
 - [Modus Cooperandi: What is Lean Coffee?](https://agilecoffee.com/leancoffee/) — step-by-step guide including the timebox and thumb-vote rules
 - [Open Practice Library: Lean Coffee](https://openpracticelibrary.com/practice/lean-coffee/)
