@@ -37,13 +37,13 @@ from methodos.search import Candidate, collection_size, retrieve
 WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
-Measured against the shipped 23-method catalog with the default multilingual
-embedding, not guessed. Every one of the 46 pinned integration probes (23
-English, 23 German) reaches at least 0.380 with its best match; questions the
-catalog genuinely does not cover top out at 0.287 ("Rezept für Zürcher
-Geschnetzeltes"), with "wie flicke ich meine Velokette" at 0.265 and "how do I
-fix my bicycle chain" at 0.146. 0.33 sits in the empty band between those two
-populations. tests/test_integration.py pins both sides.
+Measured against the shipped catalog (23 methods, re-checked at 27) with the
+default multilingual embedding, not guessed. Every one of the 54 pinned
+integration probes (27 English, 27 German) reaches at least 0.380 with its best
+match; questions the catalog genuinely does not cover top out at 0.287 ("Rezept
+für Zürcher Geschnetzeltes"), with "wie flicke ich meine Velokette" at 0.265 and
+"how do I fix my bicycle chain" at 0.224. 0.33 sits in the empty band between
+those two populations. tests/test_integration.py pins both sides.
 
 The band is narrower than it was under the English-only model (0.127-0.321),
 because a multilingual model maps more of everyday language near *something*.

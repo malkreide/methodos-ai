@@ -249,7 +249,7 @@ can tell the difference rather than guess:
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 46 pinned
+  next step. That floor is measured, not guessed: the weakest of the 54 pinned
   integration probes (English and German) scores 0.380, while questions the
   catalog genuinely does not cover reach 0.287 at most (*"Rezept für Zürcher
   Geschnetzeltes"*). Weak matches are still returned — `guidance` is a caveat, never a

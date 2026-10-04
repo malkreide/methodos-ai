@@ -88,7 +88,7 @@ research can influence policy.
 - [DACI Decision-Making Framework](DACI_Matrix.md) — for roles within one decision
 - [PESTEL Analysis](PESTEL_Analysis.md) — for the external environment beyond named actors
 - [Bryson, J. M. (2004). What to do when stakeholders matter. *Public Management Review* 6(1), 21–53](https://doi.org/10.1080/14719030410001675722)
-- [Eden, C. and Ackermann, F. (1998). *Making Strategy: The Journey of Strategic Management*. London: Sage](https://doi.org/10.4135/9781446217153)
+- [Eden, C. and Ackermann, F. (1998). *Making Strategy: The Journey of Strategic Management*. London: Sage](https://books.google.com/books?vid=ISBN9780761952251)
 - [Mendelow, A. L. (1981). Environmental scanning: the impact of the stakeholder concept. ICIS 1981 Proceedings](https://aisel.aisnet.org/icis1981/20/)
 - [ODI: Planning tools, stakeholder analysis (PDF)](https://media.odi.org/documents/6459.pdf)
 - [Wikipedia: Stakeholder analysis](https://en.wikipedia.org/wiki/Stakeholder_analysis)

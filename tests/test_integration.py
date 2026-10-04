@@ -253,7 +253,7 @@ PROBES = [
     ),
 ]
 
-# The same 23 problems as a German-speaking user would put them. Not literal
+# The same problems as a German-speaking user would put them. Not literal
 # translations where Swiss usage differs ("Pendenzen", "Lancierung", Franken):
 # the point is to probe the language users will actually type.
 PROBES_DE = [
