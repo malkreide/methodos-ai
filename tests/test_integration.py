@@ -298,6 +298,12 @@ PROBES = [
         "teachers have lost all motivation; I want to build on what we already do well",
         "Appreciative_Inquiry",
     ),
+    (
+        "every office says its own part of the permit process works fine, yet "
+        "applicants keep getting lost between them and giving up; nobody has "
+        "ever gone through it the way they do",
+        "Customer_Journey_Map",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -478,6 +484,12 @@ PROBES_DE = [
         "bei uns im Team wird nur noch über Mängel geredet und alle sind demotiviert; "
         "wir möchten die Entwicklung auf dem aufbauen, was schon gut läuft",
         "Appreciative_Inquiry",
+    ),
+    (
+        "Jedes Amt sagt, sein Teil des Bewilligungsverfahrens funktioniere, trotzdem "
+        "verlieren sich Gesuchsteller zwischen den Stellen und geben auf; niemand "
+        "hat es je so durchlaufen wie sie",
+        "Customer_Journey_Map",
     ),
 ]
 
