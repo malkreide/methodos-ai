@@ -287,6 +287,12 @@ PROBES = [
         "what problem they actually have",
         "Double_Diamond",
     ),
+    (
+        "we have to pick one of four suppliers and every meeting ends with people "
+        "defending their favourite on instinct, we want to agree what matters most "
+        "before comparing the offers",
+        "Weighted_Decision_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -456,6 +462,12 @@ PROBES_DE = [
         "sie. Bevor wir das nächste Angebot bauen, wollen wir verstehen, was die "
         "Bevölkerung wirklich braucht",
         "Double_Diamond",
+    ),
+    (
+        "wir müssen uns für eine von drei Schulsoftwares entscheiden und jede Sitzung "
+        "endet beim Bauchgefühl, wir wollen vorher festlegen, was uns wie wichtig ist, "
+        "und dann alle Angebote gleich beurteilen",
+        "Weighted_Decision_Matrix",
     ),
 ]
 
