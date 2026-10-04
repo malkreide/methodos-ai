@@ -231,6 +231,11 @@ PROBES = [
         "debrief the launch we just finished: what did we expect versus what happened",
         "After_Action_Review",
     ),
+    (
+        "whenever we discuss something as a group the same two or three people talk "
+        "and everyone else just nods along, how do I get input from all of them",
+        "One_Two_Four_All",
+    ),
 ]
 
 # The same 23 problems as a German-speaking user would put them. Not literal
@@ -341,6 +346,11 @@ PROBES_DE = [
         "Nachbesprechung der eben abgeschlossenen Lancierung: was haben wir "
         "erwartet und was ist passiert",
         "After_Action_Review",
+    ),
+    (
+        "bei unseren Besprechungen reden immer die gleichen zwei, drei Leute und der "
+        "Rest hört nur zu, wie bekomme ich von allen Ideen",
+        "One_Two_Four_All",
     ),
 ]
 
