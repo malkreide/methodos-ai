@@ -209,7 +209,7 @@ def recommend_with_candidates(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> tuple[RecommendResult, list[Candidate]]:
     """`recommend_methods`, plus the raw candidates it was built from.
 
@@ -277,7 +277,7 @@ def recommend_methods(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> RecommendResult:
     """Semantic search over the indexed catalog, with the narrowings reported."""
     result, _ = recommend_with_candidates(

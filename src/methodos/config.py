@@ -50,7 +50,12 @@ class Settings(BaseSettings):
     """Multiplied by overfetch_factor to form Chroma's n_results, which
     rejects zero and negatives with an opaque TypeError — so bound it here."""
 
-    overfetch_factor: int = Field(default=2, ge=1)
+    overfetch_factor: int = Field(default=3, ge=1)
     """Chroma returns top_k * this, then the shortlist is truncated to top_k.
     Raising it gives a reranker more to work with, at linear cost in rerank
-    time; without a reranker it changes nothing but the query size."""
+    time; without a reranker it changes nothing but the query size.
+
+    3 since the catalog reached 39 methods: at 2, two pinned probes found their
+    method only 6th by embedding, the last slot of a 6-method shortlist, and
+    three authoring runs independently pushed one of them out. 9 keeps all 78
+    probes first for about 15% more rerank time (48 texts instead of 32)."""

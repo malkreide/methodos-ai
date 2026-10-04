@@ -223,7 +223,7 @@ def retrieve(
     chroma_path: Path,
     top_k: int,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
     where: dict[str, Any] | None = None,
 ) -> list[Candidate]:
     """Return up to top_k candidates, best first.
@@ -293,7 +293,7 @@ def search(
     chroma_path: Path,
     top_k: int,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> SearchResult:
     """End-to-end: retrieve top_k, optionally rerank, then optionally LLM-explain."""
     candidates = retrieve(
