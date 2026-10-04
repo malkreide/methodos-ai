@@ -241,6 +241,11 @@ PROBES = [
         "groups do we bring in early versus just keep updated",
         "Stakeholder_Map",
     ),
+    (
+        "every company-wide initiative we launch fizzles out within a year and staff "
+        "drift back to the old ways",
+        "Kotter_Eight_Steps",
+    ),
 ]
 
 # The same 23 problems as a German-speaking user would put them. Not literal
@@ -361,6 +366,11 @@ PROBES_DE = [
         "bevor wir die Reform ankündigen: wer könnte sie zu Fall bringen oder mittragen, "
         "und welche Gruppen binden wir früh ein, welche halten wir nur auf dem Laufenden",
         "Stakeholder_Map",
+    ),
+    (
+        "unsere organisationsweiten Initiativen verlaufen nach dem Kickoff jedes Mal "
+        "im Sand und alle kehren zu den alten Gewohnheiten zurück",
+        "Kotter_Eight_Steps",
     ),
 ]
 
