@@ -28,7 +28,8 @@
   "use_cases": [
     "A benefits agency has hundreds of confusing letters and forms that cause calls and errors, can rewrite only a few this year, and wants to start with the ones that reach the most claimants for the least work.",
     "A software company keeps building features for its single loudest customer, and the product manager wants to show how few users those requests actually touch compared with others.",
-    "A marketing team wants to choose among campaign ideas by estimating how many customers each would reach per quarter and how much work it would take."
+    "A marketing team wants to choose among campaign ideas by estimating how many customers each would reach per quarter and how much work it would take.",
+    "An exciting but untested idea keeps jumping the queue, and the product lead wants to rank it against well-evidenced work with its uncertainty counted against it."
   ],
   "contexts": [
     "business",
