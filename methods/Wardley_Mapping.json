@@ -33,7 +33,8 @@
   "use_cases": [
     "Several government departments each pay for and run their own version of the same IT system, and the central digital team wants to show which of these should become one shared service or be bought as a standard product.",
     "The CIO of a public body wants technology strategy conversations to start from why each system exists and how mature it is in the market, instead of from the usual box-and-line architecture diagrams.",
-    "A buyer is drafting a single fixed-price outsourcing contract for an entire system and suspects some of its components are too novel for a supplier to price, which would lead to costly change requests later."
+    "A buyer is drafting a single fixed-price outsourcing contract for an entire system and suspects some of its components are too novel for a supplier to price, which would lead to costly change requests later.",
+    "Architects disagree whether a new platform should be developed in-house iteratively or specified in detail and outsourced, although some of its components are novel and others are standard commodities."
   ],
   "contexts": [
     "business",
