@@ -246,6 +246,11 @@ PROBES = [
         "drift back to the old ways",
         "Kotter_Eight_Steps",
     ),
+    (
+        "every time we vote the losing side reopens it at the next meeting, and "
+        "waiting for unanimity just drags things out",
+        "Consent_Decision_Making",
+    ),
 ]
 
 # The same 23 problems as a German-speaking user would put them. Not literal
@@ -371,6 +376,11 @@ PROBES_DE = [
         "unsere organisationsweiten Initiativen verlaufen nach dem Kickoff jedes Mal "
         "im Sand und alle kehren zu den alten Gewohnheiten zurück",
         "Kotter_Eight_Steps",
+    ),
+    (
+        "Im Vorstand wird jeder Mehrheitsentscheid an der nächsten Sitzung wieder "
+        "aufgerollt, und Einstimmigkeit erreichen wir nie",
+        "Consent_Decision_Making",
     ),
 ]
 
