@@ -241,6 +241,7 @@ def test_console_is_served_and_self_contained(env):
     assert "http://" not in html
     assert "https://" not in html
     assert "src=" not in html, "no external script or stylesheet may be pulled in"
+    assert html.index("</style>") < html.index("</head>") < html.index("<body>")
 
 
 def test_methods_dir_follows_the_env_var(tmp_path, monkeypatch):
@@ -327,3 +328,19 @@ def test_console_reads_the_contexts_off_the_openapi_schema(env):
     """The propose form has no copy of the list; it must exist where the page looks."""
     spec = env["client"].get("/openapi.json").json()
     assert "education" in spec["components"]["schemas"]["Context"]["enum"]
+
+
+def test_console_has_every_string_in_both_languages(env):
+    """A key missing from one dictionary would show the raw key to that reader."""
+    import re
+
+    html = env["client"].get("/").text
+    script = html.split("const I18N = {", 1)[1].split("\n};", 1)[0]
+    de, en = script.split("\n  en: {", 1)
+    keys = re.compile(r"^ {4}'?([\w-]+)'?:", re.M)
+    assert set(keys.findall(de)) == set(keys.findall(en))
+
+    used = set(re.findall(r'data-i18n(?:-html|-placeholder)?="([\w-]+)"', html))
+    used |= set(re.findall(r"\bt\('([\w-]+)'", html))
+    assert {"tab_propose", "p_checking", "explain_failed"} <= used
+    assert used <= set(keys.findall(de))
