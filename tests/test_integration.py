@@ -404,6 +404,12 @@ PROBES = [
         "colleagues to properly help me think it through in under an hour",
         "Collegial_Case_Consultation",
     ),
+    (
+        "we've shared an office for years but hardly know each other; people misread one "
+        "another's intentions, nobody really knows how they come across to the others, and "
+        "the trust between us never gets past small talk",
+        "Johari_Window",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -693,6 +699,12 @@ PROBES_DE = [
         "und im Lehrerzimmer hat jede und jeder sofort einen gut gemeinten Tipp. Wie können "
         "mir ein paar Leute aus dem Team in einer Dreiviertelstunde geordnet weiterhelfen?",
         "Collegial_Case_Consultation",
+    ),
+    (
+        "Wir arbeiten seit Jahren Tür an Tür und wissen trotzdem kaum, wie die anderen uns "
+        "sehen oder was sie von uns erwarten; ständig gibt es Missverständnisse, und das "
+        "Vertrauen untereinander bleibt an der Oberfläche",
+        "Johari_Window",
     ),
 ]
 
