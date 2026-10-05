@@ -87,7 +87,7 @@ weighted before any bid is assessed.
 - [DACI Decision-Making Framework](DACI_Matrix.md) — for settling who decides once the matrix is filled in
 - [Six Thinking Hats](Six_Thinking_Hats.md) — to surface criteria the group has not yet named
 - [Wikipedia: Decision-matrix method](https://en.wikipedia.org/wiki/Decision-matrix_method) — Pugh's method and its criticisms
-- Pugh, S. (1991). *Total Design: Integrated Methods for Successful Product Engineering*. Addison-Wesley. [Open Library record](https://openlibrary.org/isbn/0201416395)
+- Pugh, S. (1991). *Total Design: Integrated Methods for Successful Product Engineering*. Addison-Wesley. [Google Books record](https://books.google.com/books?vid=ISBN0201416395)
 - [Wikipedia: Multiple-criteria decision analysis](https://en.wikipedia.org/wiki/Multiple-criteria_decision_analysis)
 - UK Department for Communities and Local Government (2009), [Multi-criteria analysis: a manual](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — the weighted-sum approach for public appraisal
 - [ASQ: Decision matrix](https://asq.org/quality-resources/decision-matrix) — a short worked procedure
