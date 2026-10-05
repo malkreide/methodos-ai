@@ -384,6 +384,12 @@ PROBES = [
         "to count the same",
         "Nominal_Group_Technique",
     ),
+    (
+        "our customer service team gets hundreds of complaints a month about all sorts of "
+        "things and tries to chase down every one separately; I suspect most of them are "
+        "really about just a couple of issues, but nobody has ever counted",
+        "Pareto_Analysis",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -652,6 +658,13 @@ PROBES_DE = [
         "die Lautesten wollten. Alle sollen eigene Vorschläge einbringen, und die Meinung "
         "jeder Person soll gleich viel zählen",
         "Nominal_Group_Technique",
+    ),
+    (
+        "Bei uns gehen jede Woche unzählige Reklamationen und Anfragen zu allen möglichen "
+        "Themen ein, und wir versuchen, jede einzeln zu erledigen. Ich vermute, dass die "
+        "meisten eigentlich nur ein paar wenige Themen betreffen, aber gezählt hat das noch "
+        "nie jemand",
+        "Pareto_Analysis",
     ),
 ]
 

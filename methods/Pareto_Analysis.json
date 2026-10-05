@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Pareto_Analysis",
+  "name": "Pareto Analysis (Pareto Chart)",
+  "category": "analysis",
+  "use_case": "A team is swamped by many different kinds of complaints, errors or requests and is trying to fix every one of them at once, so nothing improves much. Tallying the occurrences by type over a set period and sorting the types from most to least frequent, with a running cumulative percentage, shows whether a handful of types make up most of the total, so improvement work goes to the few types that generate the bulk of the volume rather than to whichever one was mentioned last.",
+  "strengths": [
+    "replaces impressions and anecdotes with counted evidence",
+    "the sorted bars with a cumulative line are understood at a glance by any audience",
+    "quick to build from data most organisations already log",
+    "a repeat chart after a change shows whether the dominant types actually shrank",
+    "often overturns the team's assumption about which problem is biggest"
+  ],
+  "weaknesses": [
+    "counts frequency, not severity: a rare but dangerous event can sit in the smallest bar",
+    "the result depends heavily on how categories are defined and coded",
+    "says which type of problem is common, not why it happens",
+    "unreliable with few observations or inconsistently logged data",
+    "invites treating the 80/20 split as a law rather than a rough tendency"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Pareto_chart",
+    "https://en.wikipedia.org/wiki/Pareto_principle",
+    "https://en.wikipedia.org/wiki/Seven_basic_tools_of_quality",
+    "https://www.juran.com/blog/a-guide-to-the-pareto-principle-80-20-rule-pareto-analysis/",
+    "https://www.ihi.org/library/tools/pareto-chart",
+    "https://aqua.nhs.uk/wp-content/uploads/2023/07/qsir-pareto.pdf",
+    "https://learn.nes.nhs.scot/2348/quality-improvement-zone/qi-tools/pareto-chart"
+  ],
+  "use_cases": [
+    "A municipal service centre receives thousands of citizen complaints a year about everything from waste collection to parking permits, and the head of service wants to know which few complaint types generate most of the letters before deciding where to intervene.",
+    "A school office logs every enquiry from parents, and staff feel they answer the same handful of questions all day; the school leader wants the tally by topic to show which ones to address once through better information.",
+    "An online retailer receives customer complaints about deliveries, invoices, faulty products and its website and answers each one as it arrives; nobody has ever counted how many fall under each heading, although two or three recurring issues probably account for most of them.",
+    "A production line rejects parts for many different defects, and the quality engineer wants to see which defect types cause most of the scrap and rework cost before a cause analysis on the largest one.",
+    "A hospital ward records the reasons for delayed discharges, and the improvement team wants to check whether the reason everyone assumes is the main one really appears most often in the records."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 10
+  },
+  "audience": [
+    "quality improvement team",
+    "operations management",
+    "customer service and help desk leads",
+    "public service managers",
+    "school administration",
+    "hospital improvement teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}
