@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "SBI_Feedback",
+  "name": "SBI Feedback Model (Situation, Behavior, Impact)",
+  "category": "facilitation",
+  "use_case": "A manager or colleague wants to tell one person how something they did came across, a complaint or a genuine thank-you, but it comes out as a vague label like \"you're not a team player\", a remark about their character, or bad news wrapped between two compliments, so the person feels attacked or nothing changes. Name one specific moment, describe only what the person could be seen and heard doing, say what effect it had, then ask what they meant to achieve.",
+  "strengths": [
+    "small enough to prepare in two minutes and to remember under stress, so it gets used in the moment rather than saved for the annual review",
+    "keeps the message on an observable act instead of the person's character or motives, which leaves less to argue about",
+    "works for appreciation as well as criticism, and makes praise specific enough that the person knows what to repeat",
+    "the intent question turns a one-way verdict into a short exchange and catches cases where the speaker's assumption was wrong",
+    "usable in any direction: to a direct report, a peer or one's own manager"
+  ],
+  "weaknesses": [
+    "anchored in one situation, so a long-running pattern can be made to look like a single slip unless the speaker says plainly that it is recurring",
+    "it structures the message, not the follow-through; on its own it produces no agreed change or check-back date",
+    "the Impact step depends on the speaker stating their own reaction honestly, which some workplace cultures discourage and some speakers find exposing",
+    "easily turned into a formula that sounds rehearsed, especially when the opening line is always \"In the meeting on Tuesday...\"",
+    "most published guidance comes from the originating training organisation and its licensees; independent studies of the three-step structure itself are scarce"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 5,
+    "max_minutes": 20
+  },
+  "references": [
+    "https://www.ccl.org/articles/leading-effectively-articles/closing-the-gap-between-intent-vs-impact-sbii/",
+    "https://www.ccl.org/articles/leading-effectively-articles/sbi-feedback-model-a-quick-win-to-improve-talent-conversations-development/",
+    "https://www.ccl.org/articles/leading-effectively-articles/review-time-how-to-give-different-types-of-feedback/",
+    "https://home.army.mil/campbell/download_file/view/565/664",
+    "https://www.ccl.org/wp-content/uploads/2019/06/Feedback-That-Works-2E-Promo-Package.pdf",
+    "https://books.google.com/books/about/Feedback_That_Works.html?id=CI3wKatzUVQC",
+    "https://doi.org/10.1037/0033-2909.119.2.254"
+  ],
+  "use_cases": [
+    "A team lead wants to tell a colleague that his habit of cutting people off in meetings is silencing the quieter members, without the talk turning into an argument about whether he is arrogant.",
+    "After sitting in on a lesson, a deputy head wants to tell the teacher exactly what she saw and how the class reacted, rather than \"that went well\" or a list of general criticisms the teacher cannot act on.",
+    "A supervisor in a municipal citizens' office wants to thank a clerk for how she calmed an angry visitor at the counter, in words specific enough that she knows what to keep doing and others can learn from it.",
+    "A nurse wants to raise with a peer on the same ward that the information missing from last night's handover caused a delay with a patient, without having any authority over that colleague.",
+    "An employee wants to tell her own manager that deadlines moved at short notice are costing the team its weekends, and is looking for words that are direct but not an accusation."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 2
+  },
+  "audience": [
+    "team leads and line managers",
+    "school leadership and teachers",
+    "public service supervisors",
+    "clinical teams",
+    "peers and colleagues",
+    "employees giving upward feedback"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

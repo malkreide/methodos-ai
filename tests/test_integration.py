@@ -366,6 +366,11 @@ PROBES = [
         "I end up reversing it; how do we pin down what they may settle alone",
         "Delegation_Poker",
     ),
+    (
+        "how do I tell a coworker that something he did yesterday really annoyed the team "
+        "without it sounding like I'm attacking him as a person",
+        "SBI_Feedback",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -616,6 +621,11 @@ PROBES_DE = [
         "etwas entscheiden, kippe ich es; wir wollen festhalten, worüber das Team künftig "
         "allein bestimmt",
         "Delegation_Poker",
+    ),
+    (
+        "Wie sage ich einem Kollegen, dass mich etwas, das er gestern getan hat, gestört "
+        "hat, ohne dass er es als Angriff auf seine Person versteht?",
+        "SBI_Feedback",
     ),
 ]
 
