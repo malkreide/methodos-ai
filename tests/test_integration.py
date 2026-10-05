@@ -344,6 +344,12 @@ PROBES = [
         "every report",
         "Balanced_Scorecard",
     ),
+    (
+        "a room in our building frees up next year and we want a long list of possible "
+        "uses for it; when we throw ideas around out loud we run dry after five and each "
+        "one gets picked apart straight away",
+        "Brainwriting_635",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -570,6 +576,12 @@ PROBES_DE = [
         "Bevölkerung gut ist, wie rund unsere Abläufe laufen und ob sich das Personal "
         "weiterentwickelt, taucht in keinem Bericht an die Geschäftsleitung auf",
         "Balanced_Scorecard",
+    ),
+    (
+        "wir brauchen möglichst viele Vorschläge, wie mehr Eltern an die Elternabende "
+        "kommen; wenn wir in der Runde Ideen zurufen, ist nach ein paar Minuten Schluss "
+        "und jeder Vorschlag wird sofort zerredet",
+        "Brainwriting_635",
     ),
 ]
 

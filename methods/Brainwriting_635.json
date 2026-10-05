@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "Brainwriting_635",
+  "name": "Brainwriting 6-3-5",
+  "category": "facilitation",
+  "use_case": "A small group needs a long list of possible answers to one well-defined question, far more than the handful a round of calling out suggestions produces before it runs dry. Everyone should write at the same time, pick up and extend what the others have written, and leave with every suggestion on paper.",
+  "strengths": [
+    "everyone produces ideas at the same time instead of waiting for a turn to speak",
+    "each idea is read and extended by several people, so suggestions get combined and improved",
+    "no idea is judged or argued down while ideas are still being generated",
+    "leaves a complete written record of every idea and how it developed",
+    "simple rules, paper forms and about half an hour are all it needs"
+  ],
+  "weaknesses": [
+    "the ideas are only as good as the question; a vague question yields vague or scattered answers",
+    "it generates options but does not evaluate or choose between them",
+    "no room to ask what someone meant, so unclear or illegible entries are lost",
+    "fixed rounds can feel too fast for some people and too slow for others, and later rows tend to repeat earlier ones",
+    "sized for about six writers; larger groups have to be split into parallel circles"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/6-3-5_Brainwriting",
+    "https://de.wikipedia.org/wiki/6-3-5-Methode",
+    "https://doi.org/10.1037/0022-3514.53.3.497",
+    "https://www.designsociety.org/download-publication/29404/SUPPORTING+CREATIVITY+IN+CONCEPTUAL+DESIGN:+METHOD+635-EXTENDED",
+    "https://www.sessionlab.com/methods/brainwriting"
+  ],
+  "use_cases": [
+    "A school has a classroom that has become free next year, and the staff want a long list of possible uses to choose from before anyone settles on the obvious one.",
+    "Turnout at our parents' evenings keeps falling, and the parents' council wants to collect as many concrete ideas as possible for getting more families to come.",
+    "A municipal service team is looking for ways to shorten queues at the front desk and wants to gather several dozen options from the counter staff before deciding which to pilot.",
+    "A class of students works on a project question in small groups, and the teacher wants each student to add suggestions on paper and develop what classmates wrote before them."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 36
+  },
+  "audience": [
+    "project teams",
+    "workshop facilitators",
+    "teachers and school leadership",
+    "product and engineering teams",
+    "public administration teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}
