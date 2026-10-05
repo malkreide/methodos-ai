@@ -8,6 +8,12 @@
   endpoint documented at /docs — it holds no logic of its own about ranking,
   and the raw JSON stays one click away so the page can never be mistaken for
   the API's actual contract.
+
+  Two languages, German and English, chosen by `?lang=`, then the viewer's
+  last choice, then the browser. Only the page's own words are translated:
+  method names and descriptions are catalog data and stay as written, and
+  messages from the server (`detail`, `guidance`) arrive in English. Every
+  key used below must exist in both dictionaries — test_api.py checks it.
 -->
 <html lang="en">
 <head>
@@ -76,47 +82,52 @@
   .field { display: block; font-size: .8rem; color: var(--muted); margin-top: .75rem; }
   #pout a { color: var(--accent); }
   .field textarea, .field input, .field select { margin-top: .25rem; color: var(--fg); }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .lang { display: flex; gap: .25rem; }
+  .lang button { padding: .15rem .5rem; font-size: .75rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .lang button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+  .orig { color: var(--muted); font-size: .8rem; margin-top: .4rem; }
   h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.75rem 0 .6rem; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Methodos AI</h1>
-  <p class="sub">Which management method fits this problem? &middot;
-    <a href="/docs">OpenAPI</a> &middot; <a href="/methods">catalog</a></p>
+  <div class="top">
+    <h1>Methodos AI</h1>
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="false">DE</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+  <p class="sub"><span data-i18n="tagline"></span> &middot;
+    <a href="/docs">OpenAPI</a> &middot; <a href="/methods" data-i18n="catalog"></a></p>
 
-  <p id="status">checking…</p>
+  <p id="status" data-i18n="checking"></p>
 
   <nav role="tablist">
-    <button type="button" role="tab" data-tab="ask" aria-selected="true">Find a method</button>
-    <button type="button" role="tab" data-tab="propose" aria-selected="false">Propose a method</button>
+    <button type="button" role="tab" data-tab="ask" aria-selected="true" data-i18n="tab_ask"></button>
+    <button type="button" role="tab" data-tab="propose" aria-selected="false" data-i18n="tab_propose"></button>
   </nav>
 
   <section id="tab-ask">
   <form id="form">
     <fieldset>
-      <legend>Problem</legend>
-      <textarea id="problem" required minlength="3"
-        placeholder="Describe the decision or the symptom — not a method. e.g. tickets take six weeks end to end but the actual work is only a few hours"></textarea>
-      <p class="privacy" id="privacy">
-        Please leave out names and anything that identifies a person. Your question
-        and any rating are <b>stored in plain text</b> on this server to improve the
-        catalog, and with <i>LLM explanation</i> on, the question is also
-        <b>sent to the configured model provider</b>.
-      </p>
+      <legend data-i18n="problem"></legend>
+      <textarea id="problem" required minlength="3" data-i18n-placeholder="problem_ph"></textarea>
+      <p class="privacy" id="privacy" data-i18n-html="privacy_ask"></p>
       <div class="row">
-        <label>Results
+        <label><span data-i18n="results"></span>
           <input type="number" id="top_k" value="3" min="1" max="25">
         </label>
-        <label>Category
-          <select id="category"><option value="">all</option></select>
+        <label><span data-i18n="category"></span>
+          <select id="category"><option value="" data-i18n="all"></option></select>
         </label>
       </div>
       <div class="checks">
-        <label><input type="checkbox" id="explain" checked> LLM explanation</label>
-        <label><input type="checkbox" id="rerank" checked> cross-encoder rerank</label>
-        <button type="submit" id="go">Ask</button>
-        <button type="button" class="ghost" id="llmcheck">Test LLM connection</button>
+        <label><input type="checkbox" id="explain" checked> <span data-i18n="explain"></span></label>
+        <label><input type="checkbox" id="rerank" checked> <span data-i18n="rerank"></span></label>
+        <button type="submit" id="go" data-i18n="ask"></button>
+        <button type="button" class="ghost" id="llmcheck" data-i18n="llmcheck"></button>
       </div>
     </fieldset>
   </form>
@@ -132,38 +143,30 @@
   <section id="tab-propose" hidden>
   <form id="pform">
     <fieldset>
-      <legend>Propose a method</legend>
-      <label class="field">Method name
-        <input id="p_name" required minlength="2" maxlength="120" placeholder="e.g. Lean Coffee">
+      <legend data-i18n="tab_propose"></legend>
+      <label class="field"><span data-i18n="p_name"></span>
+        <input id="p_name" required minlength="2" maxlength="120" data-i18n-placeholder="p_name_ph">
       </label>
-      <label class="field">Is it already in the catalog?
-        <select id="p_existing"><option value="">No, it is a new method</option></select>
+      <label class="field"><span data-i18n="p_existing"></span>
+        <select id="p_existing"><option value="" data-i18n="p_existing_no"></option></select>
       </label>
-      <label class="field">Which problem does it solve?
-        <textarea id="p_problem" required minlength="20" maxlength="2000"
-          placeholder="The situation someone is in when they need it — not the method itself. e.g. our team meetings are dominated by two people and the agenda is set before anyone asks what matters"></textarea>
+      <label class="field"><span data-i18n="p_problem"></span>
+        <textarea id="p_problem" required minlength="20" maxlength="2000" data-i18n-placeholder="p_problem_ph"></textarea>
       </label>
-      <label class="field">How does it work? <i>(optional, in your own words)</i>
-        <textarea id="p_description" maxlength="3000"
-          placeholder="The steps, briefly. Please do not paste text you did not write."></textarea>
+      <label class="field"><span data-i18n-html="p_description"></span>
+        <textarea id="p_description" maxlength="3000" data-i18n-placeholder="p_description_ph"></textarea>
       </label>
-      <label class="field">Sources
-        <textarea id="p_sources" maxlength="1000"
-          placeholder="Original author, book, article or standard"></textarea>
+      <label class="field"><span data-i18n="p_sources"></span>
+        <textarea id="p_sources" maxlength="1000" data-i18n-placeholder="p_sources_ph"></textarea>
       </label>
-      <label class="field">Links <i>(one per line, up to five — an article, a video, a podcast episode)</i>
+      <label class="field"><span data-i18n-html="p_links"></span>
         <textarea id="p_links"></textarea>
       </label>
-      <div class="field">Where have you seen it work?
+      <div class="field"><span data-i18n="p_contexts"></span>
         <div class="checks" id="p_contexts"></div>
       </div>
-      <p class="privacy">
-        Everything you enter is <b>stored in plain text</b> on this server and read
-        by the catalog's maintainer. Leave out names and anything that identifies a
-        person. A link to a source is enough &mdash; the catalog is public under
-        CC&nbsp;BY-SA&nbsp;4.0, and only original prose goes into it.
-      </p>
-      <div class="checks"><button type="submit" id="pgo">Submit proposal</button></div>
+      <p class="privacy" data-i18n-html="privacy_propose"></p>
+      <div class="checks"><button type="submit" id="pgo" data-i18n="p_submit"></button></div>
     </fieldset>
   </form>
   <div id="pout"></div>
@@ -171,31 +174,257 @@
 </main>
 
 <script>
+const I18N = {
+  de: {
+    tagline: 'Welche Managementmethode passt zu diesem Problem?',
+    catalog: 'Katalog',
+    checking: 'wird geprüft …',
+    tab_ask: 'Methode finden',
+    tab_propose: 'Methode vorschlagen',
+    problem: 'Problem',
+    problem_ph: 'Beschreiben Sie den Entscheid oder das Symptom – nicht eine Methode. Zum Beispiel: Gesuche brauchen von Anfang bis Ende sechs Wochen, die eigentliche Arbeit dauert aber nur wenige Stunden',
+    privacy_ask: 'Bitte lassen Sie Namen und alles weg, was eine Person erkennbar macht. Ihre Frage und jede Bewertung werden <b>im Klartext</b> auf diesem Server gespeichert, um den Katalog zu verbessern. Ist die <i>KI-Erklärung</i> eingeschaltet, wird die Frage zudem <b>an den konfigurierten Modellanbieter gesendet</b>.',
+    results: 'Anzahl Treffer',
+    category: 'Kategorie',
+    all: 'alle',
+    explain: 'KI-Erklärung',
+    rerank: 'Cross-Encoder-Reranking',
+    ask: 'Suchen',
+    llmcheck: 'KI-Verbindung testen',
+    st_model: 'Modell',
+    st_embedding: 'Embedding',
+    st_rerank: 'Reranking',
+    st_off: 'aus',
+    st_index: 'Index',
+    st_indexed: '{n} Methoden indexiert',
+    st_failed: '/health fehlgeschlagen',
+    complexity: 'Komplexität',
+    matched: 'Getroffener Anwendungsfall',
+    helped: 'Hat es geholfen?',
+    summary: '{returned} von {scope} im Suchbereich ({indexed} indexiert) · sortiert nach {basis}',
+    basis_cross: 'Cross-Encoder',
+    basis_embed: 'Embedding-Ähnlichkeit',
+    guidance_none: 'Keine Methode passt. Beschreiben Sie das Problem anders, oder sehen Sie im Katalog nach, was es gibt.',
+    guidance_weak: 'Keine Methode passt gut. Die Treffer unten sind die nächstliegenden, decken Ihr Problem aber womöglich nicht ab. Beschreiben Sie es konkreter, oder sehen Sie im Katalog nach.',
+    explanation: 'Erklärung',
+    explain_failed: 'Die KI-Erklärung ist fehlgeschlagen – die Rangliste oben ist davon nicht betroffen.',
+    raw: 'Rohdaten (JSON)',
+    thinking: 'wird gesucht …',
+    calling: 'Modell wird aufgerufen …',
+    llm_ok: '<b>{model}</b> hat in {ms} ms mit «{reply}» geantwortet.',
+    recorded: '{n}/5 gespeichert · siehe <a href="/stats">/stats</a>',
+    p_name: 'Name der Methode',
+    p_name_ph: 'z. B. Lean Coffee',
+    p_existing: 'Steht sie schon im Katalog?',
+    p_existing_no: 'Nein, es ist eine neue Methode',
+    p_existing_yes: 'Ja: {name}',
+    p_problem: 'Welches Problem löst sie?',
+    p_problem_ph: 'Die Situation, in der jemand die Methode braucht – nicht die Methode selbst. Zum Beispiel: Unsere Teamsitzungen werden von zwei Personen dominiert, und die Traktanden stehen fest, bevor jemand fragt, was wichtig ist',
+    p_description: 'Wie funktioniert sie? <i>(optional, in eigenen Worten)</i>',
+    p_description_ph: 'Die Schritte, kurz. Bitte keinen Text einfügen, den Sie nicht selbst geschrieben haben.',
+    p_sources: 'Quellen',
+    p_sources_ph: 'Urheberin oder Urheber, Buch, Artikel oder Norm',
+    p_links: 'Links <i>(einer pro Zeile, höchstens fünf – ein Artikel, ein Video, eine Podcast-Folge)</i>',
+    p_contexts: 'Wo haben Sie erlebt, dass sie funktioniert?',
+    privacy_propose: 'Alles, was Sie eingeben, wird <b>im Klartext</b> auf diesem Server gespeichert und von der für den Katalog verantwortlichen Person gelesen. Lassen Sie Namen und alles weg, was eine Person erkennbar macht. Ein Link zur Quelle genügt – der Katalog ist öffentlich unter CC&nbsp;BY-SA&nbsp;4.0 und enthält nur eigene Formulierungen.',
+    p_submit: 'Vorschlag einreichen',
+    p_checking: 'Katalog wird geprüft …',
+    p_need_source: 'Bitte geben Sie mindestens eine Quelle oder einen Link an.',
+    p_too_many_links: 'Höchstens fünf Links.',
+    p_thanks: 'Danke – Vorschlag <code>{id}</code> ist zur Prüfung gespeichert. Veröffentlicht wird nichts, bevor die verantwortliche Person ihn geprüft hat.',
+    p_dup_failed: 'Die Duplikatprüfung konnte nicht laufen:',
+    p_similar: 'Ähnlichste Methoden im Katalog',
+    p_similar_hint: 'Deckt eine davon Ihr Problem bereits ab, wird Ihr Vorschlag zu einer neuen Anwendungssituation dieser Methode statt zu einem Duplikat. Das wird bei der Prüfung entschieden.',
+    p_github: 'Haben Sie ein GitHub-Konto?',
+    p_github_link: 'Als GitHub-Issue öffnen',
+    p_github_text: '– vorausgefüllt; Sie prüfen es und reichen es unter Ihrem eigenen Namen ein. Das Formular auf GitHub ist englisch.',
+    p_omitted: 'Zu lang für einen Link, bitte von Hand einfügen:',
+    f_description: 'Wie funktioniert sie?',
+    f_sources: 'Quellen',
+    f_problem: 'Problem',
+    ctx_business: 'Wirtschaft',
+    'ctx_public-sector': 'Öffentliche Verwaltung',
+    ctx_education: 'Bildung',
+    ctx_nonprofit: 'Non-Profit',
+    ctx_personal: 'Persönlich',
+    cat_strategy: 'Strategie',
+    'cat_decision-making': 'Entscheidungsfindung',
+    cat_analysis: 'Analyse',
+    cat_prioritization: 'Priorisierung',
+    cat_retrospective: 'Retrospektive',
+    cat_facilitation: 'Moderation',
+    'cat_change-management': 'Veränderungsmanagement',
+  },
+  en: {
+    tagline: 'Which management method fits this problem?',
+    catalog: 'catalog',
+    checking: 'checking…',
+    tab_ask: 'Find a method',
+    tab_propose: 'Propose a method',
+    problem: 'Problem',
+    problem_ph: 'Describe the decision or the symptom — not a method. e.g. tickets take six weeks end to end but the actual work is only a few hours',
+    privacy_ask: 'Please leave out names and anything that identifies a person. Your question and any rating are <b>stored in plain text</b> on this server to improve the catalog, and with <i>LLM explanation</i> on, the question is also <b>sent to the configured model provider</b>.',
+    results: 'Results',
+    category: 'Category',
+    all: 'all',
+    explain: 'LLM explanation',
+    rerank: 'cross-encoder rerank',
+    ask: 'Ask',
+    llmcheck: 'Test LLM connection',
+    st_model: 'model',
+    st_embedding: 'embedding',
+    st_rerank: 'rerank',
+    st_off: 'off',
+    st_index: 'index',
+    st_indexed: '{n} methods indexed',
+    st_failed: '/health failed',
+    complexity: 'complexity',
+    matched: 'matched',
+    helped: 'Did it help?',
+    summary: '{returned} of {scope} in scope ({indexed} indexed) · ordered by {basis}',
+    basis_cross: 'cross-encoder',
+    basis_embed: 'embedding-similarity',
+    guidance_none: null,
+    guidance_weak: null,
+    explanation: 'Explanation',
+    explain_failed: 'LLM step failed — the ranking above is unaffected.',
+    raw: 'Raw JSON',
+    thinking: 'thinking…',
+    calling: 'calling the model…',
+    llm_ok: '<b>{model}</b> answered “{reply}” in {ms} ms.',
+    recorded: 'recorded {n}/5 · see <a href="/stats">/stats</a>',
+    p_name: 'Method name',
+    p_name_ph: 'e.g. Lean Coffee',
+    p_existing: 'Is it already in the catalog?',
+    p_existing_no: 'No, it is a new method',
+    p_existing_yes: 'Yes: {name}',
+    p_problem: 'Which problem does it solve?',
+    p_problem_ph: 'The situation someone is in when they need it — not the method itself. e.g. our team meetings are dominated by two people and the agenda is set before anyone asks what matters',
+    p_description: 'How does it work? <i>(optional, in your own words)</i>',
+    p_description_ph: 'The steps, briefly. Please do not paste text you did not write.',
+    p_sources: 'Sources',
+    p_sources_ph: 'Original author, book, article or standard',
+    p_links: 'Links <i>(one per line, up to five — an article, a video, a podcast episode)</i>',
+    p_contexts: 'Where have you seen it work?',
+    privacy_propose: 'Everything you enter is <b>stored in plain text</b> on this server and read by the catalog\'s maintainer. Leave out names and anything that identifies a person. A link to a source is enough — the catalog is public under CC&nbsp;BY-SA&nbsp;4.0, and only original prose goes into it.',
+    p_submit: 'Submit proposal',
+    p_checking: 'checking the catalog…',
+    p_need_source: 'Give at least one source or link.',
+    p_too_many_links: 'Five links at most.',
+    p_thanks: 'Thank you — proposal <code>{id}</code> is stored for review. Nothing is published until the maintainer has checked it.',
+    p_dup_failed: 'The duplicate check could not run:',
+    p_similar: 'Closest methods already in the catalog',
+    p_similar_hint: 'If one of them already covers your problem, your proposal becomes a new situation for that method rather than a duplicate — the maintainer checks.',
+    p_github: 'Have a GitHub account?',
+    p_github_link: 'Open it as a GitHub issue',
+    p_github_text: '— prefilled; you review it and submit it under your own name.',
+    p_omitted: 'Too long for a link, please paste by hand:',
+    f_description: 'How does it work?',
+    f_sources: 'Sources',
+    f_problem: 'Problem',
+    ctx_business: 'business',
+    'ctx_public-sector': 'public sector',
+    ctx_education: 'education',
+    ctx_nonprofit: 'nonprofit',
+    ctx_personal: 'personal',
+    cat_strategy: 'strategy',
+    'cat_decision-making': 'decision-making',
+    cat_analysis: 'analysis',
+    cat_prioritization: 'prioritization',
+    cat_retrospective: 'retrospective',
+    cat_facilitation: 'facilitation',
+    'cat_change-management': 'change management',
+  },
+};
+
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function pickLang() {
+  const asked = new URLSearchParams(location.search).get('lang');
+  if (asked in I18N) return asked;
+  try {
+    const saved = localStorage.getItem('methodos.lang');
+    if (saved in I18N) return saved;
+  } catch { /* storage blocked: fall through to the browser */ }
+  return (navigator.languages || [navigator.language || 'en'])
+    .some((l) => String(l).toLowerCase().startsWith('de')) ? 'de' : 'en';
+}
+let lang = pickLang();
+
+// Values are trusted markup from I18N; anything from the server goes through esc()
+// before it is passed in as a variable.
+function t(key, vars = {}) {
+  const s = I18N[lang][key] ?? I18N.en[key] ?? key;
+  return s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+}
+// Labels for enum values the server sends: fall back to the raw value, so a
+// category added to the catalog shows up untranslated rather than not at all.
+const label = (prefix, value) => I18N[lang][`${prefix}_${value}`] ?? value;
+
 let lastQueryId = null;
+let lastQuery = null;
+let lastProposal = null;
+let lastHealth = null;
 
 async function api(path, opts) {
   const res = await fetch(path, opts);
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    // FastAPI's 422 carries a list of {loc, msg}; everything else a string.
+    const detail = Array.isArray(body.detail)
+      ? body.detail.map((d) => d.msg.replace(/^Value error, /, '')).join('; ')
+      : body.detail;
+    throw new Error(detail || `${res.status} ${res.statusText}`);
+  }
   return body;
+}
+
+function applyLang() {
+  document.documentElement.lang = lang;
+  for (const el of document.querySelectorAll('[data-i18n]')) el.textContent = t(el.dataset.i18n);
+  for (const el of document.querySelectorAll('[data-i18n-html]')) el.innerHTML = t(el.dataset.i18nHtml);
+  for (const el of document.querySelectorAll('[data-i18n-placeholder]')) el.placeholder = t(el.dataset.i18nPlaceholder);
+  for (const b of document.querySelectorAll('.lang button')) {
+    b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+  }
+  for (const o of $('category').options) if (o.value) o.textContent = label('cat', o.value);
+  for (const o of $('p_existing').options) {
+    if (o.value) o.textContent = t('p_existing_yes', { name: o.dataset.name });
+  }
+  for (const s of document.querySelectorAll('#p_contexts span')) s.textContent = label('ctx', s.dataset.ctx);
+  // Re-render what is on screen rather than leave it in the old language.
+  if (lastHealth) renderStatus(lastHealth);
+  if (lastQuery) render(lastQuery);
+  if (lastProposal) renderProposal(lastProposal);
+}
+
+for (const b of document.querySelectorAll('.lang button')) {
+  b.addEventListener('click', () => {
+    lang = b.dataset.lang;
+    try { localStorage.setItem('methodos.lang', lang); } catch { /* per-visit only */ }
+    applyLang();
+  });
+}
+
+function renderStatus(h) {
+  const bits = [
+    `v${esc(h.version)}`,
+    `${t('st_model')} <b>${esc(h.model)}</b>`,
+    `${t('st_embedding')} ${esc(h.embedding)}`,
+    `${t('st_rerank')} ${h.reranker ? esc(h.reranker) : t('st_off')}`,
+    h.index_error ? `<span class="warn">${t('st_index')}: ${esc(h.index_error)}</span>`
+                  : t('st_indexed', { n: h.indexed_methods }),
+  ];
+  $('status').innerHTML = bits.join(' &middot; ');
 }
 
 async function refreshStatus() {
   try {
-    const h = await api('/health');
-    const bits = [
-      `v${esc(h.version)}`,
-      `model <b>${esc(h.model)}</b>`,
-      `embedding ${esc(h.embedding)}`,
-      `rerank ${h.reranker ? esc(h.reranker) : 'off'}`,
-      h.index_error ? `<span class="warn">index: ${esc(h.index_error)}</span>`
-                    : `${h.indexed_methods} methods indexed`,
-    ];
-    $('status').innerHTML = bits.join(' &middot; ');
+    lastHealth = await api('/health');
+    renderStatus(lastHealth);
   } catch (e) {
-    $('status').innerHTML = `<span class="warn">/health failed: ${esc(e.message)}</span>`;
+    $('status').innerHTML = `<span class="warn">${t('st_failed')}: ${esc(e.message)}</span>`;
   }
 }
 
@@ -204,7 +433,8 @@ async function loadCategories() {
     const c = await api('/methods');
     for (const name of c.categories) {
       const o = document.createElement('option');
-      o.value = o.textContent = name;
+      o.value = name;
+      o.textContent = label('cat', name);
       $('category').appendChild(o);
     }
   } catch { /* the form still works without the filter */ }
@@ -217,42 +447,53 @@ function renderMatch(m, i) {
     : `sim ${m.similarity.toFixed(3)} &middot; rerank ${m.rerank_score >= 0 ? '+' : ''}${m.rerank_score.toFixed(2)}`;
   return `<div class="card">
     <h3>#${i + 1} ${esc(m.name)}</h3>
-    <div class="meta">${score} &middot; complexity ${dots} &middot; ${esc(m.category)}
+    <div class="meta">${score} &middot; ${t('complexity')} ${dots} &middot; ${esc(label('cat', m.category))}
       &middot; ${m.duration_min}&ndash;${m.duration_max} min &middot; <code>${esc(m.id)}</code></div>
     <div>${esc(m.use_case)}</div>
-    ${m.matched_use_case ? `<div class="meta">matched: ${esc(m.matched_use_case)}</div>` : ''}
+    ${m.matched_use_case ? `<div class="meta">${t('matched')}: ${esc(m.matched_use_case)}</div>` : ''}
     <ul>${m.strengths.slice(0, 3).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
-    <div class="rate" data-id="${esc(m.id)}">Did it help?
+    <div class="rate" data-id="${esc(m.id)}">${t('helped')}
       ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-rating="${n}">${n}</button>`).join('')}
     </div>
   </div>`;
 }
 
+function renderGuidance(data) {
+  // The server's guidance is written for a model that calls the MCP tools; a
+  // translation states the same finding for a person and keeps the original.
+  if (!I18N[lang].guidance_none) return `<div class="note warn">${esc(data.guidance)}</div>`;
+  const own = t(data.returned === 0 ? 'guidance_none' : 'guidance_weak');
+  return `<div class="note warn">${esc(own)}<div class="orig">${esc(data.guidance)}</div></div>`;
+}
+
 function render(data) {
   const parts = [];
 
-  if (data.guidance) parts.push(`<div class="note warn">${esc(data.guidance)}</div>`);
+  if (data.guidance) parts.push(renderGuidance(data));
 
-  parts.push(`<h2>${data.returned} of ${data.total_in_scope} in scope
-    (${data.total_indexed} indexed) &middot; ordered by ${esc(data.ranking_basis)}</h2>`);
+  parts.push(`<h2>${t('summary', {
+    returned: data.returned, scope: data.total_in_scope, indexed: data.total_indexed,
+    basis: t(data.ranking_basis === 'cross-encoder' ? 'basis_cross' : 'basis_embed'),
+  })}</h2>`);
   parts.push(data.matches.map(renderMatch).join(''));
 
   if (data.explanation_error) {
-    parts.push(`<h2>Explanation</h2><div class="note err">
-      LLM step failed &mdash; the ranking above is unaffected.<br>${esc(data.explanation_error)}</div>`);
+    parts.push(`<h2>${t('explanation')}</h2><div class="note err">
+      ${t('explain_failed')}<br>${esc(data.explanation_error)}</div>`);
   } else if (data.explanation) {
-    parts.push(`<h2>Explanation &middot; ${esc(data.explanation_model || '')}</h2>
+    parts.push(`<h2>${t('explanation')} &middot; ${esc(data.explanation_model || '')}</h2>
       <div class="note">${esc(data.explanation).replace(/\n/g, '<br>')}</div>`);
   }
 
-  parts.push(`<details><summary>Raw JSON</summary><pre>${esc(JSON.stringify(data, null, 2))}</pre></details>`);
+  parts.push(`<details><summary>${t('raw')}</summary><pre>${esc(JSON.stringify(data, null, 2))}</pre></details>`);
   $('out').innerHTML = parts.join('');
 }
 
 $('form').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   $('go').disabled = true;
-  $('out').innerHTML = '<p class="sub">thinking…</p>';
+  lastQuery = null;
+  $('out').innerHTML = `<p class="sub">${t('thinking')}</p>`;
   try {
     const data = await api('/query', {
       method: 'POST',
@@ -266,6 +507,7 @@ $('form').addEventListener('submit', async (ev) => {
       }),
     });
     lastQueryId = data.query_id;
+    lastQuery = data;
     render(data);
   } catch (e) {
     $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
@@ -276,11 +518,13 @@ $('form').addEventListener('submit', async (ev) => {
 
 $('llmcheck').addEventListener('click', async () => {
   $('llmcheck').disabled = true;
-  $('out').innerHTML = '<p class="sub">calling the model…</p>';
+  lastQuery = null;
+  $('out').innerHTML = `<p class="sub">${t('calling')}</p>`;
   try {
     const r = await api('/llm/check', { method: 'POST' });
-    $('out').innerHTML = `<div class="note"><b>${esc(r.model)}</b> answered
-      &ldquo;${esc(r.reply)}&rdquo; in ${r.latency_ms} ms.</div>`;
+    $('out').innerHTML = `<div class="note">${t('llm_ok', {
+      model: esc(r.model), reply: esc(r.reply), ms: r.latency_ms,
+    })}</div>`;
   } catch (e) {
     $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
   } finally {
@@ -303,7 +547,7 @@ $('out').addEventListener('click', async (ev) => {
         query_id: lastQueryId,
       }),
     });
-    row.innerHTML = `recorded ${esc(btn.dataset.rating)}/5 &middot; see <a href="/stats">/stats</a>`;
+    row.innerHTML = t('recorded', { n: esc(btn.dataset.rating) });
   } catch (e) {
     row.innerHTML = `<span style="color:var(--bad)">${esc(e.message)}</span>`;
   }
@@ -326,7 +570,8 @@ async function loadProposalOptions() {
     for (const m of c.methods) {
       const o = document.createElement('option');
       o.value = m.id;
-      o.textContent = `Yes: ${m.name}`;
+      o.dataset.name = m.name;
+      o.textContent = t('p_existing_yes', { name: m.name });
       $('p_existing').appendChild(o);
     }
   } catch { /* "new method" still works */ }
@@ -335,42 +580,49 @@ async function loadProposalOptions() {
     const spec = await api('/openapi.json');
     for (const ctx of spec.components.schemas.Context.enum) {
       $('p_contexts').insertAdjacentHTML('beforeend',
-        `<label><input type="checkbox" value="${esc(ctx)}"> ${esc(ctx)}</label>`);
+        `<label><input type="checkbox" value="${esc(ctx)}"> <span data-ctx="${esc(ctx)}">${esc(label('ctx', ctx))}</span></label>`);
     }
   } catch { /* contexts are optional */ }
 }
 
 function renderProposal(r) {
-  const parts = [`<div class="note">Thank you &mdash; proposal <code>${esc(r.proposal_id)}</code>
-    is stored for review. Nothing is published until the maintainer has checked it.</div>`];
+  const parts = [`<div class="note">${t('p_thanks', { id: esc(r.proposal_id) })}</div>`];
 
   if (r.similar_error) {
-    parts.push(`<div class="note warn">The duplicate check could not run: ${esc(r.similar_error)}</div>`);
+    parts.push(`<div class="note warn">${t('p_dup_failed')} ${esc(r.similar_error)}</div>`);
   } else if (r.similar.length) {
-    parts.push(`<h2>Closest methods already in the catalog</h2>
-      <p class="sub">If one of them already covers your problem, your proposal becomes a
-      new situation for that method rather than a duplicate &mdash; the maintainer checks.</p>`);
+    parts.push(`<h2>${t('p_similar')}</h2><p class="sub">${t('p_similar_hint')}</p>`);
     parts.push(r.similar.map((m) => `<div class="card"><h3>${esc(m.name)}</h3>
-      <div class="meta">${esc(m.category)} &middot; <code>${esc(m.id)}</code></div>
+      <div class="meta">${esc(label('cat', m.category))} &middot; <code>${esc(m.id)}</code></div>
       <div>${esc(m.matched_use_case || m.use_case)}</div></div>`).join(''));
   }
 
   if (r.issue_url) {
     const omitted = r.issue_url_omitted.length
-      ? `<br>Too long for a link, please paste by hand: ${r.issue_url_omitted.map(esc).join(', ')}.`
+      ? `<br>${t('p_omitted')} ${r.issue_url_omitted.map((f) => esc(t(`f_${f}`))).join(', ')}.`
       : '';
-    parts.push(`<h2>Have a GitHub account?</h2><div class="note">
-      <a href="${esc(r.issue_url)}" target="_blank" rel="noopener">Open it as a GitHub issue</a>
-      &mdash; prefilled; you review it and submit it under your own name.${omitted}</div>`);
+    parts.push(`<h2>${t('p_github')}</h2><div class="note">
+      <a href="${esc(r.issue_url)}" target="_blank" rel="noopener">${t('p_github_link')}</a>
+      ${t('p_github_text')}${omitted}</div>`);
   }
   $('pout').innerHTML = parts.join('');
 }
 
 $('pform').addEventListener('submit', async (ev) => {
   ev.preventDefault();
-  $('pgo').disabled = true;
-  $('pout').innerHTML = '<p class="sub">checking the catalog…</p>';
   const opt = (id) => $(id).value.trim() || null;
+  const links = $('p_links').value.split('\n').map((l) => l.trim()).filter(Boolean);
+  // The server enforces both as well; checking here says it in the viewer's language.
+  const problem = !opt('p_sources') && !links.length ? 'p_need_source'
+    : links.length > 5 ? 'p_too_many_links' : null;
+  if (problem) {
+    lastProposal = null;
+    $('pout').innerHTML = `<div class="note err">${t(problem)}</div>`;
+    return;
+  }
+  $('pgo').disabled = true;
+  lastProposal = null;
+  $('pout').innerHTML = `<p class="sub">${t('p_checking')}</p>`;
   try {
     const r = await api('/proposals', {
       method: 'POST',
@@ -380,11 +632,12 @@ $('pform').addEventListener('submit', async (ev) => {
         problem: $('p_problem').value.trim(),
         description: opt('p_description'),
         sources: opt('p_sources'),
-        links: $('p_links').value.split('\n').map((l) => l.trim()).filter(Boolean),
+        links,
         contexts: [...document.querySelectorAll('#p_contexts input:checked')].map((i) => i.value),
         existing_method_id: $('p_existing').value || null,
       }),
     });
+    lastProposal = r;
     renderProposal(r);
     $('pform').reset();
   } catch (e) {
@@ -394,6 +647,7 @@ $('pform').addEventListener('submit', async (ev) => {
   }
 });
 
+applyLang();
 refreshStatus();
 loadCategories();
 loadProposalOptions();

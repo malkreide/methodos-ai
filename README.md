@@ -93,7 +93,7 @@ survives restarts in a named volume.
 
 | Endpoint | |
 |---|---|
-| `GET /` | Browser console — ask, read the explanation, rate a method |
+| `GET /` | Browser console — ask, read the explanation, rate a method, propose one. German or English, by browser language; `?lang=de` / `?lang=en` forces one |
 | `GET /docs` | OpenAPI, with every field documented |
 | `POST /query` | `{problem, top_k, category, explain, rerank}` → matches + explanation + `query_id` |
 | `GET /health` | Config, provider names, index size. No LLM call — backs the container health check |
