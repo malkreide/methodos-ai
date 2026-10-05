@@ -361,6 +361,11 @@ PROBES = [
         "missing anything",
         "Issue_Tree",
     ),
+    (
+        "my team waits for my permission on everything, yet when they do act on their own "
+        "I end up reversing it; how do we pin down what they may settle alone",
+        "Delegation_Poker",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -605,6 +610,12 @@ PROBES_DE = [
         "Fünftel höher sind als budgetiert; jede Abteilung zeigt auf eine andere, und ich weiss "
         "nicht, wie ich die Frage so aufteile, dass wir alles prüfen und nichts doppelt machen",
         "Issue_Tree",
+    ),
+    (
+        "Meine Leute fragen mich bei jeder Kleinigkeit um Erlaubnis, und wenn sie einmal selbst "
+        "etwas entscheiden, kippe ich es; wir wollen festhalten, worüber das Team künftig "
+        "allein bestimmt",
+        "Delegation_Poker",
     ),
 ]
 
