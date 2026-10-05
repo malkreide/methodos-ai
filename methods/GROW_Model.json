@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "GROW_Model",
+  "name": "GROW Model",
+  "category": "facilitation",
+  "use_case": "Staff keep bringing their problems to their manager, who simply tells them what to do, so they never learn to work things out themselves; one-to-one meetings and staff appraisal conversations drift and end without a clear agreement. Instead of advising, the manager asks a short sequence of questions: what the employee wants, where things stand, what they could do, and what they will do by when. The employee leaves with their own solution and a dated next step.",
+  "strengths": [
+    "simple enough to learn in an hour and to keep in mind during a live conversation",
+    "shifts the leader from supplying answers to asking questions, so ownership of the solution stays with the other person",
+    "the closing commitment stage turns a pleasant talk into a named action, a date and a way to check back",
+    "fits a 20-minute check-in as well as a longer development conversation",
+    "widely taught in public services, health care and schools, so many staff will already recognise it"
+  ],
+  "weaknesses": [
+    "only works if the person has, or can find, the knowledge needed; it cannot replace teaching or instruction",
+    "the power gap between a line manager and a direct report can make questions feel like a test rather than an invitation",
+    "easily reduced to reading out a fixed list of questions in order, which feels scripted and closes down thinking",
+    "goal-centred by design, so it gives little room for open-ended exploration of values, identity or meaning",
+    "most published guidance is practitioner and training material; few studies test the four-stage structure separately from coaching in general"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/GROW_model",
+    "https://www.performanceconsultants.com/resources/the-grow-model/",
+    "https://kss.hee.nhs.uk/wp-content/uploads/sites/15/2022/08/Coaching-for-success-TGROW.pdf",
+    "https://learn.nes.nhs.scot/22932/coaching-and-mentoring/coaching-and-mentoring-information-pack/coaching-models",
+    "https://www.cipd.org/uk/knowledge/factsheets/coaching-mentoring-factsheet/",
+    "https://doi.org/10.1016/j.invent.2022.100549",
+    "https://doi.org/10.1080/17521880903559697"
+  ],
+  "use_cases": [
+    "A head teacher notices that teachers come to her door with every classroom difficulty and leave with her solution, and she wants her next one-to-one talks to help them work out their own way forward instead.",
+    "Annual staff development talks in a municipal department run through the same form every year, drift into general chat and end without anyone agreeing what the employee will actually do next.",
+    "A clinical supervisor has a trainee who is stuck on a recurring difficulty with a patient group and wants a short, structured conversation that ends with the trainee's own action plan rather than the supervisor's advice.",
+    "A newly promoted team lead in a nonprofit wants a simple way to run regular check-ins that leave each volunteer coordinator with one clear commitment and a date to review it.",
+    "Someone facing a career decision wants to think it through on their own or with a peer, starting from what they want and ending with a first step they will take this month."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 6
+  },
+  "audience": [
+    "school leadership",
+    "team leads and line managers",
+    "clinical and educational supervisors",
+    "public service managers",
+    "mentors and peer coaches",
+    "individuals coaching themselves"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

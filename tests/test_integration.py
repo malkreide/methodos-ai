@@ -321,6 +321,12 @@ PROBES = [
         "join in",
         "Fishbowl",
     ),
+    (
+        "my staff bring me every problem and I just tell them what to do; I'd like our "
+        "one-on-one talks to help them work it out themselves and leave knowing what "
+        "they will do next",
+        "GROW_Model",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -524,6 +530,12 @@ PROBES_DE = [
         "ein paar Leute sollen vertieft miteinander diskutieren und wer aus dem Saal etwas "
         "beizutragen hat, soll mitreden können",
         "Fishbowl",
+    ),
+    (
+        "In den Mitarbeitergesprächen gebe ich immer gleich die Lösung vor, und am Ende "
+        "weiss niemand, was eigentlich vereinbart wurde; ich möchte, dass meine "
+        "Lehrpersonen selbst draufkommen, wie sie weitermachen",
+        "GROW_Model",
     ),
 ]
 
