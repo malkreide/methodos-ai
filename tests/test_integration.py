@@ -350,6 +350,11 @@ PROBES = [
         "one gets picked apart straight away",
         "Brainwriting_635",
     ),
+    (
+        "lots of tasks before opening day can only begin once others are finished; which "
+        "of these hold-ups actually move our opening day, and which have room to slip?",
+        "Critical_Path_Method",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -582,6 +587,12 @@ PROBES_DE = [
         "kommen; wenn wir in der Runde Ideen zurufen, ist nach ein paar Minuten Schluss "
         "und jeder Vorschlag wird sofort zerredet",
         "Brainwriting_635",
+    ),
+    (
+        "Der Umzug ins neue Schulhaus muss bis zum Schuljahresbeginn klappen; vieles kann "
+        "erst losgehen, wenn anderes erledigt ist, und niemand weiss, welche Verzögerung "
+        "uns den Termin kostet und wo wir noch Luft haben",
+        "Critical_Path_Method",
     ),
 ]
 
