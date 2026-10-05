@@ -65,7 +65,8 @@ ENV PATH="/opt/venv/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
     METHODOS_METHODS_DIR=/app/methods \
     METHODOS_CHROMA_PATH=/data/chroma \
-    METHODOS_FEEDBACK_PATH=/data/feedback.jsonl
+    METHODOS_FEEDBACK_PATH=/data/feedback.jsonl \
+    METHODOS_PROPOSALS_PATH=/data/proposals.jsonl
 
 COPY --from=builder /opt/venv /opt/venv
 COPY --from=builder /opt/hf /opt/hf

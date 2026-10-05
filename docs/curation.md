@@ -6,7 +6,7 @@ One owner, a growing catalog, and agents doing the legwork. The split:
 |---|---|---|
 | Find what needs work | script | `scripts/audit_catalog.py` — deterministic, reproducible |
 | Fix existing entries | agent | `.claude/agents/method-curator.md` |
-| Add proposed methods | agent | `.claude/agents/method-author.md`, fed by the "Propose a method" issue form |
+| Add proposed methods | agent | `.claude/agents/method-author.md`, fed by the "Propose a method" issue form or the console's proposal inbox |
 | Review and publish | owner | merge the draft PR — **the merge is the review** |
 
 The agents never merge. Everything they do arrives as a small draft pull
@@ -44,6 +44,30 @@ Run the method-curator agent on this repository and open its draft PR.
 ```
 
 A new "Propose a method" issue can be handed to `method-author` the same way.
+
+## Proposals from the console
+
+Most people who know a good method have no GitHub account. The console's
+*Propose a method* tab (`POST /proposals`) takes the same fields as the issue
+form — name, problem, how it works, sources, links, contexts — and:
+
+- appends them to `proposals.jsonl` next to `feedback.jsonl`
+  (`METHODOS_PROPOSALS_PATH`; `/data/proposals.jsonl` in the container),
+  together with the three closest methods the search found at the time;
+- hands back a prefilled link to the issue form, for whoever does have an
+  account (`METHODOS_ISSUE_REPO`, empty to turn it off). The server holds no
+  GitHub token and never posts anything itself.
+
+Nothing is uploaded and nothing is published: links point to the source, the
+inbox is read by the owner, and the catalog changes only through the same
+draft PR as above.
+
+```
+> Use the method-author agent on proposal 01M46PM47V7B0AW5J0FQV2HDC7 from data/proposals.jsonl.
+```
+
+In the container the inbox lives in the `methodos-data` volume:
+`docker compose cp methodos:/data/proposals.jsonl data/`.
 
 ## Why the owner stays in the loop
 

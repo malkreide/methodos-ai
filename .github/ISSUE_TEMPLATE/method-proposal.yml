@@ -24,6 +24,11 @@ body:
       description: Describe the situation someone is in when they need it — not the method itself.
     validations:
       required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: How does it work?
+      description: Optional. The steps in your own words — a few lines are enough.
   - type: dropdown
     id: contexts
     attributes:

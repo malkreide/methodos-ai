@@ -39,11 +39,18 @@ from typing import Annotated, Literal
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi import Path as PathParam
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field, HttpUrl, ValidationError, model_validator
 
 from methodos import __version__, mcp_tools
 from methodos.config import Settings
-from methodos.mcp_tools import CatalogResult, MethodDetail, MethodNotFoundError, RecommendResult
+from methodos.mcp_tools import (
+    CatalogResult,
+    MethodDetail,
+    MethodMatch,
+    MethodNotFoundError,
+    RecommendResult,
+)
+from methodos.models import Context
 from methodos.providers import (
     EmbeddingProvider,
     LLMProvider,
@@ -210,6 +217,77 @@ class FeedbackResponse(BaseModel):
     recorded: Literal[True]
     method_id: str
     rating: int
+
+
+class ProposalRequest(BaseModel):
+    """What someone knows about a method the catalog is missing.
+
+    Mirrors the "Propose a method" issue form, so a proposal from the console
+    and one from GitHub reach the `method-author` agent in the same shape.
+    """
+
+    name: str = Field(min_length=2, max_length=120, examples=["Lean Coffee"])
+    problem: str = Field(
+        min_length=20,
+        max_length=2000,
+        description="The situation someone is in when they need the method — not "
+        "the method itself. This is what the catalog search will match on. Stored "
+        "verbatim: leave out personal data.",
+    )
+    description: str | None = Field(
+        default=None,
+        max_length=3000,
+        description="How it works, in your own words. Do not paste text you did "
+        "not write — the catalog is published under CC BY-SA 4.0.",
+    )
+    sources: str | None = Field(
+        default=None,
+        max_length=1000,
+        description="Original author, book, article or standard.",
+    )
+    links: list[HttpUrl] = Field(
+        default_factory=list,
+        max_length=5,
+        description="Where the method is described: an article, a video, a podcast "
+        "episode. Linked, never copied.",
+    )
+    contexts: list[Context] = Field(
+        default_factory=list, description="Where you have seen it work."
+    )
+    existing_method_id: str | None = Field(
+        default=None,
+        description="Set when this is a new situation for a method already in the "
+        "catalog rather than a new method.",
+    )
+
+    @model_validator(mode="after")
+    def _needs_a_source(self) -> ProposalRequest:
+        if not (self.sources and self.sources.strip()) and not self.links:
+            raise ValueError("give at least one source or link — a method needs provenance")
+        return self
+
+
+class ProposalResponse(BaseModel):
+    recorded: Literal[True]
+    proposal_id: str = Field(description="ULID of the stored proposal.")
+    similar: list[MethodMatch] = Field(
+        description="What the catalog search returns for `problem`. If one of these "
+        "already covers it, the better proposal is a new situation for that method."
+    )
+    similar_error: str | None = Field(
+        default=None,
+        description="Set when the duplicate check could not run. The proposal is "
+        "stored regardless — an index problem must not lose it.",
+    )
+    issue_url: str | None = Field(
+        default=None,
+        description="The GitHub issue form, prefilled. null when no repository is "
+        "configured (METHODOS_ISSUE_REPO) or the text is too long for a URL.",
+    )
+    issue_url_omitted: list[str] = Field(
+        default_factory=list,
+        description="Fields left out of `issue_url` to stay under GitHub's URL limit.",
+    )
 
 
 class MethodStatsEntry(BaseModel):
@@ -413,6 +491,67 @@ def feedback(req: FeedbackRequest, providers: ProvidersDep) -> FeedbackResponse:
         path=providers.settings.feedback_path,
     )
     return FeedbackResponse(recorded=True, method_id=req.method_id, rating=req.rating)
+
+
+@app.post("/proposals", response_model=ProposalResponse)
+def propose(req: ProposalRequest, providers: ProvidersDep) -> ProposalResponse:
+    """Submit a method the catalog is missing. Nothing is published by this call.
+
+    The proposal goes to the server's inbox (`proposals.jsonl`) and, when a
+    repository is configured, comes back as a prefilled GitHub issue link the
+    person can submit under their own account. Either way it reaches the
+    catalog only through the `method-author` agent and the owner's review.
+
+    No LLM call: the duplicate check is the same retrieval `/query` runs.
+    """
+    from methodos.proposals import issue_url, log_proposal
+
+    if req.existing_method_id is not None:
+        known = {m.id for m in mcp_tools.load_catalog(methods_dir())}
+        if req.existing_method_id not in known:
+            raise HTTPException(
+                status_code=422,
+                detail=f"no method with id {req.existing_method_id!r}. "
+                f"Valid ids: {', '.join(sorted(known))}",
+            )
+
+    s = providers.settings
+    similar: list[MethodMatch] = []
+    similar_error: str | None = None
+    try:
+        result = mcp_tools.recommend_methods(
+            problem=req.problem,
+            embedding=providers.embedding,
+            chroma_path=s.chroma_path,
+            top_k=3,
+            reranker=providers.reranker,
+            overfetch_factor=s.overfetch_factor,
+        )
+        similar = result.matches
+    except (StaleIndexError, EmbeddingError, RerankError) as e:
+        similar_error = str(e)
+
+    proposal = log_proposal(
+        name=req.name.strip(),
+        problem=req.problem.strip(),
+        description=req.description.strip() if req.description else None,
+        sources=req.sources.strip() if req.sources else None,
+        links=[str(u) for u in req.links],
+        contexts=req.contexts,
+        existing_method_id=req.existing_method_id,
+        similar_method_ids=[m.id for m in similar],
+        path=s.proposals_path,
+    )
+    link = issue_url(proposal, s.issue_repo) if s.issue_repo else None
+
+    return ProposalResponse(
+        recorded=True,
+        proposal_id=proposal.proposal_id,
+        similar=similar,
+        similar_error=similar_error,
+        issue_url=link.url if link else None,
+        issue_url_omitted=link.omitted if link else [],
+    )
 
 
 @app.get("/stats", response_model=StatsResponse)

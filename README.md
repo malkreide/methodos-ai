@@ -93,13 +93,14 @@ survives restarts in a named volume.
 
 | Endpoint | |
 |---|---|
-| `GET /` | Browser console — ask, read the explanation, rate a method |
+| `GET /` | Browser console — ask, read the explanation, rate a method, propose one. German or English, by browser language; `?lang=de` / `?lang=en` forces one |
 | `GET /docs` | OpenAPI, with every field documented |
 | `POST /query` | `{problem, top_k, category, explain, rerank}` → matches + explanation + `query_id` |
 | `GET /health` | Config, provider names, index size. No LLM call — backs the container health check |
 | `POST /llm/check` | One real completion. **This is the yes/no on whether your key and model work.** |
 | `GET /methods`, `GET /methods/{id}` | The catalog and one method's full Markdown |
 | `POST /feedback`, `GET /stats` | The same JSONL loop the CLI writes |
+| `POST /proposals` | Propose a missing method: name, problem, sources and links → stored in `proposals.jsonl`, with the closest existing methods and a prefilled GitHub issue link. Publishes nothing — see [docs/curation.md](docs/curation.md) |
 
 `/query` returns the MCP server's payload — `ranking_basis`, `guidance`,
 `total_in_scope` — plus the explanation. It carries the same meaning here, and
@@ -297,6 +298,7 @@ What leaves the user's hands, and where it goes:
 |---|---|---|
 | The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
 | Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
+| Method proposal (`/proposals`) | verbatim in `proposals.jsonl`, with a timestamp | no — the GitHub link is opened, and submitted, by the person themselves |
 | Client IP | not by Methodos; uvicorn's access log prints it to stdout | depends on your log shipping |
 
 The MCP server logs nothing and calls no LLM.
@@ -305,7 +307,7 @@ The console, the OpenAPI field descriptions and the CLI help all tell the person
 typing to leave out personal data. That is a notice, not a filter: nothing
 scrubs names out of free text. If you operate a public instance you are the one
 processing that data, so publish a privacy notice that names the LLM provider,
-set a retention period for `feedback.jsonl`, and run uvicorn with
+set a retention period for `feedback.jsonl` and `proposals.jsonl`, and run uvicorn with
 `--no-access-log` if you do not need IPs.
 
 ## Known gaps
