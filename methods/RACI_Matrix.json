@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "RACI_Matrix",
+  "name": "RACI Matrix (Responsibility Assignment Matrix)",
+  "category": "analysis",
+  "use_case": "A recurring process or a project is carried by several units at once, and the work keeps going wrong at the seams: some steps are done twice by two teams, others are not done at all because each unit assumed another one had them, and when something slips it is unclear who should have caught it. The method puts the steps of the process in the rows of a table and the people or units in the columns, and for every step marks who does the work, the one person who answers for its completion, whose expertise is asked for beforehand and who only hears about the result, so that every gap and every double assignment becomes visible on one page.",
+  "strengths": [
+    "turns vague assumptions about who handles what into a table everyone can check",
+    "exposes tasks with no owner and tasks with several competing owners at a glance",
+    "insisting on exactly one answerable person per task removes the 'I thought you had it' excuse",
+    "separates the few whose input is needed from the many who only need to be told, which shortens circulation lists",
+    "works for any process that can be broken into tasks, from school administration to IT operations",
+    "doubles as onboarding material and as the starting point of a communication plan"
+  ],
+  "weaknesses": [
+    "only as good as its upkeep; after a reorganisation or staff change an unrevised table misleads",
+    "marking too many parties as consulted slows every task down to the pace of the slowest reply",
+    "records roles but does not resolve a dispute about them; a contested assignment needs negotiation first",
+    "a fine-grained table for a large process becomes a spreadsheet nobody reads",
+    "says who is involved, not how authority is exercised or how well the work is done",
+    "assigning a whole department instead of a named role hides the same ambiguity it was meant to remove"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Responsibility_assignment_matrix",
+    "https://books.google.com/books?vid=ISBN9781628251845",
+    "https://archive.org/details/organizationaltr00beck",
+    "https://www.gov.uk/government/publications/global-hr-design/global-hr-design-principles-2024-html",
+    "https://ncs.uchicago.edu/sites/default/files/uploads/tools/NCS_PS_Toolkit_BST_Set_A_RACIMatrix.pdf"
+  ],
+  "use_cases": [
+    "Each spring the school, the district education office and the municipal IT service all have a hand in enrolling new pupils, and every year some letters go out twice while class lists or user accounts are missing on the first day, because each office assumed another one was taking care of that step.",
+    "A shared service centre takes over finance and personnel processes from several ministries, and the transition team needs a record of which steps the centre now performs, which stay with the ministries and who answers for each one.",
+    "A school counselling team splits a long list of recurring duties, from course selection to exam registration and scholarship applications, and wants every colleague to see which duties are theirs and whom to ask about the rest.",
+    "After a merger two IT departments both patch some servers while nobody patches others, and the operations lead wants every routine task in the run book tied to one owner and the teams that only need to know.",
+    "A construction project with an architect, a general contractor, specialist firms and the client's facilities team keeps losing handovers between them, and the project manager wants the work packages assigned before the next phase starts."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "project and programme managers",
+    "public administration and process owners",
+    "school leadership and administration",
+    "operations and service managers",
+    "organisational design and HR teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

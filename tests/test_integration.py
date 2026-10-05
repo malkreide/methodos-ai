@@ -361,6 +361,29 @@ PROBES = [
         "missing anything",
         "Issue_Tree",
     ),
+    (
+        "my team waits for my permission on everything, yet when they do act on their own "
+        "I end up reversing it; how do we pin down what they may settle alone",
+        "Delegation_Poker",
+    ),
+    (
+        "how do I tell a coworker that something he did yesterday really annoyed the team "
+        "without it sounding like I'm attacking him as a person",
+        "SBI_Feedback",
+    ),
+    (
+        "three offices share the work of getting new pupils started each year; some letters "
+        "go out twice, some accounts never get set up, and when we ask why, each office "
+        "thought one of the others was doing it",
+        "RACI_Matrix",
+    ),
+    (
+        "our committee has to agree today which three proposals get funded, and the final "
+        "list always ends up being whatever the chair and the two most talkative members "
+        "wanted; I want everyone to bring their own suggestions and everyone's preferences "
+        "to count the same",
+        "Nominal_Group_Technique",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -605,6 +628,30 @@ PROBES_DE = [
         "Fünftel höher sind als budgetiert; jede Abteilung zeigt auf eine andere, und ich weiss "
         "nicht, wie ich die Frage so aufteile, dass wir alles prüfen und nichts doppelt machen",
         "Issue_Tree",
+    ),
+    (
+        "Meine Leute fragen mich bei jeder Kleinigkeit um Erlaubnis, und wenn sie einmal selbst "
+        "etwas entscheiden, kippe ich es; wir wollen festhalten, worüber das Team künftig "
+        "allein bestimmt",
+        "Delegation_Poker",
+    ),
+    (
+        "Wie sage ich einem Kollegen, dass mich etwas, das er gestern getan hat, gestört "
+        "hat, ohne dass er es als Angriff auf seine Person versteht?",
+        "SBI_Feedback",
+    ),
+    (
+        "In unserem Team weiss bei den wiederkehrenden Aufgaben niemand genau, wer was macht; "
+        "manches erledigen zwei Leute doppelt, anderes vergessen alle, weil jeder dachte, "
+        "jemand anders sei dran",
+        "RACI_Matrix",
+    ),
+    (
+        "In der Schulkonferenz müssen wir heute festlegen, welche drei Vorhaben aus dem "
+        "Budget Geld bekommen; am Schluss steht immer das zuoberst, was die Schulleitung und "
+        "die Lautesten wollten. Alle sollen eigene Vorschläge einbringen, und die Meinung "
+        "jeder Person soll gleich viel zählen",
+        "Nominal_Group_Technique",
     ),
 ]
 
