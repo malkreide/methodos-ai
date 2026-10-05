@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Collegial_Case_Consultation",
+  "name": "Collegial Case Consultation",
+  "category": "facilitation",
+  "use_case": "A teacher or social worker has run out of options with a difficult case, such as a pupil nothing seems to reach, parents who have stopped cooperating or a client situation that keeps escalating, and no supervisor or coach is available. Raising it informally in the staff room produces a flood of anecdotes and quick tips that do not fit. A small group of peers needs a fixed sequence of about 45 minutes in which the person with the case describes it and frames one question, the others first only ask to understand, then offer possible explanations and ideas while that person just listens, and the person closes by saying what they take from it.",
+  "strengths": [
+    "needs no external expert: a group of equals can run it with a printed sheet of phases and a timekeeper",
+    "the case owner listening silently while ideas are offered removes the urge to defend or to reject each suggestion on the spot",
+    "the case owner, not the group, decides which ideas are useful, so responsibility for the situation stays with the person who has to act",
+    "every participant learns from situations they are not involved in, so a regular slot builds shared professional judgement across a staff",
+    "fits into an ordinary staff meeting or a lunch break and can run in a video call"
+  ],
+  "weaknesses": [
+    "the quality of the ideas is capped by the experience in the room; a group that shares the same blind spot reproduces it",
+    "depends on trust and confidentiality, which are hard to establish when a line manager or someone with a say over careers is present",
+    "groups drift back into advice-giving and storytelling unless someone holds the phases and the time firmly",
+    "only the case owner's view of the situation is heard, so the others in it (the pupil, the parents, the colleague) are present only as described",
+    "evidence on its effects comes mostly from practitioner reports and a small body of German-language research rather than controlled studies"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://kollegiale-beratung.de/ablauf-und-methodik-von-kollegialer-beratung-in-sechs-phasen.html",
+    "https://peer-supervision.com/methods-and-structure-of-peer-group-supervision-in-six-phases.html",
+    "https://www.schulerfolg-sichern.de/fileadmin/user_upload/schulerfolg-sichern/Wissensdatenbank/PDF/2022/TB1_Kollegiale_Beratung_Aufl2.pdf",
+    "https://www.stadt-zuerich.ch/content/dam/web/de/bildung/volksschule/unterricht/instrumente-starke-integrative-schule/leitfaden-kollegiale-beratung.pdf",
+    "https://de.wikipedia.org/wiki/Kollegiale_Fallberatung",
+    "https://doi.org/10.1007/978-3-531-92155-6",
+    "https://doi.org/10.1007/s11613-019-00622-x"
+  ],
+  "use_cases": [
+    "A class teacher in a primary school has a pupil whose outbursts derail lessons; the school social worker has no time for a meeting this month, and the teacher wants a few colleagues to look at the situation with fresh eyes during the regular team slot.",
+    "A teacher is caught in an escalating conflict with a mother who writes to the head after every mark, and before the next parents' meeting wants several colleagues to help her understand what is going on and how she might approach it.",
+    "Social workers in a municipal youth service meet every month without an external supervisor and want a dependable routine in which one colleague's stuck family situation gets the whole group's attention.",
+    "Section heads at the same level in a cantonal administration each carry a delicate staff or stakeholder situation alone and want a confidential setting where peers help them think it through without anyone taking it over.",
+    "Ward nurses or volunteer coordinators whose informal case talks keep turning into shared complaining want a short, disciplined format that ends with something the person concerned can actually try."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 10
+  },
+  "audience": [
+    "teachers and teaching teams",
+    "school social workers and special-needs staff",
+    "social workers",
+    "public administration staff",
+    "health and care professionals",
+    "peer groups of managers at the same level"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

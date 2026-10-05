@@ -397,6 +397,13 @@ PROBES = [
         "compared how risky each path is",
         "Ansoff_Matrix",
     ),
+    (
+        "one of my pupils has completely shut down and things with his parents keep getting "
+        "worse; our school has no supervisor or coach, and when I mention it in the staff "
+        "room everyone just throws in their own stories and quick tips. I'd like a few "
+        "colleagues to properly help me think it through in under an hour",
+        "Collegial_Case_Consultation",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -679,6 +686,13 @@ PROBES_DE = [
         "gewinnen oder etwas völlig Neues anfangen, und niemand hat verglichen, wie riskant "
         "welcher Weg ist",
         "Ansoff_Matrix",
+    ),
+    (
+        "Ich komme mit einem Schüler in meiner Klasse nicht mehr weiter, und mit seinen "
+        "Eltern ist es völlig verfahren. Supervision gibt es bei uns im Schulhaus keine, "
+        "und im Lehrerzimmer hat jede und jeder sofort einen gut gemeinten Tipp. Wie können "
+        "mir ein paar Leute aus dem Team in einer Dreiviertelstunde geordnet weiterhelfen?",
+        "Collegial_Case_Consultation",
     ),
 ]
 
