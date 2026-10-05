@@ -46,6 +46,14 @@ class Settings(BaseSettings):
 
     chroma_path: Path = Path("data/chroma")
     feedback_path: Path = Path("data/feedback.jsonl")
+    proposals_path: Path = Path("data/proposals.jsonl")
+    """Inbox for `POST /proposals`. Same placeholder shape as the feedback log."""
+
+    issue_repo: str | None = "malkreide/methodos-ai"
+    """`owner/repo` whose "Propose a method" issue form the console links to.
+    A fork points this at itself; empty turns the link off and leaves only the
+    server-side inbox."""
+
     top_k: int = Field(default=3, ge=1)
     """Multiplied by overfetch_factor to form Chroma's n_results, which
     rejects zero and negatives with an opaque TypeError — so bound it here."""

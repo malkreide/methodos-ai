@@ -70,6 +70,12 @@
         border-radius: 8px; padding: .8rem; font-size: .8rem; }
   details { margin-top: 1rem; }
   summary { cursor: pointer; color: var(--muted); font-size: .85rem; }
+  nav { display: flex; gap: .4rem; margin: 0 0 1.25rem; }
+  nav button { background: transparent; color: var(--accent); font-weight: 500; }
+  nav button[aria-selected="true"] { background: var(--accent); color: var(--bg); font-weight: 600; }
+  .field { display: block; font-size: .8rem; color: var(--muted); margin-top: .75rem; }
+  #pout a { color: var(--accent); }
+  .field textarea, .field input, .field select { margin-top: .25rem; color: var(--fg); }
   h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.75rem 0 .6rem; }
 </style>
 </head>
@@ -81,6 +87,12 @@
 
   <p id="status">checking…</p>
 
+  <nav role="tablist">
+    <button type="button" role="tab" data-tab="ask" aria-selected="true">Find a method</button>
+    <button type="button" role="tab" data-tab="propose" aria-selected="false">Propose a method</button>
+  </nav>
+
+  <section id="tab-ask">
   <form id="form">
     <fieldset>
       <legend>Problem</legend>
@@ -110,6 +122,52 @@
   </form>
 
   <div id="out"></div>
+  </section>
+
+  <!--
+    Proposals mirror the GitHub "Propose a method" issue form field for field.
+    Nothing here publishes anything: the server stores the proposal and may hand
+    back a prefilled issue link; the catalog only changes through a reviewed PR.
+  -->
+  <section id="tab-propose" hidden>
+  <form id="pform">
+    <fieldset>
+      <legend>Propose a method</legend>
+      <label class="field">Method name
+        <input id="p_name" required minlength="2" maxlength="120" placeholder="e.g. Lean Coffee">
+      </label>
+      <label class="field">Is it already in the catalog?
+        <select id="p_existing"><option value="">No, it is a new method</option></select>
+      </label>
+      <label class="field">Which problem does it solve?
+        <textarea id="p_problem" required minlength="20" maxlength="2000"
+          placeholder="The situation someone is in when they need it — not the method itself. e.g. our team meetings are dominated by two people and the agenda is set before anyone asks what matters"></textarea>
+      </label>
+      <label class="field">How does it work? <i>(optional, in your own words)</i>
+        <textarea id="p_description" maxlength="3000"
+          placeholder="The steps, briefly. Please do not paste text you did not write."></textarea>
+      </label>
+      <label class="field">Sources
+        <textarea id="p_sources" maxlength="1000"
+          placeholder="Original author, book, article or standard"></textarea>
+      </label>
+      <label class="field">Links <i>(one per line, up to five — an article, a video, a podcast episode)</i>
+        <textarea id="p_links"></textarea>
+      </label>
+      <div class="field">Where have you seen it work?
+        <div class="checks" id="p_contexts"></div>
+      </div>
+      <p class="privacy">
+        Everything you enter is <b>stored in plain text</b> on this server and read
+        by the catalog's maintainer. Leave out names and anything that identifies a
+        person. A link to a source is enough &mdash; the catalog is public under
+        CC&nbsp;BY-SA&nbsp;4.0, and only original prose goes into it.
+      </p>
+      <div class="checks"><button type="submit" id="pgo">Submit proposal</button></div>
+    </fieldset>
+  </form>
+  <div id="pout"></div>
+  </section>
 </main>
 
 <script>
@@ -251,8 +309,94 @@ $('out').addEventListener('click', async (ev) => {
   }
 });
 
+function showTab(name) {
+  for (const b of document.querySelectorAll('nav button')) {
+    b.setAttribute('aria-selected', String(b.dataset.tab === name));
+  }
+  $('tab-ask').hidden = name !== 'ask';
+  $('tab-propose').hidden = name !== 'propose';
+}
+for (const b of document.querySelectorAll('nav button')) {
+  b.addEventListener('click', () => showTab(b.dataset.tab));
+}
+
+async function loadProposalOptions() {
+  try {
+    const c = await api('/methods');
+    for (const m of c.methods) {
+      const o = document.createElement('option');
+      o.value = m.id;
+      o.textContent = `Yes: ${m.name}`;
+      $('p_existing').appendChild(o);
+    }
+  } catch { /* "new method" still works */ }
+  try {
+    // Read off the API's own schema so the page never carries its own copy of the list.
+    const spec = await api('/openapi.json');
+    for (const ctx of spec.components.schemas.Context.enum) {
+      $('p_contexts').insertAdjacentHTML('beforeend',
+        `<label><input type="checkbox" value="${esc(ctx)}"> ${esc(ctx)}</label>`);
+    }
+  } catch { /* contexts are optional */ }
+}
+
+function renderProposal(r) {
+  const parts = [`<div class="note">Thank you &mdash; proposal <code>${esc(r.proposal_id)}</code>
+    is stored for review. Nothing is published until the maintainer has checked it.</div>`];
+
+  if (r.similar_error) {
+    parts.push(`<div class="note warn">The duplicate check could not run: ${esc(r.similar_error)}</div>`);
+  } else if (r.similar.length) {
+    parts.push(`<h2>Closest methods already in the catalog</h2>
+      <p class="sub">If one of them already covers your problem, your proposal becomes a
+      new situation for that method rather than a duplicate &mdash; the maintainer checks.</p>`);
+    parts.push(r.similar.map((m) => `<div class="card"><h3>${esc(m.name)}</h3>
+      <div class="meta">${esc(m.category)} &middot; <code>${esc(m.id)}</code></div>
+      <div>${esc(m.matched_use_case || m.use_case)}</div></div>`).join(''));
+  }
+
+  if (r.issue_url) {
+    const omitted = r.issue_url_omitted.length
+      ? `<br>Too long for a link, please paste by hand: ${r.issue_url_omitted.map(esc).join(', ')}.`
+      : '';
+    parts.push(`<h2>Have a GitHub account?</h2><div class="note">
+      <a href="${esc(r.issue_url)}" target="_blank" rel="noopener">Open it as a GitHub issue</a>
+      &mdash; prefilled; you review it and submit it under your own name.${omitted}</div>`);
+  }
+  $('pout').innerHTML = parts.join('');
+}
+
+$('pform').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  $('pgo').disabled = true;
+  $('pout').innerHTML = '<p class="sub">checking the catalog…</p>';
+  const opt = (id) => $(id).value.trim() || null;
+  try {
+    const r = await api('/proposals', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: $('p_name').value.trim(),
+        problem: $('p_problem').value.trim(),
+        description: opt('p_description'),
+        sources: opt('p_sources'),
+        links: $('p_links').value.split('\n').map((l) => l.trim()).filter(Boolean),
+        contexts: [...document.querySelectorAll('#p_contexts input:checked')].map((i) => i.value),
+        existing_method_id: $('p_existing').value || null,
+      }),
+    });
+    renderProposal(r);
+    $('pform').reset();
+  } catch (e) {
+    $('pout').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
+  } finally {
+    $('pgo').disabled = false;
+  }
+});
+
 refreshStatus();
 loadCategories();
+loadProposalOptions();
 </script>
 </body>
 </html>
