@@ -174,9 +174,9 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 
 It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
-grows with the number of texts on the shortlist — about 27 for the default
-6-method shortlist of the current catalog, up from 6 when only one text per
-method was scored.
+grows with the number of texts on the shortlist — about 48 for the default
+9-method shortlist of the current 47-method catalog, up from 6 when only one
+text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
 queries do **not** fail. Reranking is a quality enhancement, so it degrades to
@@ -189,11 +189,14 @@ German probes first, but puts the right method within the top four every time;
 the cross-encoder then ranks all 46 first. Turning reranking off still works
 and still degrades gracefully, but expect noticeably worse ordering.
 
-`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 2, i.e.
-`top_k × 2`). On the current 23-method catalog, raising it buys nothing —
-the right method never lands below position four on the pinned probes — while
-cost grows linearly with the shortlist. It becomes worth raising as the catalog grows and the
-right answer starts landing further down the embedding ranking.
+`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 3, i.e.
+`top_k × 3`). It was 2 until the catalog reached 39 methods: by then two pinned
+probes found their method only 6th by embedding — the last slot of a 6-method
+shortlist — and three independent authoring runs had pushed one of them out
+with a single new method. At 3 all 78 probes still rank first, and the
+reranker scores about 48 texts instead of 32, roughly 15% more time per query.
+Cost grows linearly with the shortlist; raise it again when the right answer
+starts landing near the end of it.
 
 ## MCP server
 
@@ -249,7 +252,7 @@ can tell the difference rather than guess:
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 78 pinned
+  next step. That floor is measured, not guessed: the weakest of the 94 pinned
   integration probes (English and German) scores 0.380, while questions the
   catalog genuinely does not cover reach 0.287 at most (*"Rezept für Zürcher
   Geschnetzeltes"*). Weak matches are still returned — `guidance` is a caveat, never a

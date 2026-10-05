@@ -37,9 +37,9 @@ from methodos.search import Candidate, collection_size, retrieve
 WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
-Measured against the shipped catalog (23 methods, re-checked at 27 and 39)
-with the default multilingual embedding, not guessed. Every one of the 78
-pinned integration probes (39 English, 39 German) reaches at least 0.380 with
+Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43
+and 47) with the default multilingual embedding, not guessed. Every one of the
+94 pinned integration probes (47 English, 47 German) reaches at least 0.380 with
 its best match; questions the catalog genuinely does not cover top out at 0.287
 ("Rezept für Zürcher Geschnetzeltes"), with "wie flicke ich meine Velokette" at
 0.265 and "how do I fix my bicycle chain" at 0.224. 0.33 sits in the empty band
@@ -209,7 +209,7 @@ def recommend_with_candidates(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> tuple[RecommendResult, list[Candidate]]:
     """`recommend_methods`, plus the raw candidates it was built from.
 
@@ -277,7 +277,7 @@ def recommend_methods(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> RecommendResult:
     """Semantic search over the indexed catalog, with the narrowings reported."""
     result, _ = recommend_with_candidates(

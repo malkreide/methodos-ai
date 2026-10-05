@@ -19,7 +19,7 @@ services:
       METHODOS_MODEL: ${METHODOS_MODEL:-anthropic/claude-opus-5}
       METHODOS_TOP_K: ${METHODOS_TOP_K:-3}
       METHODOS_RERANK_PROVIDER: ${METHODOS_RERANK_PROVIDER:-cross-encoder}
-      METHODOS_OVERFETCH_FACTOR: ${METHODOS_OVERFETCH_FACTOR:-2}
+      METHODOS_OVERFETCH_FACTOR: ${METHODOS_OVERFETCH_FACTOR:-3}
     volumes:
       # Read-only and bind-mounted: edit a method on the host, `docker compose
       # restart methodos`, and the entrypoint re-ingests it. Writes stay the

@@ -146,10 +146,11 @@ def test_retrieve_reranks_the_overfetched_pool_not_just_top_k(
         chroma_path=chroma_path,
         top_k=1,
         reranker=fake_reranker,
+        overfetch_factor=2,
     )
     assert len(out) == 1
     assert out[0].id == "Match"
-    # top_k=1 with the default factor of 2 means the reranker saw 2 candidates.
+    # top_k=1 with a factor of 2 means the reranker saw 2 candidates.
     assert len(fake_reranker.calls) == 1
     assert len(fake_reranker.calls[0][1]) == 2
 

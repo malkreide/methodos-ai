@@ -314,6 +314,53 @@ PROBES = [
         "which ones deserve money and attention, and nobody knows who handles which",
         "Risk_Matrix",
     ),
+    (
+        "we have to talk about the disputed reform in front of three hundred parents; "
+        "a podium panel only gives monologues and an open microphone ends in chaos, "
+        "I want a few people to really argue it out while anyone in the hall can still "
+        "join in",
+        "Fishbowl",
+    ),
+    (
+        "my staff bring me every problem and I just tell them what to do; I'd like our "
+        "one-on-one talks to help them work it out themselves and leave knowing what "
+        "they will do next",
+        "GROW_Model",
+    ),
+    (
+        "every department says its request is top priority, but nobody can tell us "
+        "what we actually lose if one of them waits three more months",
+        "Cost_of_Delay_WSJF",
+    ),
+    (
+        "the reorganisation is decided and announced, but my people are mourning what "
+        "they've lost, nobody knows where they stand any more, and upper management "
+        "only talks about how bright the future will be",
+        "Bridges_Transition_Model",
+    ),
+    (
+        "management steers us purely by the budget figures; whether our service is any "
+        "good, how our processes run and whether staff are developing is invisible in "
+        "every report",
+        "Balanced_Scorecard",
+    ),
+    (
+        "a room in our building frees up next year and we want a long list of possible "
+        "uses for it; when we throw ideas around out loud we run dry after five and each "
+        "one gets picked apart straight away",
+        "Brainwriting_635",
+    ),
+    (
+        "lots of tasks before opening day can only begin once others are finished; which "
+        "of these hold-ups actually move our opening day, and which have room to slip?",
+        "Critical_Path_Method",
+    ),
+    (
+        "our operating costs have gone up by a fifth and the board wants to know why; where "
+        "do we even start, how do we split that into pieces we can each check without "
+        "missing anything",
+        "Issue_Tree",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -510,6 +557,54 @@ PROBES_DE = [
         "bei diesem Vorhaben könnten Dutzende Dinge schiefgehen, wir wissen nicht, "
         "welche Geld und Aufmerksamkeit verdienen, und niemand weiss, wer sich um was kümmert",
         "Risk_Matrix",
+    ),
+    (
+        "an der Personalversammlung müssen wir die umstrittene Reorganisation vor allen "
+        "besprechen; ein Podium endet in Monologen und eine offene Fragerunde im Durcheinander, "
+        "ein paar Leute sollen vertieft miteinander diskutieren und wer aus dem Saal etwas "
+        "beizutragen hat, soll mitreden können",
+        "Fishbowl",
+    ),
+    (
+        "In den Mitarbeitergesprächen gebe ich immer gleich die Lösung vor, und am Ende "
+        "weiss niemand, was eigentlich vereinbart wurde; ich möchte, dass meine "
+        "Lehrpersonen selbst draufkommen, wie sie weitermachen",
+        "GROW_Model",
+    ),
+    (
+        "alle Aufträge sind als dringend markiert; welche werden wirklich teurer, "
+        "je länger sie liegen bleiben",
+        "Cost_of_Delay_WSJF",
+    ),
+    (
+        "Die Zusammenlegung unserer zwei Schulen ist beschlossen, doch das Kollegium "
+        "trauert dem Alten nach und hängt in der Luft, und die Schulleitung redet nur "
+        "noch davon, wie toll alles wird",
+        "Bridges_Transition_Model",
+    ),
+    (
+        "Unser Amt wird nur über Budget und Fallzahlen gesteuert; ob die Leistung für die "
+        "Bevölkerung gut ist, wie rund unsere Abläufe laufen und ob sich das Personal "
+        "weiterentwickelt, taucht in keinem Bericht an die Geschäftsleitung auf",
+        "Balanced_Scorecard",
+    ),
+    (
+        "wir brauchen möglichst viele Vorschläge, wie mehr Eltern an die Elternabende "
+        "kommen; wenn wir in der Runde Ideen zurufen, ist nach ein paar Minuten Schluss "
+        "und jeder Vorschlag wird sofort zerredet",
+        "Brainwriting_635",
+    ),
+    (
+        "Der Umzug ins neue Schulhaus muss bis zum Schuljahresbeginn klappen; vieles kann "
+        "erst losgehen, wenn anderes erledigt ist, und niemand weiss, welche Verzögerung "
+        "uns den Termin kostet und wo wir noch Luft haben",
+        "Critical_Path_Method",
+    ),
+    (
+        "Die Geschäftsleitung will wissen, warum unsere Betriebskosten dieses Jahr um einen "
+        "Fünftel höher sind als budgetiert; jede Abteilung zeigt auf eine andere, und ich weiss "
+        "nicht, wie ich die Frage so aufteile, dass wir alles prüfen und nichts doppelt machen",
+        "Issue_Tree",
     ),
 ]
 
