@@ -377,6 +377,13 @@ PROBES = [
         "thought one of the others was doing it",
         "RACI_Matrix",
     ),
+    (
+        "our committee has to agree today which three proposals get funded, and the final "
+        "list always ends up being whatever the chair and the two most talkative members "
+        "wanted; I want everyone to bring their own suggestions and everyone's preferences "
+        "to count the same",
+        "Nominal_Group_Technique",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -638,6 +645,13 @@ PROBES_DE = [
         "manches erledigen zwei Leute doppelt, anderes vergessen alle, weil jeder dachte, "
         "jemand anders sei dran",
         "RACI_Matrix",
+    ),
+    (
+        "In der Schulkonferenz müssen wir heute festlegen, welche drei Vorhaben aus dem "
+        "Budget Geld bekommen; am Schluss steht immer das zuoberst, was die Schulleitung und "
+        "die Lautesten wollten. Alle sollen eigene Vorschläge einbringen, und die Meinung "
+        "jeder Person soll gleich viel zählen",
+        "Nominal_Group_Technique",
     ),
 ]
 
