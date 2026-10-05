@@ -355,6 +355,12 @@ PROBES = [
         "of these hold-ups actually move our opening day, and which have room to slip?",
         "Critical_Path_Method",
     ),
+    (
+        "our operating costs have gone up by a fifth and the board wants to know why; where "
+        "do we even start, how do we split that into pieces we can each check without "
+        "missing anything",
+        "Issue_Tree",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -593,6 +599,12 @@ PROBES_DE = [
         "erst losgehen, wenn anderes erledigt ist, und niemand weiss, welche Verzögerung "
         "uns den Termin kostet und wo wir noch Luft haben",
         "Critical_Path_Method",
+    ),
+    (
+        "Die Geschäftsleitung will wissen, warum unsere Betriebskosten dieses Jahr um einen "
+        "Fünftel höher sind als budgetiert; jede Abteilung zeigt auf eine andere, und ich weiss "
+        "nicht, wie ich die Frage so aufteile, dass wir alles prüfen und nichts doppelt machen",
+        "Issue_Tree",
     ),
 ]
 
