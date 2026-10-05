@@ -327,6 +327,11 @@ PROBES = [
         "they will do next",
         "GROW_Model",
     ),
+    (
+        "every department says its request is top priority, but nobody can tell us "
+        "what we actually lose if one of them waits three more months",
+        "Cost_of_Delay_WSJF",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -536,6 +541,11 @@ PROBES_DE = [
         "weiss niemand, was eigentlich vereinbart wurde; ich möchte, dass meine "
         "Lehrpersonen selbst draufkommen, wie sie weitermachen",
         "GROW_Model",
+    ),
+    (
+        "alle Aufträge sind als dringend markiert; welche werden wirklich teurer, "
+        "je länger sie liegen bleiben",
+        "Cost_of_Delay_WSJF",
     ),
 ]
 
