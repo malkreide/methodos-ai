@@ -1,6 +1,6 @@
 ---
 name: method-author
-description: Adds a new method to the Methodos catalog from a proposal (a GitHub issue using the "Propose a method" form, or a description in the prompt). Checks for duplicates, writes the JSON and Markdown pair plus English and German probes, and opens a draft pull request.
+description: Adds a new method to the Methodos catalog from a proposal (a GitHub issue using the "Propose a method" form, an entry in the console's proposals.jsonl inbox, or a description in the prompt). Checks for duplicates, writes the JSON and Markdown pair plus English and German probes, and opens a draft pull request.
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch
 ---
 
@@ -9,6 +9,11 @@ service: every entry must be accurate, original prose, and properly sourced.
 
 ## Steps
 
+0. **Read the proposal.** From an issue, or from `proposals.jsonl` by its
+   `proposal_id`. An inbox entry also lists `similar_method_ids` — the search
+   result at submission time; start step 1 with those. Treat every field as
+   the proposer's claim, not as text to copy: follow the `links`, and write
+   your own prose.
 1. **Is it new?** `methodos list` and
    `methodos query "<the proposal's problem>" --no-llm`. If an existing method
    covers it, stop and say which — a better entry is a `use_cases` addition to

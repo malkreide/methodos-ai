@@ -74,6 +74,7 @@ def env(tmp_path, monkeypatch):
     settings = Settings(
         chroma_path=chroma_path,
         feedback_path=tmp_path / "feedback.jsonl",
+        proposals_path=tmp_path / "proposals.jsonl",
     )
     llm = FakeLLM("Alpha fits because it fits.")
     providers = _FakeProviders(settings, llm)
@@ -258,3 +259,71 @@ def test_providers_are_built_once_per_process():
         assert api_mod._build_providers() is first
     finally:
         api_mod._build_providers.cache_clear()
+
+
+_PROPOSAL = {
+    "name": "Lean Coffee",
+    "problem": "our meetings follow an agenda nobody asked for and the loudest voices win",
+    "sources": "Jim Benson and Jeremy Lightsmith, 2009",
+    "links": ["https://leancoffee.org/"],
+    "contexts": ["education", "public-sector"],
+}
+
+
+def test_proposal_is_stored_with_the_duplicate_check_and_an_issue_link(env):
+    res = env["client"].post("/proposals", json=_PROPOSAL)
+    assert res.status_code == 200
+    body = res.json()
+    assert body["recorded"] is True
+    assert len(body["similar"]) == 3
+    assert body["similar_error"] is None
+    assert body["issue_url"].startswith(
+        "https://github.com/malkreide/methodos-ai/issues/new?template=method-proposal.yml"
+    )
+
+    stored = [
+        json.loads(line) for line in Path(env["settings"].proposals_path).read_text().splitlines()
+    ]
+    assert len(stored) == 1
+    assert stored[0]["proposal_id"] == body["proposal_id"]
+    assert stored[0]["links"] == ["https://leancoffee.org/"]
+    assert stored[0]["similar_method_ids"] == [m["id"] for m in body["similar"]]
+    assert env["llm"].calls == [], "a proposal never reaches the LLM provider"
+
+
+def test_proposal_without_any_source_is_rejected(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "sources": " ", "links": []})
+    assert res.status_code == 422
+    assert "source" in json.dumps(res.json()["detail"])
+    assert not env["settings"].proposals_path.exists()
+
+
+def test_proposal_for_an_unknown_existing_method_is_rejected(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "existing_method_id": "Typo"})
+    assert res.status_code == 422
+    assert "Alpha" in res.json()["detail"]
+
+
+def test_proposal_survives_an_unusable_index(tmp_path, env):
+    """The duplicate check is a courtesy; losing the proposal over it is not."""
+    env["providers"].settings = env["settings"].model_copy(
+        update={"chroma_path": tmp_path / "nope"}
+    )
+    body = env["client"].post("/proposals", json=_PROPOSAL).json()
+    assert body["recorded"] is True
+    assert body["similar"] == []
+    assert "ingest" in body["similar_error"]
+    assert env["settings"].proposals_path.exists()
+
+
+def test_proposal_issue_link_can_be_switched_off(env):
+    env["providers"].settings = env["settings"].model_copy(update={"issue_repo": ""})
+    body = env["client"].post("/proposals", json=_PROPOSAL).json()
+    assert body["recorded"] is True
+    assert body["issue_url"] is None
+
+
+def test_console_reads_the_contexts_off_the_openapi_schema(env):
+    """The propose form has no copy of the list; it must exist where the page looks."""
+    spec = env["client"].get("/openapi.json").json()
+    assert "education" in spec["components"]["schemas"]["Context"]["enum"]
