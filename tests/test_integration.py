@@ -390,6 +390,13 @@ PROBES = [
         "really about just a couple of issues, but nobody has ever counted",
         "Pareto_Analysis",
     ),
+    (
+        "we have to grow next year and the leadership is split: some want to sell more of "
+        "what we already offer to the people we already serve, others want to reach "
+        "completely different groups or launch something brand new, and nobody has "
+        "compared how risky each path is",
+        "Ansoff_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -665,6 +672,13 @@ PROBES_DE = [
         "meisten eigentlich nur ein paar wenige Themen betreffen, aber gezählt hat das noch "
         "nie jemand",
         "Pareto_Analysis",
+    ),
+    (
+        "Wir sollen wachsen, aber die Geschäftsleitung ist uneins: die einen wollen den "
+        "bisherigen Kunden mehr vom Gleichen verkaufen, andere ganz andere Zielgruppen "
+        "gewinnen oder etwas völlig Neues anfangen, und niemand hat verglichen, wie riskant "
+        "welcher Weg ist",
+        "Ansoff_Matrix",
     ),
 ]
 
