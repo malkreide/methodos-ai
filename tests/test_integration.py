@@ -332,6 +332,12 @@ PROBES = [
         "what we actually lose if one of them waits three more months",
         "Cost_of_Delay_WSJF",
     ),
+    (
+        "the reorganisation is decided and announced, but my people are mourning what "
+        "they've lost, nobody knows where they stand any more, and upper management "
+        "only talks about how bright the future will be",
+        "Bridges_Transition_Model",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -546,6 +552,12 @@ PROBES_DE = [
         "alle Aufträge sind als dringend markiert; welche werden wirklich teurer, "
         "je länger sie liegen bleiben",
         "Cost_of_Delay_WSJF",
+    ),
+    (
+        "Die Zusammenlegung unserer zwei Schulen ist beschlossen, doch das Kollegium "
+        "trauert dem Alten nach und hängt in der Luft, und die Schulleitung redet nur "
+        "noch davon, wie toll alles wird",
+        "Bridges_Transition_Model",
     ),
 ]
 
