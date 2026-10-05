@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Fishbowl",
+  "name": "Fishbowl",
+  "category": "facilitation",
+  "use_case": "A contested issue has to be talked through in front of a large audience, at a staff assembly, a parents' forum or a public meeting. A podium panel turns into a row of prepared statements and an open floor turns into chaos where the loudest win, so we want a handful of people to argue it out properly in full view, with the audience following closely and anyone who has something to add able to step into the conversation themselves.",
+  "strengths": [
+    "a few voices can go deep on a contested question while hundreds follow every turn of the argument",
+    "an open seat lets anyone from the audience step in, so the line between speakers and listeners stays permeable",
+    "people in the circle speak to each other rather than to the audience, which discourages speeches",
+    "makes the reasoning behind positions visible to everyone, not just the conclusions",
+    "needs only chairs, a host and, in a large hall, a few microphones"
+  ],
+  "weaknesses": [
+    "most people in the room listen most of the time; it does not collect input from everyone",
+    "shy or junior participants rarely take the open seat in front of a crowd",
+    "confident regulars can occupy the inner circle unless the host enforces short turns",
+    "produces understanding and visible disagreement, not a decision",
+    "falls flat if the inner circle is staged with people who already agree"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 40,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://www.liberatingstructures.com/user-experience-fishbowl",
+    "https://www.liberatingstructures.com/the-surprising-power-of-liberating-structures",
+    "https://www.sessionlab.com/methods/fishbowl",
+    "https://www.gamestorming.com/fishbowl/",
+    "https://www.wiley.com/en-us/Facilitator%27s+Guide+to+Participatory+Decision+Making%2C+3rd+Edition-p-9781118404959",
+    "https://en.wikipedia.org/wiki/Fishbowl_(conversation)",
+    "https://www.gla.ac.uk/myglasgow/learningandteaching/activelearning/guides/fishbowl"
+  ],
+  "use_cases": [
+    "The council has to hold a public meeting on a disputed plan to close a local school; officials answering questions from the floor last time ended in shouting, and this time residents and officials should actually debate it while the rest of the hall can join in.",
+    "A secondary-school teacher wants the class to practise arguing about a controversial text: a few students discuss it while the others watch closely, note how the argument develops, and then trade places.",
+    "Our conference panels are four experts reading out their slides one after another; the organisers want a live conversation on stage that audience members can step into rather than queue at a microphone.",
+    "At the staff assembly about the restructuring, management and employee representatives should discuss the hard questions openly in front of all two hundred colleagues instead of leadership presenting and taking a few questions.",
+    "Before the whole department adopts a new way of working, the colleagues who piloted it should talk frankly among themselves about what went well and what did not while everyone else listens and then asks questions."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 12,
+    "max_people": 300
+  },
+  "audience": [
+    "event and conference organisers",
+    "school leadership",
+    "teachers",
+    "civic participation teams",
+    "town hall and public meeting hosts",
+    "organisational development practitioners"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

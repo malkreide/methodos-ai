@@ -314,6 +314,13 @@ PROBES = [
         "which ones deserve money and attention, and nobody knows who handles which",
         "Risk_Matrix",
     ),
+    (
+        "we have to talk about the disputed reform in front of three hundred parents; "
+        "a podium panel only gives monologues and an open microphone ends in chaos, "
+        "I want a few people to really argue it out while anyone in the hall can still "
+        "join in",
+        "Fishbowl",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -510,6 +517,13 @@ PROBES_DE = [
         "bei diesem Vorhaben könnten Dutzende Dinge schiefgehen, wir wissen nicht, "
         "welche Geld und Aufmerksamkeit verdienen, und niemand weiss, wer sich um was kümmert",
         "Risk_Matrix",
+    ),
+    (
+        "an der Personalversammlung müssen wir die umstrittene Reorganisation vor allen "
+        "besprechen; ein Podium endet in Monologen und eine offene Fragerunde im Durcheinander, "
+        "ein paar Leute sollen vertieft miteinander diskutieren und wer aus dem Saal etwas "
+        "beizutragen hat, soll mitreden können",
+        "Fishbowl",
     ),
 ]
 
