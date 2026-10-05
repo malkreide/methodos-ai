@@ -17,8 +17,8 @@ Beratung. Problemlösungen gemeinsam entwickeln* (Rowohlt, 2003), who later
 studied its effects empirically (Tietze, 2010). An older, more tightly scripted
 ten-step variant, the Heilsbronn model, was developed in Bavaria in 1985/86 and
 refined at the Protestant church's centre for religious education in
-Heilsbronn. The City of Zurich's school department publishes a compact
-five-step version for its schools ("5 x 5 minutes").
+Heilsbronn. Many schools also use compact five-step versions ("5 x 5
+minutes").
 
 The core sequence, whichever scheme a group uses:
 
@@ -121,9 +121,9 @@ phases. Print the phases on one sheet or a flipchart.
    the case owner reports back briefly at the next meeting.
 
 A tight version runs as five steps of five minutes each (account, clarifying
-questions, hypotheses, solutions, case owner's evaluation); the Zurich guide
-allows the hypotheses and solutions steps to stretch to ten minutes, and refers
-complex questions to specialist consultation instead. A remote version works in a video call if the writer
+questions, hypotheses, solutions, case owner's evaluation); complex questions
+belong in specialist consultation instead. A remote version works in a video
+call if the writer
 shares a document and the case owner switches off their camera during the
 consultation phase.
 
@@ -170,8 +170,6 @@ consultation phase.
 - [Deutsche Kinder- und Jugendstiftung: Kollegiale Beratung für Schule und Sozialarbeit (Themenblatt Nr. 1, 2nd ed., 2012)](https://www.schulerfolg-sichern.de/fileadmin/user_upload/schulerfolg-sichern/Wissensdatenbank/PDF/2022/TB1_Kollegiale_Beratung_Aufl2.pdf)
   — timings for each phase, roles, consultation formats, conditions for a group,
   and limits, written for schools and school social work
-- [Stadt Zürich, Fachstelle Integrative Schule: Leitfaden kollegiale Beratung in schwierigen Schulsituationen (2024)](https://www.stadt-zuerich.ch/content/dam/web/de/bildung/volksschule/unterricht/instrumente-starke-integrative-schule/leitfaden-kollegiale-beratung.pdf)
-  — one-page five-step version used in Zurich's public schools
 - [Wikipedia (de): Kollegiale Fallberatung](https://de.wikipedia.org/wiki/Kollegiale_Fallberatung)
   — variants including the Heilsbronn model
 - [Tietze, K.-O. (2010). *Wirkprozesse und personenbezogene Wirkungen von kollegialer Beratung*. Wiesbaden: VS Verlag](https://doi.org/10.1007/978-3-531-92155-6)
