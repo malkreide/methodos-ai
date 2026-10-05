@@ -338,6 +338,12 @@ PROBES = [
         "only talks about how bright the future will be",
         "Bridges_Transition_Model",
     ),
+    (
+        "management steers us purely by the budget figures; whether our service is any "
+        "good, how our processes run and whether staff are developing is invisible in "
+        "every report",
+        "Balanced_Scorecard",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -558,6 +564,12 @@ PROBES_DE = [
         "trauert dem Alten nach und hängt in der Luft, und die Schulleitung redet nur "
         "noch davon, wie toll alles wird",
         "Bridges_Transition_Model",
+    ),
+    (
+        "Unser Amt wird nur über Budget und Fallzahlen gesteuert; ob die Leistung für die "
+        "Bevölkerung gut ist, wie rund unsere Abläufe laufen und ob sich das Personal "
+        "weiterentwickelt, taucht in keinem Bericht an die Geschäftsleitung auf",
+        "Balanced_Scorecard",
     ),
 ]
 
