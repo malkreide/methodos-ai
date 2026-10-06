@@ -99,13 +99,13 @@ def _rehydrate(
 
 
 def _open_collection(chroma_path: Path, embedding: EmbeddingProvider) -> Any:
-    import chromadb
+    from methodos.chroma import persistent_client
 
     if not chroma_path.exists():
         raise StaleIndexError(
             f"chroma path {chroma_path} does not exist — run `methodos ingest` first"
         )
-    client = chromadb.PersistentClient(path=str(chroma_path))
+    client = persistent_client(chroma_path)
     try:
         coll = client.get_collection("methods")
     except Exception as e:

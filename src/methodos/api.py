@@ -395,6 +395,12 @@ def health(providers: ProvidersDep) -> HealthResponse:
         indexed = collection_size(s.chroma_path, providers.embedding)
     except (StaleIndexError, EmbeddingError) as e:
         index_error = str(e)
+    except Exception as e:
+        # Broad on purpose, like get_providers: this endpoint exists to say why
+        # the service is unwell, and a 500 says nothing. Anything the index
+        # layer throws that the two errors above do not cover is still an
+        # unusable index, and belongs in the report rather than in a traceback.
+        index_error = f"{type(e).__name__}: {e}"
 
     return HealthResponse(
         status="ok" if index_error is None else "degraded",

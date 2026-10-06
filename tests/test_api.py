@@ -115,6 +115,20 @@ def test_health_is_degraded_rather_than_500_when_the_index_is_missing(tmp_path, 
     assert "ingest" in body["index_error"]
 
 
+def test_health_reports_an_unexpected_index_failure_instead_of_500(env, monkeypatch):
+    """Whatever breaks in the index layer, /health must still answer — that is its job."""
+
+    def broken(*a, **kw):
+        raise AttributeError("'RustBindingsAPI' object has no attribute 'bindings'")
+
+    monkeypatch.setattr(api_mod, "collection_size", broken)
+    res = env["client"].get("/health")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["status"] == "degraded"
+    assert body["index_error"].startswith("AttributeError: ")
+
+
 def test_query_returns_the_mcp_narrowing_fields_alongside_the_explanation(env):
     body = env["client"].post("/query", json={"problem": "alpha alpha alpha"}).json()
     assert body["returned"] == 3
