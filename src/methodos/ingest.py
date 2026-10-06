@@ -162,10 +162,10 @@ def ingest(
             count=0, ids=[], provider_name=embedding.name, dimensions=embedding.dimensions
         )
 
-    import chromadb
+    from methodos.chroma import persistent_client
 
     chroma_path.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(chroma_path))
+    client = persistent_client(chroma_path)
 
     with contextlib.suppress(Exception):
         client.delete_collection("methods")

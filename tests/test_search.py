@@ -217,3 +217,38 @@ def test_retrieve_survives_a_reranker_returning_wrong_count(tmp_path, fake_embed
             top_k=3,
             reranker=BadReranker(),
         )
+
+
+def test_concurrent_first_opens_of_an_index_do_not_fail(tmp_path, fake_embedding):
+    """Two requests reaching a freshly started server at once must both get an answer.
+
+    Chroma starts its per-path system on the first client construction, and
+    two threads that both arrive first used to share a half-started one: the
+    Docker health check and a first browser request turned /health into a 500.
+    Clearing Chroma's cache puts this process back in that freshly started state.
+    """
+    import threading
+
+    from chromadb.api.shared_system_client import SharedSystemClient
+
+    from methodos.search import collection_size
+
+    chroma_path = _seed(tmp_path, fake_embedding)
+    errors: list[str] = []
+    for _ in range(5):
+        SharedSystemClient.clear_system_cache()
+        barrier = threading.Barrier(8)
+
+        def open_index(barrier: threading.Barrier = barrier) -> None:
+            barrier.wait()
+            try:
+                assert collection_size(chroma_path, fake_embedding) == 3
+            except Exception as e:
+                errors.append(f"{type(e).__name__}: {e}")
+
+        threads = [threading.Thread(target=open_index) for _ in range(8)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+    assert errors == []
