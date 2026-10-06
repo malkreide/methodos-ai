@@ -428,6 +428,13 @@ PROBES = [
         "efficient ones actually do it",
         "Benchmarking",
     ),
+    (
+        "we've been arguing for months about whether to launch a big new online service, the "
+        "budget decision is next month and all we have are opinions; I want the key people "
+        "locked in a room for a week and to see real people react to something concrete "
+        "before we pay for it",
+        "Design_Sprint",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -742,6 +749,13 @@ PROBES_DE = [
         "als wir. Belegen kann das niemand, weil jede Gemeinde ihre Kosten anders verbucht, und "
         "was die Günstigeren anders machen, weiss auch keiner",
         "Benchmarking",
+    ),
+    (
+        "Seit Monaten streiten wir in der Geschäftsleitung, ob wir ein neues "
+        "Informationsangebot für Eltern aufbauen sollen; bald wird das Budget gesprochen, und "
+        "bisher haben wir nur Meinungen. Wir möchten die Frage in einer Woche klären und "
+        "vorher sehen, wie echte Eltern auf etwas Greifbares reagieren",
+        "Design_Sprint",
     ),
 ]
 
