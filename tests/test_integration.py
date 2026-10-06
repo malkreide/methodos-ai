@@ -410,6 +410,31 @@ PROBES = [
         "the trust between us never gets past small talk",
         "Johari_Window",
     ),
+    (
+        "we have to decide this year whether to refurbish the building, but a vote that "
+        "might close it could come later and we keep arguing as if that vote were ours to make",
+        "Decision_Tree",
+    ),
+    (
+        "we're planning a new after-school care offer and every meeting ends up comparing "
+        "the same two models; there are several things to settle, like opening hours, "
+        "staffing and location, and I'm sure there are workable mixes nobody has thought "
+        "through",
+        "Morphological_Box",
+    ),
+    (
+        "are we really more expensive than similar companies at handling customer orders? "
+        "every figure we find is calculated in a different way, and I'd like to see how the "
+        "efficient ones actually do it",
+        "Benchmarking",
+    ),
+    (
+        "we've been arguing for months about whether to launch a big new online service, the "
+        "budget decision is next month and all we have are opinions; I want the key people "
+        "locked in a room for a week and to see real people react to something concrete "
+        "before we pay for it",
+        "Design_Sprint",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -705,6 +730,32 @@ PROBES_DE = [
         "sehen oder was sie von uns erwarten; ständig gibt es Missverständnisse, und das "
         "Vertrauen untereinander bleibt an der Oberfläche",
         "Johari_Window",
+    ),
+    (
+        "Sollen wir das Schulhaus jetzt sanieren oder warten? Vielleicht entscheidet die "
+        "Gemeinde in zwei Jahren über eine Fusion mit dem Nachbarschulhaus, dann wäre das "
+        "Geld zum Teil verloren",
+        "Decision_Tree",
+    ),
+    (
+        "Wir planen ein neues Beratungsangebot, aber in jeder Sitzung vergleichen wir nur "
+        "dieselben zwei Varianten. Es gibt mehrere Stellschrauben wie Kanal, Zeiten und "
+        "Personal, und ich vermute, dass wir viele mögliche Kombinationen nie durchgedacht "
+        "haben",
+        "Morphological_Box",
+    ),
+    (
+        "Der Gemeinderat behauptet, die Nachbargemeinden führten ihre Werkhöfe viel günstiger "
+        "als wir. Belegen kann das niemand, weil jede Gemeinde ihre Kosten anders verbucht, und "
+        "was die Günstigeren anders machen, weiss auch keiner",
+        "Benchmarking",
+    ),
+    (
+        "Seit Monaten streiten wir in der Geschäftsleitung, ob wir ein neues "
+        "Informationsangebot für Eltern aufbauen sollen; bald wird das Budget gesprochen, und "
+        "bisher haben wir nur Meinungen. Wir möchten die Frage in einer Woche klären und "
+        "vorher sehen, wie echte Eltern auf etwas Greifbares reagieren",
+        "Design_Sprint",
     ),
 ]
 
