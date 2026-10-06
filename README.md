@@ -374,11 +374,17 @@ The first is a yes/no. The second prints the reranked order next to the model's
 prose and a verdict line, for a human to judge — there is no threshold at which
 an explanation is "correct", which is why it is a script and not a test.
 
-**The upload draft prompt has only been run against a fake model.**
-`prompts/draft_proposal.txt` is tested for how its answer is parsed, not for
-what a real model writes. Upload a handout with the draft on and read the
-result before relying on it; the console already tells people to check every
-field.
+**The upload draft has been run against Llama 3.1 8B only, not against the
+model the container uses.** `scripts/verify_draft.py` runs five fixed cases
+through the real draft path. With `ollama/llama3.1:8b` the format held every
+time, but the model obeyed an instruction planted in the document, and in
+individual runs answered in the wrong language or named a misheard word as the
+source. Prompt changes fixed the language; the rest is caught after the fact by
+`check_draft`, which flags copied passages, instruction-like text in the
+document, sources the document does not contain and drafts in the wrong
+language, and the console shows those warnings. Before relying on the draft
+with your production model, run
+`python scripts/verify_draft.py --model <METHODOS_MODEL>`.
 
 [#22]: https://github.com/malkreide/methodos-ai/issues/22
 

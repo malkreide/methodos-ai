@@ -23,6 +23,7 @@ log. The console says so to the person typing.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections.abc import Iterator
 from pathlib import Path
@@ -170,6 +171,17 @@ class DraftError(ValueError):
     """The model's answer could not be read as a draft."""
 
 
+DraftWarning = Literal[
+    "copied_text",
+    "instructions_in_document",
+    "source_not_in_document",
+    "wrong_language",
+    "from_transcript",
+]
+"""Findings of `check_draft`. Codes, not prose: the console words them in the
+viewer's language."""
+
+
 class ProposalDraft(BaseModel):
     """What the LLM made of an uploaded file. Never stored: it prefills a form."""
 
@@ -180,6 +192,11 @@ class ProposalDraft(BaseModel):
     contexts: list[Context] = Field(default_factory=list)
     is_method: bool = True
     note: str | None = None
+    warnings: list[DraftWarning] = Field(
+        default_factory=list,
+        description="What `check_draft` found wrong with this draft. Computed, not "
+        "written by the model, so it holds whatever model produced the draft.",
+    )
 
 
 def draft_from_text(text: str, *, llm: LLMProvider, language: str = "en") -> ProposalDraft:
@@ -226,6 +243,164 @@ def draft_from_text(text: str, *, llm: LLMProvider, language: str = "en") -> Pro
             data[key] = None
     if not isinstance(data.get("is_method"), bool):
         data["is_method"] = True
-    return ProposalDraft.model_validate(
-        {k: data[k] for k in ProposalDraft.model_fields if k in data}
+    if language == "de":
+        # Swiss spelling, which is what this catalog's German readers write.
+        # Done here rather than asked for: models trained mostly on German
+        # German write ß whatever the prompt says.
+        for key in ("name", "problem", "description", "sources", "note"):
+            if isinstance(data.get(key), str):
+                data[key] = data[key].replace("ß", "ss")
+    draft = ProposalDraft.model_validate(
+        {k: data[k] for k in ProposalDraft.model_fields if k in data and k != "warnings"}
     )
+    draft.warnings = check_draft(draft, document=text, language=language)
+    return draft
+
+
+# --- checks that do not trust the model ---------------------------------------
+#
+# Run against Llama 3.1 8B (the CLI's default model), the draft prompt was
+# followed for format every time and broken for content often enough to matter:
+# an instruction planted in the document was obeyed, the description copied a
+# whole passage, a misheard name from a transcript came back as the source, and
+# an English document produced an English draft. Prompt wording moved some of
+# that and not the rest. These checks are deterministic, so they hold for any
+# model; they cannot fix a draft, only tell the person where to look.
+
+COPY_RUN_WORDS = 12
+"""Consecutive words shared with the document that count as copying. Short
+enough to catch a lifted sentence, long enough that a method's own phrases
+("stimmen ab, welche Themen besprochen werden") do not trip it."""
+
+_INSTRUCTION_PATTERNS = re.compile(
+    r"ignor\w*\s+(all\w*\s+)?(previous|prior|above|vorherig\w*|bisherig\w*|obig\w*)\s+"
+    r"(instructions?|anweisung\w*|regeln|rules)"
+    r"|^\s*(system|assistant)\s*:"
+    r"|\byou are now\b|\bdu bist (jetzt|nun)\b"
+    r"|\b(set|setze)\s+\W?(name|sources|contexts)\W?\s+(to|auf)\b",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+_SOURCE_FILLER = frozenset(
+    [
+        "and",
+        "und",
+        "the",
+        "der",
+        "die",
+        "das",
+        "des",
+        "von",
+        "van",
+        "von",
+        "for",
+        "für",
+        "of",
+        "et",
+        "al",
+        "eds",
+        "hrsg",
+        "ed",
+    ]
+)
+
+_STOPWORDS = {
+    "de": frozenset(
+        [
+            "der",
+            "die",
+            "das",
+            "und",
+            "ist",
+            "nicht",
+            "ein",
+            "eine",
+            "einen",
+            "mit",
+            "zu",
+            "sich",
+            "auf",
+            "für",
+            "von",
+            "dem",
+            "den",
+            "werden",
+            "wird",
+            "sie",
+            "es",
+            "im",
+            "in",
+            "auch",
+            "als",
+            "bei",
+            "oder",
+            "wenn",
+        ]
+    ),
+    "en": frozenset(
+        [
+            "the",
+            "and",
+            "is",
+            "not",
+            "a",
+            "an",
+            "with",
+            "to",
+            "of",
+            "for",
+            "on",
+            "in",
+            "it",
+            "they",
+            "are",
+            "be",
+            "by",
+            "or",
+            "when",
+            "this",
+            "that",
+            "their",
+        ]
+    ),
+}
+
+
+def _words(text: str) -> list[str]:
+    return re.findall(r"\w+", text.lower())
+
+
+def check_draft(draft: ProposalDraft, *, document: str, language: str) -> list[DraftWarning]:
+    """Where a draft is likely wrong, whatever model wrote it."""
+    warnings: list[DraftWarning] = []
+
+    doc_words = _words(document)
+    n = COPY_RUN_WORDS
+    doc_runs = {tuple(doc_words[i : i + n]) for i in range(len(doc_words) - n + 1)}
+    for field in (draft.problem, draft.description):
+        w = _words(field)
+        if any(tuple(w[i : i + n]) in doc_runs for i in range(len(w) - n + 1)):
+            warnings.append("copied_text")
+            break
+
+    if _INSTRUCTION_PATTERNS.search(document):
+        warnings.append("instructions_in_document")
+
+    if draft.sources:
+        doc_vocab = set(doc_words)
+        cited = [
+            w
+            for w in _words(draft.sources)
+            if w not in _SOURCE_FILLER and (len(w) >= 3 or w.isdigit())
+        ]
+        if any(w not in doc_vocab for w in cited):
+            warnings.append("source_not_in_document")
+
+    target = _STOPWORDS.get(language)
+    other = _STOPWORDS["en" if language == "de" else "de"]
+    if target is not None:
+        written = _words(f"{draft.problem} {draft.description}")
+        if sum(w in other for w in written) > sum(w in target for w in written):
+            warnings.append("wrong_language")
+
+    return warnings

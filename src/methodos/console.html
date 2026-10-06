@@ -269,6 +269,12 @@ const I18N = {
     f_text: 'Ausgelesener Text ({n} Zeichen)',
     f_text_media: 'Transkript ({n} Zeichen, Aufnahme {dur})',
     f_truncated: 'Angezeigt sind die ersten 20 000 Zeichen.',
+    w_head: 'Bitte besonders prüfen:',
+    w_copied_text: 'Der Entwurf übernimmt längere Passagen wörtlich aus dem Dokument. Bitte in eigenen Worten formulieren – der Katalog enthält nur eigene Texte.',
+    w_instructions_in_document: 'Das Dokument enthält Text, der sich an die KI richtet. Der Entwurf kann dadurch manipuliert sein – prüfen Sie vor allem Name und Quellen.',
+    w_source_not_in_document: 'Die angegebene Quelle steht so nicht im Dokument. Bitte prüfen oder löschen.',
+    w_wrong_language: 'Der Entwurf ist nicht in der gewählten Sprache geschrieben.',
+    w_from_transcript: 'Der Entwurf stammt aus einem Transkript. Namen von Personen und Methoden werden beim Transkribieren oft falsch verstanden.',
     p_checking: 'Katalog wird geprüft …',
     p_need_source: 'Bitte geben Sie mindestens eine Quelle oder einen Link an.',
     p_too_many_links: 'Höchstens fünf Links.',
@@ -368,6 +374,12 @@ const I18N = {
     f_text: 'Extracted text ({n} characters)',
     f_text_media: 'Transcript ({n} characters, recording {dur})',
     f_truncated: 'Showing the first 20,000 characters.',
+    w_head: 'Check in particular:',
+    w_copied_text: 'The draft copies longer passages from the document word for word. Please rephrase — the catalog only takes original prose.',
+    w_instructions_in_document: 'The document contains text addressed to the AI. The draft may have been manipulated — check the name and the sources above all.',
+    w_source_not_in_document: 'The source given does not appear in the document like this. Check it or remove it.',
+    w_wrong_language: 'The draft is not written in the selected language.',
+    w_from_transcript: 'The draft comes from a transcript. Names of people and methods are often misheard in transcription.',
     p_checking: 'checking the catalog…',
     p_need_source: 'Give at least one source or link.',
     p_too_many_links: 'Five links at most.',
@@ -737,6 +749,10 @@ function renderExtract(r) {
   if (r.draft) {
     parts.push(`<div class="note">${t('f_filled')}</div>`);
     if (!r.draft.is_method) parts.push(`<div class="note warn">${t('f_not_method')}</div>`);
+    if (r.draft.warnings.length) {
+      parts.push(`<div class="note warn"><b>${t('w_head')}</b><ul>${r.draft.warnings
+        .map((w) => `<li>${t(`w_${w}`)}</li>`).join('')}</ul></div>`);
+    }
     if (r.draft.note) parts.push(`<div class="note warn">${t('f_note')} ${esc(r.draft.note)}</div>`);
   } else if (r.draft_error) {
     parts.push(`<div class="note err">${t('f_draft_failed')}<div class="orig">${esc(r.draft_error)}</div></div>`);
