@@ -415,6 +415,13 @@ PROBES = [
         "might close it could come later and we keep arguing as if that vote were ours to make",
         "Decision_Tree",
     ),
+    (
+        "we're planning a new after-school care offer and every meeting ends up comparing "
+        "the same two models; there are several things to settle, like opening hours, "
+        "staffing and location, and I'm sure there are workable mixes nobody has thought "
+        "through",
+        "Morphological_Box",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -716,6 +723,13 @@ PROBES_DE = [
         "Gemeinde in zwei Jahren über eine Fusion mit dem Nachbarschulhaus, dann wäre das "
         "Geld zum Teil verloren",
         "Decision_Tree",
+    ),
+    (
+        "Wir planen ein neues Beratungsangebot, aber in jeder Sitzung vergleichen wir nur "
+        "dieselben zwei Varianten. Es gibt mehrere Stellschrauben wie Kanal, Zeiten und "
+        "Personal, und ich vermute, dass wir viele mögliche Kombinationen nie durchgedacht "
+        "haben",
+        "Morphological_Box",
     ),
 ]
 

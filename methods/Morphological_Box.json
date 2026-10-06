@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Morphological_Box",
+  "name": "Morphological Box (Zwicky Box)",
+  "category": "analysis",
+  "use_case": "A team planning a new service, programme or product keeps comparing the same two or three models at every planning session. Several things have to be settled, such as delivery channel, timing, staffing and location, and it wants to list the realistic answers to each, check which combinations of them can work together and strike out those that cannot, so that workable designs nobody has considered come to light before anyone picks one.",
+  "strengths": [
+    "makes the whole space of possible designs visible instead of the few variants people already have in mind",
+    "turns a vague design debate into a short list of features and alternatives that everyone can see and correct",
+    "pairwise consistency checks remove impossible combinations in bulk, so a large grid shrinks to a manageable set",
+    "badly defined features show up quickly, because nobody can judge whether two alternatives fit together until their meaning is agreed",
+    "the grid and the consistency judgements leave a traceable record of why a configuration was kept or ruled out",
+    "works with qualitative features that cannot be measured or scored"
+  ],
+  "weaknesses": [
+    "the number of combinations multiplies with every feature added; beyond about six or seven features it cannot be worked through by hand",
+    "only finds what the grid contains: a feature or alternative nobody thought to list never appears in any configuration",
+    "assumes the features can be chosen independently; if they are really one decision in disguise the grid fills with meaningless combinations",
+    "produces a set of consistent configurations, not a recommendation; choosing between them needs a separate evaluation step",
+    "the consistency judgements are only as sound as the knowledge of the people making them, and can quietly encode existing preferences",
+    "takes longer and needs more discipline than an open idea round, which can feel slow to groups used to brainstorming"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Morphological_analysis_(problem-solving)",
+    "https://de.wikipedia.org/wiki/Morphologische_Analyse_(Kreativit%C3%A4tstechnik)",
+    "https://www.swemorph.com/pdf/gma.pdf",
+    "https://www.swemorph.com/pdf/psm-gma.pdf",
+    "https://archive.org/details/discoveryinventi0000zwic"
+  ],
+  "use_cases": [
+    "A school wants to rethink its weekly timetable, and the staff only ever compare the current single lessons with one block model; the planning group wants to set lesson length, group size, room and subject mix side by side and find out which mixtures actually fit together.",
+    "A municipal office is redesigning how residents reach it and wants to lay out every workable mix of contact channel, opening times, staffing and appointment rules, instead of arguing once more about longer counter hours versus moving everything online.",
+    "An engineering team developing a new device has a few open design questions, such as power supply, housing, mounting and controls, and wants to be sure it has not overlooked a feasible combination before it drafts any concepts.",
+    "A policy unit has to describe the forms a new support programme could take, varying who is eligible, who pays and who delivers it, and wants to rule out the combinations that cannot work before anyone debates which are desirable."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 8
+  },
+  "audience": [
+    "product and engineering teams",
+    "service designers",
+    "school leadership and timetable planners",
+    "public administration teams",
+    "policy analysts",
+    "workshop facilitators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}
