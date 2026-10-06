@@ -435,6 +435,13 @@ PROBES = [
         "before we pay for it",
         "Design_Sprint",
     ),
+    (
+        "the new curriculum guidelines run to three hundred pages and our teachers get one "
+        "afternoon to learn what is in them; last time a colleague summarised them on slides "
+        "and the room switched off. Could each of us work properly through one section and "
+        "still come away knowing all of it?",
+        "Jigsaw_Method",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -756,6 +763,13 @@ PROBES_DE = [
         "bisher haben wir nur Meinungen. Wir möchten die Frage in einer Woche klären und "
         "vorher sehen, wie echte Eltern auf etwas Greifbares reagieren",
         "Design_Sprint",
+    ),
+    (
+        "Vor der Strategieklausur haben wir fünf dicke Berichte bekommen, die niemand alle "
+        "lesen kann; fassen zwei Leute sie zusammen, hören die anderen bloss zu. Wie schaffen "
+        "wir es, dass sich jede Person gründlich in ein Stück einarbeitet und am Ende trotzdem "
+        "alle den ganzen Inhalt kennen?",
+        "Jigsaw_Method",
     ),
 ]
 

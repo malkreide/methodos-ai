@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "Jigsaw_Method",
+  "name": "Jigsaw Method",
+  "category": "facilitation",
+  "use_case": "Our staff has to work through a large amount of written material in very little time, such as a new framework, a long regulation or several reports, and nobody can read all of it. When a few people present summaries to everyone else, most of the audience sits back and retains little. We want the material split up so that each person studies one part thoroughly, checks their understanding with others who read the same part, and then explains it to colleagues who read different parts, so that every participant leaves knowing the whole content.",
+  "strengths": [
+    "each participant reads only a share of the material yet hears the whole of it explained",
+    "having to explain a part to colleagues makes people read it far more carefully than for a briefing",
+    "everyone speaks, because every small group depends on each member's part",
+    "the expert round lets people correct misreadings among themselves before they teach",
+    "runs with paper copies, a timer and a room where small groups can sit apart"
+  ],
+  "weaknesses": [
+    "a part that is misunderstood in the expert round is passed on wrongly to every mixed group",
+    "each person knows their own part much better than the parts colleagues explained to them",
+    "the material has to split into pieces of similar length that can be understood on their own",
+    "the number of participants has to fit the number of parts, so absences and odd numbers need planning",
+    "conveys and checks understanding of given content but does not produce a decision or an evaluation"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://www.jigsaw.org/",
+    "https://www.jigsaw.org/history/",
+    "https://www.jigsaw.org/tips/",
+    "https://openlibrary.org/books/OL4714401M",
+    "https://doi.org/10.1177/014616727900500405",
+    "https://serc.carleton.edu/NAGTWorkshops/coursedesign/tutorial/jigsaw.html",
+    "https://www.uis.edu/ion/resources/oiai/jigsaw",
+    "https://doi.org/10.1037/edu0000730"
+  ],
+  "use_cases": [
+    "The canton has issued a new curriculum framework of several hundred pages, and the teaching staff must know its content before planning the next school year, but there is only one afternoon of in-service training.",
+    "Before a strategy day, the management team has received five lengthy evaluation reports; nobody manages to read them all, and in the meeting only the two people who did read them really contribute.",
+    "A municipal permits office must apply a revised ordinance from next month, and every clerk needs to know what all of its chapters say, not just the two-page memo the legal unit sent round.",
+    "A lecturer wants students to cover four research articles in one seminar session, with each student working on one article in depth and then explaining it to fellow students who studied the others.",
+    "New members of a volunteer board have a thick folder of statutes, budgets and past minutes to absorb before their first meeting, and the onboarding evening should leave them actually informed."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 6,
+    "max_people": 40
+  },
+  "audience": [
+    "teaching staff",
+    "school leadership",
+    "trainers and course leaders",
+    "lecturers",
+    "public administration teams",
+    "management teams",
+    "workshop hosts"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}
