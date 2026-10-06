@@ -58,9 +58,16 @@ form — name, problem, how it works, sources, links, contexts — and:
   account (`METHODOS_ISSUE_REPO`, empty to turn it off). The server holds no
   GitHub token and never posts anything itself.
 
-Nothing is uploaded and nothing is published: links point to the source, the
-inbox is read by the owner, and the catalog changes only through the same
-draft PR as above.
+The tab can also start from a file — a PDF handout, a Word document, a
+recording of a workshop (`POST /proposals/extract`). The file is read or
+transcribed on the server, deleted, and its text turned into a draft that
+prefills the form; see [Uploads](../README.md#uploads). The proposal that
+arrives in the inbox then carries `extracted_from` (`pdf`, `docx`, `text`,
+`audio`, `video`). Read those with extra care: names and sources went through
+a speech or PDF reader and an LLM before the person checked them.
+
+Nothing is published: links point to the source, the inbox is read by the
+owner, and the catalog changes only through the same draft PR as above.
 
 ```
 > Use the method-author agent on proposal 01M46PM47V7B0AW5J0FQV2HDC7 from data/proposals.jsonl.

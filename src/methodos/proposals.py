@@ -34,6 +34,8 @@ from ulid import ULID
 
 from methodos.feedback import _append_line, _now_iso
 from methodos.models import Context
+from methodos.providers.base import LLMProvider
+from methodos.uploads import Kind
 
 ISSUE_TEMPLATE = "method-proposal.yml"
 
@@ -54,6 +56,11 @@ class ProposalEvent(BaseModel):
     links: list[str] = Field(default_factory=list)
     contexts: list[Context] = Field(default_factory=list)
     existing_method_id: str | None = None
+    extracted_from: Kind | None = Field(
+        default=None,
+        description="Set when the person started from an uploaded file. Only the "
+        "kind is kept — the file and its text are not.",
+    )
     similar_method_ids: list[str] = Field(
         default_factory=list,
         description="What the catalog search returned for `problem` at submission "
@@ -72,6 +79,7 @@ def log_proposal(
     existing_method_id: str | None,
     similar_method_ids: list[str],
     path: Path,
+    extracted_from: Kind | None = None,
 ) -> ProposalEvent:
     """Append a proposal. Returns the stored event, id and timestamp included."""
     ev = ProposalEvent(
@@ -84,6 +92,7 @@ def log_proposal(
         links=links,
         contexts=contexts,
         existing_method_id=existing_method_id,
+        extracted_from=extracted_from,
         similar_method_ids=similar_method_ids,
     )
     _append_line(path, ev)
@@ -148,3 +157,75 @@ def issue_url(proposal: ProposalEvent, repo: str) -> IssueLink:
         if len(url) <= MAX_ISSUE_URL:
             return IssueLink(url=url, omitted=omitted)
     return IssueLink(url=None, omitted=omitted)
+
+
+DRAFT_INPUT_CHARS = 24_000
+"""About 6000 tokens: enough for a handout or a half-hour transcript, and a
+bound on what one upload costs at the LLM provider."""
+
+LANGUAGES = {"de": "German", "en": "English"}
+
+
+class DraftError(ValueError):
+    """The model's answer could not be read as a draft."""
+
+
+class ProposalDraft(BaseModel):
+    """What the LLM made of an uploaded file. Never stored: it prefills a form."""
+
+    name: str = ""
+    problem: str = ""
+    description: str = ""
+    sources: str | None = None
+    contexts: list[Context] = Field(default_factory=list)
+    is_method: bool = True
+    note: str | None = None
+
+
+def draft_from_text(text: str, *, llm: LLMProvider, language: str = "en") -> ProposalDraft:
+    """Ask the LLM for a proposal draft. Raises LLMError or DraftError.
+
+    Lenient about the envelope (code fences, a sentence before the JSON) and
+    strict about the content: an unknown context is dropped rather than
+    failing the whole draft, because the person is about to review every
+    field anyway.
+    """
+    from methodos.prompts.loader import render_draft_prompt, split_system_user
+
+    prompt = render_draft_prompt(
+        document=text[:DRAFT_INPUT_CHARS],
+        language=LANGUAGES.get(language, "English"),
+        contexts=[c.value for c in Context],
+        truncated=len(text) > DRAFT_INPUT_CHARS,
+    )
+    system, user = split_system_user(prompt)
+    raw = llm.complete(system, user, max_tokens=1200, temperature=0.2)
+
+    start, end = raw.find("{"), raw.rfind("}")
+    if start == -1 or end <= start:
+        raise DraftError("the model did not answer with a JSON object")
+    try:
+        data = json.loads(raw[start : end + 1])
+    except json.JSONDecodeError as e:
+        raise DraftError(f"the model's JSON is malformed: {e}") from e
+    if not isinstance(data, dict):
+        raise DraftError("the model did not answer with a JSON object")
+
+    valid = {c.value for c in Context}
+    contexts = data.get("contexts")
+    data["contexts"] = (
+        [c for c in contexts if isinstance(c, str) and c in valid]
+        if isinstance(contexts, list)
+        else []
+    )
+    for key in ("name", "problem", "description"):
+        if not isinstance(data.get(key), str):
+            data[key] = ""
+    for key in ("sources", "note"):
+        if not isinstance(data.get(key), str) or not data[key].strip():
+            data[key] = None
+    if not isinstance(data.get("is_method"), bool):
+        data["is_method"] = True
+    return ProposalDraft.model_validate(
+        {k: data[k] for k in ProposalDraft.model_fields if k in data}
+    )

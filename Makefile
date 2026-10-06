@@ -1,7 +1,7 @@
 .PHONY: install test lint fmt schema ingest demo serve docker-build docker-up docker-down clean
 
 install:
-	pip install -e ".[dev,local,api]" -c constraints.txt
+	pip install -e ".[dev,local,api,transcribe]" -c constraints.txt
 
 test:
 	pytest

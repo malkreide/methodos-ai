@@ -70,3 +70,24 @@ def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -
         .replace("{candidates_block}", candidates_block)
         .replace("{ranking_basis}", basis)
     )
+
+
+def render_draft_prompt(
+    *, document: str, language: str, contexts: Sequence[str], truncated: bool
+) -> str:
+    """Render the proposal-draft template. `.replace`, not `.format`, for the same
+    reason as `render_explain_prompt`: the document is arbitrary text and the
+    template itself contains a literal JSON object."""
+    note = (
+        "(Only the beginning of a longer document follows; do not guess at the rest.)\n"
+        if truncated
+        else ""
+    )
+    return (
+        load_prompt("draft_proposal")
+        .replace("{language}", language)
+        .replace("{contexts}", ", ".join(contexts))
+        .replace("{truncated_note}", note)
+        # Last, so text inside the document cannot be mistaken for a placeholder.
+        .replace("{document}", document)
+    )

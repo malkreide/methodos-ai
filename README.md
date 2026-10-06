@@ -101,6 +101,7 @@ survives restarts in a named volume.
 | `GET /methods`, `GET /methods/{id}` | The catalog and one method's full Markdown |
 | `POST /feedback`, `GET /stats` | The same JSONL loop the CLI writes |
 | `POST /proposals` | Propose a missing method: name, problem, sources and links → stored in `proposals.jsonl`, with the closest existing methods and a prefilled GitHub issue link. Publishes nothing — see [docs/curation.md](docs/curation.md) |
+| `POST /proposals/extract` | Multipart upload of a PDF, Word (.docx), text, audio or video file → its text, and optionally an LLM draft that prefills the proposal form. Stores nothing; see [Uploads](#uploads) |
 
 `/query` returns the MCP server's payload — `ranking_basis`, `guidance`,
 `total_in_scope` — plus the explanation. It carries the same meaning here, and
@@ -112,10 +113,40 @@ provider's error in `explanation_error` — hiding a working ranking behind an L
 outage would be the worse failure. `POST /llm/check` is the endpoint that fails
 loudly, and `"explain": false` is the API's `--no-llm`.
 
+### Uploads
+
+The console's *Propose a method* tab can start from a file. What happens to it:
+
+1. The file is written to a temporary directory and **deleted before the
+   response is sent**. Its name is not kept.
+2. PDF (`pypdf`), Word `.docx` (standard library) and `.txt`/`.md` are read
+   in-process. Scanned PDFs (no text layer), legacy `.doc` and images are
+   refused with a message saying what to do instead.
+3. Audio and video are transcribed **on this server** with faster-whisper
+   (the `transcribe` extra; the image bakes in the `small` model). Video is
+   reduced to its audio track. The recording never leaves the machine.
+4. With *Draft with the LLM* on, the extracted **text** — not the file — goes
+   to the configured model, which returns a draft for the form. The person
+   edits it and submits as usual; only what they submit is stored, plus the
+   kind of file it started from (`extracted_from`).
+
+Limits: `METHODOS_UPLOAD_MAX_MB` (default 50, checked against Content-Length
+before the body is read) and `METHODOS_MEDIA_MAX_MINUTES` (default 20, checked
+from the file header before decoding). Transcription runs inside the request:
+on a 4-core CPU the `small` model needs very roughly a quarter of the
+recording's length, and about 1 GB of RAM while it runs. Behind a reverse
+proxy, raise its body-size limit to match and its read timeout to several
+minutes, or long recordings will fail at the proxy rather than here.
+`docker build --build-arg WHISPER_MODEL=base .` makes a smaller image with a
+weaker German transcript.
+
+Without the `transcribe` extra the server still starts and reads documents;
+`/health` lists what it accepts in `upload_suffixes`.
+
 Without Docker:
 
 ```bash
-pip install -e ".[dev,local,api]"
+pip install -e ".[dev,local,api,transcribe]"
 methodos ingest && make serve      # the server reads the index, it does not build one
 ```
 
@@ -299,9 +330,18 @@ What leaves the user's hands, and where it goes:
 | The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
 | Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
 | Method proposal (`/proposals`) | verbatim in `proposals.jsonl`, with a timestamp | no — the GitHub link is opened, and submitted, by the person themselves |
+| Uploaded file (`/proposals/extract`) | no — a temporary file for the length of the request, then deleted | no — audio and video are transcribed locally |
+| Text extracted from an upload | no — returned to the browser only | to the LLM provider when the draft runs |
 | Client IP | not by Methodos; uvicorn's access log prints it to stdout | depends on your log shipping |
 
 The MCP server logs nothing and calls no LLM.
+
+Recordings are the sensitive case: a workshop or a lesson carries the voices
+of people who did not choose to be in a catalog's inbox. Transcription is
+local by contract (`TranscriptionProvider` in `providers/base.py`), and the
+console asks people not to upload recordings of others without their
+consent — but the transcript does reach the LLM provider when the draft is
+on, and a name spoken in a recording becomes a name in that text.
 
 The console, the OpenAPI field descriptions and the CLI help all tell the person
 typing to leave out personal data. That is a notice, not a filter: nothing
@@ -333,6 +373,12 @@ docker compose run --rm --entrypoint python cli scripts/verify_explain.py
 The first is a yes/no. The second prints the reranked order next to the model's
 prose and a verdict line, for a human to judge — there is no threshold at which
 an explanation is "correct", which is why it is a script and not a test.
+
+**The upload draft prompt has only been run against a fake model.**
+`prompts/draft_proposal.txt` is tested for how its answer is parsed, not for
+what a real model writes. Upload a handout with the draft on and read the
+result before relying on it; the console already tells people to check every
+field.
 
 [#22]: https://github.com/malkreide/methodos-ai/issues/22
 

@@ -375,3 +375,171 @@ def test_make_reranker_rejects_unknown_provider(monkeypatch):
     monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "magic")
     with pytest.raises(ValidationError):
         Settings(_env_file=None)
+
+
+# --- transcription ---------------------------------------------------------
+
+
+def test_fake_transcriber_satisfies_the_protocol():
+    from methodos.providers.base import TranscriptionProvider
+    from tests.conftest import FakeTranscriber
+
+    assert isinstance(FakeTranscriber(), TranscriptionProvider)
+
+
+def test_faster_whisper_satisfies_the_protocol_without_loading_anything():
+    from methodos.providers.base import TranscriptionProvider
+    from methodos.providers.transcribe_whisper import FasterWhisperTranscriber
+
+    t = FasterWhisperTranscriber(model_name="small")
+    assert isinstance(t, TranscriptionProvider)
+    assert t.name == "faster-whisper:small"
+    assert t._model is None
+
+
+def test_make_transcriber_is_on_by_default(monkeypatch):
+    from methodos.providers import make_transcriber
+    from methodos.providers.transcribe_whisper import FasterWhisperTranscriber
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=object()) as fs:
+        assert isinstance(make_transcriber(Settings(_env_file=None)), FasterWhisperTranscriber)
+    fs.assert_called_once_with("faster_whisper")
+
+
+def test_make_transcriber_degrades_when_the_extra_is_missing(monkeypatch):
+    """Documents must keep working on a server without the `transcribe` extra."""
+    from methodos.providers import make_transcriber
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=None):
+        assert make_transcriber(Settings(_env_file=None)) is None
+
+
+def test_make_transcriber_raises_when_required_but_missing(monkeypatch):
+    from methodos.providers import make_transcriber
+    from methodos.providers.base import TranscriptionError
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with (
+        patch("methodos.providers.find_spec", return_value=None),
+        pytest.raises(TranscriptionError, match="transcribe"),
+    ):
+        make_transcriber(Settings(_env_file=None), required=True)
+
+
+def test_make_transcriber_returns_none_when_disabled(monkeypatch):
+    from methodos.providers import make_transcriber
+
+    monkeypatch.setenv("METHODOS_TRANSCRIBE_PROVIDER", "none")
+    assert make_transcriber(Settings(_env_file=None)) is None
+
+
+def _segment(text):
+    s = MagicMock()
+    s.text = text
+    return s
+
+
+def test_whisper_refuses_a_long_recording_before_loading_the_model(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import MediaTooLongError
+
+    with (
+        patch.object(tw, "_probe_duration", return_value=3600.0),
+        patch.object(tw, "_load_whisper") as load,
+        pytest.raises(MediaTooLongError, match="60 minutes"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+    load.assert_not_called()
+
+
+def test_whisper_joins_segments_and_reports_the_language(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+
+    model = MagicMock()
+    info = MagicMock(duration=42.0, language="de")
+    model.transcribe.return_value = (
+        iter([_segment(" Erstens "), _segment(""), _segment("zweitens.")]),
+        info,
+    )
+    with (
+        patch.object(tw, "_probe_duration", return_value=42.0),
+        patch.object(tw, "_load_whisper", return_value=model),
+    ):
+        t = tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+    assert t.text == "Erstens zweitens."
+    assert t.language == "de"
+    assert t.duration_seconds == 42.0
+
+
+def test_whisper_checks_the_decoded_length_when_the_header_has_none(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import MediaTooLongError
+
+    model = MagicMock()
+    model.transcribe.return_value = (iter([]), MagicMock(duration=5000.0, language="de"))
+    with (
+        patch.object(tw, "_probe_duration", return_value=None),
+        patch.object(tw, "_load_whisper", return_value=model),
+        pytest.raises(MediaTooLongError),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_whisper_wraps_backend_failures(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import TranscriptionError
+
+    model = MagicMock()
+    model.transcribe.side_effect = RuntimeError("decoder exploded")
+    with (
+        patch.object(tw, "_probe_duration", return_value=10.0),
+        patch.object(tw, "_load_whisper", return_value=model),
+        pytest.raises(TranscriptionError, match="decoder exploded"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_whisper_that_will_not_load_is_unavailable_not_a_bad_file(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import TranscriberUnavailableError
+
+    with (
+        patch.object(tw, "_probe_duration", return_value=10.0),
+        patch.object(tw, "_load_whisper", side_effect=OSError("no such model")),
+        pytest.raises(TranscriberUnavailableError, match="no such model"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_faster_whisper_can_decode_with_the_installed_pyav(tmp_path):
+    """faster-whisper and PyAV must agree on av.open()'s signature.
+
+    PyAV 19 dropped an argument faster-whisper 1.2.1 still passes, which broke
+    every transcription in the Docker image while a 3.11 dev box (av 18) was
+    fine. No model is loaded: decoding a generated tone exercises exactly the
+    call that broke. Skipped where the `transcribe` extra is not installed.
+    """
+    import math
+    import struct
+    import wave
+
+    pytest.importorskip("faster_whisper")
+    from faster_whisper.audio import decode_audio
+
+    from methodos.providers.transcribe_whisper import _probe_duration
+
+    path = tmp_path / "tone.wav"
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(16000)
+        w.writeframes(
+            b"".join(
+                struct.pack("<h", int(8000 * math.sin(2 * math.pi * 440 * i / 16000)))
+                for i in range(16000)
+            )
+        )
+    assert len(decode_audio(str(path))) == 16000
+    assert _probe_duration(path) == pytest.approx(1.0, abs=0.05)
