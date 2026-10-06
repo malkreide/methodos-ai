@@ -384,6 +384,32 @@ PROBES = [
         "to count the same",
         "Nominal_Group_Technique",
     ),
+    (
+        "our customer service team gets hundreds of complaints a month about all sorts of "
+        "things and tries to chase down every one separately; I suspect most of them are "
+        "really about just a couple of issues, but nobody has ever counted",
+        "Pareto_Analysis",
+    ),
+    (
+        "we have to grow next year and the leadership is split: some want to sell more of "
+        "what we already offer to the people we already serve, others want to reach "
+        "completely different groups or launch something brand new, and nobody has "
+        "compared how risky each path is",
+        "Ansoff_Matrix",
+    ),
+    (
+        "one of my pupils has completely shut down and things with his parents keep getting "
+        "worse; our school has no supervisor or coach, and when I mention it in the staff "
+        "room everyone just throws in their own stories and quick tips. I'd like a few "
+        "colleagues to properly help me think it through in under an hour",
+        "Collegial_Case_Consultation",
+    ),
+    (
+        "we've shared an office for years but hardly know each other; people misread one "
+        "another's intentions, nobody really knows how they come across to the others, and "
+        "the trust between us never gets past small talk",
+        "Johari_Window",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -652,6 +678,33 @@ PROBES_DE = [
         "die Lautesten wollten. Alle sollen eigene Vorschläge einbringen, und die Meinung "
         "jeder Person soll gleich viel zählen",
         "Nominal_Group_Technique",
+    ),
+    (
+        "Bei uns gehen jede Woche unzählige Reklamationen und Anfragen zu allen möglichen "
+        "Themen ein, und wir versuchen, jede einzeln zu erledigen. Ich vermute, dass die "
+        "meisten eigentlich nur ein paar wenige Themen betreffen, aber gezählt hat das noch "
+        "nie jemand",
+        "Pareto_Analysis",
+    ),
+    (
+        "Wir sollen wachsen, aber die Geschäftsleitung ist uneins: die einen wollen den "
+        "bisherigen Kunden mehr vom Gleichen verkaufen, andere ganz andere Zielgruppen "
+        "gewinnen oder etwas völlig Neues anfangen, und niemand hat verglichen, wie riskant "
+        "welcher Weg ist",
+        "Ansoff_Matrix",
+    ),
+    (
+        "Ich komme mit einem Schüler in meiner Klasse nicht mehr weiter, und mit seinen "
+        "Eltern ist es völlig verfahren. Supervision gibt es bei uns im Schulhaus keine, "
+        "und im Lehrerzimmer hat jede und jeder sofort einen gut gemeinten Tipp. Wie können "
+        "mir ein paar Leute aus dem Team in einer Dreiviertelstunde geordnet weiterhelfen?",
+        "Collegial_Case_Consultation",
+    ),
+    (
+        "Wir arbeiten seit Jahren Tür an Tür und wissen trotzdem kaum, wie die anderen uns "
+        "sehen oder was sie von uns erwarten; ständig gibt es Missverständnisse, und das "
+        "Vertrauen untereinander bleibt an der Oberfläche",
+        "Johari_Window",
     ),
 ]
 

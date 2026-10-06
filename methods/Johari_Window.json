@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Johari_Window",
+  "name": "Johari Window",
+  "category": "facilitation",
+  "use_case": "People who have worked together for years still hardly know each other: not how the others see them, not what each keeps private, not why someone acts as they do. Intentions are misread and trust never goes deeper than politeness. A guided exercise lets each person disclose something about themselves and hear how they are seen, so that what the group knows openly about its members grows.",
+  "strengths": [
+    "a two-by-two picture that anyone grasps in a minute, which gives a group shared words for talking about how they come across",
+    "treats openness as two separate moves, telling others about yourself and asking how they see you, so people can choose which one they are ready for",
+    "the commonly used adjective variant offers only positive or neutral words, which lowers the threshold for a first round of peer perception",
+    "scales from a single pair to a small team and from a one-hour session to a theme that a group returns to over months",
+    "the vocabulary (open, blind, hidden) stays useful after the session, for example when a later disagreement turns out to be a blind spot"
+  ],
+  "weaknesses": [
+    "depends on psychological safety that it cannot create by itself; in a group where people fear consequences, disclosure stays superficial or becomes risky",
+    "a manager or assessor in the room changes what people dare to say, so the same session can expose some participants far more than others",
+    "the adjective exercise can feel artificial or like a parlour game, and a list of flattering words rarely surfaces what actually causes friction",
+    "it produces insight, not agreements; without a follow-up nobody changes how they work with each other",
+    "empirical support is thin: a 1983 study found no difference in self-esteem or communication anxiety between people the window classified as open or hidden, and the model does not say which disclosures are appropriate"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://bibbase.org/network/publication/ingham-luft-thejohariwindowagraphicmodelofinterpersonalawareness-1955",
+    "https://archive.org/details/ofhumaninteracti00jose",
+    "https://www.hee.nhs.uk/sites/default/files/documents/Johari%20window.pdf",
+    "https://www.ethicalleadership.org/uploads/2/6/2/6/26265761/3.8_johari_window_and_application.pdf",
+    "https://doi.org/10.1080/0142159X.2017.1353071",
+    "https://eric.ed.gov/?id=ED238039"
+  ],
+  "use_cases": [
+    "Staff seconded from three municipal offices into a new joint project know each other only by job title and are already guessing at each other's motives; before the work starts, the project lead wants them to get to know one another personally and learn how each is seen by the others.",
+    "In a school staff team that has been together for years, one teacher's directness is read as hostility and another's reserve as indifference; the head wants a guided session in which colleagues hear how they are perceived and say plainly what they need from one another.",
+    "A newly appointed head of unit wants to learn how her staff actually see her, including habits she is not aware of, and to tell them openly how she works and what she needs from them.",
+    "Participants in a leadership course or a teacher-training seminar will spend months in the same small learning group and want to understand how their peers see them and practise telling each other things they would normally keep to themselves."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 12
+  },
+  "audience": [
+    "newly formed teams",
+    "long-standing teams",
+    "team leads and new managers",
+    "school staff teams",
+    "public service teams",
+    "leadership and teacher-training groups",
+    "clinical teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

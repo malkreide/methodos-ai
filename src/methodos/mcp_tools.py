@@ -38,12 +38,13 @@ WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
 Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43,
-47 and 51) with the default multilingual embedding, not guessed. Every one of
-the 102 pinned integration probes (51 English, 51 German) reaches at least 0.380 with
-its best match; questions the catalog genuinely does not cover top out at 0.287
-("Rezept für Zürcher Geschnetzeltes"), with "wie flicke ich meine Velokette" at
-0.265 and "how do I fix my bicycle chain" at 0.224. 0.33 sits in the empty band
-between those two populations. tests/test_integration.py pins both sides.
+47, 51 and 55) with the default multilingual embedding, not guessed. Every one
+of the 110 pinned integration probes (55 English, 55 German) reaches at least
+0.380 with its best match; questions the catalog genuinely does not cover top
+out at 0.291 ("Rezept für Zürcher Geschnetzeltes", 0.287 before the 55-method
+catalog), with "wie flicke ich meine Velokette" at 0.265 and "how do I fix my
+bicycle chain" at 0.224. 0.33 sits in the empty band between those two
+populations. tests/test_integration.py pins both sides.
 
 The band is narrower than it was under the English-only model (0.127-0.321),
 because a multilingual model maps more of everyday language near *something*.
