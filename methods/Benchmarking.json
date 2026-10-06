@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "id": "Benchmarking",
+  "name": "Benchmarking (Process and Performance Benchmarking)",
+  "category": "analysis",
+  "use_case": "An organisation has the feeling that similar organisations elsewhere do the same work faster, cheaper or better, but its own figures cannot be set beside theirs because everyone measures differently, and nobody has seen how the others actually work. Partners doing comparable work agree common definitions for a few figures, exchange them, account for differences in their circumstances, and then visit the ones that do better to learn the practices behind the difference and adapt them to their own setting.",
+  "strengths": [
+    "replaces guesswork about whether a gap even exists with figures gathered on shared definitions",
+    "moves the conversation from whether the numbers are fair to how the stronger peer actually works",
+    "shows that a better level of performance is achievable, because someone comparable already reaches it",
+    "partners outside the own sector often contribute the most useful ideas for shared functions such as billing or warehousing",
+    "a standing comparison network lets members track themselves against peers year after year at modest cost each"
+  ],
+  "weaknesses": [
+    "comparing organisations with different mandates, populations or definitions produces gaps that are artefacts, not lessons",
+    "published comparisons invite gaming: units learn to improve the reported figure rather than the service",
+    "a practice copied without its context, people and preconditions rarely delivers the result it did elsewhere",
+    "needs willing partners, agreed definitions and a data-sharing agreement before anything can be compared",
+    "laggards tend to explain the gap away as special circumstances, and leaders may relax to the average",
+    "collecting and cleaning comparable data takes weeks to months of staff time"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 960,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://archive.org/details/benchmarkingsear00camp",
+    "https://people.well.com/user/bbear/camp.html",
+    "https://en.wikipedia.org/wiki/Benchmarking",
+    "https://doi.org/10.1108/14635770810876593",
+    "https://doi.org/10.1787/ffff92c6-en",
+    "https://doi.org/10.1093/jopart/muu014",
+    "https://doi.org/10.1093/jopart/mum012",
+    "https://doi.org/10.1111/j.1467-9299.2006.00600.x",
+    "https://www.nhsbenchmarking.nhs.uk/",
+    "https://en.wikipedia.org/wiki/Campbell%27s_law"
+  ],
+  "use_cases": [
+    "Several neighbouring municipalities each run their own social-assistance office; one finance committee sees that its cost per case is well above the others but cannot tell whether it has a harder caseload or simply works less efficiently, and wants to find out by looking at the other offices.",
+    "A school district spends far more per pupil on special-needs support than districts of similar size and intake, and the superintendent wants to know, on figures that are really like for like, whether the others achieve as much with less and how they organise the support.",
+    "Patients at one hospital stay two days longer after a hip replacement than at hospitals treating similar patients, and the clinical director wants to find out what the faster wards do differently around discharge and bring it home.",
+    "Councillors keep hearing that the towns nearby provide the same local services for less money, but each town books its costs its own way, so the administration can neither confirm nor refute the claim, let alone say what the cheaper towns do differently.",
+    "A distributor keeps losing tenders on price and suspects its order picking and shipping cost far more than at the best firms, including ones in other industries, and wants to learn how they do it instead of guessing."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "executive team",
+    "municipal leadership",
+    "agency management",
+    "school district leadership",
+    "hospital management",
+    "operations managers",
+    "controlling and quality staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

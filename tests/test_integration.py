@@ -422,6 +422,12 @@ PROBES = [
         "through",
         "Morphological_Box",
     ),
+    (
+        "are we really more expensive than similar companies at handling customer orders? "
+        "every figure we find is calculated in a different way, and I'd like to see how the "
+        "efficient ones actually do it",
+        "Benchmarking",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -730,6 +736,12 @@ PROBES_DE = [
         "Personal, und ich vermute, dass wir viele mögliche Kombinationen nie durchgedacht "
         "haben",
         "Morphological_Box",
+    ),
+    (
+        "Der Gemeinderat behauptet, die Nachbargemeinden führten ihre Werkhöfe viel günstiger "
+        "als wir. Belegen kann das niemand, weil jede Gemeinde ihre Kosten anders verbucht, und "
+        "was die Günstigeren anders machen, weiss auch keiner",
+        "Benchmarking",
     ),
 ]
 
