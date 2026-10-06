@@ -126,7 +126,7 @@ prepared in advance.
 - [The Jigsaw Classroom (official website)](https://www.jigsaw.org/), with its
   [history](https://www.jigsaw.org/history/) and
   [implementation tips](https://www.jigsaw.org/tips/)
-- [Aronson, E., Blaney, N., Stephan, C., Sikes, J. & Snapp, M. (1978). *The Jigsaw Classroom*. Beverly Hills: Sage](https://openlibrary.org/books/OL4714401M)
+- [Aronson, E., Blaney, N., Stephan, C., Sikes, J. & Snapp, M. (1978). *The Jigsaw Classroom*. Beverly Hills: Sage](https://books.google.com/books?vid=ISBN0803909977)
 - [Aronson, E. & Bridgeman, D. (1979). Jigsaw groups and the desegregated classroom: In pursuit of common goals. *Personality and Social Psychology Bulletin* 5(4), 438–446](https://doi.org/10.1177/014616727900500405)
 - [Tewksbury, B.: The jigsaw technique. SERC, Carleton College](https://serc.carleton.edu/NAGTWorkshops/coursedesign/tutorial/jigsaw.html) — advice for reading-based jigsaws in higher education
 - [University of Illinois Springfield, ION Professional eLearning: Jigsaw](https://www.uis.edu/ion/resources/oiai/jigsaw) — synchronous and asynchronous use with adult online learners
