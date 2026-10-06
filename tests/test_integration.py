@@ -410,6 +410,11 @@ PROBES = [
         "the trust between us never gets past small talk",
         "Johari_Window",
     ),
+    (
+        "we have to decide this year whether to refurbish the building, but a vote that "
+        "might close it could come later and we keep arguing as if that vote were ours to make",
+        "Decision_Tree",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -705,6 +710,12 @@ PROBES_DE = [
         "sehen oder was sie von uns erwarten; ständig gibt es Missverständnisse, und das "
         "Vertrauen untereinander bleibt an der Oberfläche",
         "Johari_Window",
+    ),
+    (
+        "Sollen wir das Schulhaus jetzt sanieren oder warten? Vielleicht entscheidet die "
+        "Gemeinde in zwei Jahren über eine Fusion mit dem Nachbarschulhaus, dann wäre das "
+        "Geld zum Teil verloren",
+        "Decision_Tree",
     ),
 ]
 
