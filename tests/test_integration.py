@@ -454,6 +454,13 @@ PROBES = [
         "worse after every meeting",
         "Principled_Negotiation",
     ),
+    (
+        "our new project group pulls in people from four departments and after three weeks "
+        "we're already getting on each other's nerves; nobody ever said what we are actually "
+        "here for, how we settle things when we disagree or how quickly people should reply, "
+        "and I'd like us to sort that out together before it gets worse",
+        "Team_Charter",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -794,6 +801,13 @@ PROBES_DE = [
         "Arbeitszeitregelung festgefahren; wer nachgibt, verliert das Gesicht, und das "
         "Vertrauen zwischen uns schwindet",
         "Principled_Negotiation",
+    ),
+    (
+        "Unsere neue Schulleitung besteht aus vier Personen, die noch nie zusammengearbeitet "
+        "haben. Schon nach ein paar Wochen gibt es Missverständnisse, weil nie besprochen "
+        "wurde, wozu wir eigentlich da sind, wie wir entscheiden und wie wir einander auf dem "
+        "Laufenden halten. Das möchte ich mit allen gemeinsam klären, bevor es knallt",
+        "Team_Charter",
     ),
 ]
 
