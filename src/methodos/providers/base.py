@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Protocol, runtime_checkable
 
 
@@ -16,6 +18,18 @@ class EmbeddingError(Exception):
 
 class RerankError(Exception):
     """Raised by any RerankProvider on backend failure."""
+
+
+class TranscriptionError(Exception):
+    """Raised by any TranscriptionProvider on backend failure or undecodable media."""
+
+
+class MediaTooLongError(TranscriptionError):
+    """The recording is longer than the caller allows. Raised before any decoding."""
+
+
+class TranscriberUnavailableError(TranscriptionError):
+    """The backend itself failed (the model would not load), not the recording."""
 
 
 @runtime_checkable
@@ -67,3 +81,28 @@ class LLMProvider(Protocol):
         max_tokens: int = 1024,
         temperature: float = 0.2,
     ) -> str: ...
+
+
+@dataclass(frozen=True)
+class Transcript:
+    text: str
+    duration_seconds: float
+    language: str | None = None
+    """Detected spoken language (ISO 639-1), when the backend reports one."""
+
+
+@runtime_checkable
+class TranscriptionProvider(Protocol):
+    """Speech to text for an audio or video file on local disk.
+
+    Local by contract: a recording of a meeting or a lesson carries the voices
+    of people who never agreed to send them anywhere, so an implementation
+    must not ship the audio to a remote service. Whatever happens to the text
+    afterwards is the caller's decision and the caller's notice to give.
+    """
+
+    name: str
+
+    def transcribe(self, path: Path, *, max_seconds: float) -> Transcript:
+        """Raise MediaTooLongError past `max_seconds`, TranscriptionError on any failure."""
+        ...

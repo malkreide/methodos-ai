@@ -20,6 +20,8 @@ services:
       METHODOS_TOP_K: ${METHODOS_TOP_K:-3}
       METHODOS_RERANK_PROVIDER: ${METHODOS_RERANK_PROVIDER:-cross-encoder}
       METHODOS_OVERFETCH_FACTOR: ${METHODOS_OVERFETCH_FACTOR:-3}
+      METHODOS_UPLOAD_MAX_MB: ${METHODOS_UPLOAD_MAX_MB:-50}
+      METHODOS_MEDIA_MAX_MINUTES: ${METHODOS_MEDIA_MAX_MINUTES:-20}
     volumes:
       # Read-only and bind-mounted: edit a method on the host, `docker compose
       # restart methodos`, and the entrypoint re-ingests it. Writes stay the

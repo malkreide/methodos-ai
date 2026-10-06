@@ -58,6 +58,7 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
 |---|---|---|
 | CLI `query` | yes | Nothing else would write the explanation. |
 | HTTP `/query` | yes | Same — plus it is the surface that exists to exercise the explain path. |
+| HTTP `/proposals/extract` | only with `draft` on | Turns an uploaded file's text into a form draft. The file itself never reaches the LLM; audio and video are transcribed locally (`TranscriptionProvider`). |
 | MCP server | **never** | The caller already is a model with the user's context. |
 
 `api.py` and `mcp_server.py` are both thin translators over `mcp_tools`. Ranking

@@ -82,3 +82,61 @@ def test_issue_url_drops_optional_fields_to_fit_githubs_limit(tmp_path):
     assert link.url is not None and len(link.url) <= MAX_ISSUE_URL
     assert "description" in link.omitted
     assert "problem" in _query(link.url)
+
+
+# --- drafting -----------------------------------------------------------------
+
+import json  # noqa: E402
+
+from methodos.proposals import DRAFT_INPUT_CHARS, DraftError, draft_from_text  # noqa: E402
+from tests.conftest import FakeLLM  # noqa: E402
+
+_DRAFT = {
+    "name": "Lean Coffee",
+    "problem": "Sitzungen folgen einer Traktandenliste, die niemand gewünscht hat.",
+    "description": "Alle notieren Themen, stimmen ab und besprechen sie in Zeitfenstern.",
+    "sources": "Jim Benson, Jeremy Lightsmith (2009)",
+    "contexts": ["education", "galaxy-brain"],
+    "is_method": True,
+    "note": None,
+}
+
+
+def test_draft_is_read_out_of_a_chatty_answer():
+    llm = FakeLLM("Gern, hier der Entwurf:\n```json\n" + json.dumps(_DRAFT) + "\n```")
+    draft = draft_from_text("Lean Coffee is a meeting format …", llm=llm, language="de")
+    assert draft.name == "Lean Coffee"
+    assert [c.value for c in draft.contexts] == ["education"], "unknown contexts are dropped"
+    assert draft.is_method is True
+    system, user = llm.calls[0]
+    assert "German" in system
+    assert "<<<DOCUMENT\nLean Coffee is a meeting format" in user
+
+
+def test_draft_tolerates_wrong_types_field_by_field():
+    llm = FakeLLM(json.dumps({"name": 3, "problem": "p", "sources": " ", "is_method": "no"}))
+    draft = draft_from_text("text", llm=llm)
+    assert draft.name == ""
+    assert draft.problem == "p"
+    assert draft.sources is None
+    assert draft.is_method is True
+
+
+def test_draft_without_json_is_an_error():
+    with pytest.raises(DraftError):
+        draft_from_text("text", llm=FakeLLM("I cannot help with that."))
+
+
+def test_long_documents_are_cut_and_the_model_is_told():
+    llm = FakeLLM(json.dumps(_DRAFT))
+    draft_from_text("x" * (DRAFT_INPUT_CHARS + 500), llm=llm)
+    _, user = llm.calls[0]
+    assert "Only the beginning" in user
+    assert user.count("x") <= DRAFT_INPUT_CHARS + 10
+
+
+def test_document_text_cannot_inject_template_placeholders():
+    llm = FakeLLM(json.dumps(_DRAFT))
+    draft_from_text("weird {language} and {contexts} inside", llm=llm, language="de")
+    _, user = llm.calls[0]
+    assert "weird {language} and {contexts} inside" in user

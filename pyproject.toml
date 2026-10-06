@@ -44,7 +44,20 @@ mcp = ["mcp>=2.0"]
 api = [
   "fastapi>=0.115",
   "uvicorn[standard]>=0.30",
+  # POST /proposals/extract: FastAPI needs python-multipart to read a form at
+  # all, and pypdf is the pure-Python PDF reader (no system libraries). Word
+  # files are read with the standard library.
+  "python-multipart>=0.0.9",
+  "pypdf>=5",
 ]
+# Speech to text for uploaded audio and video, on this machine. Pulls in
+# CTranslate2 and PyAV (which bundles its own FFmpeg, so no system package);
+# the Whisper model itself downloads on first use or is baked into the image.
+# av<19: faster-whisper 1.2.1 (the latest) still passes `metadata_errors=` to
+# av.open(), which PyAV 19 removed — every transcription then fails. Python
+# 3.12 resolves to av 19 without this cap; 3.11 happens not to. Lift it once a
+# faster-whisper release no longer passes the argument.
+transcribe = ["faster-whisper>=1.1", "av>=11,<19"]
 dev = [
   "pytest>=8",
   "pytest-cov>=5",
@@ -90,6 +103,12 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "sentence_transformers.*"
+ignore_missing_imports = true
+
+# Neither ships type information, and CI does not install the `transcribe`
+# extra at all (CTranslate2 is a large native wheel a lint job has no use for).
+[[tool.mypy.overrides]]
+module = ["faster_whisper.*", "av.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

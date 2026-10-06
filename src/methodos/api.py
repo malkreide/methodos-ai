@@ -31,15 +31,18 @@ Needs an index: `methodos ingest` first. Configuration comes from the same
 from __future__ import annotations
 
 import os
+import tempfile
 import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Literal
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi import Path as PathParam
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field, HttpUrl, ValidationError, model_validator
+from starlette.concurrency import run_in_threadpool
+from starlette.datastructures import UploadFile
 
 from methodos import __version__, mcp_tools
 from methodos.config import Settings
@@ -51,16 +54,26 @@ from methodos.mcp_tools import (
     RecommendResult,
 )
 from methodos.models import Context
+from methodos.proposals import ProposalDraft
 from methodos.providers import (
     EmbeddingProvider,
     LLMProvider,
     RerankProvider,
+    TranscriptionProvider,
     make_embedding,
     make_llm,
     make_reranker,
+    make_transcriber,
 )
-from methodos.providers.base import EmbeddingError, LLMError, RerankError
+from methodos.providers.base import (
+    EmbeddingError,
+    LLMError,
+    RerankError,
+    TranscriberUnavailableError,
+    TranscriptionError,
+)
 from methodos.search import StaleIndexError, collection_size, explain
+from methodos.uploads import ACCEPTED_SUFFIXES, DOCUMENT_SUFFIXES, Kind
 
 CONSOLE_HTML = Path(__file__).parent / "console.html"
 
@@ -90,6 +103,7 @@ class Providers:
         self.embedding: EmbeddingProvider = make_embedding(settings)
         self.reranker: RerankProvider | None = make_reranker(settings)
         self.llm: LLMProvider = make_llm(settings)
+        self.transcriber: TranscriptionProvider | None = make_transcriber(settings)
 
 
 @lru_cache(maxsize=1)
@@ -184,6 +198,17 @@ class HealthResponse(BaseModel):
     chroma_path: str
     indexed_methods: int | None
     index_error: str | None = None
+    transcriber: str | None = Field(
+        default=None,
+        description="Speech-to-text model for uploaded audio and video; null when "
+        "only documents can be uploaded.",
+    )
+    upload_max_mb: int
+    media_max_minutes: int
+    upload_suffixes: list[str] = Field(
+        description="File types /proposals/extract reads on this server. Audio and "
+        "video are missing when no transcriber is installed."
+    )
 
 
 class LLMCheckResponse(BaseModel):
@@ -259,6 +284,12 @@ class ProposalRequest(BaseModel):
         description="Set when this is a new situation for a method already in the "
         "catalog rather than a new method.",
     )
+    extracted_from: Kind | None = Field(
+        default=None,
+        description="The kind of file the person started from via "
+        "/proposals/extract, if any. Kept so the reviewer knows the fields began "
+        "as a machine draft.",
+    )
 
     @model_validator(mode="after")
     def _needs_a_source(self) -> ProposalRequest:
@@ -287,6 +318,34 @@ class ProposalResponse(BaseModel):
     issue_url_omitted: list[str] = Field(
         default_factory=list,
         description="Fields left out of `issue_url` to stay under GitHub's URL limit.",
+    )
+
+
+class ExtractResponse(BaseModel):
+    """The text of an uploaded file, and a draft proposal made from it.
+
+    Nothing in here is stored. The file is deleted before this response is
+    sent; the text and the draft exist only in the browser until the person
+    submits the form, and then only the fields they kept.
+    """
+
+    kind: Kind
+    characters: int = Field(description="Length of the full extracted text.")
+    text: str = Field(description="The extracted text, cut to the first 20,000 characters.")
+    text_truncated: bool
+    duration_seconds: float | None = Field(
+        default=None, description="Length of the recording, for audio and video."
+    )
+    language: str | None = Field(default=None, description="Spoken language Whisper detected.")
+    transcriber: str | None = None
+    draft: ProposalDraft | None = Field(
+        default=None, description="null when `draft` was false or the LLM step failed."
+    )
+    draft_model: str | None = None
+    draft_error: str | None = Field(
+        default=None,
+        description="Set when the draft step failed. The text above is unaffected — "
+        "the person can still fill the form from it.",
     )
 
 
@@ -347,6 +406,12 @@ def health(providers: ProvidersDep) -> HealthResponse:
         chroma_path=str(s.chroma_path),
         indexed_methods=indexed,
         index_error=index_error,
+        transcriber=providers.transcriber.name if providers.transcriber else None,
+        upload_max_mb=s.upload_max_mb,
+        media_max_minutes=s.media_max_minutes,
+        upload_suffixes=list(
+            ACCEPTED_SUFFIXES if providers.transcriber else DOCUMENT_SUFFIXES.keys()
+        ),
     )
 
 
@@ -541,6 +606,7 @@ def propose(req: ProposalRequest, providers: ProvidersDep) -> ProposalResponse:
         existing_method_id=req.existing_method_id,
         similar_method_ids=[m.id for m in similar],
         path=s.proposals_path,
+        extracted_from=req.extracted_from,
     )
     link = issue_url(proposal, s.issue_repo) if s.issue_repo else None
 
@@ -551,6 +617,173 @@ def propose(req: ProposalRequest, providers: ProvidersDep) -> ProposalResponse:
         similar_error=similar_error,
         issue_url=link.url if link else None,
         issue_url_omitted=link.omitted if link else [],
+    )
+
+
+TEXT_PREVIEW_CHARS = 20_000
+MULTIPART_OVERHEAD = 64 * 1024
+"""Headroom for the multipart envelope and the small form fields, on top of the
+file itself, when judging the Content-Length before the body is read."""
+
+_EXTRACT_FORM = {
+    "requestBody": {
+        "required": True,
+        "content": {
+            "multipart/form-data": {
+                "schema": {
+                    "type": "object",
+                    "required": ["file"],
+                    "properties": {
+                        "file": {
+                            "type": "string",
+                            "format": "binary",
+                            "description": f"One of: {', '.join(ACCEPTED_SUFFIXES)}",
+                        },
+                        "draft": {
+                            "type": "boolean",
+                            "default": True,
+                            "description": "Ask the LLM for a draft proposal. Sends the "
+                            "extracted text to the configured model provider.",
+                        },
+                        "language": {
+                            "type": "string",
+                            "enum": ["de", "en"],
+                            "default": "en",
+                            "description": "Language to write the draft in.",
+                        },
+                    },
+                }
+            }
+        },
+    }
+}
+
+
+def _read_upload(
+    path: Path, kind: Kind, providers: Providers
+) -> tuple[str, float | None, str | None]:
+    """Text, duration and detected language of a file on disk. Blocking: run in a thread."""
+    from methodos.uploads import NoTextError, extract_document_text, normalise
+
+    if kind in ("audio", "video"):
+        if providers.transcriber is None:
+            raise HTTPException(
+                status_code=503,
+                detail="audio and video cannot be read on this server: the `transcribe` "
+                'extra is not installed (pip install -e ".[transcribe]"). PDF, Word and '
+                "text files still work.",
+            )
+        transcript = providers.transcriber.transcribe(
+            path, max_seconds=providers.settings.media_max_minutes * 60
+        )
+        text = normalise(transcript.text)
+        if not text:
+            raise NoTextError("no speech was recognised in the recording")
+        return text, transcript.duration_seconds, transcript.language
+    return extract_document_text(path, kind), None, None
+
+
+@app.post(
+    "/proposals/extract",
+    response_model=ExtractResponse,
+    openapi_extra=_EXTRACT_FORM,
+    responses={
+        411: {"description": "No Content-Length header."},
+        413: {"description": "Larger than METHODOS_UPLOAD_MAX_MB."},
+        415: {"description": "Not a supported file type."},
+        422: {"description": "No text in the file, or the recording is too long."},
+        503: {"description": "Audio or video, and no transcriber is installed."},
+    },
+)
+async def extract_proposal(request: Request, providers: ProvidersDep) -> ExtractResponse:
+    """Read a file and draft a proposal from it. Stores nothing, publishes nothing.
+
+    PDF, Word (.docx), text and Markdown are read in-process. Audio and video
+    are transcribed **on this server** (faster-whisper); the recording never
+    leaves it. With `draft` on (the default) the extracted text — not the file
+    — goes to the configured LLM, which returns a draft to prefill the
+    proposal form. The person edits it and submits through `/proposals`.
+
+    The file is held in a temporary directory for the duration of the request
+    and deleted before the response is sent.
+    """
+    from methodos.proposals import DraftError, draft_from_text
+    from methodos.uploads import UnsupportedFileError, UploadError, detect_kind
+
+    s = providers.settings
+    limit = s.upload_max_mb * 1024 * 1024
+    # Checked before the body is read: the multipart parser would otherwise
+    # spool the whole upload to disk first. The server enforces that the body
+    # matches Content-Length, so the header can be trusted for this.
+    length = request.headers.get("content-length")
+    if length is None or not length.isdigit():
+        raise HTTPException(status_code=411, detail="Content-Length is required")
+    if int(length) > limit + MULTIPART_OVERHEAD:
+        raise HTTPException(status_code=413, detail=f"the file is larger than {s.upload_max_mb} MB")
+
+    form = await request.form(max_files=1, max_fields=4)
+    try:
+        upload = form.get("file")
+        if not isinstance(upload, UploadFile) or not upload.filename:
+            raise HTTPException(status_code=422, detail="no file in the `file` field")
+        if upload.size is not None and upload.size > limit:
+            raise HTTPException(
+                status_code=413, detail=f"the file is larger than {s.upload_max_mb} MB"
+            )
+        want_draft = str(form.get("draft", "true")).lower() not in ("false", "0", "off", "")
+        language = str(form.get("language", "en"))
+
+        head = await upload.read(8)
+        await upload.seek(0)
+        try:
+            kind = detect_kind(upload.filename, head)
+        except UnsupportedFileError as e:
+            raise HTTPException(status_code=415, detail=str(e)) from e
+
+        with tempfile.TemporaryDirectory(prefix="methodos-upload-") as tmp:
+            # Only the extension survives into the temporary name: a file name
+            # can carry a person's name, and nothing here needs it.
+            path = Path(tmp) / f"upload{Path(upload.filename).suffix.lower()}"
+            with path.open("wb") as out:
+                while chunk := await upload.read(1024 * 1024):
+                    out.write(chunk)
+            try:
+                text, duration, spoken = await run_in_threadpool(
+                    _read_upload, path, kind, providers
+                )
+            except TranscriberUnavailableError as e:
+                raise HTTPException(status_code=503, detail=str(e)) from e
+            except (UploadError, TranscriptionError) as e:
+                # Covers MediaTooLongError: the file is the problem, not the server.
+                raise HTTPException(status_code=422, detail=str(e)) from e
+    finally:
+        await form.close()
+
+    draft: ProposalDraft | None = None
+    draft_error: str | None = None
+    if want_draft:
+        try:
+            draft = await run_in_threadpool(
+                draft_from_text, text, llm=providers.llm, language=language
+            )
+        except (LLMError, DraftError) as e:
+            # Not a failure of the request, for the same reason as in /query:
+            # the text is the reliable half, and the form can be filled from it.
+            draft_error = str(e)
+
+    return ExtractResponse(
+        kind=kind,
+        characters=len(text),
+        text=text[:TEXT_PREVIEW_CHARS],
+        text_truncated=len(text) > TEXT_PREVIEW_CHARS,
+        duration_seconds=duration,
+        language=spoken,
+        transcriber=providers.transcriber.name
+        if kind in ("audio", "video") and providers.transcriber
+        else None,
+        draft=draft,
+        draft_model=s.model if draft is not None else None,
+        draft_error=draft_error,
     )
 
 

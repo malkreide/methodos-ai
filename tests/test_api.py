@@ -29,7 +29,14 @@ from methodos.api import Providers, app, get_providers, methods_dir
 from methodos.config import Settings
 from methodos.ingest import ingest
 from methodos.providers.base import LLMError
-from tests.conftest import FakeEmbedding, FakeLLM, FakeReranker
+from tests.conftest import (
+    FakeEmbedding,
+    FakeLLM,
+    FakeReranker,
+    FakeTranscriber,
+    make_docx,
+    make_pdf,
+)
 
 
 def _write(dir: Path, id: str, use_case: str, category: str = "strategy") -> None:
@@ -55,6 +62,7 @@ class _FakeProviders(Providers):
         self.embedding = FakeEmbedding(dimensions=8)
         self.reranker = FakeReranker()
         self.llm = llm
+        self.transcriber = None
 
 
 @pytest.fixture
@@ -344,3 +352,133 @@ def test_console_has_every_string_in_both_languages(env):
     used |= set(re.findall(r"\bt\('([\w-]+)'", html))
     assert {"tab_propose", "p_checking", "explain_failed"} <= used
     assert used <= set(keys.findall(de))
+
+
+# --- /proposals/extract -------------------------------------------------------
+
+_DRAFT_JSON = json.dumps(
+    {
+        "name": "Lean Coffee",
+        "problem": "Sitzungen folgen einer Traktandenliste, die niemand gewünscht hat.",
+        "description": "Alle notieren Themen, stimmen ab und besprechen sie in Zeitfenstern.",
+        "sources": "Jim Benson (2009)",
+        "contexts": ["education"],
+        "is_method": True,
+        "note": None,
+    }
+)
+
+
+def _extract(env, name, content, **form):
+    data = {"language": "de", **{k: str(v).lower() for k, v in form.items()}}
+    return env["client"].post("/proposals/extract", files={"file": (name, content)}, data=data)
+
+
+def test_health_reports_what_can_be_uploaded(env):
+    body = env["client"].get("/health").json()
+    assert body["transcriber"] is None
+    assert body["upload_max_mb"] == 50
+    assert body["media_max_minutes"] == 20
+    assert ".pdf" in body["upload_suffixes"]
+    assert ".mp3" not in body["upload_suffixes"], "no transcriber, no audio"
+
+
+def test_extract_reads_a_text_file_and_drafts_from_it(env):
+    env["llm"].response = _DRAFT_JSON
+    res = _extract(env, "notes.md", b"# Lean Coffee\n\nAlle schreiben Themen auf.")
+    assert res.status_code == 200, res.text
+    body = res.json()
+    assert body["kind"] == "text"
+    assert body["text"] == "# Lean Coffee\n\nAlle schreiben Themen auf."
+    assert body["draft"]["name"] == "Lean Coffee"
+    assert body["draft"]["contexts"] == ["education"]
+    assert body["draft_error"] is None
+    system, user = env["llm"].calls[0]
+    assert "German" in system and "Alle schreiben Themen auf." in user
+    assert not env["settings"].proposals_path.exists(), "extracting stores nothing"
+
+
+def test_extract_reads_pdf_and_word(env):
+    pytest.importorskip("pypdf")
+    pdf = _extract(env, "Handout.pdf", make_pdf(["Lean Coffee", "Vote, then talk."]), draft=False)
+    docx = _extract(
+        env, "Notizen.docx", make_docx(["Lean Coffee", "Abstimmen, dann reden."]), draft=False
+    )
+    assert pdf.json()["kind"] == "pdf" and "Vote, then talk." in pdf.json()["text"]
+    assert docx.json()["text"] == "Lean Coffee\nAbstimmen, dann reden."
+
+
+def test_extract_with_draft_off_never_calls_the_llm(env):
+    body = _extract(env, "a.txt", b"Lean Coffee in a few lines.", draft=False).json()
+    assert body["draft"] is None and body["draft_model"] is None
+    assert env["llm"].calls == []
+
+
+def test_a_failing_draft_leaves_the_text(env):
+    """The default fake answers with prose, not JSON."""
+    body = _extract(env, "a.txt", b"Lean Coffee in a few lines.").json()
+    assert body["text"] == "Lean Coffee in a few lines."
+    assert body["draft"] is None
+    assert "JSON" in body["draft_error"]
+
+
+def test_extract_refuses_unknown_types_with_415(env):
+    res = _extract(env, "photo.jpg", b"\xff\xd8\xff")
+    assert res.status_code == 415
+    assert ".pdf" in res.json()["detail"]
+
+
+def test_extract_says_when_there_is_no_text(env):
+    res = _extract(env, "empty.txt", b"   ")
+    assert res.status_code == 422
+
+
+def test_audio_without_a_transcriber_is_503_and_names_the_extra(env):
+    res = _extract(env, "talk.m4a", b"\x00\x00\x00 ftypM4A ")
+    assert res.status_code == 503
+    assert "transcribe" in res.json()["detail"]
+
+
+def test_audio_is_transcribed_and_the_file_is_gone_afterwards(env):
+    fake = FakeTranscriber(text="Erstens   Themen sammeln. Zweitens abstimmen.", duration=90.0)
+    env["providers"].transcriber = fake
+    body = _extract(env, "Workshop Frau Muster.mp4", b"\x00\x00\x00 ftypisom", draft=False).json()
+    assert body["kind"] == "video"
+    assert body["text"] == "Erstens Themen sammeln. Zweitens abstimmen."
+    assert body["duration_seconds"] == 90.0
+    assert body["language"] == "de"
+    assert body["transcriber"] == "fake-transcriber"
+    (path,) = fake.calls
+    assert path.name == "upload.mp4", "the uploaded file name is not kept"
+    assert not path.exists(), "the upload is deleted with the request"
+
+
+def test_a_recording_over_the_limit_is_422(env):
+    env["providers"].transcriber = FakeTranscriber(duration=21 * 60)
+    res = _extract(env, "long.mp3", b"ID3")
+    assert res.status_code == 422
+
+
+def test_an_oversized_upload_is_refused_before_it_is_read(env):
+    env["providers"].settings = env["settings"].model_copy(update={"upload_max_mb": 1})
+    res = _extract(env, "big.txt", b"x" * (1024 * 1024 + 128 * 1024))
+    assert res.status_code == 413
+
+
+def test_an_upload_without_content_length_is_refused(env):
+    def body():
+        yield b"--x\r\n"
+
+    res = env["client"].post(
+        "/proposals/extract",
+        content=body(),
+        headers={"content-type": "multipart/form-data; boundary=x"},
+    )
+    assert res.status_code == 411
+
+
+def test_a_proposal_remembers_it_started_from_a_file(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "extracted_from": "pdf"})
+    assert res.status_code == 200
+    stored = json.loads(env["settings"].proposals_path.read_text().splitlines()[0])
+    assert stored["extracted_from"] == "pdf"

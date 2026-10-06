@@ -86,6 +86,10 @@
   .lang { display: flex; gap: .25rem; }
   .lang button { padding: .15rem .5rem; font-size: .75rem; font-weight: 500; background: transparent; color: var(--accent); }
   .lang button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+  #ffile input[type=file] { padding: .4rem; }
+  #fout { margin: 0 0 1rem; }
+  #fout .note + .note, #fout .note + details { margin-top: .6rem; }
+  #fout pre { white-space: pre-wrap; max-height: 22rem; overflow-y: auto; }
   .orig { color: var(--muted); font-size: .8rem; margin-top: .4rem; }
   h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.75rem 0 .6rem; }
 </style>
@@ -141,6 +145,24 @@
     back a prefilled issue link; the catalog only changes through a reviewed PR.
   -->
   <section id="tab-propose" hidden>
+  <!--
+    Optional first step: read a file and prefill the form below from it. The
+    file goes to /proposals/extract and is deleted there; what comes back only
+    fills fields the person then edits and submits like any other proposal.
+  -->
+  <fieldset id="ffile">
+    <legend data-i18n="f_legend"></legend>
+    <p class="sub" data-i18n="f_intro"></p>
+    <input type="file" id="f_file">
+    <div class="checks">
+      <label><input type="checkbox" id="f_draft" checked> <span data-i18n="f_draft"></span></label>
+      <button type="button" id="f_go" data-i18n="f_go"></button>
+    </div>
+    <p class="privacy" data-i18n-html="privacy_file"></p>
+    <p class="privacy" id="f_limits"></p>
+  </fieldset>
+  <div id="fout"></div>
+
   <form id="pform">
     <fieldset>
       <legend data-i18n="tab_propose"></legend>
@@ -228,6 +250,25 @@ const I18N = {
     p_contexts: 'Wo haben Sie erlebt, dass sie funktioniert?',
     privacy_propose: 'Alles, was Sie eingeben, wird <b>im Klartext</b> auf diesem Server gespeichert und von der für den Katalog verantwortlichen Person gelesen. Lassen Sie Namen und alles weg, was eine Person erkennbar macht. Ein Link zur Quelle genügt – der Katalog ist öffentlich unter CC&nbsp;BY-SA&nbsp;4.0 und enthält nur eigene Formulierungen.',
     p_submit: 'Vorschlag einreichen',
+    f_legend: 'Aus einer Datei beginnen (optional)',
+    f_intro: 'PDF, Word oder Text – oder eine Audio- oder Videoaufnahme. Daraus entsteht ein Entwurf für das Formular unten, den Sie prüfen und anpassen.',
+    f_draft: 'KI-Entwurf erstellen',
+    f_go: 'Datei auslesen',
+    privacy_file: 'Die Datei wird auf diesem Server gelesen und sofort danach gelöscht; gespeichert wird nur, was Sie unten einreichen. Audio und Video werden <b>auf diesem Server</b> transkribiert – die Aufnahme verlässt ihn nicht. Mit <i>KI-Entwurf</i> wird der ausgelesene Text <b>an den konfigurierten Modellanbieter gesendet</b>. Laden Sie keine vertraulichen Dokumente hoch und keine Aufnahmen, auf denen Personen ohne ihr Einverständnis zu hören sind.',
+    f_limits: 'Höchstens {mb} MB · Aufnahmen bis {min} Minuten · {types}',
+    f_no_media: 'Audio und Video sind auf diesem Server nicht eingerichtet.',
+    f_pick: 'Bitte wählen Sie zuerst eine Datei.',
+    f_too_big: 'Die Datei ist grösser als {mb} MB.',
+    f_reading: 'Datei wird ausgelesen …',
+    f_transcribing: 'Aufnahme wird transkribiert … das kann einige Minuten dauern.',
+    f_filled: 'Der Entwurf steht im Formular unten. <b>Bitte prüfen Sie jedes Feld</b> und formulieren Sie in eigenen Worten um, wo nötig – Namen und Quellen sind maschinell gelesen und können falsch sein.',
+    f_not_method: 'Achtung: Der Text beschreibt womöglich keine Methode.',
+    f_note: 'Hinweis aus dem Entwurf:',
+    f_draft_failed: 'Der KI-Entwurf ist fehlgeschlagen – füllen Sie das Formular mit Hilfe des Textes unten aus.',
+    f_no_draft: 'Text ausgelesen. Füllen Sie das Formular mit Hilfe des Textes unten aus.',
+    f_text: 'Ausgelesener Text ({n} Zeichen)',
+    f_text_media: 'Transkript ({n} Zeichen, Aufnahme {dur})',
+    f_truncated: 'Angezeigt sind die ersten 20 000 Zeichen.',
     p_checking: 'Katalog wird geprüft …',
     p_need_source: 'Bitte geben Sie mindestens eine Quelle oder einen Link an.',
     p_too_many_links: 'Höchstens fünf Links.',
@@ -308,6 +349,25 @@ const I18N = {
     p_contexts: 'Where have you seen it work?',
     privacy_propose: 'Everything you enter is <b>stored in plain text</b> on this server and read by the catalog\'s maintainer. Leave out names and anything that identifies a person. A link to a source is enough — the catalog is public under CC&nbsp;BY-SA&nbsp;4.0, and only original prose goes into it.',
     p_submit: 'Submit proposal',
+    f_legend: 'Start from a file (optional)',
+    f_intro: 'PDF, Word or text — or an audio or video recording. It becomes a draft for the form below, which you review and adjust.',
+    f_draft: 'Draft with the LLM',
+    f_go: 'Read file',
+    privacy_file: 'The file is read on this server and deleted right after; only what you submit below is stored. Audio and video are transcribed <b>on this server</b> — the recording does not leave it. With <i>Draft with the LLM</i> on, the extracted text is <b>sent to the configured model provider</b>. Do not upload confidential documents, or recordings of people who have not agreed to it.',
+    f_limits: 'Up to {mb} MB · recordings up to {min} minutes · {types}',
+    f_no_media: 'Audio and video are not set up on this server.',
+    f_pick: 'Choose a file first.',
+    f_too_big: 'The file is larger than {mb} MB.',
+    f_reading: 'reading the file…',
+    f_transcribing: 'transcribing the recording… this can take a few minutes.',
+    f_filled: 'The draft is in the form below. <b>Check every field</b> and rephrase in your own words where needed — names and sources are machine-read and can be wrong.',
+    f_not_method: 'Note: the text may not describe a method.',
+    f_note: 'Note from the draft:',
+    f_draft_failed: 'The LLM draft failed — fill in the form using the text below.',
+    f_no_draft: 'Text extracted. Fill in the form using the text below.',
+    f_text: 'Extracted text ({n} characters)',
+    f_text_media: 'Transcript ({n} characters, recording {dur})',
+    f_truncated: 'Showing the first 20,000 characters.',
     p_checking: 'checking the catalog…',
     p_need_source: 'Give at least one source or link.',
     p_too_many_links: 'Five links at most.',
@@ -366,6 +426,8 @@ let lastQueryId = null;
 let lastQuery = null;
 let lastProposal = null;
 let lastHealth = null;
+let lastExtract = null;
+let extractedFrom = null;
 
 async function api(path, opts) {
   const res = await fetch(path, opts);
@@ -397,6 +459,8 @@ function applyLang() {
   if (lastHealth) renderStatus(lastHealth);
   if (lastQuery) render(lastQuery);
   if (lastProposal) renderProposal(lastProposal);
+  if (lastHealth) renderUploadLimits(lastHealth);
+  if (lastExtract) renderExtract(lastExtract);
 }
 
 for (const b of document.querySelectorAll('.lang button')) {
@@ -423,6 +487,7 @@ async function refreshStatus() {
   try {
     lastHealth = await api('/health');
     renderStatus(lastHealth);
+    renderUploadLimits(lastHealth);
   } catch (e) {
     $('status').innerHTML = `<span class="warn">${t('st_failed')}: ${esc(e.message)}</span>`;
   }
@@ -635,11 +700,16 @@ $('pform').addEventListener('submit', async (ev) => {
         links,
         contexts: [...document.querySelectorAll('#p_contexts input:checked')].map((i) => i.value),
         existing_method_id: $('p_existing').value || null,
+        extracted_from: extractedFrom,
       }),
     });
     lastProposal = r;
     renderProposal(r);
     $('pform').reset();
+    $('f_file').value = '';
+    $('fout').innerHTML = '';
+    lastExtract = null;
+    extractedFrom = null;
   } catch (e) {
     $('pout').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
   } finally {
@@ -648,6 +718,80 @@ $('pform').addEventListener('submit', async (ev) => {
 });
 
 applyLang();
+// --- start from a file ------------------------------------------------------
+
+const MEDIA = /\.(mp3|m4a|wav|ogg|oga|opus|flac|aac|mp4|m4v|mov|webm|mkv|avi)$/i;
+
+function renderUploadLimits(h) {
+  $('f_file').accept = h.upload_suffixes.join(',');
+  const media = h.upload_suffixes.some((x) => MEDIA.test(x));
+  $('f_limits').textContent = t('f_limits', {
+    mb: h.upload_max_mb, min: h.media_max_minutes, types: h.upload_suffixes.join(' '),
+  }) + (media ? '' : ' · ' + t('f_no_media'));
+}
+
+const minutes = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+
+function renderExtract(r) {
+  const parts = [];
+  if (r.draft) {
+    parts.push(`<div class="note">${t('f_filled')}</div>`);
+    if (!r.draft.is_method) parts.push(`<div class="note warn">${t('f_not_method')}</div>`);
+    if (r.draft.note) parts.push(`<div class="note warn">${t('f_note')} ${esc(r.draft.note)}</div>`);
+  } else if (r.draft_error) {
+    parts.push(`<div class="note err">${t('f_draft_failed')}<div class="orig">${esc(r.draft_error)}</div></div>`);
+  } else {
+    parts.push(`<div class="note">${t('f_no_draft')}</div>`);
+  }
+  const label = r.duration_seconds
+    ? t('f_text_media', { n: r.characters, dur: minutes(r.duration_seconds) })
+    : t('f_text', { n: r.characters });
+  parts.push(`<details ${r.draft ? '' : 'open'}><summary>${label}</summary>
+    ${r.text_truncated ? `<p class="sub">${t('f_truncated')}</p>` : ''}
+    <pre>${esc(r.text)}</pre></details>`);
+  $('fout').innerHTML = parts.join('');
+}
+
+function fillFromDraft(d) {
+  const set = (id, v) => { if (v) $(id).value = v; };
+  set('p_name', d.name);
+  set('p_problem', d.problem);
+  set('p_description', d.description);
+  set('p_sources', d.sources);
+  if (d.contexts.length) {
+    for (const box of document.querySelectorAll('#p_contexts input')) {
+      box.checked = d.contexts.includes(box.value);
+    }
+  }
+}
+
+$('f_go').addEventListener('click', async () => {
+  const file = $('f_file').files[0];
+  lastExtract = null;
+  if (!file) { $('fout').innerHTML = `<div class="note err">${t('f_pick')}</div>`; return; }
+  if (lastHealth && file.size > lastHealth.upload_max_mb * 1024 * 1024) {
+    $('fout').innerHTML = `<div class="note err">${t('f_too_big', { mb: lastHealth.upload_max_mb })}</div>`;
+    return;
+  }
+  const body = new FormData();
+  body.append('file', file);
+  body.append('draft', $('f_draft').checked ? 'true' : 'false');
+  body.append('language', lang);
+  $('f_go').disabled = true;
+  $('fout').innerHTML = `<p class="sub">${t(MEDIA.test(file.name) ? 'f_transcribing' : 'f_reading')}</p>`;
+  try {
+    const r = await api('/proposals/extract', { method: 'POST', body });
+    lastExtract = r;
+    extractedFrom = r.kind;
+    if (r.draft) fillFromDraft(r.draft);
+    renderExtract(r);
+  } catch (e) {
+    $('fout').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
+  } finally {
+    $('f_go').disabled = false;
+  }
+});
+
 refreshStatus();
 loadCategories();
 loadProposalOptions();

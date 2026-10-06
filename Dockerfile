@@ -6,7 +6,9 @@
 #   * the sentence-transformers weights (~930MB across the multilingual
 #     embedding model and the multilingual cross-encoder), which otherwise
 #     download from HuggingFace on the first query and would make a cold start
-#     look like a hang;
+#     look like a hang; and the Whisper model for uploaded audio and video
+#     (~480MB for `small`), for the same reason and one more: a recording must
+#     be transcribable without the container talking to anyone;
 #   * CPU-only torch, because the GPU wheels are several gigabytes and nothing
 #     here would use them.
 #
@@ -34,7 +36,7 @@ COPY src ./src
 # The CPU index is an *extra* index, not a replacement: everything except torch
 # still resolves from PyPI.
 RUN pip install --extra-index-url https://download.pytorch.org/whl/cpu \
-        ".[api,local]" -c constraints.txt
+        ".[api,local,transcribe]" -c constraints.txt
 
 # Warm the model cache. Names must match the defaults in config.py; overriding
 # METHODOS_EMBEDDING_MODEL or METHODOS_RERANK_MODEL at run time is supported but
@@ -44,8 +46,19 @@ from sentence_transformers import CrossEncoder, SentenceTransformer; \
 SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2'); \
 CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1')"
 
+# The Whisper model for POST /proposals/extract. A build arg so a smaller image
+# (`base`, ~140MB, weaker on German) or a better transcript (`medium`, ~1.5GB,
+# several times slower on a CPU) is one flag away; the runtime setting below
+# follows it, so the two cannot disagree.
+ARG WHISPER_MODEL=small
+RUN python -c "\
+from faster_whisper import WhisperModel; \
+WhisperModel('${WHISPER_MODEL}', device='cpu', compute_type='int8')"
+
 
 FROM python:3.12-slim
+
+ARG WHISPER_MODEL=small
 
 # Without this the container does not start offline, despite shipping the
 # weights: sentence-transformers HEADs huggingface.co on every model load to
@@ -66,7 +79,8 @@ ENV PATH="/opt/venv/bin:$PATH" \
     METHODOS_METHODS_DIR=/app/methods \
     METHODOS_CHROMA_PATH=/data/chroma \
     METHODOS_FEEDBACK_PATH=/data/feedback.jsonl \
-    METHODOS_PROPOSALS_PATH=/data/proposals.jsonl
+    METHODOS_PROPOSALS_PATH=/data/proposals.jsonl \
+    METHODOS_TRANSCRIBE_MODEL=${WHISPER_MODEL}
 
 COPY --from=builder /opt/venv /opt/venv
 COPY --from=builder /opt/hf /opt/hf

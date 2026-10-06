@@ -13,7 +13,9 @@ service: every entry must be accurate, original prose, and properly sourced.
    `proposal_id`. An inbox entry also lists `similar_method_ids` — the search
    result at submission time; start step 1 with those. Treat every field as
    the proposer's claim, not as text to copy: follow the `links`, and write
-   your own prose.
+   your own prose. An entry with `extracted_from` began as a machine draft of
+   an uploaded file or a transcript: verify every name and source before you
+   use it.
 1. **Is it new?** `methodos list` and
    `methodos query "<the proposal's problem>" --no-llm`. If an existing method
    covers it, stop and say which — a better entry is a `use_cases` addition to

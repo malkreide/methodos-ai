@@ -44,6 +44,25 @@ class Settings(BaseSettings):
     rerank_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
     """Only consulted when rerank_provider != 'none'."""
 
+    transcribe_provider: Literal["none", "faster-whisper"] = "faster-whisper"
+    """Speech to text for uploaded audio and video, run on this machine.
+
+    Needs the `transcribe` extra; without it `make_transcriber` returns None and
+    uploads of audio or video are refused with a 503 while documents still work."""
+
+    transcribe_model: str = "small"
+    """faster-whisper model size or a Hugging Face repo id. 'small' is the
+    smallest that handles German, including Swiss accents, acceptably on a CPU.
+    The Docker image bakes this one in."""
+
+    upload_max_mb: int = Field(default=50, ge=1)
+    """Largest file `POST /proposals/extract` accepts. Checked while the body
+    is still arriving, so an oversized upload never reaches the disk whole."""
+
+    media_max_minutes: int = Field(default=20, ge=1)
+    """Longest recording that gets transcribed. Transcription runs inside the
+    request on a CPU; past this length the browser would give up waiting."""
+
     chroma_path: Path = Path("data/chroma")
     feedback_path: Path = Path("data/feedback.jsonl")
     proposals_path: Path = Path("data/proposals.jsonl")
