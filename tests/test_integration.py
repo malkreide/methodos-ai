@@ -442,6 +442,12 @@ PROBES = [
         "still come away knowing all of it?",
         "Jigsaw_Method",
     ),
+    (
+        "management has just decided every employee gets an AI assistant for their emails, "
+        "and nobody has thought past the obvious; what will that set off further down the "
+        "line, and who will feel it indirectly",
+        "Futures_Wheel",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -770,6 +776,12 @@ PROBES_DE = [
         "wir es, dass sich jede Person gründlich in ein Stück einarbeitet und am Ende trotzdem "
         "alle den ganzen Inhalt kennen?",
         "Jigsaw_Method",
+    ),
+    (
+        "Die Geschäftsleitung hat entschieden, dass alle einen KI-Assistenten für E-Mails "
+        "bekommen, und niemand denkt über das Offensichtliche hinaus; welche Folgewirkungen "
+        "könnte das weiter hinten haben",
+        "Futures_Wheel",
     ),
 ]
 
