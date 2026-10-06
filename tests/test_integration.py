@@ -448,6 +448,12 @@ PROBES = [
         "line, and who will feel it indirectly",
         "Futures_Wheel",
     ),
+    (
+        "the parents' council and our school have dug in on opposite demands about the "
+        "timetable; whenever one of us gives a little it feels like losing, and we get on "
+        "worse after every meeting",
+        "Principled_Negotiation",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -782,6 +788,12 @@ PROBES_DE = [
         "bekommen, und niemand denkt über das Offensichtliche hinaus; welche Folgewirkungen "
         "könnte das weiter hinten haben",
         "Futures_Wheel",
+    ),
+    (
+        "Die Personalkommission und wir als Amtsleitung haben uns bei der neuen "
+        "Arbeitszeitregelung festgefahren; wer nachgibt, verliert das Gesicht, und das "
+        "Vertrauen zwischen uns schwindet",
+        "Principled_Negotiation",
     ),
 ]
 
