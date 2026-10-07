@@ -473,6 +473,13 @@ PROBES = [
         "at the counters, but honestly I no longer know what their working day looks like",
         "Gemba_Walk",
     ),
+    (
+        "a big upheaval affects all three hundred of us and everyone sees it differently; "
+        "no planning committee could guess what people need to talk about, so we want to "
+        "bring everybody together for a day or two and let them raise and work on the "
+        "issues themselves",
+        "Open_Space_Technology",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -832,6 +839,13 @@ PROBES_DE = [
         "nur aufgrund von Berichten und Sitzungsunterlagen; ich habe das Gefühl, wir wissen gar "
         "nicht mehr, womit die Leute vor Ort im Alltag tatsächlich kämpfen",
         "Gemba_Walk",
+    ),
+    (
+        "Vierzig Vereine, Ämter und Fachstellen in unserer Region arbeiten am gleichen "
+        "drängenden Problem, aber jede sieht es anders; statt eines Programms, das ein "
+        "Ausschuss festlegt, sollen alle zwei Tage lang selbst einbringen, woran sie "
+        "arbeiten wollen, und sich dafür zusammentun",
+        "Open_Space_Technology",
     ),
 ]
 
