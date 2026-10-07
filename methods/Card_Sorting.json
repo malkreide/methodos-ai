@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Card_Sorting",
+  "name": "Card Sorting",
+  "category": "analysis",
+  "use_case": "The pages, menus or folders of a website, intranet, handbook or service catalogue are arranged the way the organisation sees itself, by internal unit and in-house jargon, and the people who use them cannot find what they need. Before rebuilding the structure, you want evidence of how those users would themselves sort the content into groups and what they would call each group, so that the new headings and menus follow their way of thinking rather than the organisation's.",
+  "strengths": [
+    "shows how users group content and which words they use for the groups, instead of how the organisation files it",
+    "cheap and quick: paper cards or a free online tool, and each participant needs only 20 to 40 minutes",
+    "disagreement between participants is itself useful, pointing to items that need cross-links or clearer names",
+    "works before anything is built, so a structure can be reconsidered while change is still cheap",
+    "the open and closed variants cover both discovering a new grouping and checking a proposed one"
+  ],
+  "weaknesses": [
+    "tells you how people group items, not whether they will find them in the finished menus; that needs a separate findability test",
+    "with fewer than about fifteen participants the clusters shift from one person to the next and are not reliable",
+    "sorts topics, not steps in a task; it says nothing about the order in which people do things",
+    "card labels written in internal jargon steer participants and distort the result",
+    "shows one level of grouping well; deeper hierarchies and very large content sets need several rounds",
+    "the output needs interpretation; similarity figures do not hand over a finished navigation"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://www.nngroup.com/articles/card-sorting-definition/",
+    "https://www.nngroup.com/articles/card-sorting-how-many-users-to-test/",
+    "https://www.nngroup.com/videos/open-vs-closed-card-sorting/",
+    "https://www.nngroup.com/articles/tree-testing/",
+    "https://boxesandarrows.com/card-sorting-a-definitive-guide/",
+    "https://digital.gov/2022/01/06/open-source-information-architecture-design-using-the-tools-you-have-to-conduct-card-sorting-and-tree-testing/",
+    "https://en.wikipedia.org/wiki/Card_sorting"
+  ],
+  "use_cases": [
+    "A school's information pages for parents grew one page at a time, filed by whoever wrote them, and parents keep phoning the secretariat to ask where to find holiday dates, sick-note rules or lunch registration; the school wants to learn which topics parents expect to find together, and under which headings, before it redoes the menu.",
+    "A municipality's website lists its online services under the names of the administrative units that provide them, and residents complain they cannot find a thing; before the relaunch the web team wants residents to put the hundred or so service names into groups themselves, to see which belong together in their eyes and what everyday words they use for them.",
+    "Staff call the intranet a maze because forms, rules and how-to guides are filed under the unit that published them; the communications team wants employees to sort a sample of documents into piles and name each pile, so the new categories match how colleagues actually look for things.",
+    "A team already has a proposed set of top-level categories for a handbook or an online shop and wants to check, before launch, whether users place each item where the designers expect, and which items people disagree about."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 30
+  },
+  "audience": [
+    "web and intranet teams",
+    "UX researchers",
+    "content designers",
+    "public administration",
+    "school administration",
+    "communications teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

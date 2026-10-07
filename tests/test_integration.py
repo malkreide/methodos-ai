@@ -493,6 +493,12 @@ PROBES = [
         "them now and then talk as a team about which of those changes we really care about",
         "Most_Significant_Change",
     ),
+    (
+        "the menus on our intranet follow our department structure and nobody can find a form; "
+        "before we reorganise it I want to learn which items employees expect to sit together "
+        "and what they would call those sections",
+        "Card_Sorting",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -873,6 +879,13 @@ PROBES_DE = [
         "und im Leitungsteam darüber reden, welche dieser Veränderungen uns wirklich etwas "
         "bedeuten",
         "Most_Significant_Change",
+    ),
+    (
+        "Auf unserer Gemeinde-Website sind die Angebote nach unserer internen Abteilungsstruktur "
+        "abgelegt, und die Einwohnerinnen finden darin kaum etwas. Bevor wir die Navigation neu "
+        "aufbauen, möchten wir herausfinden, welche Themen die Leute selbst als zusammengehörig "
+        "sehen und wie sie sie benennen würden",
+        "Card_Sorting",
     ),
 ]
 
