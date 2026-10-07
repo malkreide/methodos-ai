@@ -499,6 +499,13 @@ PROBES = [
         "and what they would call those sections",
         "Card_Sorting",
     ),
+    (
+        "a boy in my class was picked on for months by a few classmates; they've been "
+        "punished, but he still dreads coming in and the class has split into camps. I want "
+        "the ones who did it to hear from him what it did to him and to agree together how "
+        "they will make it up to him",
+        "Restorative_Circle",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -886,6 +893,13 @@ PROBES_DE = [
         "aufbauen, möchten wir herausfinden, welche Themen die Leute selbst als zusammengehörig "
         "sehen und wie sie sie benennen würden",
         "Card_Sorting",
+    ),
+    (
+        "Ein paar Jugendliche haben in unserem Jugendtreff den Gemeinschaftsraum verwüstet. "
+        "Den Schaden haben sie bezahlt, aber die anderen Jugendlichen und die Betreuenden "
+        "fühlen sich hintergangen. Die Verursacher sollen von ihnen direkt hören, was sie "
+        "angerichtet haben, und mit allen zusammen abmachen, wie sie es wiedergutmachen",
+        "Restorative_Circle",
     ),
 ]
 
