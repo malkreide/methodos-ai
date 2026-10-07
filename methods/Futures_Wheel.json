@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Futures_Wheel",
+  "name": "Futures Wheel",
+  "category": "analysis",
+  "use_case": "A new law, tool or timetable is about to take effect, and the discussion covers only its immediate, intended effects. What those effects will trigger in turn, and what follows from that, has not been thought through, so knock-on consequences, side effects and people touched only indirectly come as a surprise later. The group writes the planned step in the centre, places its direct consequences around it, then the consequences of each of those in a second ring and a third, and marks which are welcome and which need preparing for.",
+  "strengths": [
+    "gets a group past the first, obvious effects within minutes and needs only paper and pens",
+    "brings indirectly affected groups and side effects into view before a decision is final",
+    "shows desirable and undesirable effects side by side, including contradictory ones",
+    "easy to learn, so non-specialists and affected people can take part on equal terms",
+    "produces a visual map that can feed planning, communication or a later systems or scenario analysis"
+  ],
+  "weaknesses": [
+    "the outer rings are speculative chains of guesses, not forecasts, and are easily mistaken for what will happen",
+    "the number of effects multiplies with every ring and becomes unwieldy for broad or vague changes",
+    "says nothing about how likely or how large an effect is unless a separate rating step is added",
+    "a group of like-minded participants reproduces its own blind spots",
+    "suggests cause and effect where the group may only have noticed things that tend to occur together"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Futures_wheel",
+    "https://mcguinnessinstitute.org/wp-content/uploads/2024/11/06-FuturesWheel.pdf",
+    "https://millennium-project.org/futures-research-methodology-version-3-0/",
+    "https://www.fs.usda.gov/nrs/pubs/jrnl/2015/nrs_2015_bengston_002.pdf",
+    "https://doi.org/10.1080/08941920.2015.1054980",
+    "https://doi.org/10.1057/thr.2008.2"
+  ],
+  "use_cases": [
+    "A school authority is weighing a four-day school week to save on transport and staff, and the debate covers timetables and budgets but not what follows for working parents, childcare providers, school meals or what pupils do on the free day.",
+    "A public agency has to implement a law that replaces a cash benefit with vouchers, and before the start date it wants to trace how recipients, local shops, caseworkers and charities will each be touched, directly and further down the line.",
+    "A company is giving all staff an AI writing assistant; leadership has discussed licences and time savings, but not what comes next, such as more drafts to check, junior staff losing practice, or unclear responsibility for errors.",
+    "A foresight or policy unit is following an emerging trend, for example remote work becoming normal, and has to work out its knock-on effects on commuting, town centres, local tax income and community life before writing recommendations."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 30
+  },
+  "audience": [
+    "policy and foresight teams",
+    "school leadership",
+    "public administration",
+    "leadership teams",
+    "change and transformation teams",
+    "teachers and students"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

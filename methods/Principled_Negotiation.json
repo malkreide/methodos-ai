@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "Principled_Negotiation",
+  "name": "Principled Negotiation",
+  "category": "decision-making",
+  "use_case": "Two sides who have to come to terms with each other are locked in a tug of war: each clings to the position it has taken, every concession feels like losing face, and the relationship between them sours. The parties handle the personal friction apart from the substance, look for the interests behind each side's position, invent several possible arrangements before committing to any, and judge proposals by standards both accept as fair, such as precedent or the law. Each side also works out beforehand what it will do if the talks fail, so it knows when to walk away.",
+  "strengths": [
+    "moves the talk from what each side demands to why it demands it, which often reveals arrangements that serve both better than a midpoint",
+    "lets the parties be firm on substance while staying respectful to each other, so the relationship survives a hard disagreement",
+    "judging offers against agreed external standards makes a concession easier to accept, because it is yielding to a reason rather than to pressure",
+    "knowing the best alternative to agreement protects a party from accepting a bad deal and from rejecting a good one out of pride",
+    "works between two people as well as between delegations, and in one-off talks as well as in long-running relationships"
+  ],
+  "weaknesses": [
+    "assumes both sides are willing to talk in good faith; against deception, stalling or threats it offers little beyond knowing when to leave",
+    "where one side holds far more power, the weaker side's best alternative may be so poor that interest-based talk changes little",
+    "critics argue it underplays power, emotion and the purely distributive part of many disputes, where one side's gain really is the other's loss",
+    "fair standards are often contested themselves, and arguing over which yardstick applies can become a new positional fight",
+    "unsuited to questions that are not negotiable, such as legal duties, safety rules or fundamental rights",
+    "preparation takes time, and one side cannot make the other adopt the approach"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://archive.org/details/gettingtoyesnego0000fish_z1w8",
+    "https://www.pon.harvard.edu/research_projects/harvard-negotiation-project/hnp/",
+    "https://www.pon.harvard.edu/daily/negotiation-skills-daily/principled-negotiation-focus-interests-create-value/",
+    "https://en.wikipedia.org/wiki/Getting_to_Yes",
+    "https://en.wikipedia.org/wiki/Best_alternative_to_a_negotiated_agreement",
+    "https://doi.org/10.1111/j.1571-9979.1985.tb00292.x",
+    "https://doi.org/10.1111/j.1571-9979.1985.tb00293.x",
+    "https://doi.org/10.1111/j.1571-9979.1996.tb00105.x",
+    "https://doi.org/10.1093/sw/49.3.506",
+    "https://digitalcommons.kennesaw.edu/jgi/vol9/iss2/3"
+  ],
+  "use_cases": [
+    "A school's leadership and the parents' association are at loggerheads over the start of the school day: the parents demand a later bell, the school refuses to touch the timetable, and every meeting leaves both sides more entrenched and less willing to cooperate on anything else.",
+    "The management of a public office and its staff council have hardened their stances on new working-hours rules; the council rejects every draft, management threatens to impose its version, and the trust built up between the two sides is wearing thin.",
+    "Two departments that run a joint service end up in a bitter quarrel every time their cost-sharing agreement is renewed: each head opens with a hard demand and refuses to budge, and the two units now barely cooperate on anything else.",
+    "A municipality and a local sports club are renewing the lease on a council-owned hall; the club insists on lower rent, the municipality insists on covering its costs, and both are threatening to end the arrangement.",
+    "A buyer and a long-standing supplier are renegotiating a contract and have been haggling over price for weeks, while questions such as delivery terms, volumes or contract length have never been discussed."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 12
+  },
+  "audience": [
+    "school leadership",
+    "parents' associations",
+    "managers and staff representatives",
+    "unit and department heads",
+    "public administrations",
+    "procurement and contract managers",
+    "association boards"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

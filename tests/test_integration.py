@@ -435,6 +435,32 @@ PROBES = [
         "before we pay for it",
         "Design_Sprint",
     ),
+    (
+        "the new curriculum guidelines run to three hundred pages and our teachers get one "
+        "afternoon to learn what is in them; last time a colleague summarised them on slides "
+        "and the room switched off. Could each of us work properly through one section and "
+        "still come away knowing all of it?",
+        "Jigsaw_Method",
+    ),
+    (
+        "management has just decided every employee gets an AI assistant for their emails, "
+        "and nobody has thought past the obvious; what will that set off further down the "
+        "line, and who will feel it indirectly",
+        "Futures_Wheel",
+    ),
+    (
+        "the parents' council and our school have dug in on opposite demands about the "
+        "timetable; whenever one of us gives a little it feels like losing, and we get on "
+        "worse after every meeting",
+        "Principled_Negotiation",
+    ),
+    (
+        "our new project group pulls in people from four departments and after three weeks "
+        "we're already getting on each other's nerves; nobody ever said what we are actually "
+        "here for, how we settle things when we disagree or how quickly people should reply, "
+        "and I'd like us to sort that out together before it gets worse",
+        "Team_Charter",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -756,6 +782,32 @@ PROBES_DE = [
         "bisher haben wir nur Meinungen. Wir möchten die Frage in einer Woche klären und "
         "vorher sehen, wie echte Eltern auf etwas Greifbares reagieren",
         "Design_Sprint",
+    ),
+    (
+        "Vor der Strategieklausur haben wir fünf dicke Berichte bekommen, die niemand alle "
+        "lesen kann; fassen zwei Leute sie zusammen, hören die anderen bloss zu. Wie schaffen "
+        "wir es, dass sich jede Person gründlich in ein Stück einarbeitet und am Ende trotzdem "
+        "alle den ganzen Inhalt kennen?",
+        "Jigsaw_Method",
+    ),
+    (
+        "Die Geschäftsleitung hat entschieden, dass alle einen KI-Assistenten für E-Mails "
+        "bekommen, und niemand denkt über das Offensichtliche hinaus; welche Folgewirkungen "
+        "könnte das weiter hinten haben",
+        "Futures_Wheel",
+    ),
+    (
+        "Die Personalkommission und wir als Amtsleitung haben uns bei der neuen "
+        "Arbeitszeitregelung festgefahren; wer nachgibt, verliert das Gesicht, und das "
+        "Vertrauen zwischen uns schwindet",
+        "Principled_Negotiation",
+    ),
+    (
+        "Unsere neue Schulleitung besteht aus vier Personen, die noch nie zusammengearbeitet "
+        "haben. Schon nach ein paar Wochen gibt es Missverständnisse, weil nie besprochen "
+        "wurde, wozu wir eigentlich da sind, wie wir entscheiden und wie wir einander auf dem "
+        "Laufenden halten. Das möchte ich mit allen gemeinsam klären, bevor es knallt",
+        "Team_Charter",
     ),
 ]
 
