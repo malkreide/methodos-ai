@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Open_Space_Technology",
+  "name": "Open Space Technology",
+  "category": "facilitation",
+  "use_case": "An urgent change touches hundreds of people, for example all the staff of a large administration or the members of a network of organisations, and those affected know better than any organiser what needs to be worked on. Over one or two days, everyone who cares should be able to propose the subjects they themselves want to work on, form their own working groups that meet at the same time in different rooms, move freely between them, and leave with a written report from every group and the next steps people have committed to.",
+  "strengths": [
+    "the people affected set the agenda themselves, so the topics that really matter to them surface instead of the organisers' guesses",
+    "handles very large and mixed groups, from a few dozen to well over a thousand, with one facilitator and simple rules",
+    "many parallel groups cover far more ground in a day than any plenary programme could",
+    "participants who convene a topic tend to own it, which builds commitment to the follow-up",
+    "the freedom to leave a group that is not working reduces the grip of dominant speakers and polite boredom",
+    "a report from every session is available by the end, so nothing depends on memory or a later write-up"
+  ],
+  "weaknesses": [
+    "only works when the outcome is genuinely open; if management already knows the answer, participants notice and trust suffers",
+    "sponsors must be willing to accept and act on whatever emerges, which many leaders find hard to commit to in advance",
+    "needs a real, urgent question people care about; a dull or narrow theme produces thin sessions",
+    "quiet people, and those uneasy about announcing a topic in front of a large circle, may not get their concerns onto the wall",
+    "the energy fades fast when nobody owns the follow-up after the event",
+    "evidence of effect consists mostly of practitioner reports and participant surveys rather than controlled studies"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 300,
+    "max_minutes": 1440
+  },
+  "references": [
+    "https://openspaceworld.org/wp2/hho/papers/brief-users-guide-open-space-technology/",
+    "https://www.penguinrandomhouse.com/books/574633/open-space-technology-by-harrison-owen/",
+    "https://iaf-world.org/expanding-our-now-the-story-of-open-space-technology/",
+    "https://openspaceworld.org/wp2/what-is/",
+    "https://openspaceworld.org/wp2/remembering-harrison-owen/",
+    "https://peggyholman.com/wp-content/uploads/2018/08/OST-Outline-V4.pdf",
+    "https://doi.org/10.1080/15575330.2012.683799",
+    "https://en.wikipedia.org/wiki/Open_space_technology"
+  ],
+  "use_cases": [
+    "Our school is becoming an all-day school, and teachers, after-school staff, parents and older pupils all have a stake in how it will work; the head wants every one of them to spend a whole day convening and running their own working groups on the matters they care about, instead of a steering group deciding the programme for them.",
+    "A public administration with several hundred employees is moving its services online; the details are still open, and management wants staff from every department to raise the issues that concern them and work on them in self-chosen groups over two days.",
+    "Dozens of charities, social services, housing providers and volunteer groups in a region all deal with homelessness but each has its own concerns; they want a gathering without a fixed programme where anyone can convene a working session on what matters to them.",
+    "A professional association wants its annual conference to be shaped by its members: rather than a committee choosing the talks, any attendee can host a session on a subject they care about and others join whichever sessions interest them."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 20,
+    "max_people": 2000
+  },
+  "audience": [
+    "school leadership",
+    "public administration leadership",
+    "organisational development practitioners",
+    "network and alliance coordinators",
+    "conference organisers",
+    "community engagement officers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

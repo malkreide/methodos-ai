@@ -461,6 +461,31 @@ PROBES = [
         "and I'd like us to sort that out together before it gets worse",
         "Team_Charter",
     ),
+    (
+        "our open day for prospective families has run the same way for ten years; nothing is "
+        "really wrong with it, but it feels worn out, and rather than dream up a whole new event "
+        "I'd like a systematic way to come up with changes to the programme we already have",
+        "SCAMPER",
+    ),
+    (
+        "I run a department of two hundred people and only ever see their work through monthly "
+        "figures and meeting slides; I suspect the rules we set upstairs make little sense down "
+        "at the counters, but honestly I no longer know what their working day looks like",
+        "Gemba_Walk",
+    ),
+    (
+        "a big upheaval affects all three hundred of us and everyone sees it differently; "
+        "no planning committee could guess what people need to talk about, so we want to "
+        "bring everybody together for a day or two and let them raise and work on the "
+        "issues themselves",
+        "Open_Space_Technology",
+    ),
+    (
+        "In January our salaries will be paid through a new provider. Before the first payday "
+        "I'd like to check each step of the process for where something could go wrong, how "
+        "badly staff would be hit, and what we need to safeguard first",
+        "FMEA",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -808,6 +833,31 @@ PROBES_DE = [
         "wurde, wozu wir eigentlich da sind, wie wir entscheiden und wie wir einander auf dem "
         "Laufenden halten. Das möchte ich mit allen gemeinsam klären, bevor es knallt",
         "Team_Charter",
+    ),
+    (
+        "Unser Einführungskurs für neue Mitarbeitende läuft seit Jahren gleich ab; er erfüllt "
+        "seinen Zweck, wirkt aber abgestanden. Wir wollen nicht bei null anfangen, sondern das "
+        "Bestehende Teil für Teil durchgehen und möglichst viele konkrete Abwandlungen finden",
+        "SCAMPER",
+    ),
+    (
+        "In der Geschäftsleitung entscheiden wir über die Abläufe in der Küche und am Schalter "
+        "nur aufgrund von Berichten und Sitzungsunterlagen; ich habe das Gefühl, wir wissen gar "
+        "nicht mehr, womit die Leute vor Ort im Alltag tatsächlich kämpfen",
+        "Gemba_Walk",
+    ),
+    (
+        "Vierzig Vereine, Ämter und Fachstellen in unserer Region arbeiten am gleichen "
+        "drängenden Problem, aber jede sieht es anders; statt eines Programms, das ein "
+        "Ausschuss festlegt, sollen alle zwei Tage lang selbst einbringen, woran sie "
+        "arbeiten wollen, und sich dafür zusammentun",
+        "Open_Space_Technology",
+    ),
+    (
+        "Ab Januar laufen unsere Löhne über einen neuen Anbieter. Vor dem ersten Zahltag "
+        "möchte ich jeden Schritt prüfen: wo kann etwas schiefgehen, wie schlimm träfe es "
+        "die Mitarbeitenden, und was müssen wir zuerst absichern",
+        "FMEA",
     ),
 ]
 
