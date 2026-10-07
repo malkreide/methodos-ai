@@ -486,6 +486,13 @@ PROBES = [
         "badly staff would be hit, and what we need to safeguard first",
         "FMEA",
     ),
+    (
+        "our integration project for refugee families keeps reporting how many people came to "
+        "the courses, but I have a feeling the real effects, good and bad, are things we never "
+        "planned to count; I'd like to hear from the families themselves what is different for "
+        "them now and then talk as a team about which of those changes we really care about",
+        "Most_Significant_Change",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -858,6 +865,14 @@ PROBES_DE = [
         "möchte ich jeden Schritt prüfen: wo kann etwas schiefgehen, wie schlimm träfe es "
         "die Mitarbeitenden, und was müssen wir zuerst absichern",
         "FMEA",
+    ),
+    (
+        "Unser Schulentwicklungsprogramm läuft seit drei Jahren, und in den Berichten stehen nur "
+        "durchgeführte Kurse und Teilnehmerzahlen. Wir möchten von Lehrpersonen, Eltern und "
+        "Kindern selbst hören, was sich für sie tatsächlich verändert hat, auch Unerwartetes, "
+        "und im Leitungsteam darüber reden, welche dieser Veränderungen uns wirklich etwas "
+        "bedeuten",
+        "Most_Significant_Change",
     ),
 ]
 
