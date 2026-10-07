@@ -20,7 +20,7 @@ Verkaufen lassen sich vier Dinge, die sich schwer kopieren lassen:
    nicht.
 2. **Treffsicherheit.** Die richtige Methode auf eine unscharf formulierte
    Frage, auf Deutsch wie auf Englisch. Das ist gemessen und nicht behauptet
-   (126 Probes).
+   (134 Probes).
 3. **Integration.** Der Katalog als MCP-Server im KI-Assistenten der
    Organisation, als API und als Konsole.
 4. **Eigene Kataloge.** Die internen Methoden, Vorlagen und Begriffe einer
