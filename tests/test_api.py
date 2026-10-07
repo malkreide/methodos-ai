@@ -467,6 +467,16 @@ def test_audio_is_transcribed_and_the_file_is_gone_afterwards(env):
     assert not path.exists(), "the upload is deleted with the request"
 
 
+def test_a_draft_from_a_recording_carries_the_transcript_warning(env):
+    env["llm"].response = _DRAFT_JSON
+    env["providers"].transcriber = FakeTranscriber(text="Lean Coffee: alle schreiben Themen auf.")
+    body = _extract(env, "talk.m4a", b"\x00\x00\x00 ftypM4A ").json()
+    assert "from_transcript" in body["draft"]["warnings"]
+
+    text = _extract(env, "notes.txt", b"Lean Coffee: alle schreiben Themen auf.").json()
+    assert "from_transcript" not in text["draft"]["warnings"]
+
+
 def test_a_recording_over_the_limit_is_422(env):
     env["providers"].transcriber = FakeTranscriber(duration=21 * 60)
     res = _extract(env, "long.mp3", b"ID3")

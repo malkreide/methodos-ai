@@ -776,6 +776,10 @@ async def extract_proposal(request: Request, providers: ProvidersDep) -> Extract
             # Not a failure of the request, for the same reason as in /query:
             # the text is the reliable half, and the form can be filled from it.
             draft_error = str(e)
+        if draft is not None and kind in ("audio", "video"):
+            # check_draft cannot see this one: a misheard name is in the
+            # transcript too, so it passes every comparison with the text.
+            draft.warnings.append("from_transcript")
 
     return ExtractResponse(
         kind=kind,
