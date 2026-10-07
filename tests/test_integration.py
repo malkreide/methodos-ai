@@ -461,6 +461,12 @@ PROBES = [
         "and I'd like us to sort that out together before it gets worse",
         "Team_Charter",
     ),
+    (
+        "our open day for prospective families has run the same way for ten years; nothing is "
+        "really wrong with it, but it feels worn out, and rather than dream up a whole new event "
+        "I'd like a systematic way to come up with changes to the programme we already have",
+        "SCAMPER",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -808,6 +814,12 @@ PROBES_DE = [
         "wurde, wozu wir eigentlich da sind, wie wir entscheiden und wie wir einander auf dem "
         "Laufenden halten. Das möchte ich mit allen gemeinsam klären, bevor es knallt",
         "Team_Charter",
+    ),
+    (
+        "Unser Einführungskurs für neue Mitarbeitende läuft seit Jahren gleich ab; er erfüllt "
+        "seinen Zweck, wirkt aber abgestanden. Wir wollen nicht bei null anfangen, sondern das "
+        "Bestehende Teil für Teil durchgehen und möglichst viele konkrete Abwandlungen finden",
+        "SCAMPER",
     ),
 ]
 
