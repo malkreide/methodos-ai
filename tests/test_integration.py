@@ -467,6 +467,12 @@ PROBES = [
         "I'd like a systematic way to come up with changes to the programme we already have",
         "SCAMPER",
     ),
+    (
+        "I run a department of two hundred people and only ever see their work through monthly "
+        "figures and meeting slides; I suspect the rules we set upstairs make little sense down "
+        "at the counters, but honestly I no longer know what their working day looks like",
+        "Gemba_Walk",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -820,6 +826,12 @@ PROBES_DE = [
         "seinen Zweck, wirkt aber abgestanden. Wir wollen nicht bei null anfangen, sondern das "
         "Bestehende Teil für Teil durchgehen und möglichst viele konkrete Abwandlungen finden",
         "SCAMPER",
+    ),
+    (
+        "In der Geschäftsleitung entscheiden wir über die Abläufe in der Küche und am Schalter "
+        "nur aufgrund von Berichten und Sitzungsunterlagen; ich habe das Gefühl, wir wissen gar "
+        "nicht mehr, womit die Leute vor Ort im Alltag tatsächlich kämpfen",
+        "Gemba_Walk",
     ),
 ]
 
