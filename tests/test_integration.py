@@ -480,6 +480,12 @@ PROBES = [
         "issues themselves",
         "Open_Space_Technology",
     ),
+    (
+        "In January our salaries will be paid through a new provider. Before the first payday "
+        "I'd like to check each step of the process for where something could go wrong, how "
+        "badly staff would be hit, and what we need to safeguard first",
+        "FMEA",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -846,6 +852,12 @@ PROBES_DE = [
         "Ausschuss festlegt, sollen alle zwei Tage lang selbst einbringen, woran sie "
         "arbeiten wollen, und sich dafür zusammentun",
         "Open_Space_Technology",
+    ),
+    (
+        "Ab Januar laufen unsere Löhne über einen neuen Anbieter. Vor dem ersten Zahltag "
+        "möchte ich jeden Schritt prüfen: wo kann etwas schiefgehen, wie schlimm träfe es "
+        "die Mitarbeitenden, und was müssen wir zuerst absichern",
+        "FMEA",
     ),
 ]
 
