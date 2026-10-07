@@ -205,7 +205,7 @@ def test_weak_match_floor_sits_between_the_two_measured_populations():
     """Pins the constant's justification, so a casual bump has to argue with it.
 
     Measured on the shipped catalog with the multilingual default embedding:
-    the weakest of the 134 pinned integration probes (English and German) tops
+    the weakest of the 142 pinned integration probes (English and German) tops
     out at 0.380, and queries the catalog does not cover reach 0.291 at most.
     The integration suite checks both sides against the real model.
     """

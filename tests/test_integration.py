@@ -486,6 +486,33 @@ PROBES = [
         "badly staff would be hit, and what we need to safeguard first",
         "FMEA",
     ),
+    (
+        "our integration project for refugee families keeps reporting how many people came to "
+        "the courses, but I have a feeling the real effects, good and bad, are things we never "
+        "planned to count; I'd like to hear from the families themselves what is different for "
+        "them now and then talk as a team about which of those changes we really care about",
+        "Most_Significant_Change",
+    ),
+    (
+        "the menus on our intranet follow our department structure and nobody can find a form; "
+        "before we reorganise it I want to learn which items employees expect to sit together "
+        "and what they would call those sections",
+        "Card_Sorting",
+    ),
+    (
+        "a boy in my class was picked on for months by a few classmates; they've been "
+        "punished, but he still dreads coming in and the class has split into camps. I want "
+        "the ones who did it to hear from him what it did to him and to agree together how "
+        "they will make it up to him",
+        "Restorative_Circle",
+    ),
+    (
+        "over the years we have piled up so many programmes, offers and initiatives that "
+        "everyone is worn out; some only carry on out of habit while promising new ideas "
+        "never get off the ground, and I want the whole staff to look at all of it together "
+        "and agree what to stop",
+        "Ecocycle_Planning",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -858,6 +885,35 @@ PROBES_DE = [
         "möchte ich jeden Schritt prüfen: wo kann etwas schiefgehen, wie schlimm träfe es "
         "die Mitarbeitenden, und was müssen wir zuerst absichern",
         "FMEA",
+    ),
+    (
+        "Unser Schulentwicklungsprogramm läuft seit drei Jahren, und in den Berichten stehen nur "
+        "durchgeführte Kurse und Teilnehmerzahlen. Wir möchten von Lehrpersonen, Eltern und "
+        "Kindern selbst hören, was sich für sie tatsächlich verändert hat, auch Unerwartetes, "
+        "und im Leitungsteam darüber reden, welche dieser Veränderungen uns wirklich etwas "
+        "bedeuten",
+        "Most_Significant_Change",
+    ),
+    (
+        "Auf unserer Gemeinde-Website sind die Angebote nach unserer internen Abteilungsstruktur "
+        "abgelegt, und die Einwohnerinnen finden darin kaum etwas. Bevor wir die Navigation neu "
+        "aufbauen, möchten wir herausfinden, welche Themen die Leute selbst als zusammengehörig "
+        "sehen und wie sie sie benennen würden",
+        "Card_Sorting",
+    ),
+    (
+        "Ein paar Jugendliche haben in unserem Jugendtreff den Gemeinschaftsraum verwüstet. "
+        "Den Schaden haben sie bezahlt, aber die anderen Jugendlichen und die Betreuenden "
+        "fühlen sich hintergangen. Die Verursacher sollen von ihnen direkt hören, was sie "
+        "angerichtet haben, und mit allen zusammen abmachen, wie sie es wiedergutmachen",
+        "Restorative_Circle",
+    ),
+    (
+        "Über die Jahre sind bei uns so viele Angebote, Projekte und Initiativen dazugekommen, "
+        "dass alle am Anschlag sind; manches läuft nur aus Gewohnheit weiter, gute neue Ideen "
+        "kommen nie vom Fleck. Ich möchte mit dem ganzen Kollegium alles gemeinsam anschauen "
+        "und entscheiden, womit wir aufhören",
+        "Ecocycle_Planning",
     ),
 ]
 
