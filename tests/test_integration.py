@@ -506,6 +506,13 @@ PROBES = [
         "they will make it up to him",
         "Restorative_Circle",
     ),
+    (
+        "over the years we have piled up so many programmes, offers and initiatives that "
+        "everyone is worn out; some only carry on out of habit while promising new ideas "
+        "never get off the ground, and I want the whole staff to look at all of it together "
+        "and agree what to stop",
+        "Ecocycle_Planning",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -900,6 +907,13 @@ PROBES_DE = [
         "fühlen sich hintergangen. Die Verursacher sollen von ihnen direkt hören, was sie "
         "angerichtet haben, und mit allen zusammen abmachen, wie sie es wiedergutmachen",
         "Restorative_Circle",
+    ),
+    (
+        "Über die Jahre sind bei uns so viele Angebote, Projekte und Initiativen dazugekommen, "
+        "dass alle am Anschlag sind; manches läuft nur aus Gewohnheit weiter, gute neue Ideen "
+        "kommen nie vom Fleck. Ich möchte mit dem ganzen Kollegium alles gemeinsam anschauen "
+        "und entscheiden, womit wir aufhören",
+        "Ecocycle_Planning",
     ),
 ]
 

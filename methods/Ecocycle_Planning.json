@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Ecocycle_Planning",
+  "name": "Ecocycle Planning",
+  "category": "strategy",
+  "use_case": "Reviewing the whole portfolio of programmes, offers and projects that an organisation, school or network has built up over years without ever closing one: some have outlived their purpose but nobody has put their end on the agenda, while fledgling ones get too little attention to take root. The group lays out everything it runs on a looping life cycle of birth, maturity, creative destruction and renewal and agrees what to discontinue, what to sustain and what to back.",
+  "strengths": [
+    "puts every activity in front of the whole group at once, so nobody argues about one programme in isolation from the rest",
+    "treats ending something as a normal, healthy phase rather than as a failure or a criticism of the people who run it",
+    "names two distinct problems, activities kept alive past their time and promising ones starved before they can grow, which ordinary reviews tend to blur",
+    "draws in people from all levels and functions, so the placement reflects what staff actually experience rather than what the plan says",
+    "needs only a large drawing of the figure-eight, sticky notes and a wall or an online whiteboard"
+  ],
+  "weaknesses": [
+    "placement debates can stay superficial: groups argue about where a sticky note goes without examining whether the activity still serves anyone",
+    "the session can name what should end, but ending it needs someone with the authority to decide, and a follow-up that checks it actually happened",
+    "the figure-eight and its phase names are unfamiliar to many groups and take time to explain before people can use them",
+    "the evidence base is practitioner accounts and facilitation guides; there are no controlled studies of its effect on organisations",
+    "the underlying adaptive-cycle theory describes ecosystems; applying it to an organisation's activities is an analogy, not a tested model of how organisations work",
+    "people whose programme lands in the area marked for ending can feel publicly judged unless the host frames the exercise with care"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://www.liberatingstructures.com/ecocycle-planning",
+    "https://www.liberatingstructures.com/the-surprising-power-of-liberating-structures",
+    "https://blog.itcilo.org/the-compass/methodologies/ecocycle-planning/",
+    "https://www.resalliance.org/adaptive-cycle",
+    "https://doi.org/10.1007/s10021-001-0101-5",
+    "https://doi.org/10.5751/ES-02716-130240"
+  ],
+  "use_cases": [
+    "Over a decade a secondary school has added a project week, a mentoring scheme, clubs, a digital-learning offer and much else; nobody dares to end any of it, and the head wants the whole staff to decide together what to wind down and which recent idea deserves real support.",
+    "A municipal social-services department still runs dozens of projects begun under earlier strategies and one-off pilot funding; some survive only because their budget line renews automatically, and the head of department wants staff and partner organisations to see which have outlived their purpose and which recent pilots should be allowed to grow.",
+    "A foundation's board looks at a grant portfolio built up over twenty years and suspects it keeps funding the same long-standing partners out of loyalty while new community projects never get past a first small grant.",
+    "A volunteer-run association keeps organising the same annual events because they have always happened, and the committee wants the members to agree which traditions to retire so that time and goodwill are freed for something new."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 80
+  },
+  "audience": [
+    "school leadership and teaching staff",
+    "public administration leadership",
+    "nonprofit boards and staff",
+    "foundation and grant-making teams",
+    "leadership teams reviewing their programmes",
+    "individuals reviewing their own commitments"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}
