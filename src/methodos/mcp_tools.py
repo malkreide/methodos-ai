@@ -38,8 +38,8 @@ WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
 Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43,
-47, 51, 55, 59, 63 and 67) with the default multilingual embedding, not guessed. Every
-one of the 134 pinned integration probes (67 English, 67 German) reaches at least
+47, 51, 55, 59, 63, 67 and 71) with the default multilingual embedding, not guessed. Every
+one of the 142 pinned integration probes (71 English, 71 German) reaches at least
 0.380 with its best match; questions the catalog genuinely does not cover top
 out at 0.291 ("Rezept für Zürcher Geschnetzeltes", 0.287 before the 55-method
 catalog), with "wie flicke ich meine Velokette" at 0.265 and "how do I fix my
