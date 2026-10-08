@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+
 import litellm
 
 from methodos.providers.base import LLMError
@@ -30,6 +32,11 @@ class LiteLLMProvider:
         against `max_tokens`. A budget sized for the visible answer alone can be
         used up before the answer starts; that surfaces as an empty reply with
         finish_reason "length", reported below in words a person can act on.
+
+    A key that is not a key is caught before the call, too: the key travels in
+    an HTTP header, and a placeholder copied from the docs (`sk-ant-api03-…`)
+    otherwise surfaces as litellm's "'ascii' codec can't encode character",
+    which names neither the key nor the file it came from.
     """
 
     def __init__(self, model: str) -> None:
@@ -43,6 +50,9 @@ class LiteLLMProvider:
         max_tokens: int = 1024,
         temperature: float = 0.2,
     ) -> str:
+        problem = key_problem(self.name)
+        if problem:
+            raise LLMError(problem)
         messages = [
             {"role": "system", "content": system},
             {"role": "user", "content": user},
@@ -72,3 +82,34 @@ class LiteLLMProvider:
                 )
             raise LLMError("litellm returned empty content")
         return str(content)
+
+
+def key_problem(model: str, environ: dict[str, str] | None = None) -> str | None:
+    """Why the API key for `model` cannot work, or None if nothing is visibly wrong.
+
+    Looks only at the variable litellm reads for the model's provider
+    (`anthropic/...` → ANTHROPIC_API_KEY). A missing key is left to litellm,
+    which already says so; a local model such as `ollama/...` has none. The
+    message never contains the key, only what is wrong with it.
+    """
+    env = os.environ if environ is None else environ
+    provider, sep, _ = model.partition("/")
+    if not sep:
+        return None
+    var = f"{provider.upper()}_API_KEY"
+    key = env.get(var)
+    if not key:
+        return None
+    for i, ch in enumerate(key):
+        if not ch.isascii() or ch.isspace():
+            return (
+                f"{var} contains {ch!r} at position {i}; an API key is plain ASCII "
+                "without spaces. Paste the whole key again (a placeholder such as "
+                "'sk-ant-api03-…' from the docs is not one), in .env or wherever it is set."
+            )
+    if "..." in key or key.startswith("<"):
+        return (
+            f"{var} looks like a placeholder, not a key. Paste the whole key, "
+            "in .env or wherever it is set."
+        )
+    return None

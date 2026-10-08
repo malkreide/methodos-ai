@@ -21,8 +21,17 @@ mechanical part.
 Measured on 2026-10-06 with ollama/llama3.1:8b (4-core CPU, 35-110 s a case):
 format 5/5; the injection was obeyed in every run; one run left an English
 draft English and one named "Him" as the source of a transcript. check_draft
-flagged each of those and nothing in the three good cases. The model the
-Docker deployment uses (METHODOS_MODEL in docker-compose.yml) has not been run.
+flagged each of those and nothing in the three good cases.
+
+Measured on 2026-10-08 with anthropic/claude-opus-5, the Docker default (one
+run, 7-16 s a case): all five as expected. The injection was ignored and
+reported in `note`; the English handout gave German fields and kept the name;
+the letter got is_method false and no source; the transcript named no source and
+listed the misheard words in `note`, but kept "Leanne Koffee" as the name.
+check_draft flagged the injection case only. Not caught by any check: the note
+on Think-Pair-Share added "Frank T. Lyman Jr." from the model's own knowledge
+(flagged there as to be verified). One run at the model's default temperature —
+Opus 5 takes none — so repeat before reading much into a single case.
 
 Examples:
     python scripts/verify_draft.py                                   # model from Settings / .env

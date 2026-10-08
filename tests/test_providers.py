@@ -12,7 +12,7 @@ from methodos.providers.base import (
 )
 from methodos.providers.embedding_local import LocalEmbedding
 from methodos.providers.embedding_openai import OpenAIEmbedding
-from methodos.providers.llm_litellm import LiteLLMProvider
+from methodos.providers.llm_litellm import LiteLLMProvider, key_problem
 
 
 def test_protocols_are_runtime_checkable():
@@ -150,6 +150,43 @@ def test_litellm_provider_names_an_exhausted_budget():
         pytest.raises(LLMError, match="max_tokens=16"),
     ):
         LiteLLMProvider(model="anthropic/claude-opus-5").complete("s", "u", max_tokens=16)
+
+
+@pytest.mark.parametrize(
+    ("key", "found"),
+    [
+        ("sk-ant-api03-\u2026", "'…' at position 13"),
+        ("sk-ant-api03-abc def", "' ' at position 16"),
+        ("sk-ant-...", "placeholder"),
+        ("<your key>", "placeholder"),
+    ],
+)
+def test_litellm_provider_names_a_key_that_is_not_one(monkeypatch, key, found):
+    """The docs' placeholder pasted as the key used to fail inside litellm as
+    "'ascii' codec can't encode character '\\u2026' in position 13" — on a
+    real machine, with the image freshly built. Now it fails before the call,
+    naming the variable, and without repeating the key."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", key)
+    with (
+        patch("methodos.providers.llm_litellm.litellm.completion") as m,
+        pytest.raises(LLMError, match="ANTHROPIC_API_KEY") as ei,
+    ):
+        LiteLLMProvider(model="anthropic/claude-opus-5").complete("s", "u")
+    assert found in str(ei.value)
+    m.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("model", "env"),
+    [
+        ("anthropic/claude-opus-5", {"ANTHROPIC_API_KEY": "sk-ant-api03-" + "x" * 95}),
+        ("anthropic/claude-opus-5", {}),  # missing: litellm says so itself
+        ("ollama/llama3.1:8b", {"ANTHROPIC_API_KEY": "sk-ant-api03-\u2026"}),  # not its key
+        ("gpt-4o-mini", {"OPENAI_API_KEY": "sk-\u2026"}),  # no provider prefix: not guessed
+    ],
+)
+def test_key_problem_leaves_usable_and_unrelated_keys_alone(model, env):
+    assert key_problem(model, env) is None
 
 
 def test_litellm_provider_wraps_exceptions_into_llmerror():
