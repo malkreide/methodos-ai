@@ -433,7 +433,8 @@ def llm_check(providers: ProvidersDep) -> LLMCheckResponse:
         reply = providers.llm.complete(
             "You are a connectivity check.",
             "Reply with the single word: ok",
-            max_tokens=16,
+            # Not 16: a model that thinks first would spend that before replying.
+            max_tokens=1024,
         )
     except LLMError as e:
         raise HTTPException(

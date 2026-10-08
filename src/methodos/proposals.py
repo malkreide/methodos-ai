@@ -216,7 +216,8 @@ def draft_from_text(text: str, *, llm: LLMProvider, language: str = "en") -> Pro
         truncated=len(text) > DRAFT_INPUT_CHARS,
     )
     system, user = split_system_user(prompt)
-    raw = llm.complete(system, user, max_tokens=1200, temperature=0.2)
+    # 4096: room for thinking before the JSON on current Claude models.
+    raw = llm.complete(system, user, max_tokens=4096, temperature=0.2)
 
     start, end = raw.find("{"), raw.rfind("}")
     if start == -1 or end <= start:

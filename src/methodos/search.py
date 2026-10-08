@@ -282,7 +282,9 @@ def explain(
         candidates=[c.to_render_dict() for c in candidates],
     )
     system, user = split_system_user(rendered)
-    return llm.complete(system, user)
+    # Room for a model that thinks before it writes; see LiteLLMProvider. A
+    # ceiling, not a target: a non-thinking model stops where its answer ends.
+    return llm.complete(system, user, max_tokens=4096)
 
 
 def search(
