@@ -82,6 +82,74 @@ def test_litellm_provider_passes_messages_correctly():
     ]
     assert kwargs["max_tokens"] == 10
     assert kwargs["temperature"] == 0.5
+    assert kwargs["drop_params"] is True, "else models that refuse temperature fail"
+
+
+def _serve_fake_anthropic(seen: dict):
+    """A localhost stand-in for the Messages API that records the request body."""
+    import json
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            seen["body"] = json.loads(self.rfile.read(int(self.headers["content-length"])))
+            out = json.dumps(
+                {
+                    "id": "msg_test",
+                    "type": "message",
+                    "role": "assistant",
+                    "model": seen["body"]["model"],
+                    "content": [{"type": "text", "text": "ok"}],
+                    "stop_reason": "end_turn",
+                    "usage": {"input_tokens": 1, "output_tokens": 1},
+                }
+            ).encode()
+            self.send_response(200)
+            self.send_header("content-type", "application/json")
+            self.send_header("content-length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+
+        def log_message(self, *a):
+            pass
+
+    server = HTTPServer(("127.0.0.1", 0), Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    return server
+
+
+@pytest.mark.parametrize(
+    ("model", "sends_temperature"),
+    [("anthropic/claude-opus-5", False), ("anthropic/claude-sonnet-4-6", True)],
+)
+def test_temperature_reaches_only_models_that_take_it(monkeypatch, model, sends_temperature):
+    """The Docker default (claude-opus-5) refuses `temperature`; litellm used to
+    refuse the whole call on its behalf, so every explanation and every upload
+    draft failed. Runs the real litellm against a localhost endpoint: no key, no
+    network, but the exact request body that would go out."""
+    seen: dict = {}
+    server = _serve_fake_anthropic(seen)
+    try:
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+        monkeypatch.setenv("ANTHROPIC_API_BASE", f"http://127.0.0.1:{server.server_port}")
+        monkeypatch.setenv("NO_PROXY", "127.0.0.1")
+        out = LiteLLMProvider(model=model).complete("s", "u", temperature=0.2)
+    finally:
+        server.shutdown()
+    assert out == "ok"
+    assert ("temperature" in seen["body"]) is sends_temperature
+
+
+def test_litellm_provider_names_an_exhausted_budget():
+    """A thinking model can spend max_tokens before it writes anything."""
+    fake = MagicMock()
+    fake.choices = [MagicMock(message=MagicMock(content=None), finish_reason="length")]
+    with (
+        patch("methodos.providers.llm_litellm.litellm.completion", return_value=fake),
+        pytest.raises(LLMError, match="max_tokens=16"),
+    ):
+        LiteLLMProvider(model="anthropic/claude-opus-5").complete("s", "u", max_tokens=16)
 
 
 def test_litellm_provider_wraps_exceptions_into_llmerror():

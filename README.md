@@ -361,6 +361,14 @@ call works at all and, more interestingly, whether a real model honours the
 `scripts/verify_explain.py` is the tool for answering the second one against
 whatever model you deploy.
 
+One reason it never passed was found without a key: litellm refused every call
+to the Docker default `anthropic/claude-opus-5`, because the call carried a
+`temperature` that current Claude models do not accept. `LiteLLMProvider` now
+drops parameters a model does not take, and gives thinking models room in
+`max_tokens`; `test_temperature_reaches_only_models_that_take_it` replays the
+exact request body against a localhost endpoint. Whether the live call then
+succeeds is still unverified.
+
 The HTTP deployment does not close this gap, but it makes it cheap to close,
 in that order:
 
