@@ -1,0 +1,16 @@
+# Line endings, so a Windows checkout still builds and runs the container.
+#
+# Git for Windows converts text files to CRLF on checkout by default
+# (core.autocrlf=true). That is harmless for Python, Markdown and JSON, and
+# fatal for what a POSIX shell or the Linux container executes: with CRLF,
+# docker/entrypoint.sh fails with "set: Illegal option -" and the container
+# with "exec /usr/local/bin/entrypoint.sh: no such file or directory".
+# These rules hold whatever core.autocrlf the person cloning has set.
+
+# Let Git decide text vs binary; the repository itself stores LF.
+* text=auto
+
+# Executed by sh, make or docker: always LF, on every platform.
+*.sh       text eol=lf
+Dockerfile text eol=lf
+Makefile   text eol=lf
