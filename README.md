@@ -366,8 +366,10 @@ to the Docker default `anthropic/claude-opus-5`, because the call carried a
 `temperature` that current Claude models do not accept. `LiteLLMProvider` now
 drops parameters a model does not take, and gives thinking models room in
 `max_tokens`; `test_temperature_reaches_only_models_that_take_it` replays the
-exact request body against a localhost endpoint. Whether the live call then
-succeeds is still unverified.
+exact request body against a localhost endpoint. The live call itself has since
+gone through: the upload draft (below) uses the same `LiteLLMProvider.complete`
+and ran against `anthropic/claude-opus-5` on 2026-10-08. What a real model does
+with `ranking_basis` is what remains open.
 
 The HTTP deployment does not close this gap, but it makes it cheap to close,
 in that order:
@@ -382,17 +384,23 @@ The first is a yes/no. The second prints the reranked order next to the model's
 prose and a verdict line, for a human to judge — there is no threshold at which
 an explanation is "correct", which is why it is a script and not a test.
 
-**The upload draft has been run against Llama 3.1 8B only, not against the
-model the container uses.** `scripts/verify_draft.py` runs five fixed cases
-through the real draft path. With `ollama/llama3.1:8b` the format held every
-time, but the model obeyed an instruction planted in the document, and in
-individual runs answered in the wrong language or named a misheard word as the
-source. Prompt changes fixed the language; the rest is caught after the fact by
-`check_draft`, which flags copied passages, instruction-like text in the
-document, sources the document does not contain and drafts in the wrong
-language, and the console shows those warnings. Before relying on the draft
-with your production model, run
-`python scripts/verify_draft.py --model <METHODOS_MODEL>`.
+**The upload draft has been run once per case, not measured.**
+`scripts/verify_draft.py` runs five fixed cases through the real draft path.
+With `ollama/llama3.1:8b` the format held every time, but the model obeyed an
+instruction planted in the document, and in individual runs answered in the
+wrong language or named a misheard word as the source. With the Docker default
+`anthropic/claude-opus-5` (one run, 7–16 s a case) all five came out as
+intended: the planted instruction was ignored and reported in `note`, the
+English handout gave a German draft, the letter to parents was marked as no
+method, and the garbled transcript got no source and a `note` saying what was
+misheard — though the misheard name ("Leanne Koffee") stayed the method's name.
+Two things are left to the reviewer: a `note` can add facts from the model's
+own knowledge (a fuller name form for a credited author), and a non-method
+still gets a name and a problem. `check_draft` flags copied passages,
+instruction-like text in the document, sources the document does not contain
+and drafts in the wrong language, and the console shows those warnings. Opus 5
+takes no `temperature`, so another run can differ; with another model, run
+`python scripts/verify_draft.py --model <METHODOS_MODEL>` before relying on it.
 
 [#22]: https://github.com/malkreide/methodos-ai/issues/22
 
