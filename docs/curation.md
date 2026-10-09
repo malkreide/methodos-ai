@@ -5,6 +5,7 @@ One owner, a growing catalog, and agents doing the legwork. The split:
 | Step | Who | How |
 |---|---|---|
 | Find what needs work | script | `scripts/audit_catalog.py` — deterministic, reproducible |
+| Find where search misses | script | `scripts/audit_search.py` — everyday problems against the shipped ranking |
 | Fix existing entries | agent | `.claude/agents/method-curator.md` |
 | Add proposed methods | agent | `.claude/agents/method-author.md`, fed by the "Propose a method" issue form or the console's proposal inbox |
 | Review and publish | owner | merge the draft PR — **the merge is the review** |
@@ -25,6 +26,21 @@ python scripts/audit_catalog.py --check-links   # also checks every reference UR
 `unclassified` > `single-use-case` > `no-owner`. Rating signals are read from
 `data/feedback.jsonl` when it exists; point `--feedback` at a production log to
 use real ratings.
+
+## Search gaps
+
+```bash
+python scripts/audit_search.py              # one line per problem, top-1 / top-3 at the end
+python scripts/audit_search.py --diagnose   # where each miss sits, by embedding and by reranker
+```
+
+`scripts/search_queries.json` holds problems phrased the way a school leader
+or an office would type them, each with the methods that would be a right
+answer. A miss whose method is *in* the shortlist but demoted by the reranker
+means its texts do not describe that problem: add a `use_cases` line in the
+problem's words, then run the script again and confirm that nothing else moved.
+Write a second phrasing you did not use while writing the line, and check that
+too — the first one is no longer a fair test.
 
 ## Running the agents
 
