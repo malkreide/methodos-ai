@@ -1239,14 +1239,14 @@ def test_real_llm_leads_with_the_reranked_top_not_the_most_similar(
 
     Non-deterministic wording, so nothing is asserted about content.
 
-    NOTE: this has never passed. It was written where no backend was reachable,
-    so it has only ever failed at the litellm call with retrieval and the
-    precondition below both holding. First green run is real news — see #22.
+    First passed on 2026-10-09 against anthropic/claude-opus-5 (#22), after
+    months of only failing at the litellm call. Re-run it when the model
+    changes: whether a model honours the order is a property of the model.
     """
     # Same query as scripts/verify_explain.py, and for the same reason: at
-    # top_k=3 the reranker puts SWOT (sim 0.526) above both PESTEL (0.609)
-    # and Porter's (0.562), so the prompt genuinely shows a top entry that is
-    # less similar than the ones under it.
+    # top_k=3 the reranker puts SWOT (sim 0.526) above PESTEL (0.609) and the
+    # Risk Matrix (0.527), with Porter's (0.562) reranked out, so the prompt
+    # genuinely shows a top entry that is less similar than the ones under it.
     query = "internal strengths and weaknesses vs external opportunities and threats"
     settings = Settings()
     result = search(
