@@ -13,6 +13,12 @@ human to judge. The one mechanical signal — which method the explanation
 introduces first — is printed as a verdict line, the same proxy asserted by
 `test_real_llm_leads_with_the_reranked_top_not_the_most_similar`.
 
+Measured on 2026-10-09 against the 71-method catalog: anthropic/claude-opus-5,
+claude-sonnet-5-5 and claude-haiku-5-5 each led with the reranked top on the
+default query and on "In unseren Teamsitzungen reden immer dieselben, die
+anderen schweigen" (1-2-4-All, sim 0.495, reranked above Lean Coffee, 0.543),
+and each said in prose why the more similar candidate fits worse. One run each.
+
 Needs a reachable backend for every model named. Requires an ingested index and
 the `local` extra for the cross-encoder.
 
@@ -43,12 +49,16 @@ from methodos.config import Settings
 from methodos.providers import make_embedding, make_llm, make_reranker
 from methodos.search import Candidate, StaleIndexError, retrieve, search
 
-# Chosen because the reranker and the embedding disagree here, measured against
-# the 23-method catalog at top_k=3, overfetch_factor=2:
+# Chosen because the reranker and the embedding disagree here. Measured against
+# the 71-method catalog at top_k=3, overfetch_factor=3 (the Docker default):
 #
-#   SWOT Analysis         sim 0.457  rerank  +7.14   (embedding had it #3)
-#   Porter's Five Forces  sim 0.469  rerank  -8.14   (embedding had it #1)
-#   PESTEL Analysis       sim 0.465  rerank  -8.22   (embedding had it #2)
+#   SWOT Analysis               sim 0.526  rerank  +5.29   (embedding had it #5)
+#   PESTEL Analysis             sim 0.609  rerank  -5.20   (embedding had it #1)
+#   Risk Matrix and Register    sim 0.527  rerank  -5.34   (embedding had it #4)
+#
+# Porter's Five Forces (0.562) and the Ansoff Matrix (0.537) sit between them on
+# similarity and are reranked out of the three. First measured on the 23-method
+# catalog with Porter's and PESTEL as the demoted pair; the inversion has held.
 #
 # So the prompt presents a top candidate that is *less* similar than both
 # entries below it. Without that inversion the model is never actually asked to

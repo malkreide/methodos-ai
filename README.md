@@ -352,37 +352,35 @@ set a retention period for `feedback.jsonl` and `proposals.jsonl`, and run uvico
 
 ## Known gaps
 
-**The LLM explain path has never been verified against a live backend** ([#22]).
-The `METHODOS_INTEGRATION_LLM=1` tests exist and are opt-in, but they were
-written where no model was reachable — they have never passed, only failed at
-the litellm call with everything upstream holding. That covers both whether the
-call works at all and, more interestingly, whether a real model honours the
-`ranking_basis` sentence instead of re-sorting the candidates by similarity.
-`scripts/verify_explain.py` is the tool for answering the second one against
-whatever model you deploy.
+**The explain path is verified on three Claude models, and needs re-checking
+whenever the model changes** ([#22]). On 2026-10-09 both
+`METHODOS_INTEGRATION_LLM=1` tests passed against `anthropic/claude-opus-5`, the
+Docker default, and `scripts/verify_explain.py` was run with
+`anthropic/claude-opus-5`, `claude-sonnet-5-5` and `claude-haiku-5-5` on two
+queries where the reranker promotes a less similar method: the default English
+one (SWOT, similarity 0.526, ahead of PESTEL at 0.609) and *"In unseren
+Teamsitzungen reden immer dieselben, die anderen schweigen"* (1-2-4-All, 0.495,
+ahead of Lean Coffee at 0.543). All six explanations lead with the reranked top,
+and none argues against the order — each says why the most similar candidate
+fits worse (PESTEL "covers only half your question"; Lean Coffee "löst ein
+benachbartes, aber anderes Problem"). The `ranking_basis` wording needed no
+change. One run each; this says nothing about other providers.
 
-One reason it never passed was found without a key: litellm refused every call
-to the Docker default `anthropic/claude-opus-5`, because the call carried a
-`temperature` that current Claude models do not accept. `LiteLLMProvider` now
-drops parameters a model does not take, and gives thinking models room in
-`max_tokens`; `test_temperature_reaches_only_models_that_take_it` replays the
-exact request body against a localhost endpoint. The live call itself has since
-gone through: the upload draft (below) uses the same `LiteLLMProvider.complete`
-and ran against `anthropic/claude-opus-5` on 2026-10-08. What a real model does
-with `ranking_basis` is what remains open.
+What the runs did show: German explanations are written with "ß" (all three
+models), although this catalog's German readers are Swiss. The upload draft
+replaces it; the explanation does not.
 
-The HTTP deployment does not close this gap, but it makes it cheap to close,
-in that order:
+Before relying on a different model, re-run the same checks against it:
 
 ```bash
-docker compose up -d
-curl -sX POST localhost:8000/llm/check   # does the key/model work at all?
-docker compose run --rm --entrypoint python cli scripts/verify_explain.py
+docker compose run --rm cli ingest   # the cli service does not ingest on its own
+curl -sX POST localhost:8000/llm/check   # with `docker compose up`: does the key work?
+docker compose run --rm --entrypoint python cli scripts/verify_explain.py --model <model>
 ```
 
-The first is a yes/no. The second prints the reranked order next to the model's
-prose and a verdict line, for a human to judge — there is no threshold at which
-an explanation is "correct", which is why it is a script and not a test.
+The script prints the reranked order next to the model's prose and a verdict
+line, for a human to judge — there is no threshold at which an explanation is
+"correct", which is why it is a script and not a test.
 
 **The upload draft has been run once per case, not measured.**
 `scripts/verify_draft.py` runs five fixed cases through the real draft path.
