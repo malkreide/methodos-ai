@@ -1088,6 +1088,47 @@ def test_rerank_puts_every_pinned_probe_first(
     assert scores == sorted(scores, reverse=True)
 
 
+# Problem-first wording, as people actually type it, for a situation the pinned
+# probes miss because they use each method's own vocabulary ("debrief the
+# launch"). Before After_Action_Review and Start_Stop_Continue got a use case
+# for recurring events and recurring frictions, these led with Appreciative
+# Inquiry, Risk Matrix or Lean Coffee. More than one method is a right answer
+# here, so the assertion is a set, not a pinned id.
+RECURRING_MISTAKES = [
+    "Nach jedem Schulprojekt wiederholen wir dieselben Fehler",
+    "Fehler aus dem letzten Schuljahr passieren uns wieder",
+    "After every school project we repeat the same mistakes",
+    "we never learn from our projects, the same problems come up every time",
+]
+LEARNING_FROM_EXPERIENCE = {
+    "After_Action_Review",
+    "Start_Stop_Continue",
+    "Sailboat_Retrospective",
+    "PDCA_Cycle",
+}
+
+
+@pytest.mark.parametrize("problem", RECURRING_MISTAKES)
+def test_recurring_mistakes_lead_with_a_method_for_learning_from_them(
+    real_index, real_embedding, real_reranker, problem
+):
+    from methodos.search import retrieve
+
+    settings = Settings()
+    out = retrieve(
+        query=problem,
+        embedding=real_embedding,
+        chroma_path=real_index,
+        top_k=settings.top_k,
+        reranker=real_reranker,
+        overfetch_factor=settings.overfetch_factor,
+    )
+    assert out[0].id in LEARNING_FROM_EXPERIENCE, (
+        f"{problem!r} led with {out[0].id}: "
+        f"{[(c.id, round(c.similarity, 3), round(c.rerank_score or 0, 2)) for c in out]}"
+    )
+
+
 # Probes that embedding-only retrieval cannot separate — each was rejected
 # during PR #12/#13 for landing under the 0.10 bar or missing outright, which
 # forced the pinned probe to be reworded. Measured against the 23-method
