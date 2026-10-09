@@ -12,6 +12,8 @@ differently", in under an hour.
 - End of a sprint, project phase, or quarter
 - After a team composition or process change, to check what settled
 - As a recurring low-ceremony habit between deeper retrospectives
+- When the same frictions come back project after project or term after term,
+  and the team wants to change the routine that produces them
 - Course feedback: asking students what the teacher should start, stop and
   continue draws more specific, usable comments than an open text box
   (Hoon et al., 2015). Works as a written form, so nobody needs to be in the room

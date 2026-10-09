@@ -30,11 +30,13 @@
     "A civil protection agency has just run a large emergency exercise with several services and needs to capture where the plan held and where it broke down before everyone disperses.",
     "A school has carried out its first evacuation or lockdown drill of the year, and staff want to compare what the emergency plan said with what actually happened in the building.",
     "The outage is over and service is restored; the on-call engineers and support staff want to walk through how the response unfolded against the runbook while it is fresh.",
-    "A development programme has finished a field distribution or training round, and partner staff want lessons written down for colleagues planning similar activities elsewhere."
+    "A development programme has finished a field distribution or training round, and partner staff want lessons written down for colleagues planning similar activities elsewhere.",
+    "A school runs the same kinds of events every year, such as a project week, a camp or a concert, and stumbles over the same organisational problems each time, because what went wrong was talked about in the corridor and never written down; the organising team wants a short debrief straight after each one, with a named person who carries the lessons into planning the next."
   ],
   "contexts": [
     "business",
     "public-sector",
+    "education",
     "nonprofit"
   ],
   "formats": [
@@ -43,5 +45,5 @@
     "remote"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-09-27"
+  "last_reviewed": "2026-10-09"
 }

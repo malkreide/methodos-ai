@@ -29,7 +29,8 @@
   ],
   "use_cases": [
     "A lecturer wants mid-semester feedback from students that says what to change in the course, rather than a satisfaction score or a handful of vague comments.",
-    "A department that does not work in sprints wants a short quarterly review of its own routines, such as meetings and handovers, that ends with a few named changes."
+    "A department that does not work in sprints wants a short quarterly review of its own routines, such as meetings and handovers, that ends with a few named changes.",
+    "A school or office team notices that the same frictions come back in every project or term, such as information reaching parents late, unclear responsibilities or a last-minute rush, and wants a regular short review that turns those recurring patterns into a few changes to how the team works."
   ],
   "contexts": [
     "business",
@@ -41,5 +42,5 @@
     "async"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-01"
+  "last_reviewed": "2026-10-09"
 }

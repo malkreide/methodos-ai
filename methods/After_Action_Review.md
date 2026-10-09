@@ -18,6 +18,9 @@ whose recommendations go to management. Plan either one when you plan the event.
 
 - Right after a launch, incident response, exercise, or customer escalation
 - When one discrete episode holds lessons worth carrying to the next one
+- After each run of a recurring event — a project week, a camp, an annual
+  conference — so the next run starts from the last one's lessons instead of
+  repeating its mistakes
 - Across ranks, when the facilitator can credibly suspend hierarchy for an hour
 
 ## When *not* to use
