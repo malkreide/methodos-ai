@@ -542,6 +542,12 @@ PROBES = [
         "too much; I lead all of them in exactly the same way",
         "Situational_Leadership",
     ),
+    (
+        "every teacher here prepares lessons on their own and we never get to see what the "
+        "children in a colleague's class actually do with a new topic, so whatever works in "
+        "one room never reaches the next",
+        "Lesson_Study",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -973,6 +979,12 @@ PROBES_DE = [
         "sich, weil ich ihnen dauernd über die Schulter schaue. Ich behandle offenbar alle "
         "gleich, egal wie lange sie schon dabei sind",
         "Situational_Leadership",
+    ),
+    (
+        "Bei uns bereitet jede Lehrerin ihren Unterricht allein vor. Wir sehen nie, wie die "
+        "Kinder in den Klassen der anderen mit einem neuen Thema tatsächlich zurechtkommen, "
+        "und was in einem Schulzimmer gut funktioniert, kommt nie im nächsten an",
+        "Lesson_Study",
     ),
 ]
 
