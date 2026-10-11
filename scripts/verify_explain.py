@@ -50,7 +50,7 @@ from methodos.providers import make_embedding, make_llm, make_reranker
 from methodos.search import Candidate, StaleIndexError, retrieve, search
 
 # Chosen because the reranker and the embedding disagree here. Measured against
-# the 71-method catalog at top_k=3, overfetch_factor=3 (the Docker default):
+# the 71-method catalog at top_k=3, overfetch_factor=3 and 8 (the default):
 #
 #   SWOT Analysis               sim 0.526  rerank  +5.29   (embedding had it #5)
 #   PESTEL Analysis             sim 0.609  rerank  -5.20   (embedding had it #1)

@@ -1,0 +1,266 @@
+[
+  {
+    "query": "Wer ist bei diesem Projekt wofür verantwortlich?",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ]
+  },
+  {
+    "query": "Bei der Übergabe zwischen Schulleitung und Sekretariat geht immer etwas verloren",
+    "acceptable": [
+      "RACI_Matrix",
+      "Value_Stream_Mapping",
+      "Customer_Journey_Map"
+    ]
+  },
+  {
+    "query": "Wir haben zu viele Projekte gleichzeitig und keines wird fertig",
+    "acceptable": [
+      "Ecocycle_Planning",
+      "Cost_of_Delay_WSJF",
+      "Eisenhower_Matrix",
+      "OKR",
+      "MoSCoW_Method",
+      "RICE_Scoring"
+    ]
+  },
+  {
+    "query": "Ich ertrinke in Aufgaben und weiss nicht, was ich zuerst erledigen soll",
+    "acceptable": [
+      "Eisenhower_Matrix"
+    ]
+  },
+  {
+    "query": "Unser Elternabend läuft immer gleich schief",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "World_Cafe",
+      "Fishbowl",
+      "One_Two_Four_All"
+    ]
+  },
+  {
+    "query": "Die Eltern sollen bei der neuen Schulhausordnung mitreden, es kommen etwa 150 Leute",
+    "acceptable": [
+      "World_Cafe",
+      "Open_Space_Technology",
+      "Fishbowl"
+    ]
+  },
+  {
+    "query": "Das Kollegium ist skeptisch gegenüber der Reform",
+    "acceptable": [
+      "Kotter_Eight_Steps",
+      "Force_Field_Analysis",
+      "Bridges_Transition_Model",
+      "Appreciative_Inquiry",
+      "Stakeholder_Map"
+    ]
+  },
+  {
+    "query": "Nach der Zusammenlegung zweier Schulen trauern viele Lehrpersonen dem alten Schulhaus nach",
+    "acceptable": [
+      "Bridges_Transition_Model"
+    ]
+  },
+  {
+    "query": "Eine Lehrerin kommt mit einem schwierigen Schüler nicht mehr weiter",
+    "acceptable": [
+      "Collegial_Case_Consultation"
+    ]
+  },
+  {
+    "query": "Ich muss einer Mitarbeiterin sagen, dass ihr Ton in Sitzungen verletzend wirkt",
+    "acceptable": [
+      "SBI_Feedback"
+    ]
+  },
+  {
+    "query": "Mobbing in der Klasse, die Klasse ist in zwei Lager gespalten",
+    "acceptable": [
+      "Restorative_Circle"
+    ]
+  },
+  {
+    "query": "Warum ist der Server ausgefallen? Wir wollen die eigentliche Ursache finden",
+    "acceptable": [
+      "Five_Whys",
+      "Ishikawa_Diagram"
+    ]
+  },
+  {
+    "query": "Die Zahl der Lehrabbrüche steigt und niemand weiss genau warum",
+    "acceptable": [
+      "Issue_Tree",
+      "Ishikawa_Diagram",
+      "Five_Whys",
+      "Causal_Loop_Diagram"
+    ]
+  },
+  {
+    "query": "Wir müssen entscheiden, welche von drei Schulverwaltungs-Softwares wir kaufen",
+    "acceptable": [
+      "Weighted_Decision_Matrix",
+      "Cost_Benefit_Analysis"
+    ]
+  },
+  {
+    "query": "Lohnt sich der Bau einer eigenen Mensa finanziell?",
+    "acceptable": [
+      "Cost_Benefit_Analysis"
+    ]
+  },
+  {
+    "query": "Wir wollen eine neue Hausaufgabenregel zuerst in einer Klasse ausprobieren",
+    "acceptable": [
+      "PDCA_Cycle"
+    ]
+  },
+  {
+    "query": "Bevor wir das neue Zeugnisformular einführen: was könnte alles schiefgehen?",
+    "acceptable": [
+      "Pre_Mortem",
+      "FMEA",
+      "Risk_Matrix",
+      "Futures_Wheel"
+    ]
+  },
+  {
+    "query": "Welche Folgen hat die Einführung von Tablets für Unterricht, Eltern und Hauswartung?",
+    "acceptable": [
+      "Futures_Wheel",
+      "Stakeholder_Map"
+    ]
+  },
+  {
+    "query": "Wir brauchen eine Strategie für die Schule der nächsten zehn Jahre, die Zukunft ist sehr ungewiss",
+    "acceptable": [
+      "Scenario_Planning",
+      "PESTEL_Analysis",
+      "SWOT"
+    ]
+  },
+  {
+    "query": "Woran sehen wir, ob unser Förderprogramm überhaupt wirkt?",
+    "acceptable": [
+      "Theory_of_Change",
+      "Most_Significant_Change",
+      "Balanced_Scorecard"
+    ]
+  },
+  {
+    "query": "Das neu zusammengesetzte Team weiss nicht, wie es zusammenarbeiten will",
+    "acceptable": [
+      "Team_Charter"
+    ]
+  },
+  {
+    "query": "Die Schulleitung entscheidet alles selbst, das Team möchte mehr Mitsprache",
+    "acceptable": [
+      "Delegation_Poker",
+      "Consent_Decision_Making"
+    ]
+  },
+  {
+    "query": "Wir kommen in der Steuergruppe nie zu einem Entscheid",
+    "acceptable": [
+      "Consent_Decision_Making",
+      "Nominal_Group_Technique",
+      "Six_Thinking_Hats",
+      "Weighted_Decision_Matrix"
+    ]
+  },
+  {
+    "query": "Wir brauchen viele neue Ideen für die Gestaltung des Pausenplatzes",
+    "acceptable": [
+      "Brainwriting_635",
+      "SCAMPER",
+      "Morphological_Box"
+    ]
+  },
+  {
+    "query": "Die Anmeldung für die Tagesschule ist für Eltern viel zu kompliziert",
+    "acceptable": [
+      "Customer_Journey_Map",
+      "Double_Diamond",
+      "Value_Stream_Mapping"
+    ]
+  },
+  {
+    "query": "Das Kollegium muss in einer Stunde ein neues Konzept von 80 Seiten durcharbeiten",
+    "acceptable": [
+      "Jigsaw_Method"
+    ]
+  },
+  {
+    "query": "Mein Team bringt mir jedes Problem und erwartet, dass ich die Lösung vorgebe",
+    "acceptable": [
+      "GROW_Model",
+      "Delegation_Poker"
+    ]
+  },
+  {
+    "query": "Wir bekommen viele verschiedene Beschwerden von Eltern, wo sollen wir ansetzen?",
+    "acceptable": [
+      "Pareto_Analysis"
+    ]
+  },
+  {
+    "query": "Wir arbeiten seit Jahren zusammen und kennen uns persönlich trotzdem kaum",
+    "acceptable": [
+      "Johari_Window"
+    ]
+  },
+  {
+    "query": "Die Themen unserer Teamsitzung gibt immer die Chefin vor, die anderen bringen ihre Anliegen nie ein",
+    "acceptable": [
+      "Lean_Coffee"
+    ]
+  },
+  {
+    "query": "Was sind unsere Stärken und Schwächen als Volksschule im Vergleich zu Privatschulen?",
+    "acceptable": [
+      "SWOT",
+      "Benchmarking"
+    ]
+  },
+  {
+    "query": "Die Lehrpersonen finden die Formulare im Intranet nicht",
+    "acceptable": [
+      "Card_Sorting"
+    ]
+  },
+  {
+    "query": "Der Eröffnungstermin des neuen Schulhauses steht fest, wie planen wir die vielen abhängigen Arbeiten?",
+    "acceptable": [
+      "Critical_Path_Method"
+    ]
+  },
+  {
+    "query": "Wer könnte unser Projekt unterstützen und wer könnte es blockieren?",
+    "acceptable": [
+      "Stakeholder_Map",
+      "Force_Field_Analysis"
+    ]
+  },
+  {
+    "query": "The IT team gets urgent requests from every department and cannot do them all",
+    "acceptable": [
+      "Cost_of_Delay_WSJF",
+      "RICE_Scoring",
+      "MoSCoW_Method",
+      "Eisenhower_Matrix"
+    ]
+  },
+  {
+    "query": "The same problem keeps coming back no matter what we try",
+    "acceptable": [
+      "Causal_Loop_Diagram",
+      "Five_Whys",
+      "Ishikawa_Diagram"
+    ]
+  }
+]

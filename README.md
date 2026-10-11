@@ -206,8 +206,8 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 
 It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
-grows with the number of texts on the shortlist — about 48 for the default
-9-method shortlist of the current 71-method catalog, up from 6 when only one
+grows with the number of texts on the shortlist — about 135 for the default
+24-method shortlist of the current 71-method catalog, up from 6 when only one
 text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
@@ -221,14 +221,15 @@ German probes first, but puts the right method within the top four every time;
 the cross-encoder then ranks all 46 first. Turning reranking off still works
 and still degrades gracefully, but expect noticeably worse ordering.
 
-`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 3, i.e.
-`top_k × 3`). It was 2 until the catalog reached 39 methods: by then two pinned
-probes found their method only 6th by embedding — the last slot of a 6-method
-shortlist — and three independent authoring runs had pushed one of them out
-with a single new method. At 3 all 78 probes still rank first, and the
-reranker scores about 48 texts instead of 32, roughly 15% more time per query.
-Cost grows linearly with the shortlist; raise it again when the right answer
-starts landing near the end of it.
+`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 8, i.e.
+`top_k × 8`). The pinned probes all rank first at 3, but they were written in
+each method's own vocabulary, and several were reworded until this reranker
+put them first. Problems phrased the way people type them
+(`scripts/search_queries.json`, measured with `scripts/audit_search.py`) tell
+a different story: at 3 the right method never reached the reranker for 7 of
+36; at 8 top-1 rose from 19 to 23 of 36, in English as in German, for about
+twice the rerank time (1.1 s to 2.1 s a query on a 4-core CPU). Reranking the
+whole catalog did worse again. Re-measure before changing it.
 
 ## MCP server
 
@@ -381,6 +382,19 @@ docker compose run --rm --entrypoint python cli scripts/verify_explain.py --mode
 The script prints the reranked order next to the model's prose and a verdict
 line, for a human to judge — there is no threshold at which an explanation is
 "correct", which is why it is a script and not a test.
+
+**Search leads with a right method for about two in three everyday problems.**
+`scripts/audit_search.py` runs 36 problems as a school leader or an office
+would phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* —
+each with the methods that would be a right answer. On 2026-10-09: top-1 23/36,
+top-3 32/36. Neither the language nor the reranker model is the main cause:
+the same 36 in English score the same, and a much larger multilingual reranker
+(`BAAI/bge-reranker-v2-m3`) scored 23/36 at fifteen times the time, missing
+largely the same problems (9 of its 13 misses are shared). What is left is the
+catalog: the right method's texts do not describe the problem in the words
+people use. The fix is a `use_cases` line per gap, measured before and after,
+as for After Action Review. The acceptable answers in the query file are
+judgement; review them as you would a method.
 
 **The upload draft has been run once per case, not measured.**
 `scripts/verify_draft.py` runs five fixed cases through the real draft path.

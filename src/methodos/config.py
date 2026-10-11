@@ -77,12 +77,19 @@ class Settings(BaseSettings):
     """Multiplied by overfetch_factor to form Chroma's n_results, which
     rejects zero and negatives with an opaque TypeError — so bound it here."""
 
-    overfetch_factor: int = Field(default=3, ge=1)
+    overfetch_factor: int = Field(default=8, ge=1)
     """Chroma returns top_k * this, then the shortlist is truncated to top_k.
     Raising it gives a reranker more to work with, at linear cost in rerank
     time; without a reranker it changes nothing but the query size.
 
-    3 since the catalog reached 39 methods: at 2, two pinned probes found their
-    method only 6th by embedding, the last slot of a 6-method shortlist, and
-    three authoring runs independently pushed one of them out. 9 keeps all 78
-    probes first for about 15% more rerank time (48 texts instead of 32)."""
+    8 since 2026-10-09, measured on the 71-method catalog with
+    scripts/audit_search.py — problems phrased the way people type them, not
+    the pinned probes, which all rank first either way. At 3 the shortlist cut
+    hid the right method from the reranker for 7 of 36 such problems; top-1
+    went from 19/36 to 23/36 (the same 36 in English: 18 to 22). Rerank time
+    roughly doubles, about 135 texts instead of 51 (1.1 s to 2.1 s a query on a
+    4-core CPU). Reranking the whole catalog scored lower again (19/36): every
+    extra candidate is one more the reranker can wrongly prefer.
+
+    Was 2 until 39 methods, then 3: two pinned probes had slid to the last slot
+    of a 6-method shortlist."""
