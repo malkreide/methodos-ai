@@ -513,6 +513,11 @@ PROBES = [
         "and agree what to stop",
         "Ecocycle_Planning",
     ),
+    (
+        "about a month ago the parcel scanners at two of our six depots started dropping "
+        "scans; the other depots are fine, and every fix so far was somebody's hunch",
+        "Kepner_Tregoe_Problem_Analysis",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -914,6 +919,11 @@ PROBES_DE = [
         "kommen nie vom Fleck. Ich möchte mit dem ganzen Kollegium alles gemeinsam anschauen "
         "und entscheiden, womit wir aufhören",
         "Ecocycle_Planning",
+    ),
+    (
+        "Seit ein paar Wochen stürzen in zwei unserer Filialen die Kassen immer wieder ab, "
+        "in den anderen nie, und jeder hat eine andere Vermutung, woran es liegt",
+        "Kepner_Tregoe_Problem_Analysis",
     ),
 ]
 
