@@ -45,8 +45,10 @@ is explicitly written for civilian as well as military readers.
   "passed the red team" looks tested when it was not.
 - As a promise of better outcomes. Laboratory and classroom studies compared
   devil's advocacy and dialectical inquiry with seeking consensus or relying on
-  an expert, and found the structured dissent produced better recommendations
-  (Schweiger, Sandberg & Ragan, 1986; Schwenk's meta-analysis, 1990). Evidence
+  an expert, and found that structured dissent tended to produce better
+  recommendations (Schweiger, Sandberg & Ragan, 1986; Schwenk's meta-analysis,
+  1990; summarised as these studies are usually cited, not from their full
+  text). Evidence
   from real organisations is mostly case reports and practitioner accounts.
 
 ## Facilitation outline (one-day review)
