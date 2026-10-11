@@ -554,6 +554,12 @@ PROBES = [
         "any of the tasks",
         "Metaplan",
     ),
+    (
+        "if a pupil ever went missing on one of our outings, I honestly couldn't say which "
+        "of our precautions would actually prevent it, what would kick in once it had "
+        "happened, or who is supposed to make sure each of those things still works",
+        "Bowtie_Analysis",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -996,6 +1002,13 @@ PROBES_DE = [
         "Nach jedem Workshop hat jeder etwas anderes verstanden, festgehalten wird nichts, "
         "und beim nächsten Treffen fängt die Diskussion wieder von vorne an",
         "Metaplan",
+    ),
+    (
+        "Wenn bei uns Personendaten von Bürgerinnen und Bürgern bei den Falschen landen, "
+        "wäre das gravierend. Aber niemand kann sagen, was das heute konkret verhindert, "
+        "was wir tun würden, wenn es trotzdem passiert, und wer dafür sorgt, dass diese "
+        "Vorkehrungen auch wirklich funktionieren",
+        "Bowtie_Analysis",
     ),
 ]
 
