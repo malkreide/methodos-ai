@@ -33,6 +33,13 @@ missing largely the same problems — what is left is catalog wording.
 search_queries_holdout.json, written before those lines and not used to write
 them: 5/13 to 7/13 top-1, 7/13 to 10/13 top-3. Quote the holdout, not the 36.
 
+Same day, the parents' evening case: «Unser Elternabend läuft immer gleich
+schief» led with Brainwriting, whose use case about falling turnout at parents'
+evenings matched the words, not the need. One more After Action Review line
+fixed it and three of four sharper variants (40 problems now: 33/40, 38/40),
+but not the two holdout problems added with it (another school event, other
+words): 7/15 either way. The line matches "parents' evening", not the problem.
+
 Usage:
     python scripts/audit_search.py                    # summary, one line per query
     python scripts/audit_search.py --diagnose         # + where each miss sits (slow)

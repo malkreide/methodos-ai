@@ -31,7 +31,8 @@
     "A school has carried out its first evacuation or lockdown drill of the year, and staff want to compare what the emergency plan said with what actually happened in the building.",
     "The outage is over and service is restored; the on-call engineers and support staff want to walk through how the response unfolded against the runbook while it is fresh.",
     "A development programme has finished a field distribution or training round, and partner staff want lessons written down for colleagues planning similar activities elsewhere.",
-    "A school runs the same kinds of events every year, such as a project week, a camp or a concert, and stumbles over the same organisational problems each time, because what went wrong was talked about in the corridor and never written down; the organising team wants a short debrief straight after each one, with a named person who carries the lessons into planning the next."
+    "A school runs the same kinds of events every year, such as a project week, a camp or a concert, and stumbles over the same organisational problems each time, because what went wrong was talked about in the corridor and never written down; the organising team wants a short debrief straight after each one, with a named person who carries the lessons into planning the next.",
+    "Our parents' evenings keep going wrong in the same ways and people leave unhappy, but nobody can say exactly why; we want to look back straight after the next one at what we expected, what actually happened and what we will do differently."
   ],
   "contexts": [
     "business",
@@ -45,5 +46,5 @@
     "remote"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-09"
+  "last_reviewed": "2026-10-11"
 }

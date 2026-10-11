@@ -95,5 +95,21 @@
       "SWOT",
       "Benchmarking"
     ]
+  },
+  {
+    "query": "Der Besuchstag an unserer Schule endet jedes Jahr im Frust",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Sailboat_Retrospective"
+    ]
+  },
+  {
+    "query": "Unser Sommerfest ist jedes Jahr ein Durcheinander und wir lernen nichts daraus",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Sailboat_Retrospective"
+    ]
   }
 ]
