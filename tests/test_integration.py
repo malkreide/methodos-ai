@@ -566,6 +566,11 @@ PROBES = [
         "website, how can we see whether people will really book it",
         "Build_Measure_Learn",
     ),
+    (
+        "every time I sit down to write, a message or a colleague pulls me away, and after "
+        "a whole day I have two paragraphs",
+        "Timeboxing",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1021,6 +1026,11 @@ PROBES_DE = [
         "hat sich niemand angemeldet. Bevor wir Leute einstellen und eine Website bauen, "
         "möchten wir wissen, ob überhaupt jemand das tatsächlich buchen würde",
         "Build_Measure_Learn",
+    ),
+    (
+        "Ständig reissen mich Mails und kurze Fragen aus der Arbeit, nach einem ganzen Tag "
+        "habe ich am Bericht zwei Absätze geschrieben",
+        "Timeboxing",
     ),
 ]
 
