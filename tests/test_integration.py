@@ -525,6 +525,12 @@ PROBES = [
         "arguments on all sides",
         "Citizens_Assembly",
     ),
+    (
+        "the board is about to approve the director's pet project and everyone just nods "
+        "along; before we sign I want a few people who had nothing to do with it to pick it "
+        "apart and make the best case against it",
+        "Red_Team_Review",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -938,6 +944,12 @@ PROBES_DE = [
         "Einwohnerinnen und Einwohner empfehlen würden, wenn sie sich gründlich mit allen "
         "Argumenten auseinandergesetzt hätten",
         "Citizens_Assembly",
+    ),
+    (
+        "Die Geschäftsleitung ist von ihrem Lieblingsprojekt begeistert und alle nicken nur. "
+        "Bevor wir den Kredit sprechen, sollen ein paar Leute, die nicht daran beteiligt waren, "
+        "es auseinandernehmen und die Gegenposition so stark wie möglich vertreten",
+        "Red_Team_Review",
     ),
 ]
 
