@@ -140,6 +140,14 @@ def test_query_returns_the_mcp_narrowing_fields_alongside_the_explanation(env):
     assert body["query_id"]
 
 
+def test_query_explanation_uses_swiss_spelling(env):
+    """The console is the surface people read; it gets "ss" like the CLI."""
+    env["llm"].response = "Alpha passt, weil es die Gruppe ernst nimmt. Außerdem …"
+    body = env["client"].post("/query", json={"problem": "alpha alpha alpha"}).json()
+    assert "ß" not in body["explanation"]
+    assert "Ausserdem" in body["explanation"]
+
+
 def test_query_with_explain_false_never_touches_the_llm(env):
     body = (
         env["client"].post("/query", json={"problem": "alpha alpha alpha", "explain": False}).json()

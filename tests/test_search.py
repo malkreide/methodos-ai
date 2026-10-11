@@ -74,6 +74,25 @@ def test_search_calls_llm_with_rendered_prompt(tmp_path, fake_embedding, fake_ll
     assert "alpha" in user
 
 
+def test_explanation_uses_swiss_spelling(tmp_path, fake_embedding):
+    """Claude Opus 5, Sonnet 5.5 and Haiku 5.5 all wrote "ß" in German
+    explanations; the catalog's German readers write "ss"."""
+    from tests.conftest import FakeLLM
+
+    chroma_path = _seed(tmp_path, fake_embedding)
+    llm = FakeLLM("Für «die anderen schweigen» ist es bestenfalls eine Teilmaßnahme. Außerdem …")
+    out = search(
+        query="alpha alpha alpha",
+        embedding=fake_embedding,
+        llm=llm,
+        chroma_path=chroma_path,
+        top_k=2,
+    )
+    assert out.explanation == (
+        "Für «die anderen schweigen» ist es bestenfalls eine Teilmassnahme. Ausserdem …"
+    )
+
+
 def test_search_with_no_llm_skips_explanation(tmp_path, fake_embedding, fake_llm):
     chroma_path = _seed(tmp_path, fake_embedding)
     out = search(

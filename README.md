@@ -368,8 +368,9 @@ benachbartes, aber anderes Problem"). The `ranking_basis` wording needed no
 change. One run each; this says nothing about other providers.
 
 What the runs did show: German explanations are written with "ß" (all three
-models), although this catalog's German readers are Swiss. The upload draft
-replaces it; the explanation does not.
+models), although this catalog's German readers are Swiss. Like the upload
+draft, the explanation now replaces it with "ss" after the model answers; the
+prompt alone does not stop it.
 
 Before relying on a different model, re-run the same checks against it:
 

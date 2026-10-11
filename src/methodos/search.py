@@ -284,7 +284,12 @@ def explain(
     system, user = split_system_user(rendered)
     # Room for a model that thinks before it writes; see LiteLLMProvider. A
     # ceiling, not a target: a non-thinking model stops where its answer ends.
-    return llm.complete(system, user, max_tokens=4096)
+    text = llm.complete(system, user, max_tokens=4096)
+    # Swiss spelling, as in the upload draft (proposals.draft_from_text): the
+    # catalog's German readers are Swiss, and models trained mostly on German
+    # German write ß whatever the prompt says — all three Claude models did
+    # (README, Known gaps). English text never contains ß, so no language check.
+    return text.replace("ß", "ss")
 
 
 def search(
