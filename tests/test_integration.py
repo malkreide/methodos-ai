@@ -537,6 +537,11 @@ PROBES = [
         "our part would be or whether we have the staff for it",
         "Hoshin_Kanri",
     ),
+    (
+        "new staff on my team feel abandoned, while the experienced ones feel I control them "
+        "too much; I lead all of them in exactly the same way",
+        "Situational_Leadership",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -962,6 +967,12 @@ PROBES_DE = [
         "den Abteilungen ändert sich nichts; niemand hat mit uns geklärt, was wir konkret "
         "beitragen sollen und ob wir das mit unseren Leuten überhaupt schaffen",
         "Hoshin_Kanri",
+    ),
+    (
+        "Die Neuen im Team fühlen sich von mir im Stich gelassen, und die Erfahrenen ärgern "
+        "sich, weil ich ihnen dauernd über die Schulter schaue. Ich behandle offenbar alle "
+        "gleich, egal wie lange sie schon dabei sind",
+        "Situational_Leadership",
     ),
 ]
 
