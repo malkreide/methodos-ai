@@ -548,6 +548,12 @@ PROBES = [
         "one room never reaches the next",
         "Lesson_Study",
     ),
+    (
+        "our half-day workshops are all talk: arguments get repeated, nothing is captured, "
+        "and two weeks later everyone remembers a different outcome and no one has picked up "
+        "any of the tasks",
+        "Metaplan",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -985,6 +991,11 @@ PROBES_DE = [
         "Kinder in den Klassen der anderen mit einem neuen Thema tatsächlich zurechtkommen, "
         "und was in einem Schulzimmer gut funktioniert, kommt nie im nächsten an",
         "Lesson_Study",
+    ),
+    (
+        "Nach jedem Workshop hat jeder etwas anderes verstanden, festgehalten wird nichts, "
+        "und beim nächsten Treffen fängt die Diskussion wieder von vorne an",
+        "Metaplan",
     ),
 ]
 
