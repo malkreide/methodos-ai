@@ -262,5 +262,41 @@
       "Five_Whys",
       "Ishikawa_Diagram"
     ]
+  },
+  {
+    "query": "Am Elternabend redet nur die Lehrerin, die Eltern hören bloss zu",
+    "acceptable": [
+      "World_Cafe",
+      "One_Two_Four_All",
+      "Fishbowl",
+      "Open_Space_Technology"
+    ]
+  },
+  {
+    "query": "Nach jedem Elternabend sind alle unzufrieden, aber niemand weiss genau warum",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Five_Whys",
+      "Sailboat_Retrospective"
+    ]
+  },
+  {
+    "query": "Zum Elternabend kommen immer weniger Eltern",
+    "acceptable": [
+      "Brainwriting_635",
+      "Customer_Journey_Map",
+      "Five_Whys",
+      "Jobs_To_Be_Done"
+    ]
+  },
+  {
+    "query": "Am Elternabend eskaliert jedes Mal die Diskussion über die Hausaufgaben",
+    "acceptable": [
+      "Fishbowl",
+      "Principled_Negotiation",
+      "Consent_Decision_Making",
+      "Six_Thinking_Hats"
+    ]
   }
 ]

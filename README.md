@@ -387,17 +387,21 @@ line, for a human to judge — there is no threshold at which an explanation is
 **Search leads with a right method for most everyday problems, not all.**
 `scripts/audit_search.py` runs problems as a school leader or an office would
 phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* — each with
-the methods that would be a right answer. On 2026-10-11: top-1 29/36 and top-3
-35/36 on `scripts/search_queries.json`, which use cases were written against,
-and 7/13 and 10/13 on `scripts/search_queries_holdout.json`, which they were
-not; the second pair is the honest one. Neither the language nor the reranker
-model was the main cause: the same 36 in English scored the same, and a much
-larger multilingual reranker (`BAAI/bge-reranker-v2-m3`) scored no better at
-fifteen times the time. The gains came from the catalog — a short use case per
-method that states the problem in the voice of the person who has it. The
-remaining held-out misses fail in both models on German phrasing (*"rechnet
-sich"*, *"Lernförderangebot"*). The acceptable answers in both files are
-judgement; review them as you would a method.
+the methods that would be a right answer. On 2026-10-11: top-1 33/40 and top-3
+38/40 on `scripts/search_queries.json`, which use cases were written against,
+and 7/15 and 10/15 on `scripts/search_queries_holdout.json`, which they were
+not; the second pair is the honest one. Neither the language nor the models
+were the main cause: the same 36 in English scored the same, a much larger
+multilingual reranker (`BAAI/bge-reranker-v2-m3`) scored no better at fifteen
+times the time, and a larger embedding model
+(`paraphrase-multilingual-mpnet-base-v2`) scored slightly worse. The gains came
+from the catalog — a short use case per method that states the problem in the
+voice of the person who has it. What is left fails on how vaguely the problem is
+put rather than on German: *"Unser Sommerfest ist jedes Jahr ein Durcheinander"*
+misses in English too, while *"the same things go wrong every year; we want to
+learn from it"* finds After Action Review. A problem that names its need is
+found; one that only names a place and a feeling is not. The acceptable answers
+in both files are judgement; review them as you would a method.
 
 **The upload draft has been run once per case, not measured.**
 `scripts/verify_draft.py` runs five fixed cases through the real draft path.
