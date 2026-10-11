@@ -28,10 +28,16 @@ scored the same, so the gap is not the language. BAAI/bge-reranker-v2-m3 in
 place of the default reranker: 23/36 at fifteen times the time per query,
 missing largely the same problems — what is left is catalog wording.
 
+2026-10-11, after one problem-voice use case for each of twelve methods
+("We keep starting new projects but rarely finish…"): 29/36 and 35/36. On
+search_queries_holdout.json, written before those lines and not used to write
+them: 5/13 to 7/13 top-1, 7/13 to 10/13 top-3. Quote the holdout, not the 36.
+
 Usage:
     python scripts/audit_search.py                    # summary, one line per query
     python scripts/audit_search.py --diagnose         # + where each miss sits (slow)
     python scripts/audit_search.py --overfetch 8      # try another shortlist size
+    python scripts/audit_search.py --queries scripts/search_queries_holdout.json
 
 Needs an ingested index and the `local` extra. Exit code is 0 whatever it finds.
 """

@@ -36,7 +36,8 @@
     "A town council keeps splitting along party lines, the losing side reopens every vote at the next session, and the council wants a way of deciding that the minority can genuinely live with.",
     "The board of a volunteer association sees outvoted members resign or stop helping after contested votes, and wants to adopt rules that nobody has a serious reason to resist.",
     "A class or student council is setting its own rules, and the teacher wants every pupil's concerns weighed so that neither a few loud voices nor a bare majority decides for everyone.",
-    "A self-managing group with no boss to break a deadlock wants to adopt a new rule quickly and revise it after a trial period, instead of arguing until every member is enthusiastic."
+    "A self-managing group with no boss to break a deadlock wants to adopt a new rule quickly and revise it after a trial period, instead of arguing until every member is enthusiastic.",
+    "Our committee or steering group discusses the same issue meeting after meeting without ever deciding, because someone always has another objection or the decision is postponed again."
   ],
   "contexts": [
     "business",
@@ -64,5 +65,5 @@
   ],
   "language": "en",
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-04"
+  "last_reviewed": "2026-10-11"
 }

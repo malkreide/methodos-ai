@@ -1,0 +1,99 @@
+[
+  {
+    "query": "Niemand fühlt sich für die Kommunikation mit den Eltern zuständig",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ]
+  },
+  {
+    "query": "nobody knows who owns which task in our project",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ]
+  },
+  {
+    "query": "Wir starten ständig neue Projekte, aber nichts wird abgeschlossen",
+    "acceptable": [
+      "Ecocycle_Planning",
+      "Cost_of_Delay_WSJF",
+      "OKR",
+      "Eisenhower_Matrix"
+    ]
+  },
+  {
+    "query": "Meine Pendenzenliste wird jeden Tag länger und alles scheint dringend",
+    "acceptable": [
+      "Eisenhower_Matrix"
+    ]
+  },
+  {
+    "query": "Am grossen Elternanlass sollen alle miteinander ins Gespräch kommen, nicht nur zuhören",
+    "acceptable": [
+      "World_Cafe",
+      "Open_Space_Technology",
+      "Fishbowl"
+    ]
+  },
+  {
+    "query": "Die Notenabgabe ist schiefgelaufen, wir wollen verstehen, woran es wirklich lag",
+    "acceptable": [
+      "Five_Whys",
+      "Ishikawa_Diagram",
+      "After_Action_Review"
+    ]
+  },
+  {
+    "query": "Rechnet sich eine eigene Photovoltaikanlage auf dem Schulhausdach?",
+    "acceptable": [
+      "Cost_Benefit_Analysis"
+    ]
+  },
+  {
+    "query": "Wir möchten ein neues Pausenkonzept zuerst testen, bevor wir es an allen Schulen einführen",
+    "acceptable": [
+      "PDCA_Cycle"
+    ]
+  },
+  {
+    "query": "Was bewirkt die Umstellung auf Blockzeiten für Familien, Betreuung und Lehrpersonen?",
+    "acceptable": [
+      "Futures_Wheel",
+      "Stakeholder_Map"
+    ]
+  },
+  {
+    "query": "Wie können wir nachweisen, dass unser Lernförderangebot etwas bringt?",
+    "acceptable": [
+      "Theory_of_Change",
+      "Most_Significant_Change",
+      "Balanced_Scorecard"
+    ]
+  },
+  {
+    "query": "Im Gremium wird jede Entscheidung auf die nächste Sitzung vertagt",
+    "acceptable": [
+      "Consent_Decision_Making",
+      "Nominal_Group_Technique",
+      "Six_Thinking_Hats",
+      "Weighted_Decision_Matrix",
+      "DACI_Matrix"
+    ]
+  },
+  {
+    "query": "Im Sekretariat gehen viele unterschiedliche Reklamationen ein, welche sollen wir zuerst angehen?",
+    "acceptable": [
+      "Pareto_Analysis"
+    ]
+  },
+  {
+    "query": "Wo steht unsere Schule: was können wir gut und wo sind wir schwach?",
+    "acceptable": [
+      "SWOT",
+      "Benchmarking"
+    ]
+  }
+]

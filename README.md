@@ -383,17 +383,19 @@ The script prints the reranked order next to the model's prose and a verdict
 line, for a human to judge — there is no threshold at which an explanation is
 "correct", which is why it is a script and not a test.
 
-**Search leads with a right method for about two in three everyday problems.**
-`scripts/audit_search.py` runs 36 problems as a school leader or an office
-would phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* —
-each with the methods that would be a right answer. On 2026-10-09: top-1 23/36,
-top-3 32/36. Neither the language nor the reranker model is the main cause:
-the same 36 in English score the same, and a much larger multilingual reranker
-(`BAAI/bge-reranker-v2-m3`) scored 23/36 at fifteen times the time, missing
-largely the same problems (9 of its 13 misses are shared). What is left is the
-catalog: the right method's texts do not describe the problem in the words
-people use. The fix is a `use_cases` line per gap, measured before and after,
-as for After Action Review. The acceptable answers in the query file are
+**Search leads with a right method for most everyday problems, not all.**
+`scripts/audit_search.py` runs problems as a school leader or an office would
+phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* — each with
+the methods that would be a right answer. On 2026-10-11: top-1 29/36 and top-3
+35/36 on `scripts/search_queries.json`, which use cases were written against,
+and 7/13 and 10/13 on `scripts/search_queries_holdout.json`, which they were
+not; the second pair is the honest one. Neither the language nor the reranker
+model was the main cause: the same 36 in English scored the same, and a much
+larger multilingual reranker (`BAAI/bge-reranker-v2-m3`) scored no better at
+fifteen times the time. The gains came from the catalog — a short use case per
+method that states the problem in the voice of the person who has it. The
+remaining held-out misses fail in both models on German phrasing (*"rechnet
+sich"*, *"Lernförderangebot"*). The acceptable answers in both files are
 judgement; review them as you would a method.
 
 **The upload draft has been run once per case, not measured.**
