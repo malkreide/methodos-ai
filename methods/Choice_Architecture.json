@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Choice_Architecture",
+  "name": "Choice Architecture (Nudge Design)",
+  "category": "analysis",
+  "use_case": "People are entitled to something or have agreed to do something simple, such as signing up before a deadline, claiming a benefit, returning a form, paying on time or keeping an appointment, yet a large share never get round to it, and further letters, reminders and appeals change little. The question is which detail of how the request reaches them stands in the way: what happens if they do nothing, when the letter arrives, how it is worded, how many steps the form has, whether they know that others have done it. A few of those details are changed and the effect is tested, ideally against a comparison group.",
+  "strengths": [
+    "looks for the cause of inaction in the design of the decision rather than in people's motivation",
+    "changes are usually small and cheap: a pre-filled form, a moved date, a shorter letter",
+    "built-in testing, ideally a randomised trial, shows whether a change worked instead of assuming it",
+    "leaves every option open, so nobody is forced or penalised",
+    "the EAST and BASIC frameworks give non-specialists a shared checklist to work from"
+  ],
+  "weaknesses": [
+    "effects at scale are modest: nudge-unit trials averaged about 1.4 percentage points, far below published academic studies",
+    "the published literature is distorted by publication bias, so headline effect sizes overstate what to expect",
+    "can slide into manipulation if the design works against people's own interests or is hidden from them",
+    "cannot repair a service that is genuinely too hard, too costly or badly designed",
+    "a proper trial needs enough cases, a clear outcome measure and patience with administrative data"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://www.bi.team/publications/east-four-simple-ways-to-apply-behavioural-insights/",
+    "https://forskning.ruc.dk/en/publications/tools-and-ethics-for-applied-behavioural-insights-the-basic-toolk/",
+    "https://doi.org/10.3982/ECTA18709",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC8740589/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC9351501/",
+    "https://en.wikipedia.org/wiki/Choice_architecture",
+    "https://en.wikipedia.org/wiki/Nudge_theory"
+  ],
+  "use_cases": [
+    "Half the parents miss the registration deadline for the school holiday camps even though we send three reminders, and we don't want to just send a fourth.",
+    "Lots of people who are entitled to our support never claim it, although it is free and they have heard about it; telling them about it once more changes nothing.",
+    "Many residents only pay their fees or send back the form after the second dunning letter, and we would rather change how we ask the first time than keep writing more letters.",
+    "Most employees say they want to save for retirement or take part in a free health check, yet few sign up, and the company wants to know whether enrolling everyone automatically with an easy way to opt out would help without forcing anyone.",
+    "The school canteen offers a healthy lunch that pupils rarely pick, and the school wants to try placing it first, pre-selecting it in the meal order or naming it differently, without banning any other dish."
+  ],
+  "contexts": [
+    "public-sector",
+    "business",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "public administration",
+    "policy makers",
+    "service owners",
+    "school administration",
+    "HR",
+    "communications team",
+    "behavioural insights team"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

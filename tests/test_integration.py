@@ -571,6 +571,12 @@ PROBES = [
         "a whole day I have two paragraphs",
         "Timeboxing",
     ),
+    (
+        "most of the students who qualify for the free study grant never apply, even "
+        "though the form takes ten minutes and we have advertised it everywhere; more "
+        "posters won't help",
+        "Choice_Architecture",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1031,6 +1037,13 @@ PROBES_DE = [
         "Ständig reissen mich Mails und kurze Fragen aus der Arbeit, nach einem ganzen Tag "
         "habe ich am Bericht zwei Absätze geschrieben",
         "Timeboxing",
+    ),
+    (
+        "Viele Steuerpflichtige reichen ihre Steuererklärung erst nach der zweiten Mahnung "
+        "ein, obwohl ihnen das nur Ärger bringt; noch mehr Mahnungen wollen wir nicht "
+        "verschicken, sondern herausfinden, was sie abhält, und im Kleinen ausprobieren, "
+        "was hilft",
+        "Choice_Architecture",
     ),
 ]
 
