@@ -531,6 +531,12 @@ PROBES = [
         "apart and make the best case against it",
         "Red_Team_Review",
     ),
+    (
+        "head office announces its three priorities every January, but out in the branches "
+        "everyone carries on exactly as before; nobody ever sat down with us to work out what "
+        "our part would be or whether we have the staff for it",
+        "Hoshin_Kanri",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -950,6 +956,12 @@ PROBES_DE = [
         "Bevor wir den Kredit sprechen, sollen ein paar Leute, die nicht daran beteiligt waren, "
         "es auseinandernehmen und die Gegenposition so stark wie möglich vertreten",
         "Red_Team_Review",
+    ),
+    (
+        "Die Geschäftsleitung verkündet jedes Jahr ihre strategischen Schwerpunkte, aber in "
+        "den Abteilungen ändert sich nichts; niemand hat mit uns geklärt, was wir konkret "
+        "beitragen sollen und ob wir das mit unseren Leuten überhaupt schaffen",
+        "Hoshin_Kanri",
     ),
 ]
 
