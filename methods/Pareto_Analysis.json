@@ -37,7 +37,8 @@
     "A school office logs every enquiry from parents, and staff feel they answer the same handful of questions all day; the school leader wants the tally by topic to show which ones to address once through better information.",
     "An online retailer receives customer complaints about deliveries, invoices, faulty products and its website and answers each one as it arrives; nobody has ever counted how many fall under each heading, although two or three recurring issues probably account for most of them.",
     "A production line rejects parts for many different defects, and the quality engineer wants to see which defect types cause most of the scrap and rework cost before a cause analysis on the largest one.",
-    "A hospital ward records the reasons for delayed discharges, and the improvement team wants to check whether the reason everyone assumes is the main one really appears most often in the records."
+    "A hospital ward records the reasons for delayed discharges, and the improvement team wants to check whether the reason everyone assumes is the main one really appears most often in the records.",
+    "We receive many different complaints or requests and try to deal with all of them at once; we need to know which few kinds come up most often so that we can start there."
   ],
   "contexts": [
     "business",
@@ -65,5 +66,5 @@
   ],
   "language": "en",
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-05"
+  "last_reviewed": "2026-10-11"
 }

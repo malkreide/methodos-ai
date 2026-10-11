@@ -37,7 +37,8 @@
     "A shared service centre takes over finance and personnel processes from several ministries, and the transition team needs a record of which steps the centre now performs, which stay with the ministries and who answers for each one.",
     "A school counselling team splits a long list of recurring duties, from course selection to exam registration and scholarship applications, and wants every colleague to see which duties are theirs and whom to ask about the rest.",
     "After a merger two IT departments both patch some servers while nobody patches others, and the operations lead wants every routine task in the run book tied to one owner and the teams that only need to know.",
-    "A construction project with an architect, a general contractor, specialist firms and the client's facilities team keeps losing handovers between them, and the project manager wants the work packages assigned before the next phase starts."
+    "A construction project with an architect, a general contractor, specialist firms and the client's facilities team keeps losing handovers between them, and the project manager wants the work packages assigned before the next phase starts.",
+    "We never quite know who is supposed to do what: tasks fall between two people or get done twice, and when something goes wrong everyone assumed someone else was responsible."
   ],
   "contexts": [
     "business",
@@ -64,5 +65,5 @@
   ],
   "language": "en",
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-05"
+  "last_reviewed": "2026-10-11"
 }

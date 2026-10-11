@@ -41,6 +41,11 @@ paraphrase `use_case` there: near-duplicates add vectors without adding reach.
 Search reports which text matched (`matched_use_case`), and the reranker scores
 that text, so each entry should stand on its own.
 
+Include at least one entry written as the problem in the words of the person who
+has it — "We have to decide whether a large investment … pays for itself" —
+rather than a scenario about them. People type problems, not settings, and that
+is the entry the reranker matches; see `scripts/audit_search.py`.
+
 ### Assets
 
 ```json

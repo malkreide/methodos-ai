@@ -42,6 +42,18 @@ problem's words, then run the script again and confirm that nothing else moved.
 Write a second phrasing you did not use while writing the line, and check that
 too — the first one is no longer a fair test.
 
+`scripts/search_queries_holdout.json` is that second phrasing, kept for the
+whole catalog: problems written before any use case aimed at them. Never write
+a use case while looking at it; report its numbers next to the main file's, and
+treat a gain on the main file that the holdout does not share as tuning to the
+test. Once a holdout entry has been used to shape a text, move it to the main
+file and write a fresh one.
+
+What has worked: a short use case in the voice of the person with the problem
+("We keep starting new projects but rarely finish or stop any…"). The longer
+third-person scenarios that most entries carry describe the method's setting
+well, but the reranker matches a typed problem to a stated problem.
+
 ## Running the agents
 
 Locally, in Claude Code:

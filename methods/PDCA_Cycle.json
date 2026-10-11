@@ -38,7 +38,8 @@
     "A school wants to change how homework feedback or reading support is given, and instead of introducing it in every class at once, one teacher tries it with one group for two weeks and the staff look at the results before the next class joins.",
     "A municipal service counter wants to shorten waiting times with a new appointment rule, and tries it on a single morning at one office, measuring the effect before deciding whether to extend it to the other branches.",
     "A hospital ward or care home has agreed on a new routine for handovers or medication rounds and wants evidence from a few shifts that it actually reduces errors before writing it into the standard procedure.",
-    "A public agency's quality framework requires every service change to be evaluated, and staff need a lightweight routine for recording what each change should achieve and whether the figures afterwards bear that out."
+    "A public agency's quality framework requires every service change to be evaluated, and staff need a lightweight routine for recording what each change should achieve and whether the figures afterwards bear that out.",
+    "We want to try a new rule or routine in one place first and see whether it actually works before we roll it out everywhere."
   ],
   "contexts": [
     "business",
@@ -64,5 +65,5 @@
   ],
   "language": "en",
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-04"
+  "last_reviewed": "2026-10-11"
 }
