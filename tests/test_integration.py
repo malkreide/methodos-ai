@@ -518,6 +518,13 @@ PROBES = [
         "scans; the other depots are fine, and every fix so far was somebody's hunch",
         "Kepner_Tregoe_Problem_Analysis",
     ),
+    (
+        "whenever the council asks for public input on the new housing development, the "
+        "same pressure groups and a few loud neighbours dominate; we want to know what an "
+        "ordinary mix of local people would advise once they have properly studied the "
+        "arguments on all sides",
+        "Citizens_Assembly",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -924,6 +931,13 @@ PROBES_DE = [
         "Seit ein paar Wochen stürzen in zwei unserer Filialen die Kassen immer wieder ab, "
         "in den anderen nie, und jeder hat eine andere Vermutung, woran es liegt",
         "Kepner_Tregoe_Problem_Analysis",
+    ),
+    (
+        "Bei jeder Mitwirkung zur Umgestaltung des Dorfplatzes melden sich nur die üblichen "
+        "Verbände und ein paar Lautstarke. Der Gemeinderat möchte wissen, was ganz gewöhnliche "
+        "Einwohnerinnen und Einwohner empfehlen würden, wenn sie sich gründlich mit allen "
+        "Argumenten auseinandergesetzt hätten",
+        "Citizens_Assembly",
     ),
 ]
 
