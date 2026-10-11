@@ -287,8 +287,8 @@ can tell the difference rather than guess:
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
   next step. That floor is measured, not guessed: the weakest of the 158 pinned
   integration probes (English and German) scores 0.380, while questions the
-  catalog genuinely does not cover reach 0.291 at most (*"Rezept für Zürcher
-  Geschnetzeltes"*). Weak matches are still returned — `guidance` is a caveat, never a
+  catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
+  Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a
   filter, because an empty list is what a model fills in from memory.
 
 ## Languages

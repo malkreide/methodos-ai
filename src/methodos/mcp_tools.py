@@ -41,10 +41,12 @@ Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43,
 47, 51, 55, 59, 63, 67, 71 and 79) with the default multilingual embedding, not guessed. Every
 one of the 158 pinned integration probes (79 English, 79 German) reaches at least
 0.380 with its best match; questions the catalog genuinely does not cover top
-out at 0.291 ("Rezept für Zürcher Geschnetzeltes", 0.287 before the 55-method
-catalog), with "wie flicke ich meine Velokette" at 0.265 and "how do I fix my
-bicycle chain" at 0.224. 0.33 sits in the empty band between those two
-populations. tests/test_integration.py pins both sides.
+out at 0.329 ("wie flicke ich meine Velokette", 0.265 until the Eisenhower
+Matrix gained a problem-voice use case, "I have far more on my plate…", in the
+71-method catalog), with "Rezept für Zürcher Geschnetzeltes" at 0.291 and "how
+do I fix my bicycle chain" at 0.224. 0.33 sits in the empty band between those
+two populations, now only 0.001 above its upper edge.
+tests/test_integration.py pins both sides.
 
 The band is narrower than it was under the English-only model (0.127-0.321),
 because a multilingual model maps more of everyday language near *something*.

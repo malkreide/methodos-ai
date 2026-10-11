@@ -206,10 +206,10 @@ def test_weak_match_floor_sits_between_the_two_measured_populations():
 
     Measured on the shipped catalog with the multilingual default embedding:
     the weakest of the 158 pinned integration probes (English and German) tops
-    out at 0.380, and queries the catalog does not cover reach 0.291 at most.
+    out at 0.380, and queries the catalog does not cover reach 0.329 at most.
     The integration suite checks both sides against the real model.
     """
-    assert 0.291 < WEAK_MATCH_SIMILARITY < 0.380
+    assert 0.329 < WEAK_MATCH_SIMILARITY < 0.380
 
 
 # --- errors that a model has to be able to act on ----------------------------
