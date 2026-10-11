@@ -577,6 +577,12 @@ PROBES = [
         "posters won't help",
         "Choice_Architecture",
     ),
+    (
+        "we rolled out new scheduling software and ran workshops for everyone, yet months "
+        "later most staff still keep their own spreadsheets, and I can't tell whether they "
+        "see no point in it, don't want it, or just don't manage it in their daily work",
+        "ADKAR_Model",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1044,6 +1050,13 @@ PROBES_DE = [
         "verschicken, sondern herausfinden, was sie abhält, und im Kleinen ausprobieren, "
         "was hilft",
         "Choice_Architecture",
+    ),
+    (
+        "Seit einem Jahr haben wir das neue Ticketsystem und alle waren in der Schulung, "
+        "aber viele Mitarbeitende erledigen ihre Anfragen weiterhin per Mail. Ich weiss "
+        "nicht, ob sie den Nutzen nicht sehen, keine Lust darauf haben oder im Alltag "
+        "damit einfach nicht zurechtkommen",
+        "ADKAR_Model",
     ),
 ]
 
