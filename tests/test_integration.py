@@ -599,6 +599,12 @@ PROBES = [
         "down what that would actually mean",
         "SMART_Goals",
     ),
+    (
+        "we lose good people every year and all we ever hear when they go is 'personal "
+        "reasons'; I want to find out what really drives them away and what makes the "
+        "others hold on",
+        "Exit_and_Stay_Interviews",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1091,6 +1097,12 @@ PROBES_DE = [
         "Kommunikation mit den Kunden verbessere; jetzt sind wir uns uneinig, ob mir das "
         "gelungen ist, weil nie festgehalten wurde, was das konkret heissen soll",
         "SMART_Goals",
+    ),
+    (
+        "In unserer Pflegeabteilung kündigen jedes Jahr erfahrene Leute, und beim Abschied "
+        "heisst es nur «persönliche Gründe». Wir wollen endlich wissen, was sie wirklich "
+        "vertreibt und was die anderen noch hält",
+        "Exit_and_Stay_Interviews",
     ),
 ]
 
