@@ -84,10 +84,11 @@ class Settings(BaseSettings):
 
     9 since 2026-10-12, at 79 methods: with 8 (24 of 79) Causal Loop Diagram
     fell to embedding rank 25 for "Die Zahl der Lehrabbrüche steigt und niemand
-    weiss genau warum", where the reranker had put it first, so search_queries
-    dropped from 29/36 to 28/36 top-1 and 35 to 34 top-3. At 9 both are back
-    (holdout unchanged at 7/13, 10/13) for about 12 % more rerank time. The
-    slot count is fixed while the catalog grows; re-measure as it does.
+    weiss genau warum", where the reranker had put it first: search_queries.json
+    (40 problems) gave 32/40 top-1 and 37/40 top-3 against main's 33 and 38.
+    At 9 both are back to 33/40 and 38/40, the holdout unchanged at 7/15 and
+    10/15, for about 12 % more rerank time. The slot count is fixed while the
+    catalog grows; re-measure as it does.
 
     8 since 2026-10-09, measured on the 71-method catalog with
     scripts/audit_search.py — problems phrased the way people type them, not
