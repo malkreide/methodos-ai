@@ -593,6 +593,12 @@ PROBES = [
         "we did last year, and that will never add up to the target",
         "Backcasting",
     ),
+    (
+        "in my yearly review my boss and I agreed I would improve communication with "
+        "clients, and now we disagree about whether I did, because it was never written "
+        "down what that would actually mean",
+        "SMART_Goals",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1079,6 +1085,12 @@ PROBES_DE = [
         "Unsere Planung verbessert aber jedes Jahr nur ein bisschen das Bestehende, und "
         "damit erreichen wir das Ziel nie",
         "Backcasting",
+    ),
+    (
+        "Im Mitarbeitergespräch haben meine Chefin und ich abgemacht, dass ich die "
+        "Kommunikation mit den Kunden verbessere; jetzt sind wir uns uneinig, ob mir das "
+        "gelungen ist, weil nie festgehalten wurde, was das konkret heissen soll",
+        "SMART_Goals",
     ),
 ]
 
