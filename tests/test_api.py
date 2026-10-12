@@ -376,6 +376,25 @@ def test_console_has_every_string_in_both_languages(env):
     assert used <= set(keys.findall(de))
 
 
+def test_console_offers_every_goal_in_both_languages(env):
+    """The goal buttons are built from GOALS with keys the test above cannot see."""
+    import re
+
+    html = env["client"].get("/").text
+    goals = re.findall(r"'(\w+)'", html.split("const GOALS = [", 1)[1].split("];", 1)[0])
+    assert len(goals) >= 5
+    de, en = html.split("const I18N = {", 1)[1].split("\n};", 1)[0].split("\n  en: {", 1)
+    for g in goals:
+        for d in (de, en):
+            assert f"    goal_{g}:" in d and f"    goal_{g}_q:" in d, g
+
+
+def test_query_carries_the_clarify_field_the_console_reads(env):
+    spec = env["client"].get("/openapi.json").json()
+    assert "clarify" in spec["components"]["schemas"]["QueryResponse"]["properties"]
+    assert "data.clarify" in env["client"].get("/").text
+
+
 # --- /proposals/extract -------------------------------------------------------
 
 _DRAFT_JSON = json.dumps(

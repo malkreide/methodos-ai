@@ -78,7 +78,10 @@ def _methods_dir() -> Path:
         "When that is 'cross-encoder', `similarity` is NOT the sort key and a "
         "lower-similarity method can legitimately outrank a higher one; do not "
         "re-sort by similarity. Compare `returned` against `total_in_scope` before "
-        "concluding the catalog holds nothing else, and read `guidance` when present."
+        "concluding the catalog holds nothing else, and read `guidance` when present.\n\n"
+        "`clarify` means the order is unsure because the problem does not say what "
+        "the user wants to achieve. Ask them before presenting the first match as "
+        "the answer, then search again with their goal added."
     ),
     annotations=_READ_ONLY,
 )

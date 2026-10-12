@@ -91,6 +91,9 @@
   #fout .note + .note, #fout .note + details { margin-top: .6rem; }
   #fout pre { white-space: pre-wrap; max-height: 22rem; overflow-y: auto; }
   .orig { color: var(--muted); font-size: .8rem; margin-top: .4rem; }
+  .goals { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .6rem; }
+  .goals button { padding: .25rem .7rem; font-size: .82rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .goals button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
   h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.75rem 0 .6rem; }
 </style>
 </head>
@@ -228,6 +231,30 @@ const I18N = {
     basis_embed: 'Embedding-Ähnlichkeit',
     guidance_none: 'Keine Methode passt. Beschreiben Sie das Problem anders, oder sehen Sie im Katalog nach, was es gibt.',
     guidance_weak: 'Keine Methode passt gut. Die Treffer unten sind die nächstliegenden, decken Ihr Problem aber womöglich nicht ab. Beschreiben Sie es konkreter, oder sehen Sie im Katalog nach.',
+    clarify: 'Was möchten Sie erreichen? Die vordersten Treffer liegen nah beieinander, und keiner passt eindeutig. Mit einem Ziel kann die Suche besser unterscheiden.',
+    clarify_goal: 'Gesucht mit dem Ziel «{goal}». Ein anderes Ziel wählen oder ohne Ziel suchen:',
+    clarify_none: 'ohne Ziel',
+    clarify_kept: 'Vor der Präzisierung an erster Stelle',
+    goal_cause: 'Ursache verstehen',
+    goal_cause_q: 'Wir wollen herausfinden, woran es liegt.',
+    goal_learn: 'aus Wiederholtem lernen',
+    goal_learn_q: 'Es geht immer wieder gleich schief; wir wollen daraus lernen.',
+    goal_decide: 'entscheiden',
+    goal_decide_q: 'Wir müssen zwischen Möglichkeiten entscheiden.',
+    goal_prioritise: 'Prioritäten setzen',
+    goal_prioritise_q: 'Wir müssen festlegen, was zuerst kommt.',
+    goal_involve: 'Beteiligte einbeziehen',
+    goal_involve_q: 'Wir wollen alle Beteiligten einbeziehen und miteinander ins Gespräch bringen.',
+    goal_ideas: 'Ideen finden',
+    goal_ideas_q: 'Wir brauchen viele neue Ideen.',
+    goal_anticipate: 'Folgen vorausdenken',
+    goal_anticipate_q: 'Wir wollen vorher durchdenken, was passieren könnte.',
+    goal_impact: 'Wirkung zeigen',
+    goal_impact_q: 'Wir wollen zeigen können, ob es wirkt.',
+    goal_pilot: 'im Kleinen ausprobieren',
+    goal_pilot_q: 'Wir wollen es zuerst im Kleinen ausprobieren.',
+    goal_conflict: 'Konflikt klären',
+    goal_conflict_q: 'Wir wollen einen Konflikt klären.',
     explanation: 'Erklärung',
     explain_failed: 'Die KI-Erklärung ist fehlgeschlagen – die Rangliste oben ist davon nicht betroffen.',
     raw: 'Rohdaten (JSON)',
@@ -333,6 +360,30 @@ const I18N = {
     basis_embed: 'embedding-similarity',
     guidance_none: null,
     guidance_weak: null,
+    clarify: 'What do you want to achieve? The top matches are close together and none fits clearly. A goal helps the search tell them apart.',
+    clarify_goal: 'Searched with the goal “{goal}”. Pick another goal or search without one:',
+    clarify_none: 'no goal',
+    clarify_kept: 'First before the goal was added',
+    goal_cause: 'understand the cause',
+    goal_cause_q: 'We want to find out what is causing it.',
+    goal_learn: 'learn from what keeps happening',
+    goal_learn_q: 'The same things keep going wrong; we want to learn from it.',
+    goal_decide: 'decide',
+    goal_decide_q: 'We have to decide between options.',
+    goal_prioritise: 'set priorities',
+    goal_prioritise_q: 'We have to settle what comes first.',
+    goal_involve: 'involve the people concerned',
+    goal_involve_q: 'We want to involve everyone concerned and get them talking to each other.',
+    goal_ideas: 'find ideas',
+    goal_ideas_q: 'We need many new ideas.',
+    goal_anticipate: 'think ahead',
+    goal_anticipate_q: 'We want to think through beforehand what could happen.',
+    goal_impact: 'show impact',
+    goal_impact_q: 'We want to be able to show whether it works.',
+    goal_pilot: 'try it small first',
+    goal_pilot_q: 'We want to try it on a small scale first.',
+    goal_conflict: 'resolve a conflict',
+    goal_conflict_q: 'We want to resolve a conflict.',
     explanation: 'Explanation',
     explain_failed: 'LLM step failed — the ranking above is unaffected.',
     raw: 'Raw JSON',
@@ -436,6 +487,14 @@ const label = (prefix, value) => I18N[lang][`${prefix}_${value}`] ?? value;
 
 let lastQueryId = null;
 let lastQuery = null;
+
+// The goals offered when the server sets `clarify` (see mcp_tools.UNSURE_TOP_SCORE).
+// A goal's sentence is appended to the problem as typed and the search runs
+// again; the German sentences are the ones measured there — reword one, re-measure.
+const GOALS = ['cause', 'learn', 'decide', 'prioritise', 'involve', 'ideas',
+               'anticipate', 'impact', 'pilot', 'conflict'];
+let base = null;  // {problem, top, queryId}: the search as typed, before any goal
+let goal = null;  // the goal added to it, or null
 let lastProposal = null;
 let lastHealth = null;
 let lastExtract = null;
@@ -517,7 +576,7 @@ async function loadCategories() {
   } catch { /* the form still works without the filter */ }
 }
 
-function renderMatch(m, i) {
+function renderMatch(m, i, queryId = null) {
   const dots = '&#9679;'.repeat(m.complexity_score) + '&#9675;'.repeat(5 - m.complexity_score);
   const score = m.rerank_score === null || m.rerank_score === undefined
     ? `sim ${m.similarity.toFixed(3)}`
@@ -529,7 +588,7 @@ function renderMatch(m, i) {
     <div>${esc(m.use_case)}</div>
     ${m.matched_use_case ? `<div class="meta">${t('matched')}: ${esc(m.matched_use_case)}</div>` : ''}
     <ul>${m.strengths.slice(0, 3).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
-    <div class="rate" data-id="${esc(m.id)}">${t('helped')}
+    <div class="rate" data-id="${esc(m.id)}"${queryId ? ` data-query="${esc(queryId)}"` : ''}>${t('helped')}
       ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-rating="${n}">${n}</button>`).join('')}
     </div>
   </div>`;
@@ -543,16 +602,37 @@ function renderGuidance(data) {
   return `<div class="note warn">${esc(own)}<div class="orig">${esc(data.guidance)}</div></div>`;
 }
 
+// Asked when the ranking is unsure, and kept while a goal is applied so the
+// reader can switch goals or go back without retyping.
+function renderClarify(data) {
+  if (!data.clarify && !goal) return '';
+  const chips = GOALS.map((g) =>
+    `<button type="button" data-goal="${g}" aria-pressed="${g === goal}">${t(`goal_${g}`)}</button>`);
+  if (goal) chips.push(`<button type="button" data-goal="">${t('clarify_none')}</button>`);
+  const ask = goal ? t('clarify_goal', { goal: t(`goal_${goal}`) }) : t('clarify');
+  return `<div class="note warn">${ask}<div class="goals">${chips.join('')}</div></div>`;
+}
+
+// A goal moves a right method up about as often as it pushes one down
+// (measured with the goals above), so the first match from before stays on
+// screen whenever the refined search no longer shows it.
+function renderKept(data) {
+  if (!goal || !base?.top || data.matches.some((m) => m.id === base.top.id)) return '';
+  return `<h2>${t('clarify_kept')}</h2>${renderMatch(base.top, 0, base.queryId)}`;
+}
+
 function render(data) {
   const parts = [];
 
   if (data.guidance) parts.push(renderGuidance(data));
+  parts.push(renderClarify(data));
 
   parts.push(`<h2>${t('summary', {
     returned: data.returned, scope: data.total_in_scope, indexed: data.total_indexed,
     basis: t(data.ranking_basis === 'cross-encoder' ? 'basis_cross' : 'basis_embed'),
   })}</h2>`);
-  parts.push(data.matches.map(renderMatch).join(''));
+  parts.push(data.matches.map((m, i) => renderMatch(m, i)).join(''));
+  parts.push(renderKept(data));
 
   if (data.explanation_error) {
     parts.push(`<h2>${t('explanation')}</h2><div class="note err">
@@ -566,8 +646,7 @@ function render(data) {
   $('out').innerHTML = parts.join('');
 }
 
-$('form').addEventListener('submit', async (ev) => {
-  ev.preventDefault();
+async function runQuery() {
   $('go').disabled = true;
   lastQuery = null;
   $('out').innerHTML = `<p class="sub">${t('thinking')}</p>`;
@@ -585,12 +664,31 @@ $('form').addEventListener('submit', async (ev) => {
     });
     lastQueryId = data.query_id;
     lastQuery = data;
+    if (!goal) Object.assign(base, { top: data.matches[0] ?? null, queryId: data.query_id });
     render(data);
   } catch (e) {
     $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
   } finally {
     $('go').disabled = false;
   }
+}
+
+// Typing and submitting starts over; only a goal button builds on the last search.
+$('form').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  base = { problem: $('problem').value.trim(), top: null, queryId: null };
+  goal = null;
+  runQuery();
+});
+
+$('out').addEventListener('click', (ev) => {
+  const btn = ev.target.closest('button[data-goal]');
+  if (!btn || !base || $('go').disabled) return;
+  goal = btn.dataset.goal || null;
+  // Visible and editable in the box, and logged as asked: the query log then
+  // shows which goals people reach for.
+  $('problem').value = goal ? `${base.problem} ${t(`goal_${goal}_q`)}` : base.problem;
+  runQuery();
 });
 
 $('llmcheck').addEventListener('click', async () => {
@@ -621,7 +719,7 @@ $('out').addEventListener('click', async (ev) => {
       body: JSON.stringify({
         method_id: row.dataset.id,
         rating: Number(btn.dataset.rating),
-        query_id: lastQueryId,
+        query_id: row.dataset.query || lastQueryId,
       }),
     });
     row.innerHTML = t('recorded', { n: esc(btn.dataset.rating) });

@@ -24,6 +24,8 @@ import pytest
 
 from methodos.ingest import ingest
 from methodos.mcp_tools import (
+    UNSURE_MARGIN,
+    UNSURE_TOP_SCORE,
     WEAK_MATCH_SIMILARITY,
     MethodNotFoundError,
     get_method,
@@ -210,6 +212,89 @@ def test_weak_match_floor_sits_between_the_two_measured_populations():
     The integration suite checks both sides against the real model.
     """
     assert 0.329 < WEAK_MATCH_SIMILARITY < 0.380
+
+
+# --- recommend_methods: an unsure order asks for the goal -------------------
+
+
+class ScriptedReranker:
+    """Scores each document by which method's words it holds, so a test sets the
+    top score and the margin directly instead of hunting for a query."""
+
+    name = "scripted-reranker"
+
+    def __init__(self, **scores: float) -> None:
+        self.scores = scores
+
+    def score(self, query, documents):
+        return [
+            next((v for word, v in self.scores.items() if word in doc.lower()), -9.0)
+            for doc in documents
+        ]
+
+
+def _recommend(indexed, fake_embedding, reranker, top_k=3):
+    return recommend_methods(
+        problem="unser Sommerfest ist jedes Jahr ein Durcheinander",
+        embedding=fake_embedding,
+        chroma_path=indexed,
+        top_k=top_k,
+        reranker=reranker,
+    )
+
+
+@pytest.fixture
+def no_weak_floor(monkeypatch):
+    monkeypatch.setattr("methodos.mcp_tools.WEAK_MATCH_SIMILARITY", -1.0)
+
+
+def test_unsure_order_asks_for_the_goal(indexed, fake_embedding, no_weak_floor):
+    result = _recommend(indexed, fake_embedding, ScriptedReranker(alpha=-0.5, beta=-1.0))
+    assert [m.id for m in result.matches][:2] == ["Alpha", "Beta"]
+    assert result.clarify is not None
+    assert "achieve" in result.clarify, "must say what to ask the user"
+    assert "recommend_methods" in result.clarify, "must name the next call"
+    assert "+0.50" not in result.clarify and "-0.50" in result.clarify
+    assert result.guidance is None
+
+
+@pytest.mark.parametrize(
+    "scores",
+    [
+        {"alpha": -0.5, "beta": -2.0},  # a clear lead, however low
+        {"alpha": 2.0, "beta": 1.5},  # close, but both scored well
+    ],
+)
+def test_a_clear_or_confident_order_does_not_ask(indexed, fake_embedding, no_weak_floor, scores):
+    assert _recommend(indexed, fake_embedding, ScriptedReranker(**scores)).clarify is None
+
+
+def test_a_weak_match_gets_guidance_not_a_question(indexed, fake_embedding, monkeypatch):
+    """Off the catalog, a goal will not bring the right method in."""
+    monkeypatch.setattr("methodos.mcp_tools.WEAK_MATCH_SIMILARITY", 1.1)
+    result = _recommend(indexed, fake_embedding, ScriptedReranker(alpha=-0.5, beta=-1.0))
+    assert result.guidance is not None
+    assert result.clarify is None
+
+
+def test_no_question_without_a_runner_up_or_a_reranker(indexed, fake_embedding, no_weak_floor):
+    reranker = ScriptedReranker(alpha=-0.5, beta=-1.0)
+    assert _recommend(indexed, fake_embedding, reranker, top_k=1).clarify is None
+    assert _recommend(indexed, fake_embedding, None).clarify is None
+
+
+def test_clarify_never_explains_away_the_order(indexed, fake_embedding, no_weak_floor):
+    """Same guard as for `guidance`: the caller should ask, not conclude."""
+    clarify = _recommend(indexed, fake_embedding, ScriptedReranker(alpha=-0.5, beta=-1.0)).clarify
+    assert clarify is not None
+    for excuse in ("usually means", "probably means", "suggests that", "is the answer"):
+        assert excuse not in clarify.lower()
+
+
+def test_unsure_thresholds_are_the_measured_ones():
+    """Pins the rule its docstring measured (12 of 15 wrong first places caught,
+    8 of 40 right ones asked about), so a bump has to re-measure first."""
+    assert (UNSURE_TOP_SCORE, UNSURE_MARGIN) == (0.0, 1.0)
 
 
 # --- errors that a model has to be able to act on ----------------------------
