@@ -513,6 +513,53 @@ PROBES = [
         "and agree what to stop",
         "Ecocycle_Planning",
     ),
+    (
+        "about a month ago the parcel scanners at two of our six depots started dropping "
+        "scans; the other depots are fine, and every fix so far was somebody's hunch",
+        "Kepner_Tregoe_Problem_Analysis",
+    ),
+    (
+        "whenever the council asks for public input on the new housing development, the "
+        "same pressure groups and a few loud neighbours dominate; we want to know what an "
+        "ordinary mix of local people would advise once they have properly studied the "
+        "arguments on all sides",
+        "Citizens_Assembly",
+    ),
+    (
+        "the board is about to approve the director's pet project and everyone just nods "
+        "along; before we sign I want a few people who had nothing to do with it to pick it "
+        "apart and make the best case against it",
+        "Red_Team_Review",
+    ),
+    (
+        "head office announces its three priorities every January, but out in the branches "
+        "everyone carries on exactly as before; nobody ever sat down with us to work out what "
+        "our part would be or whether we have the staff for it",
+        "Hoshin_Kanri",
+    ),
+    (
+        "new staff on my team feel abandoned, while the experienced ones feel I control them "
+        "too much; I lead all of them in exactly the same way",
+        "Situational_Leadership",
+    ),
+    (
+        "every teacher here prepares lessons on their own and we never get to see what the "
+        "children in a colleague's class actually do with a new topic, so whatever works in "
+        "one room never reaches the next",
+        "Lesson_Study",
+    ),
+    (
+        "our half-day workshops are all talk: arguments get repeated, nothing is captured, "
+        "and two weeks later everyone remembers a different outcome and no one has picked up "
+        "any of the tasks",
+        "Metaplan",
+    ),
+    (
+        "if a pupil ever went missing on one of our outings, I honestly couldn't say which "
+        "of our precautions would actually prevent it, what would kick in once it had "
+        "happened, or who is supposed to make sure each of those things still works",
+        "Bowtie_Analysis",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -914,6 +961,54 @@ PROBES_DE = [
         "kommen nie vom Fleck. Ich möchte mit dem ganzen Kollegium alles gemeinsam anschauen "
         "und entscheiden, womit wir aufhören",
         "Ecocycle_Planning",
+    ),
+    (
+        "Seit ein paar Wochen stürzen in zwei unserer Filialen die Kassen immer wieder ab, "
+        "in den anderen nie, und jeder hat eine andere Vermutung, woran es liegt",
+        "Kepner_Tregoe_Problem_Analysis",
+    ),
+    (
+        "Bei jeder Mitwirkung zur Umgestaltung des Dorfplatzes melden sich nur die üblichen "
+        "Verbände und ein paar Lautstarke. Der Gemeinderat möchte wissen, was ganz gewöhnliche "
+        "Einwohnerinnen und Einwohner empfehlen würden, wenn sie sich gründlich mit allen "
+        "Argumenten auseinandergesetzt hätten",
+        "Citizens_Assembly",
+    ),
+    (
+        "Die Geschäftsleitung ist von ihrem Lieblingsprojekt begeistert und alle nicken nur. "
+        "Bevor wir den Kredit sprechen, sollen ein paar Leute, die nicht daran beteiligt waren, "
+        "es auseinandernehmen und die Gegenposition so stark wie möglich vertreten",
+        "Red_Team_Review",
+    ),
+    (
+        "Die Geschäftsleitung verkündet jedes Jahr ihre strategischen Schwerpunkte, aber in "
+        "den Abteilungen ändert sich nichts; niemand hat mit uns geklärt, was wir konkret "
+        "beitragen sollen und ob wir das mit unseren Leuten überhaupt schaffen",
+        "Hoshin_Kanri",
+    ),
+    (
+        "Die Neuen im Team fühlen sich von mir im Stich gelassen, und die Erfahrenen ärgern "
+        "sich, weil ich ihnen dauernd über die Schulter schaue. Ich behandle offenbar alle "
+        "gleich, egal wie lange sie schon dabei sind",
+        "Situational_Leadership",
+    ),
+    (
+        "Bei uns bereitet jede Lehrerin ihren Unterricht allein vor. Wir sehen nie, wie die "
+        "Kinder in den Klassen der anderen mit einem neuen Thema tatsächlich zurechtkommen, "
+        "und was in einem Schulzimmer gut funktioniert, kommt nie im nächsten an",
+        "Lesson_Study",
+    ),
+    (
+        "Nach jedem Workshop hat jeder etwas anderes verstanden, festgehalten wird nichts, "
+        "und beim nächsten Treffen fängt die Diskussion wieder von vorne an",
+        "Metaplan",
+    ),
+    (
+        "Wenn bei uns Personendaten von Bürgerinnen und Bürgern bei den Falschen landen, "
+        "wäre das gravierend. Aber niemand kann sagen, was das heute konkret verhindert, "
+        "was wir tun würden, wenn es trotzdem passiert, und wer dafür sorgt, dass diese "
+        "Vorkehrungen auch wirklich funktionieren",
+        "Bowtie_Analysis",
     ),
 ]
 

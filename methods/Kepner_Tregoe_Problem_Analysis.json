@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Kepner_Tregoe_Problem_Analysis",
+  "name": "Kepner-Tregoe Problem Analysis (Is / Is Not)",
+  "category": "analysis",
+  "use_case": "Something that used to work, or still works in some places, has started going wrong only at certain sites, on certain days or with certain items, and nobody knows why; people argue over rival theories or act on the most convincing one. Describing exactly what is affected, where, when and how much, next to comparable cases that could be affected but are not, narrows the explanations to the one cause that fits the whole pattern, and that cause is checked before anyone spends money on a fix.",
+  "strengths": [
+    "replaces a contest of opinions with a written description of the problem that every theory has to fit",
+    "comparing affected and unaffected cases rules out explanations that fit only half the facts",
+    "points attention to what changed, which is often where the cause is found",
+    "tests candidate causes on paper before costly repairs, recalls or reorganisations",
+    "uses facts people already hold, such as logs, dates, locations and batch numbers, rather than new data collection",
+    "the written specification is easy to hand over to a supplier, an auditor or the next shift"
+  ],
+  "weaknesses": [
+    "needs a clear deviation from a known standard; it does not help with design questions or a general sense that things could be better",
+    "only as good as the facts: vague or missing data about where and when the problem occurs leaves the comparison empty",
+    "slower than a quick conversation, and complete specifications can take several sessions plus fact-finding in between",
+    "assumes one cause explains the whole pattern, so it struggles when several causes interact or the problem builds up through feedback",
+    "the full procedure and worksheets are sold through commercial training, and published evidence of its effect is mostly practitioner reports",
+    "a candidate that fits the specification is still a hypothesis until it is confirmed in practice"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://archive.org/details/rationalmanagers0000kepn",
+    "https://www.energy.gov/ehss/articles/doe-ne-std-1004-92",
+    "https://digital.ahrq.gov/health-it-tools-and-resources/evaluation-resources/workflow-assessment-health-it-toolkit/all-workflow-tools/kepner-tregoe-matrix",
+    "https://create-labgest.uniud.it/Handbook/techniques/List/Kepner.php",
+    "https://www.ascd.org/books/analytic-processes-for-school-leaders",
+    "https://en.wikipedia.org/wiki/Benjamin_Tregoe"
+  ],
+  "use_cases": [
+    "For a few weeks our new booking system has been losing entries, but only at some of our sites and not every day, and everyone has a different theory about why.",
+    "Since a council switched to new case-management software, some benefit letters go out with the wrong amount, but only for certain benefit types and only from two of its five teams, and nobody has been able to say why.",
+    "This summer the exam results of one year group fell sharply in mathematics while parallel classes on the same syllabus held steady, and before changing the course the department wants to know which classes, topics and question types dropped and what changed for them alone.",
+    "Customers have started returning one of our products with a leaking seal, but only units made on the night shift since March, although the day shift uses the same machines and materials; the quality team has to find out what differs before deciding on a recall.",
+    "Things worked until recently; now a fault turns up at some of our sites but not at others that work the same way, nobody can tell what sets them apart, and every fix so far has been a guess."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 8
+  },
+  "audience": [
+    "operations and quality teams",
+    "IT service and support teams",
+    "public service managers",
+    "school leadership",
+    "hospital quality and laboratory teams",
+    "incident and problem managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

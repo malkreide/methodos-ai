@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Red_Team_Review",
+  "name": "Red Team Review",
+  "category": "decision-making",
+  "use_case": "A plan or proposal is about to be approved that nobody has seriously questioned, because its authors and the leaders behind it are invested in it and people lower down will not contradict them. People who had no part in writing it are asked to examine its assumptions critically, argue against it as an opponent would and make the case for a different option, so that the decision-maker hears the strongest objections before deciding.",
+  "strengths": [
+    "separates the people who challenge a plan from the people who own it, so criticism does not depend on someone risking their standing",
+    "goes after the assumptions a plan rests on and builds a serious alternative, rather than only listing what could go wrong",
+    "gives a leader a sanctioned channel for dissent that rank and loyalty would otherwise suppress",
+    "laboratory studies of structured dissent (devil's advocacy, dialectical inquiry) found better-quality recommendations than consensus or single-expert approaches",
+    "scales from a half-day challenge session to a review lasting several weeks, depending on what is at stake"
+  ],
+  "weaknesses": [
+    "only works if the reviewers are genuinely independent and a sponsor protects them and is prepared to act on what they find",
+    "costly: it takes capable people away from their own work, often for days",
+    "plan owners can experience it as an attack, and the review can turn adversarial or personal",
+    "can harden into a ritual that makes a flawed plan look tested when it was not",
+    "can be misused by a leader to discredit a plan they already dislike",
+    "the evidence for structured dissent comes mostly from laboratory and classroom studies; field evidence from real organisations is thin"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://www.gov.uk/government/publications/a-guide-to-red-teaming",
+    "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1027158/20210625-Red_Teaming_Handbook.pdf",
+    "https://home.army.mil/hawaii/7517/5978/4767/Red_Team_Handbook.pdf",
+    "https://nsiteam.com/social/the-applied-critical-thinking-handbook-7-0/",
+    "https://doi.org/10.1016/0749-5978(90)90051-A",
+    "https://doi.org/10.2307/255859",
+    "https://doi.org/10.1287/mnsc.15.8.B403"
+  ],
+  "use_cases": [
+    "Our leaders are enthusiastic about their own plan and everyone just nods; before the budget is approved we need outsiders to criticise it honestly and argue the opposing case.",
+    "Nobody dares to object to the plan our leaders love; before it is approved we want people with no stake in it to find its weak points and argue for another option.",
+    "A government department is about to put a major policy or programme to ministers, and the senior official responsible wants a few people who did not draft it to test its evidence and its assumptions and to make the best case for a different course.",
+    "A school district or university has drawn up a plan to merge schools or close a campus, and before the board votes it asks experienced heads from elsewhere to take the case apart and set out the strongest alternative.",
+    "A company's deal team has built the business case for buying a competitor, and the chief executive assigns a separate group to argue against the acquisition and to work out how rivals and customers would really respond."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 20
+  },
+  "audience": [
+    "executive board",
+    "senior leadership",
+    "policy team",
+    "school district leadership",
+    "programme sponsor",
+    "strategy team"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

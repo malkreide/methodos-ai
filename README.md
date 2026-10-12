@@ -206,8 +206,8 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 
 It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
-grows with the number of texts on the shortlist — about 135 for the default
-24-method shortlist of the current 71-method catalog, up from 6 when only one
+grows with the number of texts on the shortlist — about 150 for the default
+27-method shortlist of the current 79-method catalog, up from 6 when only one
 text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
@@ -221,15 +221,17 @@ German probes first, but puts the right method within the top four every time;
 the cross-encoder then ranks all 46 first. Turning reranking off still works
 and still degrades gracefully, but expect noticeably worse ordering.
 
-`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 8, i.e.
-`top_k × 8`). The pinned probes all rank first at 3, but they were written in
+`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 9, i.e.
+`top_k × 9`). The pinned probes all rank first at 3, but they were written in
 each method's own vocabulary, and several were reworded until this reranker
 put them first. Problems phrased the way people type them
 (`scripts/search_queries.json`, measured with `scripts/audit_search.py`) tell
 a different story: at 3 the right method never reached the reranker for 7 of
 36; at 8 top-1 rose from 19 to 23 of 36, in English as in German, for about
 twice the rerank time (1.1 s to 2.1 s a query on a 4-core CPU). Reranking the
-whole catalog did worse again. Re-measure before changing it.
+whole catalog did worse again. At 79 methods, 8 lost one of the 36 again — the
+right method had slipped to the 25th slot — and 9 brought it back. The slot
+count is fixed while the catalog grows, so re-measure as it does.
 
 ## MCP server
 
@@ -285,10 +287,10 @@ can tell the difference rather than guess:
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 142 pinned
+  next step. That floor is measured, not guessed: the weakest of the 158 pinned
   integration probes (English and German) scores 0.380, while questions the
-  catalog genuinely does not cover reach 0.291 at most (*"Rezept für Zürcher
-  Geschnetzeltes"*). Weak matches are still returned — `guidance` is a caveat, never a
+  catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
+  Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a
   filter, because an empty list is what a model fills in from memory.
 
 ## Languages

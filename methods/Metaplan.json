@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Metaplan",
+  "name": "Metaplan (Moderationsmethode)",
+  "category": "facilitation",
+  "use_case": "Our workshops and long meetings go round in circles: points are made, lost and made again, nothing is written down, and afterwards each participant carries home a different version of the result. We want the session steered so that every contribution goes on a card pinned to a board in full view, the group clusters the cards into themes, works on the most pressing ones, and keeps the photographed boards as the shared record.",
+  "strengths": [
+    "everyone writes before anyone argues, so quiet and junior participants are heard on the same footing as the loudest",
+    "the wall of cards is the minutes: what was said and agreed stays visible and can be photographed",
+    "objections are marked on the card they concern instead of being talked away, so disagreement stays on record",
+    "a short speaking-time rule and written contributions keep a large meeting from drifting",
+    "one toolkit covers a whole session, from opening question to a plan of who does what by when"
+  ],
+  "weaknesses": [
+    "needs a trained facilitator who stays neutral on content; done badly it becomes a ritual of coloured cards",
+    "grouping cards under one heading can smooth over real disagreement",
+    "sticking dots shows where interest lies but is not a decision procedure and carries no mandate",
+    "needs space, pinboards and materials; online versions lose much of the shared physical wall",
+    "used to stage participation on a decision already taken, it destroys trust in the method and the convenor",
+    "evidence for it is mainly practitioner and training literature, not controlled studies"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://www.metaplan.com/wp-content/uploads/2021/04/Metaplan_Basiswissen_engl.pdf",
+    "https://www.metaplan.com/wp-content/uploads/2021/04/Metaplan-Chronologie-1.pdf",
+    "https://www.metaplan.com/de/about-us/metaplan-approach/",
+    "https://de.wikipedia.org/wiki/Metaplan",
+    "https://wb-web.de/file/download/3c12bcd4-816b-3f8c-25b7-521357d76848/methoden-kartothek.de-moderationsmethode.pdf",
+    "https://www.uni-koeln.de/hf/konstrukt/didaktik/download/moderation-metaplan.pdf",
+    "https://www.southbound.com.my/Vipp/Vipp_AboutVipp_HowVIPPDeveloped.htm"
+  ],
+  "use_cases": [
+    "We talk for hours in our workshops, but the discussion is never captured as it happens, so after each meeting every participant remembers a different conclusion.",
+    "A school's staff spend a development day on what to improve next year; in the usual plenary conference the debate wanders and the results disappear with the flip chart, so this time every teacher's concerns should end up on the wall, sorted into themes, worked on in small groups, and turned into written next steps.",
+    "Staff from several units of a municipal department meet to sort out recurring friction in a shared service; the discussion keeps jumping between issues, and the minutes afterwards read differently to everyone who was there.",
+    "The active members of a volunteer association spend a weekend retreat on the coming year; past retreats were long, rambling discussions whose outcome nobody could reconstruct afterwards.",
+    "Two teams that keep clashing need to lay their different views side by side in one session, with objections written up next to the points they challenge rather than argued away, so the disagreement is visible before anyone looks for a way forward."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 5,
+    "max_people": 20
+  },
+  "audience": [
+    "workshop facilitators",
+    "team leads and project managers",
+    "school leadership and staff teams",
+    "public-sector working groups",
+    "association boards and volunteers",
+    "adult education trainers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

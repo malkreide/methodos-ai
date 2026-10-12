@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Citizens_Assembly",
+  "name": "Citizens' Assembly",
+  "category": "decision-making",
+  "use_case": "Every time we consult the public on this contested question, the same organised lobbies and the same handful of vocal residents fill the hearings and the written submissions, and we have no idea what an ordinary cross-section of the population would actually recommend once it had time to hear the evidence and the arguments from every side. A group of residents drawn by lot to mirror the population should learn from experts and affected groups, weigh the trade-offs together over several days, and write recommendations to which the council or parliament replies in public.",
+  "strengths": [
+    "selection by lot, balanced by age, gender, place of residence and similar criteria, brings in people who never attend a hearing or write a submission",
+    "organised interests are heard as witnesses but do not sit at the table, which limits their grip on the outcome",
+    "members get the time and material to understand the trade-offs, so the recommendation reflects informed judgement rather than first reactions",
+    "ordinary people who changed their minds after hearing all sides are often more persuasive to the wider public than officials or experts",
+    "a written report with reasons and vote counts gives the commissioning body something concrete to accept, amend or explain why it rejects",
+    "well-documented in practice, from the German planning cells of the 1970s to assemblies in British Columbia, Ireland and Switzerland"
+  ],
+  "weaknesses": [
+    "expensive and slow: recruitment, payment of members, experts, facilitators and documentation take months and a substantial budget",
+    "pointless, and damaging to trust, unless the commissioning body commits beforehand to respond publicly to every recommendation",
+    "random invitation gives only rough representativeness, because those who accept are more interested and available than those who decline",
+    "whoever frames the question and chooses the experts shapes the result; an unbalanced witness list produces a one-sided report",
+    "the recommendations are advisory, and critics argue that a few dozen people drawn by lot lack the mandate of elected representatives",
+    "unsuited to technical questions with one correct answer, and to decisions that must be taken within weeks"
+  ],
+  "complexity_score": 5,
+  "estimated_duration": {
+    "min_minutes": 1440,
+    "max_minutes": 9600
+  },
+  "references": [
+    "https://participedia.net/method/citizens-assembly",
+    "https://participedia.net/method/citizens-jury",
+    "https://de.wikipedia.org/wiki/Planungszelle",
+    "https://de.wikipedia.org/wiki/B%C3%BCrgerrat",
+    "https://en.wikipedia.org/wiki/Citizens%27_assembly",
+    "https://citizensassembly.ie/",
+    "https://www.buergerinnenrat.ch/"
+  ],
+  "use_cases": [
+    "When we ask the public for input, only the usual lobby groups and activists respond; we want informed recommendations from ordinary residents who reflect the whole population and have heard every side of the argument.",
+    "Our town has argued for years about whether to turn the main shopping street into a car-free zone; shopkeepers, motorists' clubs and cycling groups all claim to speak for residents, and the council wants about forty randomly drawn residents to hear all of them and tell it what they would recommend.",
+    "A school board faces a bitter dispute about the future of its school sites over the next fifteen years, with parents of each school campaigning for their own building; it wants a representative group of residents to study the enrolment forecasts and the options and propose a plan for the whole district.",
+    "The regional transport authority must choose between expanding the road network and investing in rail and buses for the next two decades; the public comment periods only ever hear from the same associations, so it wants randomly selected inhabitants from city and countryside to deliberate and give a reasoned recommendation.",
+    "A national government faces a divisive ethical or social question on which parliament is split along party lines, and it wants a body of ordinary citizens chosen by lot to deliberate over several weekends and advise on what should change before any proposal goes to parliament or a referendum."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 12,
+    "max_people": 200
+  },
+  "audience": [
+    "municipal councils and administrations",
+    "parliaments and government departments",
+    "school authorities and education boards",
+    "regional transport and planning authorities",
+    "civic participation officers",
+    "civil-society organisations commissioning deliberation"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}
