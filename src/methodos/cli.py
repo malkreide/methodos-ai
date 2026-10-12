@@ -7,6 +7,7 @@ Subcommands:
     show ID                    Print a method's full Markdown
     feedback ID --rating N     Record outcome
     stats                      Aggregated ratings table
+    goals                      What people did with the console's question back
     --version                  Show version + active providers
 """
 
@@ -393,6 +394,69 @@ def stats_cmd() -> None:
             f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
         )
     console.print(table)
+
+
+FEW_QUESTIONS = 30
+"""Below this many questions asked, `goals` says its numbers are anecdotes."""
+
+
+def _console_goals() -> list[str]:
+    """The goals the console offers, read off its GOALS constant — the console
+    is the one place they are defined, and a goal nobody picks is a finding."""
+    import re
+
+    html = (Path(__file__).parent / "console.html").read_text(encoding="utf-8")
+    block = html.split("const GOALS = [", 1)[1].split("];", 1)[0]
+    return re.findall(r"'(\w+)'", block)
+
+
+def _mean(values: list[int]) -> str:
+    return f"{len(values)} · {sum(values) / len(values):.1f}" if values else "—"
+
+
+@app.command("goals")
+def goals_cmd() -> None:
+    """What people did when the console asked «Was möchten Sie erreichen?».
+
+    Counts only searches made through the HTTP API since it started recording
+    the question; the CLI never asks.
+    """
+    from methodos.feedback import goal_stats
+
+    settings = _load_settings()
+    g = goal_stats(settings.feedback_path)
+    if not g.recorded:
+        console.print("[yellow]No search has recorded the question yet.[/]")
+        return
+
+    share = f" ({g.answered / g.asked:.0%})" if g.asked else ""
+    console.print(
+        f"Asked on {g.asked} of {g.recorded} searches; a goal was picked after "
+        f"{g.answered}{share}. Back to the problem as typed: {g.back}."
+    )
+    if g.asked < FEW_QUESTIONS:
+        console.print(
+            f"[yellow]Fewer than {FEW_QUESTIONS} questions asked — read what follows "
+            "as anecdotes, not rates.[/]"
+        )
+    if g.rows:
+        table = Table(title="Goals picked")
+        table.add_column("Goal", style="cyan")
+        table.add_column("Picked", justify="right")
+        table.add_column("First method changed", justify="right")
+        table.add_column("Refined results rated (n · mean)", justify="right")
+        table.add_column("First before the goal rated (n · mean)", justify="right")
+        for row in sorted(g.rows.values(), key=lambda r: (-r.clicks, r.goal)):
+            table.add_row(
+                row.goal,
+                str(row.clicks),
+                str(row.first_changed),
+                _mean(row.ratings),
+                _mean(row.before),
+            )
+        console.print(table)
+    if never := [x for x in _console_goals() if x not in g.rows]:
+        console.print(f"Never picked: {', '.join(never)}")
 
 
 if __name__ == "__main__":

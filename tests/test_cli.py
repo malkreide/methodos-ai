@@ -516,3 +516,30 @@ def test_settings_errors_survive_rich_markup(monkeypatch):
     res = runner.invoke(app, ["stats"])
     assert res.exit_code == 2
     assert "[local]" in res.stdout, f"markup ate the value: {res.stdout!r}"
+
+
+def test_goals_command_reports_picks_and_never_picked_goals(tmp_path, monkeypatch):
+    from methodos.cli import app
+    from methodos.feedback import log_recommendation
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    root = log_recommendation(query="q", method_ids=["A", "B"], model="m", path=fb, clarify=True)
+    log_recommendation(
+        query="q +", method_ids=["B", "A"], model="m", path=fb, goal="cause", refines=root
+    )
+    res = runner.invoke(app, ["goals"])
+    assert res.exit_code == 0
+    assert "Asked on 1 of 1 searches; a goal was picked after 1 (100%)" in res.stdout
+    assert "anecdotes" in res.stdout, "a handful of questions must not read as a rate"
+    assert "cause" in res.stdout
+    assert "Never picked:" in res.stdout and "conflict" in res.stdout
+
+
+def test_goals_command_without_recorded_questions(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(tmp_path / "fb.jsonl"))
+    res = runner.invoke(app, ["goals"])
+    assert res.exit_code == 0
+    assert "No search has recorded the question yet" in res.stdout
