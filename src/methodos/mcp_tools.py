@@ -18,7 +18,12 @@ Three such narrowings exist here, and each has a field:
   * the reranker may be absent        -> `ranking_basis`
   * vector search never returns empty -> `guidance` when the best match is weak
 
-That last one is the important one. `retrieve()` answers every query with its
+and one judgement the ranking cannot make alone:
+
+  * a problem that names a place and a feeling but no goal ("unser Sommerfest
+    ist jedes Jahr ein Durcheinander") -> `clarify` when the ranking is unsure
+
+The weak-match case is the important one. `retrieve()` answers every query with its
 nearest neighbours, so "how do I fix my bicycle chain" comes back with a
 method at similarity 0.146 and looks exactly like a real hit.
 """
@@ -57,6 +62,33 @@ because a weak match plus a stated caveat is more useful than an empty list
 that a model will fill in from memory.
 """
 
+UNSURE_TOP_SCORE = 0.0
+UNSURE_MARGIN = 1.0
+"""`clarify` is set when the cross-encoder's best score is below UNSURE_TOP_SCORE
+and leads the runner-up by less than UNSURE_MARGIN.
+
+Measured 2026-10-12 on the 79-method catalog against the 55 problems in
+scripts/search_queries.json and search_queries_holdout.json (problems as people
+type them, with their acceptable methods). The rule catches 12 of the 15 whose
+first result is wrong, at the price of 8 of the 40 whose first result is right.
+Of the 158 pinned integration probes it asks on 5, all of them already right.
+Neither score alone separates them: a wrong first place at +0.6 exists, and a
+right one at -2.
+
+What a person does with the question was measured too. Adding the goal they
+would name ("Wir wollen herausfinden, woran es liegt.") to the problem:
+
+                          first place right     a right one in the top 3
+  wrong before (10)         0 -> 5                  4 -> 8
+  right before  (8)         8 -> 4                  8 -> 7
+
+so a goal moves the right method up about as often as it pushes a right one
+down. The console therefore shows the refined results *and* keeps the earlier
+first place: with it, all 8 stay visible and 8 of the 10 gain a right method.
+Two of the 20 flagged problems had no goal on offer that fits. Re-measure with
+the rule and the goals after changing the reranker or the catalog's wording.
+"""
+
 RankingBasis = Literal["cross-encoder", "embedding-similarity"]
 
 _WEAK_MATCH_GUIDANCE = (
@@ -65,6 +97,19 @@ _WEAK_MATCH_GUIDANCE = (
     "the domain, or call `list_methods` to see the {total} methods that exist. "
     "If none of them fit, say so — the catalog is a fixed set of {total} methods "
     "and does not contain everything. Do not name a method that is not in it."
+)
+
+
+_CLARIFY = (
+    "The ranking is unsure: the best match scored {top:+.2f} and leads the next by "
+    "{margin:.2f}. The problem likely names a situation but not what the user wants "
+    "from it. Ask the user what they want to achieve — understand a cause, learn "
+    "from something that keeps going wrong, decide between options, set "
+    "priorities, involve the people concerned, generate ideas, think through "
+    "consequences beforehand, show whether something works, try it small first, "
+    "resolve a conflict — and call `recommend_methods` again with that goal added "
+    "to the problem in one sentence. Keep the current first match in view: a goal "
+    "added to a problem can push a right answer down as well as up."
 )
 
 
@@ -115,6 +160,14 @@ class RecommendResult(BaseModel):
         default=None,
         description="Set when the best match is weak. Names a next step; absence "
         "of it is not a quality guarantee.",
+    )
+    clarify: str | None = Field(
+        default=None,
+        description="Set when the cross-encoder could not separate the top matches "
+        "and none of them scored well: ask the user what they want to achieve "
+        "before relying on the order. Never set together with `guidance`, and "
+        "only when ranking_basis is 'cross-encoder' and at least two methods "
+        "were returned.",
     )
 
 
@@ -252,6 +305,19 @@ def recommend_with_candidates(
             total=total_indexed,
         )
 
+    clarify = None
+    if guidance is None and len(candidates) >= 2:
+        top, second = candidates[0].rerank_score, candidates[1].rerank_score
+        # A weak match is outside the catalog, and asking for the goal will not
+        # bring it in; `guidance` already says what to do there.
+        if (
+            top is not None
+            and second is not None
+            and top < UNSURE_TOP_SCORE
+            and top - second < UNSURE_MARGIN
+        ):
+            clarify = _CLARIFY.format(top=top, margin=top - second)
+
     result = RecommendResult(
         problem=problem,
         returned=len(candidates),
@@ -268,6 +334,7 @@ def recommend_with_candidates(
         ),
         matches=[_to_match(c) for c in candidates],
         guidance=guidance,
+        clarify=clarify,
     )
     return result, candidates
 

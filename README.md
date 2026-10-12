@@ -104,7 +104,7 @@ survives restarts in a named volume.
 | `POST /proposals/extract` | Multipart upload of a PDF, Word (.docx), text, audio or video file → its text, and optionally an LLM draft that prefills the proposal form. Stores nothing; see [Uploads](#uploads) |
 
 `/query` returns the MCP server's payload — `ranking_basis`, `guidance`,
-`total_in_scope` — plus the explanation. It carries the same meaning here, and
+`clarify`, `total_in_scope` — plus the explanation. It carries the same meaning here, and
 [What the results tell you](#what-the-results-tell-you) applies unchanged.
 
 **A failing LLM does not fail a query.** Retrieval and explanation are
@@ -277,7 +277,7 @@ running instance; it stays a CLI command.
 
 A vector search answers *every* query with its nearest neighbours and never
 returns an empty list — so "no results" never appears, and a bad question comes
-back looking exactly like a good one. Three fields exist so the calling model
+back looking exactly like a good one. Four fields exist so the calling model
 can tell the difference rather than guess:
 
 - **`returned` / `total_in_scope` / `total_indexed`** — a caller shown 3 methods
@@ -292,6 +292,16 @@ can tell the difference rather than guess:
   catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
   Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a
   filter, because an empty list is what a model fills in from memory.
+- **`clarify`** — set when the cross-encoder's best score is below 0 and leads
+  the runner-up by less than 1.0: the problem probably names a situation but
+  not what the person wants from it. It asks the caller to find out the goal
+  and search again. On the 55 benchmark problems it catches 12 of the 15 whose
+  first result is wrong and asks needlessly on 8 of the 40 that are right; it
+  fires on 5 of the 158 pinned probes. The console turns it into *«Was möchten
+  Sie erreichen?»* with ten goals to click, each adding one sentence to the
+  problem — no model call. Because a goal pushes a right answer down about as
+  often as it lifts one up, the console keeps the earlier first match on screen
+  when the refined search drops it. The numbers are in `mcp_tools.UNSURE_TOP_SCORE`.
 
 ## Languages
 
@@ -408,8 +418,13 @@ problem before search does not close that gap: `scripts/verify_rewrite.py` with
 9/15 on the restatement alone and 29/40 and 9/15 on problem plus restatement,
 against 33/40 and 7/15 as typed. The restatements were accurate but alike — many
 became "the person wants to understand why this keeps happening" — and lost the
-words that told methods apart. Not built in. The acceptable answers in both
-files are judgement; review them as you would a method.
+words that told methods apart. Not built in. What is built in instead is a
+question back: when the ranking is unsure, the console asks for the goal
+(`clarify`, above). With the goal a person would pick, 5 of 10 wrong first
+places became right and 8 of 10 got a right method into the top three — but 4
+of 8 right first places were pushed down, which is why the earlier first match
+stays visible. The acceptable answers in both files are judgement; review them
+as you would a method.
 
 **The upload draft has been run once per case, not measured.**
 `scripts/verify_draft.py` runs five fixed cases through the real draft path.
