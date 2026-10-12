@@ -206,8 +206,8 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 
 It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
-grows with the number of texts on the shortlist — about 150 for the default
-27-method shortlist of the current 79-method catalog, up from 6 when only one
+grows with the number of texts on the shortlist — about 155 for the default
+27-method shortlist of the current 87-method catalog, up from 6 when only one
 text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
@@ -287,7 +287,7 @@ can tell the difference rather than guess:
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 158 pinned
+  next step. That floor is measured, not guessed: the weakest of the 174 pinned
   integration probes (English and German) scores 0.380, while questions the
   catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
   Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a
