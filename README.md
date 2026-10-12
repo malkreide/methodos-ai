@@ -402,11 +402,14 @@ voice of the person who has it. What is left fails on how vaguely the problem is
 put rather than on German: *"Unser Sommerfest ist jedes Jahr ein Durcheinander"*
 misses in English too, while *"the same things go wrong every year; we want to
 learn from it"* finds After Action Review. A problem that names its need is
-found; one that only names a place and a feeling is not. Whether a model
-restating the problem first would close that gap is what
-`scripts/verify_rewrite.py` measures; it needs a key and has not been run yet.
-The acceptable answers
-in both files are judgement; review them as you would a method.
+found; one that only names a place and a feeling is not. A model restating the
+problem before search does not close that gap: `scripts/verify_rewrite.py` with
+`anthropic/claude-opus-5` on the 71-method catalog (2026-10-12) scored 25/40 and
+9/15 on the restatement alone and 29/40 and 9/15 on problem plus restatement,
+against 33/40 and 7/15 as typed. The restatements were accurate but alike — many
+became "the person wants to understand why this keeps happening" — and lost the
+words that told methods apart. Not built in. The acceptable answers in both
+files are judgement; review them as you would a method.
 
 **The upload draft has been run once per case, not measured.**
 `scripts/verify_draft.py` runs five fixed cases through the real draft path.

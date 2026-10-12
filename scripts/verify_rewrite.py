@@ -26,6 +26,22 @@ The prompt never sees the catalog, and a restatement that names a catalog
 method anyway is flagged: a rewrite that guesses the answer measures the
 model's knowledge of management methods, not whether search improves.
 
+Measured 2026-10-12 with anthropic/claude-opus-5, 71 methods, overfetch 8:
+
+                         raw          rewrite      both
+  search_queries (40)    33 (38)      25 (32)      29 (35)     top-1 (top-3)
+  holdout (15)            7 (10)       9 (10)       9 (13)
+  4.8-5.5 s per restatement; no restatement named a method.
+
+On the 40 the rewrite loses, which is partly built in: their use cases were
+written against the problems as typed. On the 15 it gains two first places,
+within what one wording more or less moves. The restatements were faithful
+but alike — about a third became "wants to understand why this keeps
+happening", for problems as different as intranet forms and a school merger —
+and lost the nouns that separated the right method (intranet forms went to the
+Eisenhower Matrix instead of Card Sorting). Eight came back in German despite
+the prompt. Not worth a model call before every search.
+
 Needs a reachable LLM (METHODOS_MODEL / --model), an ingested index and the
 `local` extra.
 
