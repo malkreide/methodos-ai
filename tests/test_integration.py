@@ -560,6 +560,12 @@ PROBES = [
         "happened, or who is supposed to make sure each of those things still works",
         "Bowtie_Analysis",
     ),
+    (
+        "we want to launch a paid tutoring service and everyone we talk to thinks it's a "
+        "great idea, but nobody has signed up yet; before we hire tutors and build the "
+        "website, how can we see whether people will really book it",
+        "Build_Measure_Learn",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1009,6 +1015,12 @@ PROBES_DE = [
         "was wir tun würden, wenn es trotzdem passiert, und wer dafür sorgt, dass diese "
         "Vorkehrungen auch wirklich funktionieren",
         "Bowtie_Analysis",
+    ),
+    (
+        "Wir planen einen bezahlten Nachhilfedienst und alle finden die Idee toll, aber bisher "
+        "hat sich niemand angemeldet. Bevor wir Leute einstellen und eine Website bauen, "
+        "möchten wir wissen, ob überhaupt jemand das tatsächlich buchen würde",
+        "Build_Measure_Learn",
     ),
 ]
 
