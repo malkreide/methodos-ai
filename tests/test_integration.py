@@ -583,6 +583,11 @@ PROBES = [
         "see no point in it, don't want it, or just don't manage it in their daily work",
         "ADKAR_Model",
     ),
+    (
+        "my presentation to the board went badly yesterday and I keep going back over it by "
+        "myself, feeling awful, without learning anything from it",
+        "Gibbs_Reflective_Cycle",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1057,6 +1062,12 @@ PROBES_DE = [
         "nicht, ob sie den Nutzen nicht sehen, keine Lust darauf haben oder im Alltag "
         "damit einfach nicht zurechtkommen",
         "ADKAR_Model",
+    ),
+    (
+        "Nach einem missglückten Hausbesuch geht mir die Situation nicht aus dem Kopf; ich "
+        "möchte für mich allein sauber durchdenken, was passiert ist und was ich beim "
+        "nächsten Mal anders mache",
+        "Gibbs_Reflective_Cycle",
     ),
 ]
 
