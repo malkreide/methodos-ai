@@ -588,6 +588,11 @@ PROBES = [
         "myself, feeling awful, without learning anything from it",
         "Gibbs_Reflective_Cycle",
     ),
+    (
+        "our council signed up to net zero by 2045, but each year's plan just tweaks what "
+        "we did last year, and that will never add up to the target",
+        "Backcasting",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1068,6 +1073,12 @@ PROBES_DE = [
         "möchte für mich allein sauber durchdenken, was passiert ist und was ich beim "
         "nächsten Mal anders mache",
         "Gibbs_Reflective_Cycle",
+    ),
+    (
+        "Wir haben beschlossen, dass unsere Schulhäuser ab 2040 ohne Öl und Gas auskommen. "
+        "Unsere Planung verbessert aber jedes Jahr nur ein bisschen das Bestehende, und "
+        "damit erreichen wir das Ziel nie",
+        "Backcasting",
     ),
 ]
 
