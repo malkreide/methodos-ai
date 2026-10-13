@@ -49,6 +49,27 @@ treat a gain on the main file that the holdout does not share as tuning to the
 test. Once a holdout entry has been used to shape a text, move it to the main
 file and write a fresh one.
 
+Both of those files were still written by the people who write the use cases.
+`scripts/search_queries_holdout_log.json` is not: it holds problems people
+actually typed into the console, taken from `feedback.jsonl` with
+`scripts/holdout_from_log.py` in two steps, with a person in between.
+
+```bash
+python scripts/holdout_from_log.py extract /data/feedback.jsonl /tmp/draft.json
+# a person edits the draft: anonymises, fills acceptable and goal, sets keep
+python scripts/holdout_from_log.py add /tmp/draft.json
+python scripts/audit_search.py --queries scripts/search_queries_holdout_log.json
+```
+
+The repository is public and the log is not, so the person reviewing rewrites
+every problem until nobody can be recognised; `add` refuses e-mail addresses,
+phone numbers, links and salutations with a name, and asks for
+`names_checked: true` where it suspects a name. They fill `acceptable` from the
+catalog, not from the ranking — the draft deliberately leaves out what search
+returned, or the benchmark would measure the ranking against itself. The same
+rule applies as for the other holdout: never write a use case while looking at
+it.
+
 What has worked: a short use case in the voice of the person with the problem
 ("We keep starting new projects but rarely finish or stop any…"). The longer
 third-person scenarios that most entries carry describe the method's setting
