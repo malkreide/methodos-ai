@@ -5,7 +5,8 @@
       "RACI_Matrix",
       "DACI_Matrix",
       "Team_Charter"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Bei der Übergabe zwischen Schulleitung und Sekretariat geht immer etwas verloren",
@@ -13,7 +14,8 @@
       "RACI_Matrix",
       "Value_Stream_Mapping",
       "Customer_Journey_Map"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Wir haben zu viele Projekte gleichzeitig und keines wird fertig",
@@ -24,13 +26,15 @@
       "OKR",
       "MoSCoW_Method",
       "RICE_Scoring"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Ich ertrinke in Aufgaben und weiss nicht, was ich zuerst erledigen soll",
     "acceptable": [
       "Eisenhower_Matrix"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Unser Elternabend läuft immer gleich schief",
@@ -40,7 +44,8 @@
       "World_Cafe",
       "Fishbowl",
       "One_Two_Four_All"
-    ]
+    ],
+    "goal": "learn"
   },
   {
     "query": "Die Eltern sollen bei der neuen Schulhausordnung mitreden, es kommen etwa 150 Leute",
@@ -48,7 +53,8 @@
       "World_Cafe",
       "Open_Space_Technology",
       "Fishbowl"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Das Kollegium ist skeptisch gegenüber der Reform",
@@ -58,38 +64,44 @@
       "Bridges_Transition_Model",
       "Appreciative_Inquiry",
       "Stakeholder_Map"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Nach der Zusammenlegung zweier Schulen trauern viele Lehrpersonen dem alten Schulhaus nach",
     "acceptable": [
       "Bridges_Transition_Model"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Eine Lehrerin kommt mit einem schwierigen Schüler nicht mehr weiter",
     "acceptable": [
       "Collegial_Case_Consultation"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Ich muss einer Mitarbeiterin sagen, dass ihr Ton in Sitzungen verletzend wirkt",
     "acceptable": [
       "SBI_Feedback"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Mobbing in der Klasse, die Klasse ist in zwei Lager gespalten",
     "acceptable": [
       "Restorative_Circle"
-    ]
+    ],
+    "goal": "conflict"
   },
   {
     "query": "Warum ist der Server ausgefallen? Wir wollen die eigentliche Ursache finden",
     "acceptable": [
       "Five_Whys",
       "Ishikawa_Diagram"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Die Zahl der Lehrabbrüche steigt und niemand weiss genau warum",
@@ -98,26 +110,30 @@
       "Ishikawa_Diagram",
       "Five_Whys",
       "Causal_Loop_Diagram"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Wir müssen entscheiden, welche von drei Schulverwaltungs-Softwares wir kaufen",
     "acceptable": [
       "Weighted_Decision_Matrix",
       "Cost_Benefit_Analysis"
-    ]
+    ],
+    "goal": "decide"
   },
   {
     "query": "Lohnt sich der Bau einer eigenen Mensa finanziell?",
     "acceptable": [
       "Cost_Benefit_Analysis"
-    ]
+    ],
+    "goal": "decide"
   },
   {
     "query": "Wir wollen eine neue Hausaufgabenregel zuerst in einer Klasse ausprobieren",
     "acceptable": [
       "PDCA_Cycle"
-    ]
+    ],
+    "goal": "pilot"
   },
   {
     "query": "Bevor wir das neue Zeugnisformular einführen: was könnte alles schiefgehen?",
@@ -126,14 +142,16 @@
       "FMEA",
       "Risk_Matrix",
       "Futures_Wheel"
-    ]
+    ],
+    "goal": "anticipate"
   },
   {
     "query": "Welche Folgen hat die Einführung von Tablets für Unterricht, Eltern und Hauswartung?",
     "acceptable": [
       "Futures_Wheel",
       "Stakeholder_Map"
-    ]
+    ],
+    "goal": "anticipate"
   },
   {
     "query": "Wir brauchen eine Strategie für die Schule der nächsten zehn Jahre, die Zukunft ist sehr ungewiss",
@@ -141,7 +159,8 @@
       "Scenario_Planning",
       "PESTEL_Analysis",
       "SWOT"
-    ]
+    ],
+    "goal": "anticipate"
   },
   {
     "query": "Woran sehen wir, ob unser Förderprogramm überhaupt wirkt?",
@@ -149,20 +168,23 @@
       "Theory_of_Change",
       "Most_Significant_Change",
       "Balanced_Scorecard"
-    ]
+    ],
+    "goal": "impact"
   },
   {
     "query": "Das neu zusammengesetzte Team weiss nicht, wie es zusammenarbeiten will",
     "acceptable": [
       "Team_Charter"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Die Schulleitung entscheidet alles selbst, das Team möchte mehr Mitsprache",
     "acceptable": [
       "Delegation_Poker",
       "Consent_Decision_Making"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Wir kommen in der Steuergruppe nie zu einem Entscheid",
@@ -171,7 +193,8 @@
       "Nominal_Group_Technique",
       "Six_Thinking_Hats",
       "Weighted_Decision_Matrix"
-    ]
+    ],
+    "goal": "decide"
   },
   {
     "query": "Wir brauchen viele neue Ideen für die Gestaltung des Pausenplatzes",
@@ -179,7 +202,8 @@
       "Brainwriting_635",
       "SCAMPER",
       "Morphological_Box"
-    ]
+    ],
+    "goal": "ideas"
   },
   {
     "query": "Die Anmeldung für die Tagesschule ist für Eltern viel zu kompliziert",
@@ -187,64 +211,74 @@
       "Customer_Journey_Map",
       "Double_Diamond",
       "Value_Stream_Mapping"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Das Kollegium muss in einer Stunde ein neues Konzept von 80 Seiten durcharbeiten",
     "acceptable": [
       "Jigsaw_Method"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Mein Team bringt mir jedes Problem und erwartet, dass ich die Lösung vorgebe",
     "acceptable": [
       "GROW_Model",
       "Delegation_Poker"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Wir bekommen viele verschiedene Beschwerden von Eltern, wo sollen wir ansetzen?",
     "acceptable": [
       "Pareto_Analysis"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Wir arbeiten seit Jahren zusammen und kennen uns persönlich trotzdem kaum",
     "acceptable": [
       "Johari_Window"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Die Themen unserer Teamsitzung gibt immer die Chefin vor, die anderen bringen ihre Anliegen nie ein",
     "acceptable": [
       "Lean_Coffee"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Was sind unsere Stärken und Schwächen als Volksschule im Vergleich zu Privatschulen?",
     "acceptable": [
       "SWOT",
       "Benchmarking"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Die Lehrpersonen finden die Formulare im Intranet nicht",
     "acceptable": [
       "Card_Sorting"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Der Eröffnungstermin des neuen Schulhauses steht fest, wie planen wir die vielen abhängigen Arbeiten?",
     "acceptable": [
       "Critical_Path_Method"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Wer könnte unser Projekt unterstützen und wer könnte es blockieren?",
     "acceptable": [
       "Stakeholder_Map",
       "Force_Field_Analysis"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "The IT team gets urgent requests from every department and cannot do them all",
@@ -253,7 +287,8 @@
       "RICE_Scoring",
       "MoSCoW_Method",
       "Eisenhower_Matrix"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "The same problem keeps coming back no matter what we try",
@@ -261,7 +296,8 @@
       "Causal_Loop_Diagram",
       "Five_Whys",
       "Ishikawa_Diagram"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Am Elternabend redet nur die Lehrerin, die Eltern hören bloss zu",
@@ -270,7 +306,8 @@
       "One_Two_Four_All",
       "Fishbowl",
       "Open_Space_Technology"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Nach jedem Elternabend sind alle unzufrieden, aber niemand weiss genau warum",
@@ -279,7 +316,8 @@
       "Start_Stop_Continue",
       "Five_Whys",
       "Sailboat_Retrospective"
-    ]
+    ],
+    "goal": "learn"
   },
   {
     "query": "Zum Elternabend kommen immer weniger Eltern",
@@ -288,7 +326,8 @@
       "Customer_Journey_Map",
       "Five_Whys",
       "Jobs_To_Be_Done"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Am Elternabend eskaliert jedes Mal die Diskussion über die Hausaufgaben",
@@ -297,6 +336,7 @@
       "Principled_Negotiation",
       "Consent_Decision_Making",
       "Six_Thinking_Hats"
-    ]
+    ],
+    "goal": "conflict"
   }
 ]

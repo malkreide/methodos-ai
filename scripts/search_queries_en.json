@@ -1,0 +1,342 @@
+[
+  {
+    "query": "Who is responsible for what in this project?",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ],
+    "goal": null
+  },
+  {
+    "query": "Something always gets lost in the handover between the head teacher and the school office",
+    "acceptable": [
+      "RACI_Matrix",
+      "Value_Stream_Mapping",
+      "Customer_Journey_Map"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "We have too many projects at once and none of them gets finished",
+    "acceptable": [
+      "Ecocycle_Planning",
+      "Cost_of_Delay_WSJF",
+      "Eisenhower_Matrix",
+      "OKR",
+      "MoSCoW_Method",
+      "RICE_Scoring"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "I am drowning in tasks and don't know what to do first",
+    "acceptable": [
+      "Eisenhower_Matrix"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "Our parents' evening always goes wrong in the same way",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "World_Cafe",
+      "Fishbowl",
+      "One_Two_Four_All"
+    ],
+    "goal": "learn"
+  },
+  {
+    "query": "Parents should have a say in the new school rules, about 150 people will come",
+    "acceptable": [
+      "World_Cafe",
+      "Open_Space_Technology",
+      "Fishbowl"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "The teaching staff are sceptical about the reform",
+    "acceptable": [
+      "Kotter_Eight_Steps",
+      "Force_Field_Analysis",
+      "Bridges_Transition_Model",
+      "Appreciative_Inquiry",
+      "Stakeholder_Map"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "After two schools merged, many teachers are mourning their old school building",
+    "acceptable": [
+      "Bridges_Transition_Model"
+    ],
+    "goal": null
+  },
+  {
+    "query": "A teacher has run out of ideas with a difficult pupil",
+    "acceptable": [
+      "Collegial_Case_Consultation"
+    ],
+    "goal": null
+  },
+  {
+    "query": "I have to tell a colleague that her tone in meetings comes across as hurtful",
+    "acceptable": [
+      "SBI_Feedback"
+    ],
+    "goal": null
+  },
+  {
+    "query": "Bullying in the class, the class is split into two camps",
+    "acceptable": [
+      "Restorative_Circle"
+    ],
+    "goal": "conflict"
+  },
+  {
+    "query": "Why did the server go down? We want to find the real cause",
+    "acceptable": [
+      "Five_Whys",
+      "Ishikawa_Diagram"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "The number of apprenticeship dropouts is rising and nobody knows exactly why",
+    "acceptable": [
+      "Issue_Tree",
+      "Ishikawa_Diagram",
+      "Five_Whys",
+      "Causal_Loop_Diagram"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "We have to decide which of three school administration software packages to buy",
+    "acceptable": [
+      "Weighted_Decision_Matrix",
+      "Cost_Benefit_Analysis"
+    ],
+    "goal": "decide"
+  },
+  {
+    "query": "Is building our own school canteen financially worthwhile?",
+    "acceptable": [
+      "Cost_Benefit_Analysis"
+    ],
+    "goal": "decide"
+  },
+  {
+    "query": "We want to try out a new homework rule in one class first",
+    "acceptable": [
+      "PDCA_Cycle"
+    ],
+    "goal": "pilot"
+  },
+  {
+    "query": "Before we introduce the new report card form: what could go wrong?",
+    "acceptable": [
+      "Pre_Mortem",
+      "FMEA",
+      "Risk_Matrix",
+      "Futures_Wheel"
+    ],
+    "goal": "anticipate"
+  },
+  {
+    "query": "What consequences will introducing tablets have for teaching, parents and the caretakers?",
+    "acceptable": [
+      "Futures_Wheel",
+      "Stakeholder_Map"
+    ],
+    "goal": "anticipate"
+  },
+  {
+    "query": "We need a strategy for the school for the next ten years, the future is very uncertain",
+    "acceptable": [
+      "Scenario_Planning",
+      "PESTEL_Analysis",
+      "SWOT"
+    ],
+    "goal": "anticipate"
+  },
+  {
+    "query": "How can we tell whether our support programme actually works?",
+    "acceptable": [
+      "Theory_of_Change",
+      "Most_Significant_Change",
+      "Balanced_Scorecard"
+    ],
+    "goal": "impact"
+  },
+  {
+    "query": "The newly assembled team doesn't know how it wants to work together",
+    "acceptable": [
+      "Team_Charter"
+    ],
+    "goal": null
+  },
+  {
+    "query": "The school management decides everything itself, the team wants more say",
+    "acceptable": [
+      "Delegation_Poker",
+      "Consent_Decision_Making"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "Our steering group never reaches a decision",
+    "acceptable": [
+      "Consent_Decision_Making",
+      "Nominal_Group_Technique",
+      "Six_Thinking_Hats",
+      "Weighted_Decision_Matrix"
+    ],
+    "goal": "decide"
+  },
+  {
+    "query": "We need lots of new ideas for redesigning the playground",
+    "acceptable": [
+      "Brainwriting_635",
+      "SCAMPER",
+      "Morphological_Box"
+    ],
+    "goal": "ideas"
+  },
+  {
+    "query": "Registering for the day school is far too complicated for parents",
+    "acceptable": [
+      "Customer_Journey_Map",
+      "Double_Diamond",
+      "Value_Stream_Mapping"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "The staff have to work through a new 80-page concept in one hour",
+    "acceptable": [
+      "Jigsaw_Method"
+    ],
+    "goal": null
+  },
+  {
+    "query": "My team brings me every problem and expects me to provide the solution",
+    "acceptable": [
+      "GROW_Model",
+      "Delegation_Poker"
+    ],
+    "goal": null
+  },
+  {
+    "query": "We get many different complaints from parents, where should we start?",
+    "acceptable": [
+      "Pareto_Analysis"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "We have worked together for years and still hardly know each other personally",
+    "acceptable": [
+      "Johari_Window"
+    ],
+    "goal": null
+  },
+  {
+    "query": "The boss always sets the topics of our team meeting, the others never bring up their concerns",
+    "acceptable": [
+      "Lean_Coffee"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "What are our strengths and weaknesses as a public school compared with private schools?",
+    "acceptable": [
+      "SWOT",
+      "Benchmarking"
+    ],
+    "goal": null
+  },
+  {
+    "query": "Teachers can't find the forms on the intranet",
+    "acceptable": [
+      "Card_Sorting"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "The opening date of the new school building is fixed, how do we plan the many dependent tasks?",
+    "acceptable": [
+      "Critical_Path_Method"
+    ],
+    "goal": null
+  },
+  {
+    "query": "Who could support our project and who could block it?",
+    "acceptable": [
+      "Stakeholder_Map",
+      "Force_Field_Analysis"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "The IT team gets urgent requests from every department and cannot do them all",
+    "acceptable": [
+      "Cost_of_Delay_WSJF",
+      "RICE_Scoring",
+      "MoSCoW_Method",
+      "Eisenhower_Matrix"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "The same problem keeps coming back no matter what we try",
+    "acceptable": [
+      "Causal_Loop_Diagram",
+      "Five_Whys",
+      "Ishikawa_Diagram"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "At parents' evening only the teacher talks, the parents just listen",
+    "acceptable": [
+      "World_Cafe",
+      "One_Two_Four_All",
+      "Fishbowl",
+      "Open_Space_Technology"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "After every parents' evening everyone is dissatisfied, but nobody knows exactly why",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Five_Whys",
+      "Sailboat_Retrospective"
+    ],
+    "goal": "learn"
+  },
+  {
+    "query": "Fewer and fewer parents come to parents' evening",
+    "acceptable": [
+      "Brainwriting_635",
+      "Customer_Journey_Map",
+      "Five_Whys",
+      "Jobs_To_Be_Done"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "At every parents' evening the discussion about homework escalates",
+    "acceptable": [
+      "Fishbowl",
+      "Principled_Negotiation",
+      "Consent_Decision_Making",
+      "Six_Thinking_Hats"
+    ],
+    "goal": "conflict"
+  }
+]

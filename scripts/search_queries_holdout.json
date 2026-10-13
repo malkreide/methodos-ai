@@ -5,7 +5,8 @@
       "RACI_Matrix",
       "DACI_Matrix",
       "Team_Charter"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "nobody knows who owns which task in our project",
@@ -13,7 +14,8 @@
       "RACI_Matrix",
       "DACI_Matrix",
       "Team_Charter"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Wir starten ständig neue Projekte, aber nichts wird abgeschlossen",
@@ -22,13 +24,15 @@
       "Cost_of_Delay_WSJF",
       "OKR",
       "Eisenhower_Matrix"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Meine Pendenzenliste wird jeden Tag länger und alles scheint dringend",
     "acceptable": [
       "Eisenhower_Matrix"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Am grossen Elternanlass sollen alle miteinander ins Gespräch kommen, nicht nur zuhören",
@@ -36,7 +40,8 @@
       "World_Cafe",
       "Open_Space_Technology",
       "Fishbowl"
-    ]
+    ],
+    "goal": "involve"
   },
   {
     "query": "Die Notenabgabe ist schiefgelaufen, wir wollen verstehen, woran es wirklich lag",
@@ -44,26 +49,30 @@
       "Five_Whys",
       "Ishikawa_Diagram",
       "After_Action_Review"
-    ]
+    ],
+    "goal": "cause"
   },
   {
     "query": "Rechnet sich eine eigene Photovoltaikanlage auf dem Schulhausdach?",
     "acceptable": [
       "Cost_Benefit_Analysis"
-    ]
+    ],
+    "goal": "decide"
   },
   {
     "query": "Wir möchten ein neues Pausenkonzept zuerst testen, bevor wir es an allen Schulen einführen",
     "acceptable": [
       "PDCA_Cycle"
-    ]
+    ],
+    "goal": "pilot"
   },
   {
     "query": "Was bewirkt die Umstellung auf Blockzeiten für Familien, Betreuung und Lehrpersonen?",
     "acceptable": [
       "Futures_Wheel",
       "Stakeholder_Map"
-    ]
+    ],
+    "goal": "anticipate"
   },
   {
     "query": "Wie können wir nachweisen, dass unser Lernförderangebot etwas bringt?",
@@ -71,7 +80,8 @@
       "Theory_of_Change",
       "Most_Significant_Change",
       "Balanced_Scorecard"
-    ]
+    ],
+    "goal": "impact"
   },
   {
     "query": "Im Gremium wird jede Entscheidung auf die nächste Sitzung vertagt",
@@ -81,20 +91,23 @@
       "Six_Thinking_Hats",
       "Weighted_Decision_Matrix",
       "DACI_Matrix"
-    ]
+    ],
+    "goal": "decide"
   },
   {
     "query": "Im Sekretariat gehen viele unterschiedliche Reklamationen ein, welche sollen wir zuerst angehen?",
     "acceptable": [
       "Pareto_Analysis"
-    ]
+    ],
+    "goal": "prioritise"
   },
   {
     "query": "Wo steht unsere Schule: was können wir gut und wo sind wir schwach?",
     "acceptable": [
       "SWOT",
       "Benchmarking"
-    ]
+    ],
+    "goal": null
   },
   {
     "query": "Der Besuchstag an unserer Schule endet jedes Jahr im Frust",
@@ -102,7 +115,8 @@
       "After_Action_Review",
       "Start_Stop_Continue",
       "Sailboat_Retrospective"
-    ]
+    ],
+    "goal": "learn"
   },
   {
     "query": "Unser Sommerfest ist jedes Jahr ein Durcheinander und wir lernen nichts daraus",
@@ -110,6 +124,7 @@
       "After_Action_Review",
       "Start_Stop_Continue",
       "Sailboat_Retrospective"
-    ]
+    ],
+    "goal": "learn"
   }
 ]
