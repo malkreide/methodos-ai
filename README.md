@@ -313,6 +313,19 @@ can tell the difference rather than guess:
   its numbers are anecdotes. Only searches made through the API since the log
   recorded the question count; the CLI never asks.
 
+  To read the report before real data exists, `scripts/sample_goal_log.py`
+  writes an invented log of the same shape (every search marked
+  `model: "sample-data"`; it refuses to touch the real log):
+
+  ```bash
+  python scripts/sample_goal_log.py /tmp/sample.jsonl
+  METHODOS_FEEDBACK_PATH=/tmp/sample.jsonl methodos goals
+  ```
+
+  Even its 60 questions leave one to five picks per goal, and the means stray
+  far from the profiles the script drew them from — a fair preview of how
+  little a few weeks of real use will say per goal.
+
 ## Languages
 
 The catalog is written in English; questions can be asked in any of the ~50
