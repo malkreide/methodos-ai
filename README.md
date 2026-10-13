@@ -322,15 +322,15 @@ can tell the difference rather than guess:
   METHODOS_FEEDBACK_PATH=/tmp/sample.jsonl methodos goals
   ```
 
-  Even its 60 questions leave one to five picks per goal, and the means stray
-  far from the profiles the script drew them from — a fair preview of how
-  little a few weeks of real use will say per goal. The report therefore puts
-  every mean of fewer than 10 ratings in parentheses, `(3 · 2.3)`, and says
-  below the table that those are too few to tell whether a goal helps. With
-  `--questions 600` the six frequent goals clear that line and every one of
-  them shows the right direction — rated better or worse after the goal than
-  before, as its profile has it — though some means still sit up to half a
-  point off; the three rare ones stay in parentheses.
+  Even its 60 questions leave each goal a handful of picks and a few ratings,
+  and the means stray up to a point from the profiles the script drew them
+  from — a fair preview of how little a few weeks of real use will say per
+  goal. The report therefore puts every mean of fewer than 10 ratings in
+  parentheses, `(3 · 3.7)`, and says below the table that those are too few
+  to tell whether a goal helps. With `--questions 600` the three most frequent
+  goals clear that line in both columns and each shows the direction its
+  profile has, better after the goal than before; the rarest stay in
+  parentheses throughout.
 
 ## Languages
 

@@ -406,7 +406,7 @@ Ratings run 1-5 and scatter by about one point, so a mean of ten is still
 uncertain by roughly ±0.6 either way: enough to see a goal that clearly helps
 or hurts, not to rank two close ones. The invented log from
 scripts/sample_goal_log.py shows why a line is needed at all: with 60
-questions, goals get one to five ratings and their means land up to a point
+questions, goals get a few ratings each and their means land up to a point
 away from the profile they were drawn from."""
 
 

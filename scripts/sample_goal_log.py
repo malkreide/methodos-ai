@@ -181,9 +181,10 @@ def build(questions: int, seed: int) -> list[str]:
         # Most searches are never asked: about two for every one that is.
         for _ in range(2):
             case = rng.choice(cases)
-            qid = w.search(case["query"], methods(), clarify=False)
+            ids = methods()
+            qid = w.search(case["query"], ids, clarify=False)
             if rng.random() < 0.3:
-                w.rate(qid, rng.choice(case["acceptable"]), 4.0)
+                w.rate(qid, rng.choice(ids), 4.0)
 
         case = rng.choice(cases)
         root_ids = methods()
