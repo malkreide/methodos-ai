@@ -302,7 +302,10 @@ can tell the difference rather than guess:
   Sie erreichen?»* with ten goals to click, each adding one sentence to the
   problem — no model call. Because a goal pushes a right answer down about as
   often as it lifts one up, the console keeps the earlier first match on screen
-  when the refined search drops it. The numbers are in `mcp_tools.UNSURE_TOP_SCORE`.
+  when the refined search drops it. The numbers are in `mcp_tools.UNSURE_TOP_SCORE`;
+  `scripts/verify_goals.py` re-measures them in German and English, on the
+  benchmark problems and their English translations (`search_queries_en.json`,
+  `search_queries_holdout_en.json`), each labelled with the goal a person would pick.
 
   Those numbers come from goals picked by whoever ran the benchmark. Whether
   the people with the problem pick the same ones, and whether it helps them,

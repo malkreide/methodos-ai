@@ -87,6 +87,22 @@ down. The console therefore shows the refined results *and* keeps the earlier
 first place: with it, all 8 stay visible and 8 of the 10 gain a right method.
 Two of the 20 flagged problems had no goal on offer that fits. Re-measure with
 the rule and the goals after changing the reranker or the catalog's wording.
+
+Re-measured 2026-10-13 on 87 methods with scripts/verify_goals.py, which keeps
+each problem's goal in the query files, and for the first time in English, on
+the same 55 problems translated:
+
+                       asked on            first place right   a right one shown
+                       wrong    right      wrong    right      wrong    right
+  German sentences     10/15    7/40       0 -> 5/9 7 -> 3/7   4 -> 8/9 7 -> 6/7
+  English sentences     9/15    5/40       0 -> 4/8 5 -> 4/5   3 -> 5/8 5 -> 4/5
+
+With the earlier first match kept on screen every right answer stays visible in
+both languages. The English sentences lift about as many first places as the
+German ones but fewer into view; where they fail, they mostly fail on problems
+English search already misses badly (an unrelated top three that a goal does
+not move). A difference of one or two problems is within what one wording more
+or less moves.
 """
 
 RankingBasis = Literal["cross-encoder", "embedding-similarity"]

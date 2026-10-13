@@ -490,7 +490,8 @@ let lastQuery = null;
 
 // The goals offered when the server sets `clarify` (see mcp_tools.UNSURE_TOP_SCORE).
 // A goal's sentence is appended to the problem as typed and the search runs
-// again; the German sentences are the ones measured there — reword one, re-measure.
+// again; both languages' sentences are measured there and by
+// scripts/verify_goals.py — reword one, re-measure.
 const GOALS = ['cause', 'learn', 'decide', 'prioritise', 'involve', 'ideas',
                'anticipate', 'impact', 'pilot', 'conflict'];
 let base = null;  // {problem, top, queryId}: the search as typed, before any goal
