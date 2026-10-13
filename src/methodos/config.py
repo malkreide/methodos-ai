@@ -77,10 +77,16 @@ class Settings(BaseSettings):
     """Multiplied by overfetch_factor to form Chroma's n_results, which
     rejects zero and negatives with an opaque TypeError — so bound it here."""
 
-    overfetch_factor: int = Field(default=9, ge=1)
+    overfetch_factor: int = Field(default=10, ge=1)
     """Chroma returns top_k * this, then the shortlist is truncated to top_k.
     Raising it gives a reranker more to work with, at linear cost in rerank
     time; without a reranker it changes nothing but the query size.
+
+    10 since 2026-10-12, at 87 methods: with 9 (27 of 87) the holdout fell
+    from 10/15 to 9/15 top-3 while search_queries.json held at 33/40 and
+    38/40; taking out any one of four of the eight new methods restored it, so
+    a right method had been crowded out of the shortlist again. At 10 both
+    files are back to main's numbers for about 8 % more rerank time.
 
     9 since 2026-10-12, at 79 methods: with 8 (24 of 79) Causal Loop Diagram
     fell to embedding rank 25 for "Die Zahl der Lehrabbrüche steigt und niemand

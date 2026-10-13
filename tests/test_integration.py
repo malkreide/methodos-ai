@@ -560,6 +560,51 @@ PROBES = [
         "happened, or who is supposed to make sure each of those things still works",
         "Bowtie_Analysis",
     ),
+    (
+        "we want to launch a paid tutoring service and everyone we talk to thinks it's a "
+        "great idea, but nobody has signed up yet; before we hire tutors and build the "
+        "website, how can we see whether people will really book it",
+        "Build_Measure_Learn",
+    ),
+    (
+        "every time I sit down to write, a message or a colleague pulls me away, and after "
+        "a whole day I have two paragraphs",
+        "Timeboxing",
+    ),
+    (
+        "most of the students who qualify for the free study grant never apply, even "
+        "though the form takes ten minutes and we have advertised it everywhere; more "
+        "posters won't help",
+        "Choice_Architecture",
+    ),
+    (
+        "we rolled out new scheduling software and ran workshops for everyone, yet months "
+        "later most staff still keep their own spreadsheets, and I can't tell whether they "
+        "see no point in it, don't want it, or just don't manage it in their daily work",
+        "ADKAR_Model",
+    ),
+    (
+        "my presentation to the board went badly yesterday and I keep going back over it by "
+        "myself, feeling awful, without learning anything from it",
+        "Gibbs_Reflective_Cycle",
+    ),
+    (
+        "our council signed up to net zero by 2045, but each year's plan just tweaks what "
+        "we did last year, and that will never add up to the target",
+        "Backcasting",
+    ),
+    (
+        "in my yearly review my boss and I agreed I would improve communication with "
+        "clients, and now we disagree about whether I did, because it was never written "
+        "down what that would actually mean",
+        "SMART_Goals",
+    ),
+    (
+        "we lose good people every year and all we ever hear when they go is 'personal "
+        "reasons'; I want to find out what really drives them away and what makes the "
+        "others hold on",
+        "Exit_and_Stay_Interviews",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1009,6 +1054,55 @@ PROBES_DE = [
         "was wir tun würden, wenn es trotzdem passiert, und wer dafür sorgt, dass diese "
         "Vorkehrungen auch wirklich funktionieren",
         "Bowtie_Analysis",
+    ),
+    (
+        "Wir planen einen bezahlten Nachhilfedienst und alle finden die Idee toll, aber bisher "
+        "hat sich niemand angemeldet. Bevor wir Leute einstellen und eine Website bauen, "
+        "möchten wir wissen, ob überhaupt jemand das tatsächlich buchen würde",
+        "Build_Measure_Learn",
+    ),
+    (
+        "Ständig reissen mich Mails und kurze Fragen aus der Arbeit, nach einem ganzen Tag "
+        "habe ich am Bericht zwei Absätze geschrieben",
+        "Timeboxing",
+    ),
+    (
+        "Viele Steuerpflichtige reichen ihre Steuererklärung erst nach der zweiten Mahnung "
+        "ein, obwohl ihnen das nur Ärger bringt; noch mehr Mahnungen wollen wir nicht "
+        "verschicken, sondern herausfinden, was sie abhält, und im Kleinen ausprobieren, "
+        "was hilft",
+        "Choice_Architecture",
+    ),
+    (
+        "Seit einem Jahr haben wir das neue Ticketsystem und alle waren in der Schulung, "
+        "aber viele Mitarbeitende erledigen ihre Anfragen weiterhin per Mail. Ich weiss "
+        "nicht, ob sie den Nutzen nicht sehen, keine Lust darauf haben oder im Alltag "
+        "damit einfach nicht zurechtkommen",
+        "ADKAR_Model",
+    ),
+    (
+        "Nach einem missglückten Hausbesuch geht mir die Situation nicht aus dem Kopf; ich "
+        "möchte für mich allein sauber durchdenken, was passiert ist und was ich beim "
+        "nächsten Mal anders mache",
+        "Gibbs_Reflective_Cycle",
+    ),
+    (
+        "Wir haben beschlossen, dass unsere Schulhäuser ab 2040 ohne Öl und Gas auskommen. "
+        "Unsere Planung verbessert aber jedes Jahr nur ein bisschen das Bestehende, und "
+        "damit erreichen wir das Ziel nie",
+        "Backcasting",
+    ),
+    (
+        "Im Mitarbeitergespräch haben meine Chefin und ich abgemacht, dass ich die "
+        "Kommunikation mit den Kunden verbessere; jetzt sind wir uns uneinig, ob mir das "
+        "gelungen ist, weil nie festgehalten wurde, was das konkret heissen soll",
+        "SMART_Goals",
+    ),
+    (
+        "In unserer Pflegeabteilung kündigen jedes Jahr erfahrene Leute, und beim Abschied "
+        "heisst es nur «persönliche Gründe». Wir wollen endlich wissen, was sie wirklich "
+        "vertreibt und was die anderen noch hält",
+        "Exit_and_Stay_Interviews",
     ),
 ]
 
