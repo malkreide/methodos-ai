@@ -543,3 +543,33 @@ def test_goals_command_without_recorded_questions(tmp_path, monkeypatch):
     res = runner.invoke(app, ["goals"])
     assert res.exit_code == 0
     assert "No search has recorded the question yet" in res.stdout
+
+
+def test_goals_marks_means_from_few_ratings():
+    """A mean of three ratings must not read like a mean of thirty."""
+    from methodos.cli import FEW_RATINGS, _mean
+
+    assert _mean([]) == "—"
+    assert _mean([4] * (FEW_RATINGS - 1)) == f"({FEW_RATINGS - 1} · 4.0)"
+    assert _mean([4] * FEW_RATINGS) == f"{FEW_RATINGS} · 4.0"
+
+
+@pytest.mark.parametrize("ratings, marked", [(3, True), (10, False)])
+def test_goals_explains_the_parentheses_only_when_it_uses_them(
+    tmp_path, monkeypatch, ratings, marked
+):
+    from methodos.cli import app
+    from methodos.feedback import log_rating, log_recommendation
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    root = log_recommendation(query="q", method_ids=["A", "B"], model="m", path=fb, clarify=True)
+    qid = log_recommendation(
+        query="q +", method_ids=["B", "A"], model="m", path=fb, goal="cause", refines=root
+    )
+    for _ in range(ratings):
+        log_rating(method_id="B", rating=4, note=None, query_id=qid, path=fb)
+    res = runner.invoke(app, ["goals"], env={"COLUMNS": "200"})
+    assert res.exit_code == 0
+    assert (f"({ratings} · 4.0)" in res.stdout) is marked
+    assert ("too few to say" in res.stdout) is marked

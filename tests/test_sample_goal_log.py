@@ -56,6 +56,17 @@ def test_same_seed_same_log_other_seed_other_log():
     assert sample_goal_log.build(20, 7) != sample_goal_log.build(20, 8)
 
 
+def test_every_rating_is_of_a_method_its_search_returned(tmp_path):
+    """As in the console: a rating names a method shown for that query_id —
+    otherwise `methodos stats` would count ratings with no recommendation."""
+    events = [json.loads(x) for x in _write(tmp_path).read_text(encoding="utf-8").splitlines()]
+    shown = {e["query_id"]: e["method_ids"] for e in events if e["event"] == "recommendation"}
+    ratings = [e for e in events if e["event"] == "rating"]
+    assert ratings
+    for r in ratings:
+        assert r["method_id"] in shown[r["query_id"]], r
+
+
 def test_every_search_is_marked_as_sample_data(tmp_path):
     for line in _write(tmp_path, questions=10).read_text(encoding="utf-8").splitlines():
         event = json.loads(line)

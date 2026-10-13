@@ -399,6 +399,16 @@ def stats_cmd() -> None:
 FEW_QUESTIONS = 30
 """Below this many questions asked, `goals` says its numbers are anecdotes."""
 
+FEW_RATINGS = 10
+"""Below this many ratings, `goals` puts a mean in parentheses.
+
+Ratings run 1-5 and scatter by about one point, so a mean of ten is still
+uncertain by roughly ±0.6 either way: enough to see a goal that clearly helps
+or hurts, not to rank two close ones. The invented log from
+scripts/sample_goal_log.py shows why a line is needed at all: with 60
+questions, goals get a few ratings each and their means land up to a point
+away from the profile they were drawn from."""
+
 
 def _console_goals() -> list[str]:
     """The goals the console offers, read off its GOALS constant — the console
@@ -411,7 +421,10 @@ def _console_goals() -> list[str]:
 
 
 def _mean(values: list[int]) -> str:
-    return f"{len(values)} · {sum(values) / len(values):.1f}" if values else "—"
+    if not values:
+        return "—"
+    shown = f"{len(values)} · {sum(values) / len(values):.1f}"
+    return f"({shown})" if len(values) < FEW_RATINGS else shown
 
 
 @app.command("goals")
@@ -455,6 +468,10 @@ def goals_cmd() -> None:
                 _mean(row.before),
             )
         console.print(table)
+        if any(0 < len(v) < FEW_RATINGS for r in g.rows.values() for v in (r.ratings, r.before)):
+            console.print(
+                f"(…) fewer than {FEW_RATINGS} ratings: too few to say whether that goal helps."
+            )
     if never := [x for x in _console_goals() if x not in g.rows]:
         console.print(f"Never picked: {', '.join(never)}")
 
