@@ -495,6 +495,7 @@ const GOALS = ['cause', 'learn', 'decide', 'prioritise', 'involve', 'ideas',
                'anticipate', 'impact', 'pilot', 'conflict'];
 let base = null;  // {problem, top, queryId}: the search as typed, before any goal
 let goal = null;  // the goal added to it, or null
+let refining = false;  // this search came from a goal button, not from typing
 let lastProposal = null;
 let lastHealth = null;
 let lastExtract = null;
@@ -660,11 +661,14 @@ async function runQuery() {
         category: $('category').value || null,
         explain: $('explain').checked,
         rerank: $('rerank').checked,
+        // Logged with the query so `methodos goals` can tell what people picked.
+        goal,
+        refines: refining ? base.queryId : null,
       }),
     });
     lastQueryId = data.query_id;
     lastQuery = data;
-    if (!goal) Object.assign(base, { top: data.matches[0] ?? null, queryId: data.query_id });
+    if (!refining) Object.assign(base, { top: data.matches[0] ?? null, queryId: data.query_id });
     render(data);
   } catch (e) {
     $('out').innerHTML = `<div class="note err">${esc(e.message)}</div>`;
@@ -678,13 +682,15 @@ $('form').addEventListener('submit', (ev) => {
   ev.preventDefault();
   base = { problem: $('problem').value.trim(), top: null, queryId: null };
   goal = null;
+  refining = false;
   runQuery();
 });
 
 $('out').addEventListener('click', (ev) => {
   const btn = ev.target.closest('button[data-goal]');
-  if (!btn || !base || $('go').disabled) return;
+  if (!btn || !base?.queryId || $('go').disabled) return;
   goal = btn.dataset.goal || null;
+  refining = true;
   // Visible and editable in the box, and logged as asked: the query log then
   // shows which goals people reach for.
   $('problem').value = goal ? `${base.problem} ${t(`goal_${goal}_q`)}` : base.problem;

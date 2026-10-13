@@ -161,6 +161,19 @@ class QueryRequest(BaseModel):
         "METHODOS_RERANK_PROVIDER. true fails loudly when the reranker is "
         "unavailable, exactly as `--rerank` does.",
     )
+    goal: str | None = Field(
+        default=None,
+        pattern=r"^[a-z]{2,20}$",
+        description="Which goal the person picked after `clarify`, as the console "
+        "names it. Logged for `methodos goals` and nothing else: the search reads "
+        "`problem`, which already carries the goal's sentence.",
+    )
+    refines: str | None = Field(
+        default=None,
+        pattern=r"^[0-9A-HJKMNP-TV-Z]{26}$",
+        description="query_id of the search this one builds on: with `goal`, a "
+        "goal was added to it; without, the person went back to it as typed.",
+    )
 
 
 class QueryResponse(RecommendResult):
@@ -492,6 +505,9 @@ def query(req: QueryRequest, providers: ProvidersDep) -> QueryResponse:
         method_ids=[c.id for c in candidates],
         model=s.model,
         path=s.feedback_path,
+        clarify=result.clarify is not None,
+        goal=req.goal,
+        refines=req.refines,
     )
 
     explanation: str | None = None

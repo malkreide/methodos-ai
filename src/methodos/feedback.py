@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import sys
 from collections.abc import Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
@@ -36,6 +36,12 @@ class RecommendationEvent(BaseModel):
     query: str
     method_ids: list[str]
     model: str
+    # The console's question back (`clarify`) and what people did with it; see
+    # goal_stats(). None on `clarify` means not recorded — lines written before
+    # these fields existed, and the CLI, which never asks — not "not asked".
+    clarify: bool | None = None
+    goal: str | None = None
+    refines: str | None = None
 
 
 class RatingEvent(BaseModel):
@@ -73,8 +79,15 @@ def log_recommendation(
     method_ids: list[str],
     model: str,
     path: Path,
+    clarify: bool | None = None,
+    goal: str | None = None,
+    refines: str | None = None,
 ) -> str:
-    """Append a recommendation event. Returns the freshly-minted query_id (ULID)."""
+    """Append a recommendation event. Returns the freshly-minted query_id (ULID).
+
+    `refines` is the query_id of the search this one builds on, when the person
+    picked a goal (`goal`) or went back to the problem as typed (no `goal`).
+    """
     qid = str(ULID())
     ev = RecommendationEvent(
         timestamp=_now_iso(),
@@ -82,6 +95,9 @@ def log_recommendation(
         query=query,
         method_ids=method_ids,
         model=model,
+        clarify=clarify,
+        goal=goal,
+        refines=refines,
     )
     _append_line(path, ev)
     return qid
@@ -159,4 +175,85 @@ def stats(path: Path) -> dict[str, MethodStats]:
             s.method_id = ev.method_id
             s.rating_count += 1
             s.rating_sum += ev.rating
+    return out
+
+
+@dataclass
+class GoalRow:
+    """What happened after one goal was picked, over every time it was."""
+
+    goal: str
+    clicks: int = 0
+    first_changed: int = 0
+    """Refined searches whose first method differs from the one before the goal."""
+    ratings: list[int] = field(default_factory=list)
+    """Ratings of the refined results."""
+    before: list[int] = field(default_factory=list)
+    """Ratings of the first method before the goal, given on the original search."""
+
+
+@dataclass
+class GoalStats:
+    recorded: int = 0
+    """Searches that recorded whether the question was asked."""
+    asked: int = 0
+    """Searches typed by a person that got the question."""
+    answered: int = 0
+    """Of those, how many were followed by at least one goal."""
+    back: int = 0
+    """Times someone went from a goal back to the problem as typed."""
+    rows: dict[str, GoalRow] = field(default_factory=dict)
+
+
+def goal_stats(path: Path) -> GoalStats:
+    """How people answered "Was möchten Sie erreichen?", read off the log.
+
+    Built to check the measurement behind mcp_tools.UNSURE_TOP_SCORE in use:
+    there a goal lifted a right method about as often as it pushed one down,
+    with goals picked by whoever ran the benchmark. Here the people who had
+    the problem pick them, and their ratings say whether it helped.
+    """
+    searches: dict[str, RecommendationEvent] = {}
+    ratings: list[RatingEvent] = []
+    for ev in read_events(path):
+        if isinstance(ev, RecommendationEvent):
+            searches[ev.query_id] = ev
+        else:
+            ratings.append(ev)
+
+    out = GoalStats()
+    answered: set[str] = set()
+    for ev in searches.values():
+        if ev.clarify is not None:
+            out.recorded += 1
+        if ev.refines is None:
+            out.asked += bool(ev.clarify)
+            continue
+        if ev.goal is None:
+            out.back += 1
+            continue
+        root = searches.get(ev.refines)
+        row = out.rows.setdefault(ev.goal, GoalRow(goal=ev.goal))
+        row.clicks += 1
+        answered.add(ev.refines)
+        if root and root.method_ids and ev.method_ids:
+            row.first_changed += root.method_ids[0] != ev.method_ids[0]
+        row.ratings += [r.rating for r in ratings if r.query_id == ev.query_id]
+    out.answered = sum(1 for qid in answered if qid in searches and searches[qid].clarify)
+
+    # The first method before a goal, rated on the original search: either
+    # before the click, or on the card the console keeps on screen after it.
+    firsts = {
+        qid: searches[qid].method_ids[0]
+        for qid in answered
+        if qid in searches and searches[qid].method_ids
+    }
+    goals_of: dict[str, set[str]] = {}
+    for ev in searches.values():
+        if ev.refines in firsts and ev.goal:
+            goals_of.setdefault(ev.refines, set()).add(ev.goal)
+    for r in ratings:
+        if r.query_id in firsts and r.method_id == firsts[r.query_id]:
+            for g in goals_of[r.query_id]:
+                out.rows[g].before.append(r.rating)
     return out

@@ -395,6 +395,32 @@ def test_query_carries_the_clarify_field_the_console_reads(env):
     assert "data.clarify" in env["client"].get("/").text
 
 
+def test_query_logs_the_goal_and_the_search_it_refines(env):
+    client = env["client"]
+    first = client.post("/query", json={"problem": "alpha", "explain": False}).json()
+    client.post(
+        "/query",
+        json={
+            "problem": "alpha We want to find out what is causing it.",
+            "explain": False,
+            "goal": "cause",
+            "refines": first["query_id"],
+        },
+    )
+    lines = env["settings"].feedback_path.read_text(encoding="utf-8").splitlines()
+    a, b = (json.loads(x) for x in lines)
+    assert isinstance(a["clarify"], bool), "the API always knows whether it asked"
+    assert (a["goal"], a["refines"]) == (None, None)
+    assert (b["goal"], b["refines"]) == ("cause", first["query_id"])
+
+
+@pytest.mark.parametrize("extra", [{"goal": "Ursache verstehen"}, {"refines": "not-a-query-id"}])
+def test_query_rejects_a_malformed_goal_or_reference(env, extra):
+    """Free text here would be a second unannounced place for personal data."""
+    body = {"problem": "alpha", "explain": False, **extra}
+    assert env["client"].post("/query", json=body).status_code == 422
+
+
 # --- /proposals/extract -------------------------------------------------------
 
 _DRAFT_JSON = json.dumps(

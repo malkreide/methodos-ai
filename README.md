@@ -10,7 +10,7 @@ problem stated in natural language.
   with two files; no Python required.
 - **`schemas/method_schema.json`** — generated from a Pydantic model; CI
   enforces freshness.
-- **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`.
+- **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`, `goals`.
 - **HTTP API + browser console** — `docker compose up`, then ask, read and rate
   at `http://localhost:8000`. See [Deploy](#deploy-http--docker).
 - **MCP server** — the catalog as three read-only tools for Claude Desktop or
@@ -303,6 +303,15 @@ can tell the difference rather than guess:
   often as it lifts one up, the console keeps the earlier first match on screen
   when the refined search drops it. The numbers are in `mcp_tools.UNSURE_TOP_SCORE`.
 
+  Those numbers come from goals picked by whoever ran the benchmark. Whether
+  the people with the problem pick the same ones, and whether it helps them,
+  `methodos goals` reads off `feedback.jsonl`: how often the question was
+  asked and answered, which goals were picked and which never were, how often
+  a goal changed the first method, and the ratings after the goal set against
+  the rating of the first method before it. Under 30 questions asked it says
+  its numbers are anecdotes. Only searches made through the API since the log
+  recorded the question count; the CLI never asks.
+
 ## Languages
 
 The catalog is written in English; questions can be asked in any of the ~50
@@ -341,6 +350,7 @@ What leaves the user's hands, and where it goes:
 | Data | Stored | Sent elsewhere |
 |---|---|---|
 | The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
+| A goal picked after the question back (`/query`) | in `feedback.jsonl`: the goal's key and the id of the search it refines — no free text | no |
 | Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
 | Method proposal (`/proposals`) | verbatim in `proposals.jsonl`, with a timestamp | no — the GitHub link is opened, and submitted, by the person themselves |
 | Uploaded file (`/proposals/extract`) | no — a temporary file for the length of the request, then deleted | no — audio and video are transcribed locally |
