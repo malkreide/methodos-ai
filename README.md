@@ -373,6 +373,7 @@ What leaves the user's hands, and where it goes:
 | Data | Stored | Sent elsewhere |
 |---|---|---|
 | The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
+| A problem copied into `search_queries_holdout_log.json` | only after a person rewrote it so nobody can be recognised and set `keep` — see `scripts/holdout_from_log.py` | it is in the public repository from then on |
 | A goal picked after the question back (`/query`) | in `feedback.jsonl`: the goal's key and the id of the search it refines — no free text | no |
 | Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
 | Method proposal (`/proposals`) | verbatim in `proposals.jsonl`, with a timestamp | no — the GitHub link is opened, and submitted, by the person themselves |
