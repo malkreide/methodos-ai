@@ -435,7 +435,12 @@ phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* — each 
 the methods that would be a right answer. On 2026-10-11: top-1 33/40 and top-3
 38/40 on `scripts/search_queries.json`, which use cases were written against,
 and 7/15 and 10/15 on `scripts/search_queries_holdout.json`, which they were
-not; the second pair is the honest one. Neither the language nor the models
+not; the second pair is the honest one. The same problems in English
+(`search_queries_en.json`, `search_queries_holdout_en.json`) scored 32/40 and
+8/15 on 87 methods (2026-10-13); three problem-voice lines (Eisenhower Matrix,
+Pre-Mortem, Ishikawa Diagram) and one reworded Morphological Box line that
+named "support programme" brought that to 36/40 in English and 34/40 in German
+— and left both holdouts where they were, 8/15 and 7/15. Neither the language nor the models
 were the main cause: the same 36 in English scored the same, a much larger
 multilingual reranker (`BAAI/bge-reranker-v2-m3`) scored no better at fifteen
 times the time, and a larger embedding model

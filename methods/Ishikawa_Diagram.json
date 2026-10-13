@@ -32,7 +32,8 @@
     "A hospital ward has logged several medication errors this year, and prescribing software, pharmacy supply, staffing and ward layout could each be contributing; the safety group wants every factor laid out before it audits anything.",
     "Attendance at a secondary school has fallen, and staff suggest transport, family circumstances, the timetable and how absences are followed up; the leadership team wants all of these explanations on one page before choosing what data to gather.",
     "About one new account in ten fails to complete onboarding in our software product, and the cause could sit in data quality, integrations, documentation or the handover to support.",
-    "Most planning applications reaching a council arrive incomplete, and the form design, the online guidance, the validation checks and applicants' own circumstances might all play a part."
+    "Most planning applications reaching a council arrive incomplete, and the form design, the online guidance, the validation checks and applicants' own circumstances might all play a part.",
+    "More and more people are dropping out or not finishing, and we do not know why; every colleague has a different theory, and we want to list all the possible causes before deciding what to change."
   ],
   "contexts": [
     "business",
@@ -45,5 +46,5 @@
     "remote"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-09-27"
+  "last_reviewed": "2026-10-13"
 }

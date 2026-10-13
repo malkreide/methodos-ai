@@ -32,7 +32,8 @@
     "A university student juggling coursework deadlines, a part-time job and exam revision wants to see which tasks actually move their studies forward and which can be dropped.",
     "A newly promoted manager still does much of their former hands-on work and must decide which requests to pass to colleagues and which only they can handle.",
     "Back from two weeks of leave to an overflowing inbox, a professional needs a quick way to decide what to answer today, what to book time for later, and what to ignore.",
-    "I have far more on my plate than I can do, everything feels urgent, and I spend my days reacting to whatever lands on my desk instead of the work that matters most."
+    "I have far more on my plate than I can do, everything feels urgent, and I spend my days reacting to whatever lands on my desk instead of the work that matters most.",
+    "I am swamped with work and keep losing time on small things, because I cannot tell which tasks really need me first and which could wait or go to someone else."
   ],
   "contexts": [
     "business",
@@ -44,5 +45,5 @@
     "async"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-11"
+  "last_reviewed": "2026-10-13"
 }

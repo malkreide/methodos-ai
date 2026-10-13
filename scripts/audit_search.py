@@ -40,6 +40,16 @@ fixed it and three of four sharper variants (40 problems now: 33/40, 38/40),
 but not the two holdout problems added with it (another school event, other
 words): 7/15 either way. The line matches "parents' evening", not the problem.
 
+2026-10-13, 87 methods, overfetch 10, now also in English (--queries
+scripts/search_queries_en.json; the same problems translated): 32/40 English,
+33/40 German. Three problem-voice lines (Eisenhower Matrix, Pre-Mortem,
+Ishikawa Diagram) and a Morphological Box line reworded so it no longer named
+"support programme": 36/40 English, 34/40 German, nothing lost — and both
+holdouts unchanged at 8/15 (English) and 7/15 (German). Lines tried for RACI,
+Benchmarking and Fishbowl did not win against texts sharing the problem's
+nouns ("head teacher", "parents' evening"), and the RACI one took a German
+root-cause problem, so they were dropped.
+
 Usage:
     python scripts/audit_search.py                    # summary, one line per query
     python scripts/audit_search.py --diagnose         # + where each miss sits (slow)

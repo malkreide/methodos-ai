@@ -33,7 +33,8 @@
     "A public agency is weeks away from rolling out a new benefit scheme or digital service to citizens and wants to learn, before go-live, how it could end up failing the people it is meant to serve.",
     "A school district or school leadership team is about to spend a one-off funding grant on a multi-year programme and wants to find out now why it might have produced no improvement by the time the money runs out.",
     "A health or community programme was designed by specialists, and before it starts the staff who will deliver it and the people who will receive it should say why they think it will not work in practice.",
-    "An executive board is on the verge of a large investment or acquisition that every member appears to back, and the chair wants the private doubts on the table before the money is committed."
+    "An executive board is on the verge of a large investment or acquisition that every member appears to back, and the chair wants the private doubts on the table before the money is committed.",
+    "Before we introduce a change, we want to picture it a year from now having gone badly wrong and work out what most likely caused it, while the plan can still be altered."
   ],
   "contexts": [
     "business",
@@ -46,5 +47,5 @@
     "remote"
   ],
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-09-28"
+  "last_reviewed": "2026-10-13"
 }
