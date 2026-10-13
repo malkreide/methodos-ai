@@ -39,6 +39,10 @@ where it is; the draft holds only problem texts, never timestamps or ids.
 Usage:
     python scripts/holdout_from_log.py extract data/feedback.jsonl /tmp/draft.json
     python scripts/holdout_from_log.py add /tmp/draft.json
+    python scripts/holdout_from_log.py add /tmp/draft.json --target /tmp/other.json
+
+Entries marked `practice: true` (scripts/sample_holdout_draft.py) are refused
+for the real holdout file; send them elsewhere with --target.
 
     docker compose run --rm --entrypoint python cli \\
         scripts/holdout_from_log.py extract /data/feedback.jsonl /data/holdout_draft.json
@@ -172,6 +176,14 @@ def add(draft: Path, target: Path = TARGET) -> tuple[int, list[str]]:
     entries = [e for e in json.loads(draft.read_text(encoding="utf-8")) if e.get("keep")]
     ids, goals = _catalog_ids(), _console_goals()
     errors = [f"{e.get('query', '?')!r}: {why}" for e in entries for why in check(e, ids, goals)]
+    # Invented problems from scripts/sample_holdout_draft.py may be added to a
+    # file of their own, never to the real holdout.
+    if target.resolve() == TARGET.resolve():
+        errors += [
+            f"{e.get('query', '?')!r}: a practice entry — add it with --target elsewhere"
+            for e in entries
+            if e.get("practice")
+        ]
     if errors:
         return 0, errors
 
@@ -206,6 +218,12 @@ def main() -> int:
     ex.add_argument("draft", type=Path)
     ad = sub.add_parser("add", help="reviewed draft -> search_queries_holdout_log.json")
     ad.add_argument("draft", type=Path)
+    ad.add_argument(
+        "--target",
+        type=Path,
+        default=TARGET,
+        help="default: scripts/search_queries_holdout_log.json",
+    )
     args = ap.parse_args()
 
     if args.cmd == "extract":
@@ -228,11 +246,13 @@ def main() -> int:
         print("Review it — anonymise, fill acceptable and goal, set keep — then run add.")
         return 0
 
-    n, errors = add(args.draft)
+    n, errors = add(args.draft, args.target)
     for line in errors:
         print(f"refused {line}", file=sys.stderr)
     if n:
-        print(f"added {n} problem(s) to {TARGET.relative_to(REPO)}")
+        print(f"added {n} problem(s) to {args.target}")
+    elif not errors:
+        print("nothing added: no entry in the draft is marked keep: true")
     return 1 if errors and not n else 0
 
 

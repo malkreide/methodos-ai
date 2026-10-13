@@ -64,7 +64,11 @@ python scripts/audit_search.py --queries scripts/search_queries_holdout_log.json
 The repository is public and the log is not, so the person reviewing rewrites
 every problem until nobody can be recognised; `add` refuses e-mail addresses,
 phone numbers, links and salutations with a name, and asks for
-`names_checked: true` where it suspects a name. They fill `acceptable` from the
+`names_checked: true` where it suspects a name — often a false alarm, since
+German strings nouns together («seit Wochen Streit»). To practise the review
+before real searches exist, `scripts/sample_holdout_draft.py` writes a draft of
+twelve invented problems (and with `--solved`, one way of solving it); `add`
+only takes those with `--target` pointing elsewhere. They fill `acceptable` from the
 catalog, not from the ranking — the draft deliberately leaves out what search
 returned, or the benchmark would measure the ranking against itself. The same
 rule applies as for the other holdout: never write a use case while looking at
