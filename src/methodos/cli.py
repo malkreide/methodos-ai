@@ -16,7 +16,7 @@ import json as _json
 import sys
 from enum import StrEnum
 from pathlib import Path
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 import typer
 from pydantic import ValidationError
@@ -31,7 +31,6 @@ from methodos.config import Settings
 from methodos.providers import EmbeddingProvider, make_embedding, make_llm, make_reranker
 
 if TYPE_CHECKING:
-    from methodos.feedback import Aspect
     from methodos.models import Method
     from methodos.search import Candidate
 
@@ -372,7 +371,7 @@ def feedback(
         note=note,
         query_id=query_id,
         path=settings.feedback_path,
-        aspect=cast("Aspect", aspect.value),
+        aspect=aspect.value,
     )
     console.print(f"[green]Recorded:[/] {method_id} rated {rating}/5 ({aspect.value})")
 
