@@ -43,6 +43,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from methodos import __version__, mcp_tools
 from methodos.config import Settings
+from methodos.feedback import Aspect
 from methodos.mcp_tools import CatalogResult, MethodDetail, MethodNotFoundError, RecommendResult
 from methodos.providers import (
     EmbeddingProvider,
@@ -198,6 +199,11 @@ class FeedbackRequest(BaseModel):
     query_id: str | None = Field(
         default=None, description="The query_id from /query, to tie the rating to a query."
     )
+    aspect: Aspect = Field(
+        default="application",
+        description="'recommendation' rates whether the method fit the problem; "
+        "'application' rates whether it helped once applied. Reported separately.",
+    )
 
 
 class FeedbackResponse(BaseModel):
@@ -211,7 +217,11 @@ class MethodStatsEntry(BaseModel):
     recommendation_count: int
     rating_count: int
     avg_rating: float | None = Field(
-        description="null until the method has been rated at least once."
+        description="Application ratings only. null until rated at least once."
+    )
+    recommendation_rating_count: int
+    avg_recommendation_rating: float | None = Field(
+        description="Whether the recommendation fit the problem. null until rated."
     )
 
 
@@ -400,6 +410,7 @@ def feedback(req: FeedbackRequest, providers: ProvidersDep) -> FeedbackResponse:
         note=req.note,
         query_id=req.query_id,
         path=providers.settings.feedback_path,
+        aspect=req.aspect,
     )
     return FeedbackResponse(recorded=True, method_id=req.method_id, rating=req.rating)
 
@@ -416,6 +427,10 @@ def stats(providers: ProvidersDep) -> StatsResponse:
                 recommendation_count=st.recommendation_count,
                 rating_count=st.rating_count,
                 avg_rating=st.avg_rating if st.rating_count else None,
+                recommendation_rating_count=st.recommendation_rating_count,
+                avg_recommendation_rating=(
+                    st.avg_recommendation_rating if st.recommendation_rating_count else None
+                ),
             )
             for mid, st in sorted(read_stats(providers.settings.feedback_path).items())
         ]

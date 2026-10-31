@@ -220,6 +220,27 @@ def test_feedback_round_trip_reaches_stats(env):
     assert entries["Beta"]["avg_rating"] is None
 
 
+def test_recommendation_feedback_is_reported_separately(env):
+    client = env["client"]
+    qid = client.post("/query", json={"problem": "alpha"}).json()["query_id"]
+    res = client.post(
+        "/feedback",
+        json={"method_id": "Alpha", "rating": 4, "query_id": qid, "aspect": "recommendation"},
+    )
+    assert res.status_code == 200
+    entry = {x["method_id"]: x for x in client.get("/stats").json()["entries"]}["Alpha"]
+    assert entry["recommendation_rating_count"] == 1
+    assert entry["avg_recommendation_rating"] == 4.0
+    assert entry["rating_count"] == 0 and entry["avg_rating"] is None
+
+
+def test_unknown_aspect_is_rejected(env):
+    res = env["client"].post(
+        "/feedback", json={"method_id": "Alpha", "rating": 3, "aspect": "vibes"}
+    )
+    assert res.status_code == 422
+
+
 def test_feedback_rejects_an_id_that_is_not_in_the_catalog(env):
     """Over HTTP nobody watches the shell, so a typo must not accumulate silently."""
     res = env["client"].post("/feedback", json={"method_id": "Typo", "rating": 4})

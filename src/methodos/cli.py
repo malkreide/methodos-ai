@@ -5,7 +5,7 @@ Subcommands:
     query "<problem>"          Recommend methods (with LLM explanation)
     list                       Browse the catalog
     show ID                    Print a method's full Markdown
-    feedback ID --rating N     Record outcome
+    feedback ID --rating N     Rate a method's fit (--aspect recommendation) or outcome
     stats                      Aggregated ratings table
     --version                  Show version + active providers
 """
@@ -14,8 +14,9 @@ from __future__ import annotations
 
 import json as _json
 import sys
+from enum import StrEnum
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import typer
 from pydantic import ValidationError
@@ -30,8 +31,17 @@ from methodos.config import Settings
 from methodos.providers import EmbeddingProvider, make_embedding, make_llm, make_reranker
 
 if TYPE_CHECKING:
+    from methodos.feedback import Aspect
     from methodos.models import Method
     from methodos.search import Candidate
+
+
+class FeedbackAspect(StrEnum):
+    """Typer needs an Enum for choices; mirrors `feedback.Aspect`."""
+
+    recommendation = "recommendation"
+    application = "application"
+
 
 # On Windows, default stdout encoding is cp1252, which can't render the unicode
 # characters we use in tables (●, ○, en-dash, ellipsis). Reconfigure to UTF-8 so
@@ -344,8 +354,15 @@ def feedback(
     rating: int = typer.Option(..., "--rating", "-r", min=1, max=5),
     note: str | None = typer.Option(None, "--note", "-n"),
     query_id: str | None = typer.Option(None, "--query-id", "-q"),
+    aspect: FeedbackAspect = typer.Option(  # noqa: B008
+        FeedbackAspect.application,
+        "--aspect",
+        "-a",
+        help="recommendation: did the method fit the problem? "
+        "application: did it help once applied?",
+    ),
 ) -> None:
-    """Record an outcome rating for a previously-recommended method."""
+    """Rate a recommended method: its fit to the problem, or its outcome."""
     from methodos.feedback import log_rating
 
     settings = _load_settings()
@@ -355,8 +372,9 @@ def feedback(
         note=note,
         query_id=query_id,
         path=settings.feedback_path,
+        aspect=cast("Aspect", aspect.value),
     )
-    console.print(f"[green]Recorded:[/] {method_id} rated {rating}/5")
+    console.print(f"[green]Recorded:[/] {method_id} rated {rating}/5 ({aspect.value})")
 
 
 @app.command("stats")
@@ -374,12 +392,16 @@ def stats_cmd() -> None:
     table.add_column("Recommended", justify="right")
     table.add_column("Rated", justify="right")
     table.add_column("Avg rating", justify="right")
+    table.add_column("Fit rated", justify="right")
+    table.add_column("Avg fit", justify="right")
     for mid, stat in sorted(s.items()):
         table.add_row(
             mid,
             str(stat.recommendation_count),
             str(stat.rating_count),
             f"{stat.avg_rating:.2f}" if stat.rating_count else "—",
+            str(stat.recommendation_rating_count),
+            f"{stat.avg_recommendation_rating:.2f}" if stat.recommendation_rating_count else "—",
         )
     console.print(table)
 
