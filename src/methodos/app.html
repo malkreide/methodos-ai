@@ -104,6 +104,30 @@
   li { margin: .15rem 0; }
   .rate { display: flex; gap: .35rem; align-items: center; flex-wrap: wrap; margin-top: 1rem; font-size: .9rem; }
   .rate button { padding: .2rem .6rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .rate button.picked { background: var(--accent); color: var(--accent-fg); }
+
+  /* apply */
+  .track { display: flex; gap: 4px; margin: .4rem 0 .3rem; }
+  .track span { flex: 1; height: 8px; border-radius: 4px; background: var(--line); }
+  .track span.done { background: var(--good); }
+  .track span.now { background: var(--accent); }
+  .steps { list-style: none; padding: 0; margin: .8rem 0 0; }
+  .step {
+    display: grid; grid-template-columns: 1.4rem 1fr; gap: .1rem .6rem; padding: .6rem .7rem;
+    border: 1px solid var(--line); border-radius: 8px; margin: 0 0 .5rem;
+  }
+  .step.now { border-color: var(--accent); background: var(--soft); }
+  .step.done .text { color: var(--muted); text-decoration: line-through; }
+  .step input { width: 1.1rem; height: 1.1rem; margin: .2rem 0 0; accent-color: var(--accent); }
+  .box { font: .72rem var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 .3rem; margin-right: .4rem; }
+  .outcome textarea { min-height: 3rem; margin-top: .6rem; }
+
+  /* history */
+  .entry { display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; padding: .45rem 0; border-top: 1px solid var(--line); }
+  .entry:first-of-type { border-top: 0; }
+  .entry .what { flex: 1 1 18rem; }
+  .entry .what small { display: block; color: var(--muted); }
+  #next-steps { font-size: .88rem; color: var(--muted); margin-top: .5rem; }
 </style>
 </head>
 <body>
@@ -290,7 +314,225 @@ function renderMethod(d) {
     <div class="rate" id="fit">${fitRated.has(d.id) ? 'Thanks — noted.' : `Does this fit your problem?
       ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-fit="${n}" title="${n} of 5">${n}</button>`).join('')}
       <span class="muted">1 = not at all · 5 = exactly</span>`}</div>
-    <div class="row" id="method-actions"></div>`;
+    <div class="row" id="method-actions">
+      ${g.steps.length ? `<button type="button" id="start">Start applying ${esc(d.name)}</button>
+        <span class="muted">${g.steps.length} steps to check off as you go</span>` : ''}
+    </div>`;
+}
+
+// --- history: this device only -------------------------------------------
+// The only two functions that touch browser storage. Both swallow failures
+// (private windows, blocked site data): without storage the page still works,
+// it just has no memory.
+
+const HISTORY_KEY = 'methodos.history.v1';
+const HISTORY_KEEP = 20;
+const HISTORY_SHOW = 3;
+
+function loadHistory() {
+  try {
+    const v = JSON.parse(window.localStorage.getItem(HISTORY_KEY) || '[]');
+    return Array.isArray(v) ? v.filter((e) => e && typeof e.methodId === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(entries) {
+  try {
+    window.localStorage.setItem(HISTORY_KEY, JSON.stringify(entries.slice(0, HISTORY_KEEP)));
+  } catch { /* no storage: nothing is remembered, nothing breaks */ }
+}
+
+function sameEntry(a, b) { return a.queryId === b.queryId && a.methodId === b.methodId; }
+
+function upsertEntry(entry) {
+  const rest = loadHistory().filter((e) => !sameEntry(e, entry));
+  saveHistory([entry, ...rest]);
+}
+
+function day(iso) {
+  const d = new Date(iso);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function stepsDone(e) { return Array.isArray(e.stepsDone) ? e.stepsDone.length : 0; }
+
+// --- apply ------------------------------------------------------------------
+
+let applying = null;  // { entry, detail }
+
+function startApplying() {
+  const d = details[state.selectedId];
+  const existing = loadHistory().find((e) => e.queryId === state.queryId && e.methodId === d.id);
+  const entry = existing || {
+    queryId: state.queryId, methodId: d.id, methodName: d.name, date: new Date().toISOString(),
+    problem: state.problem, stepsDone: [], stepsTotal: d.guide.steps.length, feedbackGiven: false,
+  };
+  applying = { entry, detail: d };
+  upsertEntry(entry);
+  renderApply();
+  renderHistory(false);
+  $('apply').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderApply() {
+  const { entry, detail: d } = applying;
+  const steps = d.guide.steps;
+  const done = new Set(entry.stepsDone);
+  const now = steps.findIndex((_, i) => !done.has(i));
+  const finished = now === -1 || entry.finished;
+
+  $('apply').hidden = false;
+  $('apply').innerHTML = `<div class="card">
+    <span class="label">03 · Apply</span>
+    <h2>${esc(d.name)}</h2>
+    <div class="track">${steps.map((_, i) =>
+      `<span class="${done.has(i) ? 'done' : i === now ? 'now' : ''}"></span>`).join('')}</div>
+    <div class="muted">${done.size} of ${steps.length} steps done${d.guide.outline_duration ? ` · about ${esc(d.guide.outline_duration)} in total` : ''}</div>
+    <ol class="steps">${steps.map((s, i) => `<li class="step ${done.has(i) ? 'done' : i === now ? 'now' : ''}">
+      <input type="checkbox" data-step="${i}" ${done.has(i) ? 'checked' : ''} aria-label="Step ${i + 1} done">
+      <div><span class="text">${s.time_box ? `<span class="box">${esc(s.time_box)}</span>` : ''}${esc(s.text)}</span></div>
+    </li>`).join('')}</ol>
+    ${d.guide.pitfalls.length ? `<details><summary>Common pitfalls</summary><ul>${d.guide.pitfalls.map((p) => `<li>${esc(p)}</li>`).join('')}</ul></details>` : ''}
+    <div id="outcome-slot" style="margin-top:1rem">${
+      entry.feedbackGiven ? '<p class="muted">Thanks — your feedback helps improve Methodos.</p>'
+      : finished ? outcomeForm(entry)
+      : '<button type="button" class="ghost" id="finish">I\'m done with this method</button>'}</div>
+  </div>`;
+}
+
+function outcomeForm(entry) {
+  return `<div class="outcome" data-query="${esc(entry.queryId)}" data-method="${esc(entry.methodId)}">
+    <div class="rate">Did ${esc(entry.methodName)} help?
+      ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-outcome="${n}">${n}</button>`).join('')}
+      <span class="muted">1 = not at all · 5 = a lot</span></div>
+    <textarea class="note-in" maxlength="2000" placeholder="What was unclear or missing? (optional)"></textarea>
+    <div class="row"><button type="button" class="send-outcome" disabled>Send feedback</button></div>
+  </div>`;
+}
+
+$('method').addEventListener('click', (ev) => {
+  if (ev.target.closest('#start')) startApplying();
+});
+
+$('apply').addEventListener('change', (ev) => {
+  const box = ev.target.closest('[data-step]');
+  if (!box || !applying) return;
+  const i = Number(box.dataset.step);
+  const done = new Set(applying.entry.stepsDone);
+  if (box.checked) done.add(i); else done.delete(i);
+  applying.entry.stepsDone = [...done].sort((a, b) => a - b);
+  upsertEntry(applying.entry);
+  renderApply();
+  renderHistory(false);
+});
+
+$('apply').addEventListener('click', (ev) => {
+  if (ev.target.closest('#finish') && applying) {
+    applying.entry.finished = true;
+    upsertEntry(applying.entry);
+    renderApply();
+  }
+});
+
+// One handler for every outcome form: the one under the checklist and the
+// "How did it go?" prompt in the history.
+document.addEventListener('click', async (ev) => {
+  const form = ev.target.closest('.outcome');
+  if (!form) return;
+  const pick = ev.target.closest('[data-outcome]');
+  if (pick) {
+    for (const b of form.querySelectorAll('[data-outcome]')) b.classList.toggle('picked', b === pick);
+    form.dataset.rating = pick.dataset.outcome;
+    form.querySelector('.send-outcome').disabled = false;
+    return;
+  }
+  if (!ev.target.closest('.send-outcome')) return;
+  const note = form.querySelector('.note-in').value.trim();
+  try {
+    await api('/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        method_id: form.dataset.method, rating: Number(form.dataset.rating),
+        query_id: form.dataset.query, note: note || null, aspect: 'application',
+      }),
+    });
+  } catch (e) {
+    form.insertAdjacentHTML('beforeend', `<p style="color:var(--bad)">${esc(e.message)}</p>`);
+    return;
+  }
+  const key = { queryId: form.dataset.query, methodId: form.dataset.method };
+  const entry = loadHistory().find((e) => sameEntry(e, key));
+  if (entry) { entry.feedbackGiven = true; upsertEntry(entry); }
+  if (applying && sameEntry(applying.entry, key)) {
+    applying.entry.feedbackGiven = true;
+    renderApply();
+  }
+  const inHistory = Boolean(form.closest('#history'));
+  form.outerHTML = '<p class="muted">Thanks — your feedback helps improve Methodos.</p>';
+  renderHistory(false, inHistory);
+});
+
+// --- history panel and next steps ------------------------------------------
+
+function renderHistory(askHowItWent, thanked = false) {
+  const entries = loadHistory();
+  if (!entries.length) { $('history').hidden = true; return; }
+  const newest = entries[0];
+  const ask = askHowItWent && !newest.feedbackGiven;
+  $('history').hidden = false;
+  $('history').innerHTML = `<div class="card">
+    <span class="label">Your recent work <span>(kept on this device only)</span></span>
+    ${thanked ? '<p class="muted">Thanks — your feedback helps improve Methodos.</p>' : ''}
+    ${ask ?`<div class="note" style="margin-bottom:.8rem"><b>How did ${esc(newest.methodName)} go?</b>
+      <small class="muted">— ${esc(day(newest.date))}</small>${outcomeForm(newest)}</div>` : ''}
+    ${entries.slice(0, HISTORY_SHOW).map((e, i) => `<div class="entry">
+      <div class="what"><b>${esc(e.methodName)}</b> · ${esc(day(e.date))} · ${stepsDone(e)} of ${Number(e.stepsTotal) || 0} steps${e.feedbackGiven ? ' · rated' : ''}
+        <small>${esc(String(e.problem || '').slice(0, 140))}</small></div>
+      <button type="button" class="link" data-use="${i}">Use this</button>
+      <button type="button" class="link" data-remove="${i}">Remove</button>
+    </div>`).join('')}
+  </div>`;
+}
+
+function describeEntry(e) {
+  const date = String(e.date || '').slice(0, 10);
+  return `Ran ${e.methodName} on ${date} (${stepsDone(e)} of ${Number(e.stepsTotal) || 0} steps): ${e.problem || ''}`;
+}
+
+$('history').addEventListener('click', (ev) => {
+  const use = ev.target.closest('[data-use]');
+  const rm = ev.target.closest('[data-remove]');
+  const entries = loadHistory();
+  if (use) {
+    const e = entries[Number(use.dataset.use)];
+    const field = $('already-done');
+    const line = describeEntry(e);
+    field.value = (field.value.trim() ? `${field.value.trim()}\n${line}` : line).slice(0, 2000);
+    field.focus();
+  } else if (rm) {
+    entries.splice(Number(rm.dataset.remove), 1);
+    saveHistory(entries);
+    renderHistory(false);
+    renderNextSteps();
+  }
+});
+
+async function renderNextSteps() {
+  const newest = loadHistory()[0];
+  $('next-steps').innerHTML = '';
+  if (!newest) return;
+  try {
+    const d = details[newest.methodId] || await api(`/methods/${encodeURIComponent(newest.methodId)}`);
+    details[newest.methodId] = d;
+    const next = d.guide.see_also.filter((l) => l.method_id);
+    if (next.length) {
+      $('next-steps').innerHTML = `Possible next steps after ${esc(d.name)}: ` +
+        next.map((l) => `<b>${esc(l.label)}</b>${l.note ? ` (${esc(l.note)})` : ''}`).join(' · ');
+    }
+  } catch { /* a removed or renamed method just shows no suggestions */ }
 }
 
 $('ranking').addEventListener('click', (ev) => {
@@ -342,6 +584,9 @@ $('form').addEventListener('submit', async (ev) => {
     $('go').disabled = false;
   }
 });
+
+renderHistory(true);
+renderNextSteps();
 </script>
 </body>
 </html>

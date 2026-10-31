@@ -330,3 +330,15 @@ def test_app_has_no_developer_controls(env):
 def test_app_escapes_server_text(env):
     html = env["client"].get("/").text
     assert "function esc(" in html or "const esc" in html
+
+
+def test_app_reaches_storage_only_through_the_guarded_helper(env):
+    """Private windows and blocked site data throw on access; the page must survive."""
+    html = env["client"].get("/").text
+    assert html.count("localStorage") == 2  # getItem in loadHistory, setItem in saveHistory
+    assert "methodos.history.v1" in html
+    assert "function loadHistory(" in html and "function saveHistory(" in html
+
+
+def test_app_sends_outcome_feedback(env):
+    assert "aspect: 'application'" in env["client"].get("/").text
