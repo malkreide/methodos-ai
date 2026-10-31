@@ -303,3 +303,30 @@ def test_already_done_reaches_the_llm_but_not_the_ranking_or_the_log(env):
 def test_already_done_is_bounded(env):
     res = env["client"].post("/query", json={"problem": "alpha", "already_done": "x" * 2001})
     assert res.status_code == 422
+
+
+def test_app_talks_to_the_api_contract(env):
+    html = env["client"].get("/").text
+    for needle in [
+        "/query",
+        "/methods/",
+        "/feedback",
+        "aspect: 'recommendation'",
+        "already_done",
+        'id="problem"',
+        'id="already-done"',
+        'id="apply"',
+        'id="history"',
+    ]:
+        assert needle in html, needle
+
+
+def test_app_has_no_developer_controls(env):
+    html = env["client"].get("/").text
+    for needle in ['id="top_k"', 'id="rerank"', "/llm/check", "Raw JSON"]:
+        assert needle not in html, needle
+
+
+def test_app_escapes_server_text(env):
+    html = env["client"].get("/").text
+    assert "function esc(" in html or "const esc" in html
