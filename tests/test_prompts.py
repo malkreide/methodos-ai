@@ -92,3 +92,27 @@ def test_prompt_keeps_similarity_visible_after_reranking():
     """Both numbers reach the model, so it can see where they disagree."""
     out = render_explain_prompt(query="q", candidates=[_cand("A", 0.46, 7.1)])
     assert "similarity: 0.46" in out
+
+
+# --- what the user has already done ----------------------------------------
+
+
+def test_no_already_done_block_when_absent():
+    out = render_explain_prompt(query="q", candidates=[_cand("A", 0.5)])
+    assert "already done" not in out
+    assert "{already_done_block}" not in out
+
+
+def test_blank_already_done_renders_no_block():
+    out = render_explain_prompt(query="q", candidates=[_cand("A", 0.5)], already_done="   ")
+    assert "already done" not in out
+
+
+def test_already_done_with_braces_is_inserted_verbatim():
+    out = render_explain_prompt(
+        query="q", candidates=[_cand("A", 0.5)], already_done="Ran Five_Whys {query}"
+    )
+    assert "What the user has already done:" in out
+    assert "Ran Five_Whys {query}" in out
+    _, user_part = split_system_user(out)
+    assert user_part.index("already done") < user_part.index("Candidate methods")

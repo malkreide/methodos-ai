@@ -182,11 +182,13 @@ def explain(
     query: str,
     candidates: list[Candidate],
     llm: LLMProvider,
+    already_done: str | None = None,
 ) -> str:
     """Single LLM call, all candidates in one prompt for coherent comparison."""
     rendered = render_explain_prompt(
         query=query,
         candidates=[c.to_render_dict() for c in candidates],
+        already_done=already_done,
     )
     system, user = split_system_user(rendered)
     return llm.complete(system, user)

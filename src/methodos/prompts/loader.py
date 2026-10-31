@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
@@ -43,12 +44,33 @@ def _format_candidate(c: dict[str, Any]) -> str:
     )
 
 
-def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -> str:
+_PLACEHOLDER = re.compile(r"\{(query|candidates_block|ranking_basis|already_done_block)\}")
+
+_ALREADY_DONE = (
+    'What the user has already done:\n"""\n{already_done}\n"""\n'
+    "Take this into account: do not recommend repeating it without a reason, "
+    "and say when a candidate is a sensible next step after it.\n"
+)
+
+
+def render_explain_prompt(
+    *,
+    query: str,
+    candidates: Sequence[dict[str, Any]],
+    already_done: str | None = None,
+) -> str:
     """Render the explain template with query + candidate list.
 
-    Uses string `.replace` rather than `.format` to avoid format-injection
-    when a user's query contains literal `{` or `}` characters.
+    Substitutes in a single regex pass rather than `.format` to avoid
+    format-injection when a user's text contains literal `{` or `}`. `already_done`
+    is the user's account of earlier work; it informs the explanation only and
+    never reaches retrieval.
     """
+    already_done_block = (
+        _ALREADY_DONE.replace("{already_done}", already_done.strip())
+        if already_done and already_done.strip()
+        else ""
+    )
     template = load_prompt("explain")
     candidates_block = "\n".join(_format_candidate(c) for c in candidates)
     # After reranking the list is no longer in similarity order, and the top
@@ -62,8 +84,12 @@ def render_explain_prompt(*, query: str, candidates: Sequence[dict[str, Any]]) -
         if reranked
         else "semantic similarity"
     )
-    return (
-        template.replace("{query}", query)
-        .replace("{candidates_block}", candidates_block)
-        .replace("{ranking_basis}", basis)
-    )
+    # One pass, so text inserted for one placeholder is never scanned for the
+    # next: a "{query}" typed into the already-done field stays literal.
+    values = {
+        "query": query,
+        "candidates_block": candidates_block,
+        "ranking_basis": basis,
+        "already_done_block": already_done_block,
+    }
+    return _PLACEHOLDER.sub(lambda m: values[m.group(1)], template)

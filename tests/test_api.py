@@ -280,3 +280,19 @@ def test_providers_are_built_once_per_process():
         assert api_mod._build_providers() is first
     finally:
         api_mod._build_providers.cache_clear()
+
+
+def test_already_done_reaches_the_llm_but_not_the_ranking_or_the_log(env):
+    client, llm = env["client"], env["llm"]
+    plain = client.post("/query", json={"problem": "alpha beta"}).json()
+    ctx = client.post(
+        "/query", json={"problem": "alpha beta", "already_done": "Ran SECRET_MARKER last week"}
+    ).json()
+    assert [m["id"] for m in ctx["matches"]] == [m["id"] for m in plain["matches"]]
+    assert "SECRET_MARKER" in llm.calls[-1][1]
+    assert "SECRET_MARKER" not in env["settings"].feedback_path.read_text(encoding="utf-8")
+
+
+def test_already_done_is_bounded(env):
+    res = env["client"].post("/query", json={"problem": "alpha", "already_done": "x" * 2001})
+    assert res.status_code == 422

@@ -128,6 +128,12 @@ class QueryRequest(BaseModel):
         description="Restrict to one category. Applied inside the search, not to "
         f"its output. Valid values: {', '.join(mcp_tools.valid_categories())}.",
     )
+    already_done: str | None = Field(
+        default=None,
+        max_length=2000,
+        description="What the user has already done, in their words. Given to the "
+        "LLM explanation only: it never changes the ranking and is not logged.",
+    )
     explain: bool = Field(
         default=True,
         description="Run the LLM explanation step. Set false to isolate retrieval "
@@ -352,7 +358,12 @@ def query(req: QueryRequest, providers: ProvidersDep) -> QueryResponse:
     explanation_error: str | None = None
     if req.explain and candidates:
         try:
-            explanation = explain(query=req.problem, candidates=candidates, llm=providers.llm)
+            explanation = explain(
+                query=req.problem,
+                candidates=candidates,
+                llm=providers.llm,
+                already_done=req.already_done,
+            )
         except LLMError as e:
             # Not a 502: the matches above are a complete, correct answer to the
             # retrieval question, and hiding them behind an LLM outage would

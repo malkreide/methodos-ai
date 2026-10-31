@@ -12,7 +12,7 @@ Problem:
 """
 {query}
 """
-
+{already_done_block}
 Candidate methods (ranked by {ranking_basis}):
 
 {candidates_block}
