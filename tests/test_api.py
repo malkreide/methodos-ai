@@ -342,3 +342,31 @@ def test_app_reaches_storage_only_through_the_guarded_helper(env):
 
 def test_app_sends_outcome_feedback(env):
     assert "aspect: 'application'" in env["client"].get("/").text
+
+
+def test_app_speaks_to_people_not_models_about_weak_matches(env):
+    """`guidance` is written for a calling model; the page has its own words for it."""
+    html = env["client"].get("/").text
+    assert "None of these is a close match" in html
+    assert "No method in the catalog matched" in html
+    assert "closest match" in html
+
+
+def test_app_reports_validation_errors_readably(env):
+    """FastAPI's 422 detail is a list; String(list) would read "[object Object]"."""
+    html = env["client"].get("/").text
+    assert "Array.isArray(body.detail)" in html
+    assert "problem.length < 3" in html
+
+
+def test_app_locks_feedback_while_it_is_sent(env):
+    """A double click must not write two ratings."""
+    html = env["client"].get("/").text
+    assert html.count("lockButtons(") >= 3  # definition + fit + outcome
+
+
+def test_app_bars_do_not_invent_gaps(env):
+    """Bars scale against the top score, never min-max across the answer."""
+    html = env["client"].get("/").text
+    assert "Math.min(...vals)" not in html
+    assert "1 / (1 + Math.exp(" in html  # rerank logits squashed before scaling

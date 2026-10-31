@@ -16,10 +16,16 @@ class LiteLLMProvider:
         LiteLLMProvider(model="openai/gpt-4o-mini")
 
     API keys are read from environment by litellm itself.
+
+    `timeout` bounds each call. litellm's own default is 600 s, and the HTTP
+    /query blocks on the explanation, so a stuck provider would hold back a
+    finished ranking for ten minutes; a timeout instead raises LLMError, which
+    the API reports as `explanation_error` with the ranking intact.
     """
 
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, timeout: float = 45.0) -> None:
         self.name = model
+        self.timeout = timeout
 
     def complete(
         self,
@@ -39,6 +45,7 @@ class LiteLLMProvider:
                 messages=messages,
                 max_tokens=max_tokens,
                 temperature=temperature,
+                timeout=self.timeout,
             )
         except Exception as e:
             raise LLMError(f"{type(e).__name__}: {e}") from e

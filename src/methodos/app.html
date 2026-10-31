@@ -185,8 +185,23 @@ function esc(s) {
 async function api(path, opts) {
   const res = await fetch(path, opts);
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    // FastAPI sends validation failures as a list of {msg, ...}.
+    const detail = Array.isArray(body.detail) ? body.detail.map((d) => d.msg).join('; ') : body.detail;
+    throw new Error(detail || `${res.status} ${res.statusText}`);
+  }
   return body;
+}
+
+// While a rating is on its way, its buttons stay disabled: a double click
+// must not write two ratings.
+function lockButtons(container, locked) {
+  for (const b of container.querySelectorAll('button')) b.disabled = locked;
+}
+
+function showError(container, message) {
+  container.querySelector('.err-msg')?.remove();
+  container.insertAdjacentHTML('beforeend', `<p class="err-msg" style="color:var(--bad)">${esc(message)}</p>`);
 }
 
 const state = { queryId: null, problem: '', matches: [], selectedId: null, guide: null };
@@ -211,18 +226,19 @@ function duration(min, max) {
   return [`${h(min)}–${h(max)}`, 'hours'];
 }
 
-// Bar width shows each method's fit relative to the others in this answer:
-// the sort key (rerank score when a reranker ran, else similarity) mapped onto
-// 30–100%. It is never an absolute quality claim; raw values sit in Details.
+// Bar width is each method's score as a share of the top score in this answer,
+// so near-ties look like near-ties (min-max scaling would turn 0.412 vs 0.409
+// into 100% vs 30%). Rerank scores are unbounded logits, so they are squashed
+// to 0–1 first. Never an absolute quality claim; raw values sit in Details.
 function widths(matches) {
-  const key = (m) => (m.rerank_score ?? m.similarity);
-  const vals = matches.map(key);
-  const hi = Math.max(...vals), lo = Math.min(...vals);
-  return vals.map((v) => (hi === lo ? 100 : Math.round(30 + 70 * (v - lo) / (hi - lo))));
+  const squash = (x) => 1 / (1 + Math.exp(-x));
+  const vals = matches.map((m) => (m.rerank_score == null ? m.similarity : squash(m.rerank_score)));
+  const hi = Math.max(...vals);
+  return vals.map((v) => (hi > 0 ? Math.max(4, Math.round(100 * v / hi)) : 100));
 }
 
-function fitWord(i, w) {
-  if (i === 0) return 'best match';
+function fitWord(i, w, weak) {
+  if (i === 0) return weak ? 'closest match' : 'best match';
   return w >= 75 ? 'close alternative' : 'alternative';
 }
 
@@ -238,18 +254,25 @@ function renderResults(data) {
   $('results').hidden = false;
   $('apply').hidden = true;
 
-  $('guidance').innerHTML = data.guidance
-    ? `<div class="note" style="margin-bottom:.8rem">${esc(data.guidance)}</div>` : '';
+  // `guidance` is worded for a calling model (scores, tool names). Its presence
+  // is the signal; the words shown here are for a person. The original text
+  // stays in Details.
+  const weak = Boolean(data.guidance);
+  $('guidance').innerHTML = !weak ? '' : `<div class="note" style="margin-bottom:.8rem">${
+    data.matches.length
+      ? 'None of these is a close match for what you described. Try describing the decision or the symptom rather than the subject — or see whether one of these still helps.'
+      : 'No method in the catalog matched. Try describing the decision or the symptom rather than the subject.'}</div>`;
 
   const w = widths(data.matches);
   $('ranking').innerHTML = data.matches.map((m, i) => `<li>
       <button type="button" class="rank" data-id="${esc(m.id)}">
         <span class="n">${i + 1}</span>
-        <span><span class="name">${esc(m.name)}</span><span class="fit">${fitWord(i, w[i])}</span></span>
+        <span><span class="name">${esc(m.name)}</span><span class="fit">${fitWord(i, w[i], weak)}</span></span>
         <span class="bar"><i style="width:${w[i]}%"></i></span>
       </button></li>`).join('');
 
-  $('raw').innerHTML = `ordered by ${esc(data.ranking_basis)}<br>` + data.matches.map((m) =>
+  $('raw').innerHTML = (weak ? `${esc(data.guidance)}<br><br>` : '') +
+    `ordered by ${esc(data.ranking_basis)}<br>` + data.matches.map((m) =>
     `${esc(m.id)}: similarity ${m.similarity.toFixed(3)}` +
     (m.rerank_score == null ? '' : ` · rerank ${m.rerank_score.toFixed(2)}`)).join('<br>');
 
@@ -450,6 +473,7 @@ document.addEventListener('click', async (ev) => {
   }
   if (!ev.target.closest('.send-outcome')) return;
   const note = form.querySelector('.note-in').value.trim();
+  lockButtons(form, true);
   try {
     await api('/feedback', {
       method: 'POST',
@@ -460,7 +484,8 @@ document.addEventListener('click', async (ev) => {
       }),
     });
   } catch (e) {
-    form.insertAdjacentHTML('beforeend', `<p style="color:var(--bad)">${esc(e.message)}</p>`);
+    lockButtons(form, false);
+    showError(form, e.message);
     return;
   }
   const key = { queryId: form.dataset.query, methodId: form.dataset.method };
@@ -546,6 +571,8 @@ $('method').addEventListener('click', async (ev) => {
   const fit = ev.target.closest('[data-fit]');
   if (!fit) return;
   const id = state.selectedId;
+  const box = $('fit');
+  lockButtons(box, true);
   try {
     await api('/feedback', {
       method: 'POST',
@@ -556,9 +583,10 @@ $('method').addEventListener('click', async (ev) => {
       }),
     });
     fitRated.add(id);
-    $('fit').textContent = 'Thanks — noted.';
+    box.textContent = 'Thanks — noted.';
   } catch (e) {
-    $('fit').innerHTML = `<span style="color:var(--bad)">${esc(e.message)}</span>`;
+    lockButtons(box, false);
+    showError(box, e.message);
   }
 });
 
@@ -566,6 +594,10 @@ $('form').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   const problem = $('problem').value.trim();
   const alreadyDone = $('already-done').value.trim();
+  if (problem.length < 3) {
+    setStatus('<div class="note err">Please describe the problem in a few words first.</div>');
+    return;
+  }
   $('go').disabled = true;
   $('results').hidden = true;
   setStatus('<div class="waiting"><div class="pulse"></div>Finding methods for your problem… this can take a few seconds.</div>');

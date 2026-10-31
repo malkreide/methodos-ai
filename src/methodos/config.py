@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     model: str = "ollama/llama3.1:8b"
     """Litellm model string in the form '<provider>/<model>'."""
 
+    llm_timeout: float = Field(default=45.0, gt=0)
+    """Seconds one LLM call may take before it fails as an LLMError. Bounds how
+    long the HTTP /query (and the user page) waits for the explanation."""
+
     embedding_provider: Literal["local", "openai"] = "local"
     embedding_model: str = "all-MiniLM-L6-v2"
     """For provider='local': sentence-transformers model name.

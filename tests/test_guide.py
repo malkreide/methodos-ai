@@ -59,6 +59,8 @@ def test_inline_markdown_is_reduced_to_plain_text():
     g = parse_guide(FIVE_WHYS_LIKE.replace("one factual sentence", "*one* factual sentence"))
     assert g.not_a_fit_when[0] == "When several causes contributed — use an Ishikawa diagram"
     assert g.steps[0].text == "Write the failure as one factual sentence."
+    g = parse_guide(FIVE_WHYS_LIKE.replace("has several causes", "has *several* causes"))
+    assert g.see_also[0].note == "when the failure has several causes"
 
 
 def test_see_also_separates_methods_from_urls():

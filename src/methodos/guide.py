@@ -109,10 +109,10 @@ def parse_guide(markdown: str) -> MethodGuide:
         is_method = target.endswith(".md")
         see_also.append(
             SeeAlsoLink(
-                label=label,
+                label=_plain(label),
                 method_id=target[: -len(".md")] if is_method else None,
                 url=None if is_method else target,
-                note=note.strip() if note else None,
+                note=_plain(note) if note else None,
             )
         )
 
