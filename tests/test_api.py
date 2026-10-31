@@ -196,6 +196,7 @@ def test_methods_endpoints_serve_the_catalog_and_the_markdown(env):
     detail = env["client"].get("/methods/Alpha").json()
     assert detail["id"] == "Alpha"
     assert "Full documentation for Alpha" in detail["documentation"]
+    assert detail["guide"]["steps"] == []  # the fixture docs have no sections
 
 
 def test_unknown_method_404s_with_the_valid_ids(env):
