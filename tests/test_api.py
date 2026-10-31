@@ -255,13 +255,20 @@ def test_feedback_rating_is_bounded(env):
     )
 
 
-def test_console_is_served_and_self_contained(env):
+def test_console_is_served_at_console_and_self_contained(env):
     """The container may have no egress, so the page must not reference one."""
-    html = env["client"].get("/").text
+    html = env["client"].get("/console").text
     assert "<title>Methodos AI</title>" in html
     assert "http://" not in html
     assert "https://" not in html
     assert "src=" not in html, "no external script or stylesheet may be pulled in"
+
+
+def test_app_is_served_at_root_and_self_contained(env):
+    html = env["client"].get("/").text
+    assert "<title>Methodos</title>" in html
+    assert "http://" not in html and "https://" not in html
+    assert "src=" not in html
 
 
 def test_methods_dir_follows_the_env_var(tmp_path, monkeypatch):

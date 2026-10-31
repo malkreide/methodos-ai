@@ -56,6 +56,7 @@ from methodos.providers import (
 from methodos.providers.base import EmbeddingError, LLMError, RerankError
 from methodos.search import StaleIndexError, collection_size, explain
 
+APP_HTML = Path(__file__).parent / "app.html"
 CONSOLE_HTML = Path(__file__).parent / "console.html"
 
 
@@ -253,8 +254,14 @@ def _check_category(category: str | None) -> None:
 
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def user_page() -> HTMLResponse:
+    """The page for the person Methodos is for: describe, choose, apply."""
+    return HTMLResponse(APP_HTML.read_text(encoding="utf-8"))
+
+
+@app.get("/console", response_class=HTMLResponse, include_in_schema=False)
 def console() -> HTMLResponse:
-    """A single self-contained page for trying queries and rating the results."""
+    """The developer console: raw scores, rerank toggle, LLM check, raw JSON."""
     return HTMLResponse(CONSOLE_HTML.read_text(encoding="utf-8"))
 
 

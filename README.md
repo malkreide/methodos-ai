@@ -11,8 +11,9 @@ problem stated in natural language.
 - **`schemas/method_schema.json`** — generated from a Pydantic model; CI
   enforces freshness.
 - **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`.
-- **HTTP API + browser console** — `docker compose up`, then ask, read and rate
-  at `http://localhost:8000`. See [Deploy](#deploy-http--docker).
+- **HTTP API + browser page** — `docker compose up`, then describe a problem,
+  pick a method and apply it at `http://localhost:8000`; the developer console
+  is at `/console`. See [Deploy](#deploy-http--docker).
 - **MCP server** — the catalog as three read-only tools for Claude Desktop or
   any other MCP client.
 - **Provider-neutral** — Anthropic, OpenAI, Google, Mistral, Ollama, etc., via
@@ -85,7 +86,8 @@ survives restarts in a named volume.
 
 | Endpoint | |
 |---|---|
-| `GET /` | Browser console — ask, read the explanation, rate a method |
+| `GET /` | The Methodos page — describe a problem, pick a method, apply it step by step |
+| `GET /console` | Developer console — ask, read the explanation, rate a method, see raw scores |
 | `GET /docs` | OpenAPI, with every field documented |
 | `POST /query` | `{problem, top_k, category, explain, rerank}` → matches + explanation + `query_id` |
 | `GET /health` | Config, provider names, index size. No LLM call — backs the container health check |
