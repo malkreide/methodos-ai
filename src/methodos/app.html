@@ -1,0 +1,627 @@
+<!doctype html>
+<!--
+  The Methodos page — for the person who is stuck: describe the problem, pick a
+  method with its reasons, then work through it step by step.
+
+  Same rules as console.html: one self-contained file with no build step and no
+  external requests, so it works in a container with no egress. It holds no
+  ranking logic — it renders what /query and /methods/{id} return. Anything a
+  developer needs (raw scores aside from the "Details" disclosure, the rerank
+  toggle, the LLM check, raw JSON) lives in /console, not here.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodos</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1c1b19; --muted: #6b6a66; --line: #e2dfd9; --soft: #f1ede7;
+    --card: #ffffff; --accent: #7a5c3e; --accent-fg: #ffffff; --bad: #a3341f; --good: #3d6b45;
+    --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614; --fg: #ece9e4; --muted: #9c9890; --line: #2f2d29; --soft: #24221f;
+      --card: #1f1e1b; --accent: #c69b6d; --accent-fg: #171614; --bad: #e0866f; --good: #86b28f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1rem 4rem; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 64rem; margin: 0 auto; }
+  [hidden] { display: none !important; }
+  h1 { font-size: 1.6rem; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 1.15rem; margin: 0 0 .25rem; }
+  .tag { color: var(--muted); margin: .2rem 0 1.5rem; }
+  .label {
+    font: 600 .72rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 0 0 .5rem; display: block;
+  }
+  .label span { text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; }
+  section { margin: 0 0 1rem; }
+  textarea {
+    width: 100%; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--bg); color: var(--fg); font: inherit; resize: vertical;
+  }
+  #problem { min-height: 5rem; }
+  #already-done { min-height: 2.6rem; }
+  .row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-top: .8rem; }
+  button {
+    padding: .55rem 1.05rem; border: 1px solid var(--accent); border-radius: 7px;
+    background: var(--accent); color: var(--accent-fg); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  button.ghost { background: transparent; color: var(--accent); font-weight: 500; }
+  button.link { border: 0; background: none; color: var(--accent); padding: 0; font-weight: 500; text-decoration: underline; }
+  button:disabled { opacity: .55; cursor: progress; }
+  .muted { color: var(--muted); }
+  .note { border: 1px solid var(--accent); border-radius: 8px; padding: .75rem .9rem; background: var(--soft); }
+  .note.err { border-color: var(--bad); color: var(--bad); background: transparent; }
+
+  /* waiting state */
+  .waiting { display: flex; gap: .8rem; align-items: center; color: var(--muted); }
+  .pulse { width: 7rem; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; position: relative; }
+  .pulse::after {
+    content: ""; position: absolute; inset: 0; width: 40%; background: var(--accent); border-radius: 2px;
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+  @media (prefers-reduced-motion: reduce) { .pulse::after { animation: none; width: 100%; opacity: .4; } }
+
+  /* ranking */
+  .grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .grid { grid-template-columns: 1.15fr 1fr; } }
+  #ranking { list-style: none; margin: 0; padding: 0; }
+  .rank {
+    display: grid; grid-template-columns: 1.6rem 1fr; gap: .2rem .6rem; align-items: center;
+    width: 100%; text-align: left; padding: .55rem .5rem; margin: 0 0 .25rem; border-radius: 7px;
+    border: 1px solid transparent; background: transparent; color: var(--fg); font-weight: 400;
+  }
+  .rank:hover { background: var(--soft); }
+  .rank.on { border-color: var(--accent); background: var(--soft); }
+  .rank .n { font: 600 .85rem var(--mono); color: var(--muted); grid-row: span 2; }
+  .rank .name { font-weight: 600; }
+  .rank .fit { font-size: .78rem; color: var(--muted); margin-left: .4rem; font-weight: 400; }
+  .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+  details { margin-top: .6rem; font-size: .85rem; }
+  summary { cursor: pointer; color: var(--muted); }
+  .raw { font: .78rem/1.5 var(--mono); color: var(--muted); margin: .4rem 0 0; }
+  #why { white-space: normal; }
+
+  /* selected method */
+  .use { margin: .2rem 0 .9rem; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin: 0 0 1rem; }
+  .tile { border: 1px solid var(--line); border-radius: 8px; padding: .55rem .7rem; }
+  .tile b { display: block; font: 600 1.25rem/1.3 var(--mono); }
+  .tile small { color: var(--muted); }
+  .cols { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .cols { grid-template-columns: 1fr 1fr; } }
+  ul { margin: .2rem 0; padding-left: 1.1rem; }
+  li { margin: .15rem 0; }
+  .rate { display: flex; gap: .35rem; align-items: center; flex-wrap: wrap; margin-top: 1rem; font-size: .9rem; }
+  .rate button { padding: .2rem .6rem; font-weight: 500; background: transparent; color: var(--accent); }
+  .rate button.picked { background: var(--accent); color: var(--accent-fg); }
+
+  /* apply */
+  .track { display: flex; gap: 4px; margin: .4rem 0 .3rem; }
+  .track span { flex: 1; height: 8px; border-radius: 4px; background: var(--line); }
+  .track span.done { background: var(--good); }
+  .track span.now { background: var(--accent); }
+  .steps { list-style: none; padding: 0; margin: .8rem 0 0; }
+  .step {
+    display: grid; grid-template-columns: 1.4rem 1fr; gap: .1rem .6rem; padding: .6rem .7rem;
+    border: 1px solid var(--line); border-radius: 8px; margin: 0 0 .5rem;
+  }
+  .step.now { border-color: var(--accent); background: var(--soft); }
+  .step.done .text { color: var(--muted); text-decoration: line-through; }
+  .step input { width: 1.1rem; height: 1.1rem; margin: .2rem 0 0; accent-color: var(--accent); }
+  .box { font: .72rem var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 .3rem; margin-right: .4rem; }
+  .outcome textarea { min-height: 3rem; margin-top: .6rem; }
+
+  /* history */
+  .entry { display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; padding: .45rem 0; border-top: 1px solid var(--line); }
+  .entry:first-of-type { border-top: 0; }
+  .entry .what { flex: 1 1 18rem; }
+  .entry .what small { display: block; color: var(--muted); }
+  #next-steps { font-size: .88rem; color: var(--muted); margin-top: .5rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Methodos</h1>
+    <p class="tag">Stuck on a problem or a next step? Find a method that fits, see why, and work through it.</p>
+  </header>
+
+  <section class="card">
+    <form id="form">
+      <label class="label" for="problem">01 · Your problem</label>
+      <textarea id="problem" required minlength="3"
+        placeholder="Describe the situation or the decision, not a method. e.g. Tickets take six weeks end to end, but the actual work is only a few hours."></textarea>
+      <label class="label" for="already-done" style="margin-top:.9rem">What you've already done <span>(optional)</span></label>
+      <textarea id="already-done" maxlength="2000"
+        placeholder="e.g. Ran a Five Whys last week; the delay comes from the approval step."></textarea>
+      <div id="next-steps"></div>
+      <div class="row"><button type="submit" id="go">Find methods</button></div>
+    </form>
+  </section>
+
+  <section id="history" hidden></section>
+
+  <section id="status" hidden></section>
+
+  <section id="results" hidden>
+    <div class="grid">
+      <div class="card">
+        <span class="label">02 · Methods that fit</span>
+        <div id="guidance"></div>
+        <ol id="ranking"></ol>
+        <details><summary>Details</summary><div id="raw" class="raw"></div></details>
+      </div>
+      <div class="card" id="why-card">
+        <span class="label">Why these methods?</span>
+        <div id="why"></div>
+      </div>
+    </div>
+    <div class="card" id="method" style="margin-top:1rem" hidden></div>
+  </section>
+
+  <section id="apply" hidden></section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+async function api(path, opts) {
+  const res = await fetch(path, opts);
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    // FastAPI sends validation failures as a list of {msg, ...}.
+    const detail = Array.isArray(body.detail) ? body.detail.map((d) => d.msg).join('; ') : body.detail;
+    throw new Error(detail || `${res.status} ${res.statusText}`);
+  }
+  return body;
+}
+
+// While a rating is on its way, its buttons stay disabled: a double click
+// must not write two ratings.
+function lockButtons(container, locked) {
+  for (const b of container.querySelectorAll('button')) b.disabled = locked;
+}
+
+function showError(container, message) {
+  container.querySelector('.err-msg')?.remove();
+  container.insertAdjacentHTML('beforeend', `<p class="err-msg" style="color:var(--bad)">${esc(message)}</p>`);
+}
+
+const state = { queryId: null, problem: '', matches: [], selectedId: null, guide: null };
+const details = {};          // method id -> GET /methods/{id} payload
+const fitRated = new Set();  // method ids rated for this query
+
+// The explanation is Markdown prose. Escape first, then allow only bold and
+// line breaks back in — nothing the model writes can become markup.
+function prose(text) {
+  return esc(text)
+    .replace(/^#{1,6}\s*/gm, '')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+function dots(n) { return '●'.repeat(n) + '○'.repeat(5 - n); }
+
+// "240–1200 minutes" reads badly; past two hours, say hours.
+function duration(min, max) {
+  if (max < 120) return [`${min}–${max}`, 'minutes'];
+  const h = (m) => String(Math.round(m / 6) / 10);
+  return [`${h(min)}–${h(max)}`, 'hours'];
+}
+
+// Bar width is each method's score as a share of the top score in this answer,
+// so near-ties look like near-ties (min-max scaling would turn 0.412 vs 0.409
+// into 100% vs 30%). Rerank scores are unbounded logits, so they are squashed
+// to 0–1 first. Never an absolute quality claim; raw values sit in Details.
+function widths(matches) {
+  const squash = (x) => 1 / (1 + Math.exp(-x));
+  const vals = matches.map((m) => (m.rerank_score == null ? m.similarity : squash(m.rerank_score)));
+  // Cosine reaches -1: with no positive top score, shift onto [0, 1] first so
+  // weak matches keep their differences instead of all reading 100%.
+  const pos = Math.max(...vals) > 0 ? vals : vals.map((v) => (v + 1) / 2);
+  const hi = Math.max(...pos);
+  return pos.map((v) => (hi > 0 ? Math.max(4, Math.round(100 * v / hi)) : 100));
+}
+
+function fitWord(i, w, weak) {
+  if (i === 0) return weak ? 'closest match' : 'best match';
+  return w >= 75 ? 'close alternative' : 'alternative';
+}
+
+function setStatus(html) {
+  $('status').innerHTML = html;
+  $('status').hidden = !html;
+}
+
+function renderResults(data) {
+  state.queryId = data.query_id;
+  state.matches = data.matches;
+  fitRated.clear();
+  $('results').hidden = false;
+  $('apply').hidden = true;
+
+  // `guidance` is worded for a calling model (scores, tool names). Its presence
+  // is the signal; the words shown here are for a person. The original text
+  // stays in Details.
+  const weak = Boolean(data.guidance);
+  $('guidance').innerHTML = !weak ? '' : `<div class="note" style="margin-bottom:.8rem">${
+    data.matches.length
+      ? 'None of these is a close match for what you described. Try describing the decision or the symptom rather than the subject — or see whether one of these still helps.'
+      : 'No method in the catalog matched. Try describing the decision or the symptom rather than the subject.'}</div>`;
+
+  const w = widths(data.matches);
+  $('ranking').innerHTML = data.matches.map((m, i) => `<li>
+      <button type="button" class="rank" data-id="${esc(m.id)}">
+        <span class="n">${i + 1}</span>
+        <span><span class="name">${esc(m.name)}</span><span class="fit">${fitWord(i, w[i], weak)}</span></span>
+        <span class="bar"><i style="width:${w[i]}%"></i></span>
+      </button></li>`).join('');
+
+  $('raw').innerHTML = (weak ? `${esc(data.guidance)}<br><br>` : '') +
+    `ordered by ${esc(data.ranking_basis)}<br>` + data.matches.map((m) =>
+    `${esc(m.id)}: similarity ${m.similarity.toFixed(3)}` +
+    (m.rerank_score == null ? '' : ` · rerank ${m.rerank_score.toFixed(2)}`)).join('<br>');
+
+  if (data.explanation) {
+    $('why').innerHTML = prose(data.explanation);
+  } else if (data.explanation_error) {
+    $('why').innerHTML = '<p class="muted">The explanation is unavailable right now — the ranking is complete.</p>';
+  } else {
+    $('why').innerHTML = '<p class="muted">No explanation for this answer.</p>';
+  }
+  $('why-card').hidden = data.matches.length === 0;
+
+  if (data.matches.length) {
+    selectMethod(data.matches[0].id);
+  } else {
+    $('method').hidden = true;
+  }
+}
+
+async function selectMethod(id) {
+  state.selectedId = id;
+  for (const b of document.querySelectorAll('.rank')) b.classList.toggle('on', b.dataset.id === id);
+  const m = state.matches.find((x) => x.id === id);
+  $('method').hidden = false;
+  $('method').innerHTML = `<h2>${esc(m.name)}</h2><p class="muted">Loading the method…</p>`;
+  try {
+    details[id] = details[id] || await api(`/methods/${encodeURIComponent(id)}`);
+  } catch (e) {
+    $('method').innerHTML = `<h2>${esc(m.name)}</h2><div class="note err">${esc(e.message)}</div>`;
+    return;
+  }
+  if (state.selectedId !== id) return;  // the user clicked on while this loaded
+  state.guide = details[id].guide;
+  renderMethod(details[id]);
+}
+
+function renderMethod(d) {
+  const g = d.guide;
+  const inAnswer = new Set(state.matches.map((m) => m.id));
+  const instead = g.see_also.filter((l) => l.method_id).map((l) => {
+    const name = inAnswer.has(l.method_id)
+      ? `<button type="button" class="link" data-goto="${esc(l.method_id)}">${esc(l.label)}</button>`
+      : `<b>${esc(l.label)}</b>`;
+    return `<li>${name}${l.note ? ` — ${esc(l.note)}` : ''}</li>`;
+  }).join('');
+
+  const [span, unit] = duration(d.duration_min, d.duration_max);
+  $('method').innerHTML = `
+    <span class="label">Selected method</span>
+    <h2>${esc(d.name)}</h2>
+    <p class="use">${esc(d.use_case)}</p>
+    <div class="tiles">
+      <div class="tile"><b>${span}</b><small>${unit}${g.outline_duration ? ` · outline: ${esc(g.outline_duration)}` : ''}</small></div>
+      <div class="tile"><b>${dots(d.complexity_score)}</b><small>effort</small></div>
+      <div class="tile"><b>${g.steps.length}</b><small>steps</small></div>
+    </div>
+    <div class="cols">
+      <div><span class="label">Strengths</span><ul>${d.strengths.slice(0, 3).map((s) => `<li>${esc(s)}</li>`).join('')}</ul></div>
+      <div><span class="label">Not a fit when…</span><ul>${g.not_a_fit_when.map((s) => `<li>${esc(s)}</li>`).join('') || '<li class="muted">Nothing noted.</li>'}</ul></div>
+    </div>
+    ${instead ? `<span class="label" style="margin-top:1rem">Consider instead</span><ul>${instead}</ul>` : ''}
+    <div class="rate" id="fit">${fitRated.has(d.id) ? 'Thanks — noted.' : `Does this fit your problem?
+      ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-fit="${n}" title="${n} of 5">${n}</button>`).join('')}
+      <span class="muted">1 = not at all · 5 = exactly</span>`}</div>
+    <div class="row" id="method-actions">
+      ${g.steps.length ? `<button type="button" id="start">Start applying ${esc(d.name)}</button>
+        <span class="muted">${g.steps.length} steps to check off as you go</span>` : ''}
+    </div>`;
+}
+
+// --- history: this device only -------------------------------------------
+// The only two functions that touch browser storage. Both swallow failures
+// (private windows, blocked site data): without storage the page still works,
+// it just has no memory.
+
+const HISTORY_KEY = 'methodos.history.v1';
+const HISTORY_KEEP = 20;
+const HISTORY_SHOW = 3;
+
+function loadHistory() {
+  try {
+    const v = JSON.parse(window.localStorage.getItem(HISTORY_KEY) || '[]');
+    return Array.isArray(v) ? v.filter((e) => e && typeof e.methodId === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(entries) {
+  try {
+    window.localStorage.setItem(HISTORY_KEY, JSON.stringify(entries.slice(0, HISTORY_KEEP)));
+  } catch { /* no storage: nothing is remembered, nothing breaks */ }
+}
+
+function sameEntry(a, b) { return a.queryId === b.queryId && a.methodId === b.methodId; }
+
+function upsertEntry(entry) {
+  const rest = loadHistory().filter((e) => !sameEntry(e, entry));
+  saveHistory([entry, ...rest]);
+}
+
+function day(iso) {
+  const d = new Date(iso);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function stepsDone(e) { return Array.isArray(e.stepsDone) ? e.stepsDone.length : 0; }
+
+// --- apply ------------------------------------------------------------------
+
+let applying = null;  // { entry, detail }
+
+function startApplying() {
+  const d = details[state.selectedId];
+  const existing = loadHistory().find((e) => e.queryId === state.queryId && e.methodId === d.id);
+  const entry = existing || {
+    queryId: state.queryId, methodId: d.id, methodName: d.name, date: new Date().toISOString(),
+    problem: state.problem, stepsDone: [], stepsTotal: d.guide.steps.length, feedbackGiven: false,
+  };
+  applying = { entry, detail: d };
+  upsertEntry(entry);
+  renderApply();
+  renderHistory(false);
+  $('apply').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderApply() {
+  const { entry, detail: d } = applying;
+  const steps = d.guide.steps;
+  const done = new Set(entry.stepsDone);
+  const now = steps.findIndex((_, i) => !done.has(i));
+  const finished = now === -1 || entry.finished;
+
+  $('apply').hidden = false;
+  $('apply').innerHTML = `<div class="card">
+    <span class="label">03 · Apply</span>
+    <h2>${esc(d.name)}</h2>
+    <div class="track">${steps.map((_, i) =>
+      `<span class="${done.has(i) ? 'done' : i === now ? 'now' : ''}"></span>`).join('')}</div>
+    <div class="muted">${done.size} of ${steps.length} steps done${d.guide.outline_duration ? ` · outline: ${esc(d.guide.outline_duration)}` : ''}</div>
+    <ol class="steps">${steps.map((s, i) => `<li class="step ${done.has(i) ? 'done' : i === now ? 'now' : ''}">
+      <input type="checkbox" data-step="${i}" ${done.has(i) ? 'checked' : ''} aria-label="Step ${i + 1} done">
+      <div><span class="text">${s.time_box ? `<span class="box">${esc(s.time_box)}</span>` : ''}${esc(s.text)}</span></div>
+    </li>`).join('')}</ol>
+    ${d.guide.pitfalls.length ? `<details><summary>Common pitfalls</summary><ul>${d.guide.pitfalls.map((p) => `<li>${esc(p)}</li>`).join('')}</ul></details>` : ''}
+    <div id="outcome-slot" style="margin-top:1rem">${
+      entry.feedbackGiven ? '<p class="muted">Thanks — your feedback helps improve Methodos.</p>'
+      : finished ? outcomeForm(entry)
+      : '<button type="button" class="ghost" id="finish">I\'m done with this method</button>'}</div>
+  </div>`;
+}
+
+function outcomeForm(entry) {
+  return `<div class="outcome" data-query="${esc(entry.queryId)}" data-method="${esc(entry.methodId)}">
+    <div class="rate">Did ${esc(entry.methodName)} help?
+      ${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-outcome="${n}">${n}</button>`).join('')}
+      <span class="muted">1 = not at all · 5 = a lot</span></div>
+    <textarea class="note-in" maxlength="2000" placeholder="What was unclear or missing? (optional)"></textarea>
+    <div class="row"><button type="button" class="send-outcome" disabled>Send feedback</button></div>
+  </div>`;
+}
+
+$('method').addEventListener('click', (ev) => {
+  if (ev.target.closest('#start')) startApplying();
+});
+
+$('apply').addEventListener('change', (ev) => {
+  const box = ev.target.closest('[data-step]');
+  if (!box || !applying) return;
+  const i = Number(box.dataset.step);
+  const done = new Set(applying.entry.stepsDone);
+  if (box.checked) done.add(i); else done.delete(i);
+  applying.entry.stepsDone = [...done].sort((a, b) => a - b);
+  upsertEntry(applying.entry);
+  renderApply();
+  renderHistory(false);
+});
+
+$('apply').addEventListener('click', (ev) => {
+  if (ev.target.closest('#finish') && applying) {
+    applying.entry.finished = true;
+    upsertEntry(applying.entry);
+    renderApply();
+  }
+});
+
+// One handler for every outcome form: the one under the checklist and the
+// "How did it go?" prompt in the history.
+document.addEventListener('click', async (ev) => {
+  const form = ev.target.closest('.outcome');
+  if (!form) return;
+  const pick = ev.target.closest('[data-outcome]');
+  if (pick) {
+    for (const b of form.querySelectorAll('[data-outcome]')) b.classList.toggle('picked', b === pick);
+    form.dataset.rating = pick.dataset.outcome;
+    form.querySelector('.send-outcome').disabled = false;
+    return;
+  }
+  if (!ev.target.closest('.send-outcome')) return;
+  const note = form.querySelector('.note-in').value.trim();
+  lockButtons(form, true);
+  try {
+    await api('/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        method_id: form.dataset.method, rating: Number(form.dataset.rating),
+        query_id: form.dataset.query, note: note || null, aspect: 'application',
+      }),
+    });
+  } catch (e) {
+    lockButtons(form, false);
+    showError(form, e.message);
+    return;
+  }
+  const key = { queryId: form.dataset.query, methodId: form.dataset.method };
+  const entry = loadHistory().find((e) => sameEntry(e, key));
+  if (entry) { entry.feedbackGiven = true; upsertEntry(entry); }
+  if (applying && sameEntry(applying.entry, key)) {
+    applying.entry.feedbackGiven = true;
+    renderApply();
+  }
+  const inHistory = Boolean(form.closest('#history'));
+  form.outerHTML = '<p class="muted">Thanks — your feedback helps improve Methodos.</p>';
+  renderHistory(false, inHistory);
+});
+
+// --- history panel and next steps ------------------------------------------
+
+function renderHistory(askHowItWent, thanked = false) {
+  const entries = loadHistory();
+  if (!entries.length) { $('history').hidden = true; return; }
+  const newest = entries[0];
+  const ask = askHowItWent && !newest.feedbackGiven;
+  $('history').hidden = false;
+  $('history').innerHTML = `<div class="card">
+    <span class="label">Your recent work <span>(kept on this device only)</span></span>
+    ${thanked ? '<p class="muted">Thanks — your feedback helps improve Methodos.</p>' : ''}
+    ${ask ?`<div class="note" style="margin-bottom:.8rem"><b>How did ${esc(newest.methodName)} go?</b>
+      <small class="muted">— ${esc(day(newest.date))}</small>${outcomeForm(newest)}</div>` : ''}
+    ${entries.slice(0, HISTORY_SHOW).map((e, i) => `<div class="entry">
+      <div class="what"><b>${esc(e.methodName)}</b> · ${esc(day(e.date))} · ${stepsDone(e)} of ${Number(e.stepsTotal) || 0} steps${e.feedbackGiven ? ' · rated' : ''}
+        <small>${esc(String(e.problem || '').slice(0, 140))}</small></div>
+      <button type="button" class="link" data-use="${i}">Use this</button>
+      <button type="button" class="link" data-remove="${i}">Remove</button>
+    </div>`).join('')}
+  </div>`;
+}
+
+function describeEntry(e) {
+  const date = String(e.date || '').slice(0, 10);
+  return `Ran ${e.methodName} on ${date} (${stepsDone(e)} of ${Number(e.stepsTotal) || 0} steps): ${e.problem || ''}`;
+}
+
+$('history').addEventListener('click', (ev) => {
+  const use = ev.target.closest('[data-use]');
+  const rm = ev.target.closest('[data-remove]');
+  const entries = loadHistory();
+  if (use) {
+    const e = entries[Number(use.dataset.use)];
+    const field = $('already-done');
+    const line = describeEntry(e);
+    field.value = (field.value.trim() ? `${field.value.trim()}\n${line}` : line).slice(0, 2000);
+    field.focus();
+  } else if (rm) {
+    entries.splice(Number(rm.dataset.remove), 1);
+    saveHistory(entries);
+    renderHistory(false);
+    renderNextSteps();
+  }
+});
+
+async function renderNextSteps() {
+  const newest = loadHistory()[0];
+  $('next-steps').innerHTML = '';
+  if (!newest) return;
+  try {
+    const d = details[newest.methodId] || await api(`/methods/${encodeURIComponent(newest.methodId)}`);
+    details[newest.methodId] = d;
+    const next = d.guide.see_also.filter((l) => l.method_id);
+    if (next.length) {
+      $('next-steps').innerHTML = `Possible next steps after ${esc(d.name)}: ` +
+        next.map((l) => `<b>${esc(l.label)}</b>${l.note ? ` (${esc(l.note)})` : ''}`).join(' · ');
+    }
+  } catch { /* a removed or renamed method just shows no suggestions */ }
+}
+
+$('ranking').addEventListener('click', (ev) => {
+  const b = ev.target.closest('.rank');
+  if (b) selectMethod(b.dataset.id);
+});
+
+$('method').addEventListener('click', async (ev) => {
+  const go = ev.target.closest('[data-goto]');
+  if (go) { selectMethod(go.dataset.goto); return; }
+  const fit = ev.target.closest('[data-fit]');
+  if (!fit) return;
+  const id = state.selectedId;
+  const box = $('fit');
+  lockButtons(box, true);
+  try {
+    await api('/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        method_id: id, rating: Number(fit.dataset.fit), query_id: state.queryId,
+        aspect: 'recommendation',
+      }),
+    });
+    fitRated.add(id);
+    box.textContent = 'Thanks — noted.';
+  } catch (e) {
+    lockButtons(box, false);
+    showError(box, e.message);
+  }
+});
+
+$('form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const problem = $('problem').value.trim();
+  const alreadyDone = $('already-done').value.trim();
+  if (problem.length < 3) {
+    setStatus('<div class="note err">Please describe the problem in a few words first.</div>');
+    return;
+  }
+  $('go').disabled = true;
+  $('results').hidden = true;
+  setStatus('<div class="waiting"><div class="pulse"></div>Finding methods for your problem… this can take a few seconds.</div>');
+  try {
+    const data = await api('/query', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ problem, already_done: alreadyDone || null, top_k: 5, explain: true }),
+    });
+    state.problem = problem;
+    setStatus('');
+    renderResults(data);
+  } catch (e) {
+    setStatus(`<div class="note err">Something went wrong: ${esc(e.message)}</div>`);
+  } finally {
+    $('go').disabled = false;
+  }
+});
+
+renderHistory(true);
+renderNextSteps();
+</script>
+</body>
+</html>

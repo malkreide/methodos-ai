@@ -13,7 +13,7 @@ make lint       # ruff + mypy
 make ingest     # rebuild local Chroma from /methods
 make schema     # regenerate schemas/method_schema.json from Pydantic
 make demo       # ingest + a sample query, end-to-end smoke
-make serve      # HTTP API + browser console on :8000 (needs `make ingest` first)
+make serve      # HTTP API + user page on :8000, dev console at /console (needs `make ingest` first)
 make docker-up  # the same thing containerised, ingest included
 ```
 

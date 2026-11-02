@@ -227,6 +227,7 @@ def test_methods_endpoints_serve_the_catalog_and_the_markdown(env):
     detail = env["client"].get("/methods/Alpha").json()
     assert detail["id"] == "Alpha"
     assert "Full documentation for Alpha" in detail["documentation"]
+    assert detail["guide"]["steps"] == []  # the fixture docs have no sections
 
 
 def test_unknown_method_404s_with_the_valid_ids(env):
@@ -250,6 +251,27 @@ def test_feedback_round_trip_reaches_stats(env):
     assert entries["Beta"]["avg_rating"] is None
 
 
+def test_recommendation_feedback_is_reported_separately(env):
+    client = env["client"]
+    qid = client.post("/query", json={"problem": "alpha"}).json()["query_id"]
+    res = client.post(
+        "/feedback",
+        json={"method_id": "Alpha", "rating": 4, "query_id": qid, "aspect": "recommendation"},
+    )
+    assert res.status_code == 200
+    entry = {x["method_id"]: x for x in client.get("/stats").json()["entries"]}["Alpha"]
+    assert entry["recommendation_rating_count"] == 1
+    assert entry["avg_recommendation_rating"] == 4.0
+    assert entry["rating_count"] == 0 and entry["avg_rating"] is None
+
+
+def test_unknown_aspect_is_rejected(env):
+    res = env["client"].post(
+        "/feedback", json={"method_id": "Alpha", "rating": 3, "aspect": "vibes"}
+    )
+    assert res.status_code == 422
+
+
 def test_feedback_rejects_an_id_that_is_not_in_the_catalog(env):
     """Over HTTP nobody watches the shell, so a typo must not accumulate silently."""
     res = env["client"].post("/feedback", json={"method_id": "Typo", "rating": 4})
@@ -264,14 +286,21 @@ def test_feedback_rating_is_bounded(env):
     )
 
 
-def test_console_is_served_and_self_contained(env):
+def test_console_is_served_at_console_and_self_contained(env):
     """The container may have no egress, so the page must not reference one."""
-    html = env["client"].get("/").text
+    html = env["client"].get("/console").text
     assert "<title>Methodos AI</title>" in html
     assert "http://" not in html
     assert "https://" not in html
     assert "src=" not in html, "no external script or stylesheet may be pulled in"
     assert html.index("</style>") < html.index("</head>") < html.index("<body>")
+
+
+def test_app_is_served_at_root_and_self_contained(env):
+    html = env["client"].get("/").text
+    assert "<title>Methodos</title>" in html
+    assert "http://" not in html and "https://" not in html
+    assert "src=" not in html
 
 
 def test_methods_dir_follows_the_env_var(tmp_path, monkeypatch):
@@ -290,6 +319,95 @@ def test_providers_are_built_once_per_process():
         assert api_mod._build_providers() is first
     finally:
         api_mod._build_providers.cache_clear()
+
+
+def test_already_done_reaches_the_llm_but_not_the_ranking_or_the_log(env):
+    client, llm = env["client"], env["llm"]
+    plain = client.post("/query", json={"problem": "alpha beta"}).json()
+    ctx = client.post(
+        "/query", json={"problem": "alpha beta", "already_done": "Ran SECRET_MARKER last week"}
+    ).json()
+    assert [m["id"] for m in ctx["matches"]] == [m["id"] for m in plain["matches"]]
+    assert "SECRET_MARKER" in llm.calls[-1][1]
+    assert "SECRET_MARKER" not in env["settings"].feedback_path.read_text(encoding="utf-8")
+
+
+def test_already_done_is_bounded(env):
+    res = env["client"].post("/query", json={"problem": "alpha", "already_done": "x" * 2001})
+    assert res.status_code == 422
+
+
+def test_app_talks_to_the_api_contract(env):
+    html = env["client"].get("/").text
+    for needle in [
+        "/query",
+        "/methods/",
+        "/feedback",
+        "aspect: 'recommendation'",
+        "already_done",
+        'id="problem"',
+        'id="already-done"',
+        'id="apply"',
+        'id="history"',
+    ]:
+        assert needle in html, needle
+
+
+def test_app_has_no_developer_controls(env):
+    html = env["client"].get("/").text
+    for needle in ['id="top_k"', 'id="rerank"', "/llm/check", "Raw JSON"]:
+        assert needle not in html, needle
+
+
+def test_app_escapes_server_text(env):
+    html = env["client"].get("/").text
+    assert "function esc(" in html or "const esc" in html
+
+
+def test_app_reaches_storage_only_through_the_guarded_helper(env):
+    """Private windows and blocked site data throw on access; the page must survive."""
+    html = env["client"].get("/").text
+    assert html.count("localStorage") == 2  # getItem in loadHistory, setItem in saveHistory
+    assert "methodos.history.v1" in html
+    assert "function loadHistory(" in html and "function saveHistory(" in html
+
+
+def test_app_sends_outcome_feedback(env):
+    assert "aspect: 'application'" in env["client"].get("/").text
+
+
+def test_app_speaks_to_people_not_models_about_weak_matches(env):
+    """`guidance` is written for a calling model; the page has its own words for it."""
+    html = env["client"].get("/").text
+    assert "None of these is a close match" in html
+    assert "No method in the catalog matched" in html
+    assert "closest match" in html
+
+
+def test_app_reports_validation_errors_readably(env):
+    """FastAPI's 422 detail is a list; String(list) would read "[object Object]"."""
+    html = env["client"].get("/").text
+    assert "Array.isArray(body.detail)" in html
+    assert "problem.length < 3" in html
+
+
+def test_app_locks_feedback_while_it_is_sent(env):
+    """A double click must not write two ratings."""
+    html = env["client"].get("/").text
+    assert html.count("lockButtons(") >= 3  # definition + fit + outcome
+
+
+def test_app_bars_do_not_invent_gaps(env):
+    """Bars scale against the top score, never min-max across the answer."""
+    html = env["client"].get("/").text
+    assert "Math.min(...vals)" not in html
+    assert "1 / (1 + Math.exp(" in html  # rerank logits squashed before scaling
+
+
+def test_app_bars_keep_differences_when_every_similarity_is_negative(env):
+    """Cosine reaches -1; with no positive top score every bar would read 100%."""
+    html = env["client"].get("/").text
+    assert "(v + 1) / 2" in html
 
 
 _PROPOSAL = {
@@ -364,7 +482,7 @@ def test_console_has_every_string_in_both_languages(env):
     """A key missing from one dictionary would show the raw key to that reader."""
     import re
 
-    html = env["client"].get("/").text
+    html = env["client"].get("/console").text
     script = html.split("const I18N = {", 1)[1].split("\n};", 1)[0]
     de, en = script.split("\n  en: {", 1)
     keys = re.compile(r"^ {4}'?([\w-]+)'?:", re.M)
@@ -380,7 +498,7 @@ def test_console_offers_every_goal_in_both_languages(env):
     """The goal buttons are built from GOALS with keys the test above cannot see."""
     import re
 
-    html = env["client"].get("/").text
+    html = env["client"].get("/console").text
     goals = re.findall(r"'(\w+)'", html.split("const GOALS = [", 1)[1].split("];", 1)[0])
     assert len(goals) >= 5
     de, en = html.split("const I18N = {", 1)[1].split("\n};", 1)[0].split("\n  en: {", 1)
@@ -392,7 +510,7 @@ def test_console_offers_every_goal_in_both_languages(env):
 def test_query_carries_the_clarify_field_the_console_reads(env):
     spec = env["client"].get("/openapi.json").json()
     assert "clarify" in spec["components"]["schemas"]["QueryResponse"]["properties"]
-    assert "data.clarify" in env["client"].get("/").text
+    assert "data.clarify" in env["client"].get("/console").text
 
 
 def test_query_logs_the_goal_and_the_search_it_refines(env):

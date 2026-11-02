@@ -61,6 +61,30 @@ def test_read_events_skips_corrupt_lines(tmp_path, capsys):
     assert "skipped" in err.lower() or "corrupt" in err.lower() or "malformed" in err.lower()
 
 
+def test_lines_without_aspect_read_as_application(tmp_path):
+    """Everything logged before the field existed was an outcome rating."""
+    fb = tmp_path / "fb.jsonl"
+    fb.write_text(
+        '{"event":"rating","timestamp":"2026-01-01T00:00:00Z","query_id":null,'
+        '"method_id":"SWOT","rating":4,"note":null}\n',
+        encoding="utf-8",
+    )
+    (ev,) = list(read_events(fb))
+    assert isinstance(ev, RatingEvent)
+    assert ev.aspect == "application"
+
+
+def test_stats_keep_the_two_aspects_apart(tmp_path):
+    fb = tmp_path / "fb.jsonl"
+    log_rating(method_id="SWOT", rating=2, note=None, query_id=None, path=fb)
+    log_rating(
+        method_id="SWOT", rating=5, note=None, query_id=None, path=fb, aspect="recommendation"
+    )
+    s = stats(fb)["SWOT"]
+    assert (s.rating_count, s.avg_rating) == (1, 2.0)
+    assert (s.recommendation_rating_count, s.avg_recommendation_rating) == (1, 5.0)
+
+
 def test_stats_aggregates(tmp_path):
     fb = tmp_path / "fb.jsonl"
     log_recommendation(query="q1", method_ids=["SWOT"], model="m", path=fb)

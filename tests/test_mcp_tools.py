@@ -35,6 +35,7 @@ from methodos.mcp_tools import (
 from methodos.search import StaleIndexError
 
 CATEGORIES = {"Alpha": "strategy", "Beta": "strategy", "Gamma": "analysis"}
+REPO_METHODS = Path(__file__).parent.parent / "methods"
 
 
 def _write(dir: Path, id: str, use_case: str, category: str) -> None:
@@ -339,6 +340,13 @@ def test_get_method_includes_the_markdown_companion(catalog):
     assert detail.id == "Alpha"
     assert "Full documentation for Alpha." in detail.documentation
     assert detail.duration_min == 30 and detail.duration_max == 60
+
+
+def test_get_method_includes_parsed_guide_for_a_shipped_method():
+    detail = get_method(method_id="Five_Whys", methods_dir=REPO_METHODS)
+    assert [s.time_box for s in detail.guide.steps] == ["5 min", "25 min", "10 min", "5 min"]
+    assert any(link.method_id == "Ishikawa_Diagram" for link in detail.guide.see_also)
+    assert "Facilitation outline" in detail.documentation
 
 
 def test_missing_companion_is_reported_as_a_sync_problem(catalog):

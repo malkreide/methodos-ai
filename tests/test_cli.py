@@ -172,6 +172,28 @@ def test_feedback_command_appends_rating(tmp_path, monkeypatch):
     assert obj["note"] == "great"
 
 
+def test_feedback_command_records_the_aspect(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    fb = tmp_path / "fb.jsonl"
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(fb))
+    res = runner.invoke(app, ["feedback", "SWOT", "-r", "4", "--aspect", "recommendation"])
+    assert res.exit_code == 0, res.stdout
+    res = runner.invoke(app, ["feedback", "SWOT", "-r", "3"])
+    assert res.exit_code == 0, res.stdout
+    first, second = (json.loads(x) for x in fb.read_text(encoding="utf-8").splitlines())
+    assert first["aspect"] == "recommendation"
+    assert second["aspect"] == "application"
+
+
+def test_feedback_command_rejects_an_unknown_aspect(tmp_path, monkeypatch):
+    from methodos.cli import app
+
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(tmp_path / "fb.jsonl"))
+    res = runner.invoke(app, ["feedback", "SWOT", "-r", "4", "--aspect", "vibes"])
+    assert res.exit_code != 0
+
+
 def test_feedback_command_validates_rating_range(tmp_path, monkeypatch):
     from methodos.cli import app
 

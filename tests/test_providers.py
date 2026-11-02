@@ -189,6 +189,24 @@ def test_key_problem_leaves_usable_and_unrelated_keys_alone(model, env):
     assert key_problem(model, env) is None
 
 
+def test_litellm_provider_passes_a_timeout():
+    """Without one, litellm waits 600 s and the user page hangs on a stuck provider."""
+    fake_response = MagicMock()
+    fake_response.choices = [MagicMock(message=MagicMock(content="ok"))]
+    with patch(
+        "methodos.providers.llm_litellm.litellm.completion", return_value=fake_response
+    ) as m:
+        LiteLLMProvider(model="ollama/llama3.1:8b", timeout=12.5).complete("s", "u")
+    assert m.call_args.kwargs["timeout"] == 12.5
+
+
+def test_make_llm_uses_the_configured_timeout(monkeypatch):
+    monkeypatch.setenv("METHODOS_LLM_TIMEOUT", "7")
+    assert make_llm(Settings(_env_file=None)).timeout == 7.0
+    monkeypatch.delenv("METHODOS_LLM_TIMEOUT")
+    assert make_llm(Settings(_env_file=None)).timeout == 45.0
+
+
 def test_litellm_provider_wraps_exceptions_into_llmerror():
     with patch(
         "methodos.providers.llm_litellm.litellm.completion", side_effect=RuntimeError("boom")

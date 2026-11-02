@@ -35,6 +35,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from methodos.guide import MethodGuide, parse_guide
 from methodos.models import Asset, Category, Context, Format, GroupSize, Method
 from methodos.providers.base import EmbeddingProvider, RerankProvider
 from methodos.search import Candidate, collection_size, retrieve
@@ -237,6 +238,10 @@ class MethodDetail(BaseModel):
     owner: str | None = None
     last_reviewed: str | None = Field(default=None, description="ISO date, or null.")
     documentation: str = Field(description="Full Markdown companion document.")
+    guide: MethodGuide = Field(
+        description="Steps, not-a-fit-when, pitfalls and see-also parsed from "
+        "`documentation`; empty where a section is missing."
+    )
 
 
 class MethodNotFoundError(LookupError):
@@ -439,6 +444,7 @@ def get_method(*, method_id: str, methods_dir: Path) -> MethodDetail:
             f"{found.doc_path} — the index and the catalog on disk may be out of sync."
         )
 
+    documentation = doc.read_text(encoding="utf-8")
     return MethodDetail(
         id=found.id,
         name=found.name,
@@ -459,7 +465,8 @@ def get_method(*, method_id: str, methods_dir: Path) -> MethodDetail:
         assets=found.assets,
         owner=found.owner,
         last_reviewed=found.last_reviewed.isoformat() if found.last_reviewed else None,
-        documentation=doc.read_text(encoding="utf-8"),
+        documentation=documentation,
+        guide=parse_guide(documentation),
     )
 
 

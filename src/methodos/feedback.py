@@ -44,6 +44,11 @@ class RecommendationEvent(BaseModel):
     refines: str | None = None
 
 
+Aspect = Literal["recommendation", "application"]
+"""What a rating judges: whether the recommendation fit the problem, or whether
+the method helped once applied. Never averaged together."""
+
+
 class RatingEvent(BaseModel):
     event: Literal["rating"] = "rating"
     timestamp: str
@@ -51,6 +56,10 @@ class RatingEvent(BaseModel):
     method_id: str
     rating: int = Field(ge=1, le=5)
     note: str | None = None
+    # Lines written before this field existed were all outcome ratings — the
+    # CLI's "Record outcome" and the console's "Did it help?" — so they read
+    # as "application" rather than being misfiled.
+    aspect: Aspect = "application"
 
 
 FeedbackEvent = RecommendationEvent | RatingEvent
@@ -110,6 +119,7 @@ def log_rating(
     note: str | None,
     query_id: str | None,
     path: Path,
+    aspect: Aspect = "application",
 ) -> None:
     """Append a rating event. Validates rating in [1, 5]."""
     if rating < 1 or rating > 5:
@@ -120,6 +130,7 @@ def log_rating(
         method_id=method_id,
         rating=rating,
         note=note,
+        aspect=aspect,
     )
     _append_line(path, ev)
 
@@ -152,14 +163,24 @@ def read_events(path: Path) -> Iterator[FeedbackEvent]:
 
 @dataclass
 class MethodStats:
+    """Per-method aggregates. `rating_*` counts application ratings only."""
+
     method_id: str
     recommendation_count: int = 0
     rating_count: int = 0
     rating_sum: int = 0
+    recommendation_rating_count: int = 0
+    recommendation_rating_sum: int = 0
 
     @property
     def avg_rating(self) -> float:
         return self.rating_sum / self.rating_count if self.rating_count else 0.0
+
+    @property
+    def avg_recommendation_rating(self) -> float:
+        if not self.recommendation_rating_count:
+            return 0.0
+        return self.recommendation_rating_sum / self.recommendation_rating_count
 
 
 def stats(path: Path) -> dict[str, MethodStats]:
@@ -173,8 +194,12 @@ def stats(path: Path) -> dict[str, MethodStats]:
         elif isinstance(ev, RatingEvent):
             s = out.setdefault(ev.method_id, MethodStats(method_id=ev.method_id))
             s.method_id = ev.method_id
-            s.rating_count += 1
-            s.rating_sum += ev.rating
+            if ev.aspect == "recommendation":
+                s.recommendation_rating_count += 1
+                s.recommendation_rating_sum += ev.rating
+            else:
+                s.rating_count += 1
+                s.rating_sum += ev.rating
     return out
 
 

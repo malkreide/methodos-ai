@@ -46,6 +46,7 @@ from starlette.datastructures import UploadFile
 
 from methodos import __version__, mcp_tools
 from methodos.config import Settings
+from methodos.feedback import Aspect
 from methodos.mcp_tools import (
     CatalogResult,
     MethodDetail,
@@ -75,6 +76,7 @@ from methodos.providers.base import (
 from methodos.search import StaleIndexError, collection_size, explain
 from methodos.uploads import ACCEPTED_SUFFIXES, DOCUMENT_SUFFIXES, Kind
 
+APP_HTML = Path(__file__).parent / "app.html"
 CONSOLE_HTML = Path(__file__).parent / "console.html"
 
 
@@ -149,6 +151,12 @@ class QueryRequest(BaseModel):
         default=None,
         description="Restrict to one category. Applied inside the search, not to "
         f"its output. Valid values: {', '.join(mcp_tools.valid_categories())}.",
+    )
+    already_done: str | None = Field(
+        default=None,
+        max_length=2000,
+        description="What the user has already done, in their words. Given to the "
+        "LLM explanation only: it never changes the ranking and is not logged.",
     )
     explain: bool = Field(
         default=True,
@@ -248,6 +256,11 @@ class FeedbackRequest(BaseModel):
     )
     query_id: str | None = Field(
         default=None, description="The query_id from /query, to tie the rating to a query."
+    )
+    aspect: Aspect = Field(
+        default="application",
+        description="'recommendation' rates whether the method fit the problem; "
+        "'application' rates whether it helped once applied. Reported separately.",
     )
 
 
@@ -367,7 +380,11 @@ class MethodStatsEntry(BaseModel):
     recommendation_count: int
     rating_count: int
     avg_rating: float | None = Field(
-        description="null until the method has been rated at least once."
+        description="Application ratings only. null until rated at least once."
+    )
+    recommendation_rating_count: int
+    avg_recommendation_rating: float | None = Field(
+        description="Whether the recommendation fit the problem. null until rated."
     )
 
 
@@ -393,8 +410,14 @@ def _check_category(category: str | None) -> None:
 
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def user_page() -> HTMLResponse:
+    """The page for the person Methodos is for: describe, choose, apply."""
+    return HTMLResponse(APP_HTML.read_text(encoding="utf-8"))
+
+
+@app.get("/console", response_class=HTMLResponse, include_in_schema=False)
 def console() -> HTMLResponse:
-    """A single self-contained page for trying queries and rating the results."""
+    """The developer console: raw scores, rerank toggle, LLM check, raw JSON."""
     return HTMLResponse(CONSOLE_HTML.read_text(encoding="utf-8"))
 
 
@@ -514,7 +537,12 @@ def query(req: QueryRequest, providers: ProvidersDep) -> QueryResponse:
     explanation_error: str | None = None
     if req.explain and candidates:
         try:
-            explanation = explain(query=req.problem, candidates=candidates, llm=providers.llm)
+            explanation = explain(
+                query=req.problem,
+                candidates=candidates,
+                llm=providers.llm,
+                already_done=req.already_done,
+            )
         except LLMError as e:
             # Not a 502: the matches above are a complete, correct answer to the
             # retrieval question, and hiding them behind an LLM outage would
@@ -577,6 +605,7 @@ def feedback(req: FeedbackRequest, providers: ProvidersDep) -> FeedbackResponse:
         note=req.note,
         query_id=req.query_id,
         path=providers.settings.feedback_path,
+        aspect=req.aspect,
     )
     return FeedbackResponse(recorded=True, method_id=req.method_id, rating=req.rating)
 
@@ -826,6 +855,10 @@ def stats(providers: ProvidersDep) -> StatsResponse:
                 recommendation_count=st.recommendation_count,
                 rating_count=st.rating_count,
                 avg_rating=st.avg_rating if st.rating_count else None,
+                recommendation_rating_count=st.recommendation_rating_count,
+                avg_recommendation_rating=(
+                    st.avg_recommendation_rating if st.recommendation_rating_count else None
+                ),
             )
             for mid, st in sorted(read_stats(providers.settings.feedback_path).items())
         ]

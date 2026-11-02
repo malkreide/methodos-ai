@@ -24,7 +24,7 @@ def make_llm(settings: Settings) -> LLMProvider:
     """Construct an LLM provider from settings (currently always litellm)."""
     from methodos.providers.llm_litellm import LiteLLMProvider
 
-    return LiteLLMProvider(model=settings.model)
+    return LiteLLMProvider(model=settings.model, timeout=settings.llm_timeout)
 
 
 def make_embedding(settings: Settings) -> EmbeddingProvider:
