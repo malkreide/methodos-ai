@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Gemba_Walk",
+  "name": "Gemba Walk",
+  "category": "analysis",
+  "use_case": "Decisions about how front-line work should be done are taken in offices and meetings on the strength of reports, dashboards and summaries, far from the counter, ward, kitchen or warehouse where the work actually happens, and leaders suspect they no longer understand what really gets in their staff's way. Leaders go to that place regularly, watch the work as it is being done, ask the people doing it what makes it hard, and only afterwards decide what to change and how to support them.",
+  "strengths": [
+    "replaces second-hand assumptions with what the leader has seen and heard in person",
+    "surfaces workarounds, improvised fixes and daily obstacles that never appear in reports",
+    "shows staff that the people deciding about their work have taken the trouble to look at it",
+    "costs little: an hour of a leader's time and no tools beyond a notebook",
+    "gives later analysis, such as a cause or flow analysis, a grounding in the real work"
+  ],
+  "weaknesses": [
+    "easily read as surveillance or an inspection where trust between staff and management is low",
+    "people tend to work differently while a manager is watching, so what is seen is not always typical",
+    "a few visits show what happens, not how often; they do not replace figures",
+    "a single walk with no follow-up changes nothing and can leave staff more cynical than before",
+    "leaders who fix things on the spot undermine the local team and its supervisor",
+    "published evidence is mostly case reports and practitioner accounts, not controlled studies"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.lean.org/lexicon-terms/gemba/",
+    "https://www.lean.org/lexicon-terms/gemba-walk/",
+    "https://www.lean.org/the-lean-post/articles/how-to-go-to-the-gemba-go-see-ask-why-show-respect/",
+    "https://www.lean.org/store/book/gemba-walks-2nd-edition/",
+    "https://www.buckingham.ac.uk/wp-content/uploads/2015/12/Prof-Dr-Christoph-Roser-Taiichi-Ohnos-Chalk-Circle-in-the-Office.pdf",
+    "https://doi.org/10.1017/cem.2020.380",
+    "https://doi.org/10.1108/LHS-03-2014-0015",
+    "https://doi.org/10.1093/intqhc/mzaf049"
+  ],
+  "use_cases": [
+    "The heads of a municipal service centre set procedures and staffing from case statistics and complaint summaries, but have not spent time at the counters in years, and counter staff say the new rules ignore what citizens actually come in with.",
+    "Hospital managers approve new ward routines in management meetings; nurses say the rules do not fit how a night shift really runs, and the managers want to see the work at first hand and hear from the staff before changing anything else.",
+    "A school authority's central administration issues instructions to school secretariats and canteen kitchens from its own offices, and the head of administration wants to understand what actually slows the staff down in those places before the next change goes out.",
+    "A logistics manager sees on the dashboard that picking errors in the warehouse have doubled, and instead of sending out another instruction wants to spend time on the floor watching how the picking is really done and what the pickers struggle with.",
+    "A manager in charge of a large department or several sites knows the staff's work only from monthly figures and presentations, sets rules for them from a distance, and wants to see what an ordinary working day looks like for them and what gets in their way."
+  ],
+  "contexts": [
+    "business",
+    "public-sector"
+  ],
+  "formats": [
+    "in-person"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 4
+  },
+  "audience": [
+    "senior leadership",
+    "middle managers",
+    "public administration",
+    "hospital management",
+    "school administration",
+    "operations managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

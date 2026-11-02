@@ -23,6 +23,28 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Value-stream_mapping",
-    "https://www.lean.org/lexicon-terms/value-stream-mapping/"
-  ]
+    "https://www.lean.org/lexicon-terms/value-stream-mapping/",
+    "https://dora.dev/guides/value-stream-management/",
+    "https://www.epa.gov/sites/default/files/2014-01/documents/lean-methods-guide.pdf",
+    "https://www.epa.gov/sites/default/files/2013-11/documents/lean-in-air-permitting-guide_0.pdf",
+    "https://www.inderscience.com/info/inarticle.php?artid=37919",
+    "https://www.minnesota.edu/about/institutional-effectiveness/project-charters/value-stream-mapping-admissions-process-prospect"
+  ],
+  "use_cases": [
+    "A government permitting office takes months to approve applications that need only a few hours of review, and wants to see at which desk or department each file sits waiting before it redesigns the procedure.",
+    "A college admissions or student advising office wants to find where applications and student requests stall between offices, because students wait weeks for an answer that takes minutes to give.",
+    "A software organisation wants to see why a code change takes days to reach production, mapping each stage from commit through review, testing and release together with the waiting between them.",
+    "A hospital or clinic wants to understand why patients spend most of a visit or referral waiting, by following the patient journey step by step and timing each wait."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-02"
 }

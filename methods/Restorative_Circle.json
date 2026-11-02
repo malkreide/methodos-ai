@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "Restorative_Circle",
+  "name": "Restorative Circle",
+  "category": "facilitation",
+  "use_case": "After an incident that hurt people, such as bullying in a class, a humiliating outburst in a meeting or vandalism in a shared space, a sanction alone has not repaired the damage: those harmed still feel unsafe or betrayed, onlookers have taken sides, and everyone involved has to go on sharing the same school, workplace or club. After separate preparation talks, a trained facilitator brings the wrongdoer, those harmed and their supporters into one circle, asks each in turn what happened, who was affected and how, and what is needed to put it right, and helps them agree on concrete amends.",
+  "strengths": [
+    "those who were hurt get to say in person what the incident did to them and to ask the questions that only the person responsible can answer",
+    "the person responsible faces the actual consequences of their behaviour instead of only a penalty, and gets a defined way back into the group once amends are made",
+    "a fixed sequence of questions put to each person in turn keeps an emotional meeting orderly and stops it turning into a cross-examination or a shouting match",
+    "the outcome is an agreement the participants wrote themselves, which they are more likely to keep than one imposed from above",
+    "inviting supporters for both sides widens responsibility beyond two individuals and makes it harder for the matter to be quietly reopened in the corridor afterwards"
+  ],
+  "weaknesses": [
+    "only works if the person responsible admits at least broadly to what they did and everyone takes part voluntarily; it is no tool for establishing facts or guilt",
+    "needs a facilitator trained in the process plus individual preparation talks with every participant, which together take far longer than the meeting itself",
+    "a badly prepared meeting can harm those affected a second time, especially where there is fear, ongoing intimidation or a marked imbalance of power between the parties",
+    "does not replace safeguarding duties, disciplinary or employment procedures, or a criminal complaint; in serious cases it can at most run alongside or after them",
+    "evidence in schools is mixed: a randomised trial in Pittsburgh found fewer suspensions and a better climate as rated by teachers but no academic gains, and lower test scores in middle schools"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 150
+  },
+  "references": [
+    "https://www.iirp.edu/images/pdf/Defining-Restorative_Nov-2016.pdf",
+    "https://restorativejustice.org.uk/what-restorative-justice",
+    "https://eric.ed.gov/?id=ED594828",
+    "https://fordhaminstitute.org/national/commentary/effects-pittsburghs-new-restorative-justice-program",
+    "https://vuir.vu.edu.au/38759/"
+  ],
+  "use_cases": [
+    "Bullying in a class: a few pupils picked on a classmate for months and got detention, but the victim still feels unsafe and the class is divided into camps; perpetrators, victim and supporters sit in one circle with a facilitator, hear what the bullying did and agree on amends.",
+    "After a racist slur at a works party, the employee responsible has been formally disciplined, but the colleague targeted and those who witnessed it feel the matter was swept under the carpet; the organisation wants a facilitated meeting where the harm is named and amends agreed.",
+    "Teenagers who wrecked the games room of a municipal youth centre have paid for the damage, but the youth workers and the other young people who use the room feel betrayed, and the centre wants them all to meet so the culprits see whom they let down and agree how to make it good.",
+    "After a fight in the playground that left one child injured, the school wants the two families, the children involved and the teachers on duty to sit down together so that the injured child and his parents are heard, the other child takes responsibility, and everyone agrees what will keep it from happening again.",
+    "A volunteer in a sports club spread a damaging rumour about a coach; the club board has dealt with the formal side, but the coach and the young players' parents are still upset, and the club wants a moderated meeting in which the volunteer faces the consequences and the people affected say what would set things right."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 20
+  },
+  "audience": [
+    "teachers and school leaders",
+    "school social workers",
+    "youth workers",
+    "managers and HR staff",
+    "mediators and conflict counsellors",
+    "volunteer organisations and clubs"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

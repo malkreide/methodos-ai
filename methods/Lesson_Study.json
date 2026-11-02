@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Lesson_Study",
+  "name": "Lesson Study",
+  "category": "facilitation",
+  "use_case": "Teachers plan and teach on their own and hardly ever see how pupils in a colleague's classroom actually work through a task, so good ideas stay behind closed doors and nobody can say where pupils' understanding of a difficult topic breaks down. A small group of teachers needs a cycle over several weeks in which they agree a learning goal, plan one lesson together in detail and predict how pupils will respond, one of them teaches it while the others watch the pupils rather than the teacher, and the group then discusses what the evidence of pupils' thinking shows, revises the lesson and carries what it learned into the next one.",
+  "strengths": [
+    "the lesson belongs to the group, so the person teaching it is not the one being judged and the discussion stays on how pupils learned",
+    "planning around predicted pupil responses makes teachers spell out what they expect pupils to understand and where they expect them to stumble, which ordinary preparation rarely does",
+    "observers collect concrete evidence of pupils' thinking (what they said, wrote, got stuck on), which grounds the debrief in more than impressions",
+    "teachers control the topic and the pace, so the work is about questions that matter in their own classrooms rather than a programme delivered from outside",
+    "the documented lesson and what the group learned from it can be shared with colleagues who teach the same topic",
+    "has been adapted from primary schools to secondary, vocational and university teaching"
+  ],
+  "weaknesses": [
+    "needs protected time over several weeks: planning meetings, a timetabled lesson that colleagues can attend, and a debrief soon afterwards",
+    "where trust is low, or a line manager sits in, it slides into an appraisal of the teacher who taught, and people start choosing safe lessons",
+    "the quality of the planning depends on the subject knowledge in the group; teams without access to good materials or a knowledgeable outside commentator can circle around their own assumptions",
+    "evidence outside Japan is mixed: a large English trial found no effect on pupils' test results, while a US trial that supplied teams with research-based materials found gains",
+    "one carefully studied lesson changes a small share of all teaching; the benefit depends on what teachers carry into their everyday lessons",
+    "requires consent and care when observers record what individual pupils say and do"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 360,
+    "max_minutes": 1200
+  },
+  "references": [
+    "https://lessonresearch.net/about-lesson-study/",
+    "https://www.isetl.org/ijtlhe/pdf/IJTLHE110.pdf",
+    "https://files.eric.ed.gov/fulltext/ED581145.pdf",
+    "https://doi.org/10.5951/jresematheduc.48.3.0261",
+    "https://doi.org/10.53349/resource.2021.i16.a998",
+    "https://en.wikipedia.org/wiki/Lesson_study"
+  ],
+  "use_cases": [
+    "Our teachers plan their lessons alone and never watch how the children in each other's classes actually learn, so good ideas stay behind closed doors.",
+    "A maths department sees the same misunderstandings about fractions in every year group's tests and wants to find out, inside a real lesson, where pupils' reasoning goes off track and which kind of task would change that.",
+    "A school is introducing a more open, problem-based way of teaching mathematics, and the leadership wants teachers to try it out together in real classrooms and learn from how pupils respond, rather than sending them to another one-off training day.",
+    "Lecturers who teach parallel sections of the same introductory university course each prepare their sessions separately and want to design one key session together, sit in to see how students make sense of it, and improve it for the next term.",
+    "Instructors at a vocational college or in adult education want to understand why apprentices or adult learners keep struggling with one difficult part of the course, and would rather study their own lessons together than wait for an outside trainer."
+  ],
+  "contexts": [
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 8
+  },
+  "audience": [
+    "teachers and teaching teams",
+    "subject departments",
+    "school leadership",
+    "university lecturers",
+    "vocational and adult education instructors",
+    "teacher educators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

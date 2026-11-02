@@ -7,6 +7,7 @@ Subcommands:
     show ID                    Print a method's full Markdown
     feedback ID --rating N     Rate a method's fit (--aspect recommendation) or outcome
     stats                      Aggregated ratings table
+    goals                      What people did with the console's question back
     --version                  Show version + active providers
 """
 
@@ -207,7 +208,11 @@ def query(
         help="Cross-encoder rerank of the shortlist (default: METHODOS_RERANK_PROVIDER)",
     ),
 ) -> None:
-    """Recommend methods for a problem."""
+    """Recommend methods for a problem.
+
+    The problem text is appended to the feedback log (METHODOS_FEEDBACK_PATH)
+    and, unless --no-llm, sent to the configured LLM provider.
+    """
     from methodos.providers.base import EmbeddingError, LLMError, RerankError
     from methodos.search import StaleIndexError, search
 
@@ -303,6 +308,9 @@ def _load_all_methods(methods_dir: Path) -> list[Method]:
 @app.command("list")
 def list_methods(
     category: str | None = typer.Option(None, "--category", "-c"),
+    context: str | None = typer.Option(
+        None, "--context", help="business, public-sector, education, nonprofit or personal"
+    ),
     max_complexity: int | None = typer.Option(None, "--max-complexity"),
     methods_dir: Path = typer.Option(Path("methods"), "--methods-dir"),  # noqa: B008
 ) -> None:
@@ -310,6 +318,8 @@ def list_methods(
     methods = _load_all_methods(methods_dir)
     if category:
         methods = [m for m in methods if m.category.value == category]
+    if context:
+        methods = [m for m in methods if context in m.contexts]
     if max_complexity is not None:
         methods = [m for m in methods if m.complexity_score <= max_complexity]
 
@@ -351,7 +361,9 @@ def show(
 def feedback(
     method_id: str = typer.Argument(..., help="Method id (e.g. SWOT)"),
     rating: int = typer.Option(..., "--rating", "-r", min=1, max=5),
-    note: str | None = typer.Option(None, "--note", "-n"),
+    note: str | None = typer.Option(
+        None, "--note", "-n", help="Stored verbatim in the feedback log; leave out personal data."
+    ),
     query_id: str | None = typer.Option(None, "--query-id", "-q"),
     aspect: FeedbackAspect = typer.Option(  # noqa: B008
         FeedbackAspect.application,
@@ -403,6 +415,86 @@ def stats_cmd() -> None:
             f"{stat.avg_recommendation_rating:.2f}" if stat.recommendation_rating_count else "—",
         )
     console.print(table)
+
+
+FEW_QUESTIONS = 30
+"""Below this many questions asked, `goals` says its numbers are anecdotes."""
+
+FEW_RATINGS = 10
+"""Below this many ratings, `goals` puts a mean in parentheses.
+
+Ratings run 1-5 and scatter by about one point, so a mean of ten is still
+uncertain by roughly ±0.6 either way: enough to see a goal that clearly helps
+or hurts, not to rank two close ones. The invented log from
+scripts/sample_goal_log.py shows why a line is needed at all: with 60
+questions, goals get a few ratings each and their means land up to a point
+away from the profile they were drawn from."""
+
+
+def _console_goals() -> list[str]:
+    """The goals the console offers, read off its GOALS constant — the console
+    is the one place they are defined, and a goal nobody picks is a finding."""
+    import re
+
+    html = (Path(__file__).parent / "console.html").read_text(encoding="utf-8")
+    block = html.split("const GOALS = [", 1)[1].split("];", 1)[0]
+    return re.findall(r"'(\w+)'", block)
+
+
+def _mean(values: list[int]) -> str:
+    if not values:
+        return "—"
+    shown = f"{len(values)} · {sum(values) / len(values):.1f}"
+    return f"({shown})" if len(values) < FEW_RATINGS else shown
+
+
+@app.command("goals")
+def goals_cmd() -> None:
+    """What people did when the console asked «Was möchten Sie erreichen?».
+
+    Counts only searches made through the HTTP API since it started recording
+    the question; the CLI never asks.
+    """
+    from methodos.feedback import goal_stats
+
+    settings = _load_settings()
+    g = goal_stats(settings.feedback_path)
+    if not g.recorded:
+        console.print("[yellow]No search has recorded the question yet.[/]")
+        return
+
+    share = f" ({g.answered / g.asked:.0%})" if g.asked else ""
+    console.print(
+        f"Asked on {g.asked} of {g.recorded} searches; a goal was picked after "
+        f"{g.answered}{share}. Back to the problem as typed: {g.back}."
+    )
+    if g.asked < FEW_QUESTIONS:
+        console.print(
+            f"[yellow]Fewer than {FEW_QUESTIONS} questions asked — read what follows "
+            "as anecdotes, not rates.[/]"
+        )
+    if g.rows:
+        table = Table(title="Goals picked")
+        table.add_column("Goal", style="cyan")
+        table.add_column("Picked", justify="right")
+        table.add_column("First method changed", justify="right")
+        table.add_column("Refined results rated (n · mean)", justify="right")
+        table.add_column("First before the goal rated (n · mean)", justify="right")
+        for row in sorted(g.rows.values(), key=lambda r: (-r.clicks, r.goal)):
+            table.add_row(
+                row.goal,
+                str(row.clicks),
+                str(row.first_changed),
+                _mean(row.ratings),
+                _mean(row.before),
+            )
+        console.print(table)
+        if any(0 < len(v) < FEW_RATINGS for r in g.rows.values() for v in (r.ratings, r.before)):
+            console.print(
+                f"(…) fewer than {FEW_RATINGS} ratings: too few to say whether that goal helps."
+            )
+    if never := [x for x in _console_goals() if x not in g.rows]:
+        console.print(f"Never picked: {', '.join(never)}")
 
 
 if __name__ == "__main__":

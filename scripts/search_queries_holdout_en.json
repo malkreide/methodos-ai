@@ -1,0 +1,130 @@
+[
+  {
+    "query": "Nobody feels responsible for communicating with parents",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ],
+    "goal": null
+  },
+  {
+    "query": "nobody knows who owns which task in our project",
+    "acceptable": [
+      "RACI_Matrix",
+      "DACI_Matrix",
+      "Team_Charter"
+    ],
+    "goal": null
+  },
+  {
+    "query": "We keep starting new projects, but nothing gets finished",
+    "acceptable": [
+      "Ecocycle_Planning",
+      "Cost_of_Delay_WSJF",
+      "OKR",
+      "Eisenhower_Matrix"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "My to-do list gets longer every day and everything seems urgent",
+    "acceptable": [
+      "Eisenhower_Matrix"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "At the big parents' event everyone should get talking with each other, not just listen",
+    "acceptable": [
+      "World_Cafe",
+      "Open_Space_Technology",
+      "Fishbowl"
+    ],
+    "goal": "involve"
+  },
+  {
+    "query": "Handing in the grades went wrong, we want to understand what really caused it",
+    "acceptable": [
+      "Five_Whys",
+      "Ishikawa_Diagram",
+      "After_Action_Review"
+    ],
+    "goal": "cause"
+  },
+  {
+    "query": "Does our own solar installation on the school roof pay off?",
+    "acceptable": [
+      "Cost_Benefit_Analysis"
+    ],
+    "goal": "decide"
+  },
+  {
+    "query": "We want to test a new break-time concept first before introducing it at all schools",
+    "acceptable": [
+      "PDCA_Cycle"
+    ],
+    "goal": "pilot"
+  },
+  {
+    "query": "What does switching to block schedules do to families, childcare and teachers?",
+    "acceptable": [
+      "Futures_Wheel",
+      "Stakeholder_Map"
+    ],
+    "goal": "anticipate"
+  },
+  {
+    "query": "How can we prove that our learning support offer achieves something?",
+    "acceptable": [
+      "Theory_of_Change",
+      "Most_Significant_Change",
+      "Balanced_Scorecard"
+    ],
+    "goal": "impact"
+  },
+  {
+    "query": "In the committee every decision is postponed to the next meeting",
+    "acceptable": [
+      "Consent_Decision_Making",
+      "Nominal_Group_Technique",
+      "Six_Thinking_Hats",
+      "Weighted_Decision_Matrix",
+      "DACI_Matrix"
+    ],
+    "goal": "decide"
+  },
+  {
+    "query": "The school office receives many different complaints, which should we tackle first?",
+    "acceptable": [
+      "Pareto_Analysis"
+    ],
+    "goal": "prioritise"
+  },
+  {
+    "query": "Where does our school stand: what are we good at and where are we weak?",
+    "acceptable": [
+      "SWOT",
+      "Benchmarking"
+    ],
+    "goal": null
+  },
+  {
+    "query": "Our school's open day ends in frustration every year",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Sailboat_Retrospective"
+    ],
+    "goal": "learn"
+  },
+  {
+    "query": "Our summer fair is a mess every year and we never learn anything from it",
+    "acceptable": [
+      "After_Action_Review",
+      "Start_Stop_Continue",
+      "Sailboat_Retrospective"
+    ],
+    "goal": "learn"
+  }
+]

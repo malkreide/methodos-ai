@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "Risk_Matrix",
+  "name": "Risk Matrix and Risk Register",
+  "category": "analysis",
+  "use_case": "A project, programme or organisation is carrying a long, unsorted list of things that could go wrong and cannot tell which of them deserve management attention and money. Nobody knows who is responsible for watching each threat or what is being done about it. Rating every threat for likelihood and severity of consequence, plotting the ratings on a grid and recording owners and responses in a register turns the list into a ranked, accountable set of actions.",
+  "strengths": [
+    "turns an unsorted list of worries into a short, ordered set of threats that get attention first",
+    "forces every significant threat to have a named owner, a response and a review date",
+    "a shared rating scale makes threats from different departments or workstreams comparable",
+    "easy to explain to boards, auditors and funders, and recognised by ISO 31000-style risk frameworks",
+    "the register gives a lasting record that can be reviewed and updated as the project moves"
+  ],
+  "weaknesses": [
+    "ordinal scales hide large differences: two threats in the same cell can differ by orders of magnitude (range compression)",
+    "multiplying ordinal ratings into a score is arithmetically unsound and can rank threats in the wrong order",
+    "rare but catastrophic events tend to land in a low-likelihood cell and get too little attention",
+    "ratings are subjective and swing with who is in the room and how the scale words are read",
+    "a register that is filled in once and never reviewed becomes compliance paperwork",
+    "only captures threats someone has already thought of; it does not generate new ones"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.iso.org/standard/65694.html",
+    "https://www.iso.org/standard/72140.html",
+    "https://www.pmi.org/pmbok-guide-standards/foundational/pmbok",
+    "https://www.pmi.org/learning/library/assessing-risk-probability-impact-alternative-approaches-8444",
+    "https://doi.org/10.1111/j.1539-6924.2008.01030.x",
+    "https://doi.org/10.1016/j.ssci.2015.02.014",
+    "https://doi.org/10.1111/risa.13822",
+    "https://www.gov.uk/government/publications/orange-book",
+    "https://en.wikipedia.org/wiki/Risk_matrix"
+  ],
+  "use_cases": [
+    "A municipal administration or public agency has to show its audit committee or council that its main operational, financial and compliance threats are known, rated on one consistent scale across departments, and each has someone accountable for it.",
+    "A school or university is organising a field trip, an exchange programme or a large event and must document which hazards to students are both likely and serious enough to need precautions, and who is responsible for each precaution.",
+    "A project manager takes over a programme midway and finds a spreadsheet of dozens of concerns collected over months, with no agreed severity and no clarity about which ones anyone is actually handling.",
+    "A management team has a limited contingency budget and must decide which of many possible threats, from a supplier collapsing to a data breach or key staff leaving, are worth paying to reduce.",
+    "A nonprofit applying for a grant is asked by the funder to show, for each major threat to delivering the programme, how likely it is, how much damage it would do and what will be done about it."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "project and programme managers",
+    "management teams",
+    "public administration",
+    "school leadership",
+    "audit and compliance",
+    "nonprofit programme leads"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

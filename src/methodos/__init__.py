@@ -1,4 +1,4 @@
 """Methodos AI — RAG catalog of management methods."""
 
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 """Kept equal to pyproject.toml's `version` by tests/test_version.py."""

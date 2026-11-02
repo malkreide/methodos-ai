@@ -28,9 +28,15 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
    ranking issues from LLM issues.
 
 ## How to add a new method
-1. Create `methods/<Id>.json` + `methods/<Id>.md`
-2. `python -m methodos.cli ingest`
-3. `methodos query "<test problem>"`
+1. Create `methods/<Id>.json` + `methods/<Id>.md` (fields: `docs/method-format.md`)
+2. Add an English probe to `PROBES` and a German one to `PROBES_DE` in `tests/test_integration.py`
+3. `python -m methodos.cli ingest`
+4. `methodos query "<test problem>"`, then `pytest -m integration`
+
+## Curating the catalog
+- `scripts/audit_catalog.py` lists what needs work; the `method-curator` and
+  `method-author` agents in `.claude/agents/` do it as draft PRs.
+- The owner's merge is the review. Agents never merge. See `docs/curation.md`.
 
 ## How to add a new provider
 1. Implement the Protocol in `src/methodos/providers/`
@@ -44,12 +50,15 @@ On Windows without `make`: run the inner commands directly (`pytest`, `ruff chec
 3. Always-rebuild ingest. Chroma is a derived artifact.
 4. Determinism in tests. Fakes, not mocks.
 5. JSONL feedback is the placeholder. Don't pre-build a SQLite migration.
+6. The repository is public. Premium assets are referenced by `url`, never
+   committed (the model enforces it).
 
 ## Surfaces, and what each one may do
 | | LLM call? | Why |
 |---|---|---|
 | CLI `query` | yes | Nothing else would write the explanation. |
 | HTTP `/query` | yes | Same — plus it is the surface that exists to exercise the explain path. |
+| HTTP `/proposals/extract` | only with `draft` on | Turns an uploaded file's text into a form draft. The file itself never reaches the LLM; audio and video are transcribed locally (`TranscriptionProvider`). |
 | MCP server | **never** | The caller already is a model with the user's context. |
 
 `api.py` and `mcp_server.py` are both thin translators over `mcp_tools`. Ranking

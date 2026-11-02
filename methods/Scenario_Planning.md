@@ -8,6 +8,8 @@ that survive all of them.
 - Long-horizon commitments where a single-number forecast would be dishonest
 - Deep uncertainty: regulation, technology substitution, geopolitics
 - When an organisation cannot discuss a future it finds uncomfortable
+- Public policy and education planning, where today's decisions (infrastructure,
+  school estates, workforce) outlive several governments
 
 ## When *not* to use
 
@@ -26,6 +28,12 @@ that survive all of them.
 6. Test the current strategy in each. Note what breaks and what holds.
 7. Define early-warning indicators per world, and who watches them.
 
+The two-axis grid is the most common construction, not the only one. Government
+foresight guidance also describes building scenarios from a set of archetypes or
+by combining several factors at once, and calls step 6 policy stress-testing or
+"wind tunnelling". Workshops can run face to face or online with breakout rooms
+and a shared whiteboard; the horizon is at least five years and usually ten or more.
+
 ## Common pitfalls
 
 - Producing best case, worst case and a comfortable middle — that is not scenarios
@@ -37,4 +45,7 @@ that survive all of them.
 
 - [PESTEL Analysis](PESTEL_Analysis.md) — feeds the driving-forces step
 - [Pre-Mortem Analysis](Pre_Mortem.md) — cheaper, for a single plan rather than a portfolio
-- [HBR: Living in the Futures](https://hbr.org/2013/05/living-in-the-futures)
+- [HBR: Living in the Futures](https://hbr.org/2013/05/living-in-the-futures) — Wilkinson and Kupers on four decades of scenarios at Shell
+- [HBR: Scenarios: Uncharted Waters Ahead](https://hbr.org/1985/09/scenarios-uncharted-waters-ahead) — Pierre Wack, who built the Shell approach
+- [GOV.UK: Futures Toolkit](https://www.gov.uk/government/publications/futures-toolkit-for-policy-makers-and-analysts) and its [scenarios facilitation worksheet](https://www.gov.uk/government/publications/scenarios-facilitation-worksheet/scenarios-facilitation-worksheet) — Government Office for Science, 2024
+- [OECD: Back to the Future of Education](https://doi.org/10.1787/178ef527-en) — four scenarios for schooling to 2040, 2020

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Design_Sprint",
+  "name": "Design Sprint",
+  "category": "strategy",
+  "use_case": "A leadership group has been going round in circles for months about whether to back a big new idea, such as a new digital service or a new way of informing parents, and the money is about to be released on the strength of opinions alone. It wants to settle the question in one intensive, time-boxed week: the people who matter, including whoever has the final say, work on it together without interruption, turn the idea into a realistic-looking mock-up, and watch a handful of real future customers or residents try it before anything is funded or built.",
+  "strengths": [
+    "replaces months of meetings and opinion with one week that ends in observed reactions",
+    "the person with the final say takes part, so the outcome turns into a decision rather than another round of discussion",
+    "a fake but convincing mock-up is cheap to build and cheap to throw away",
+    "structured individual sketching and silent voting keep loud voices and seniority from settling the question",
+    "a clear result either way: an idea that fails on Friday has cost five days, not a budget year"
+  ],
+  "weaknesses": [
+    "needs a decision-maker and a cross-functional team of up to about seven people free for five consecutive days",
+    "five one-to-one tests reveal whether people understand and can use the idea, not whether enough of them will want or adopt it",
+    "overkill for small or well-understood questions, and too short for problems nobody has researched at all",
+    "can turn into innovation theatre: an energising week whose results are never acted on",
+    "in public bodies, procurement, data-protection and legal rules may limit what can be shown to residents and who may build it"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 1440,
+    "max_minutes": 2400
+  },
+  "references": [
+    "https://www.gv.com/sprint/",
+    "https://en.wikipedia.org/wiki/Design_sprint",
+    "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/",
+    "https://publicpolicydesign.blog.gov.uk/2025/01/30/sprint-before-you-walk-fail-faster/",
+    "https://dwpdigital.blog.gov.uk/2021/03/31/five-tips-for-running-a-remote-design-sprint/",
+    "https://charlesrt.uk/blog/running-a-design-sprint-in-government/"
+  ],
+  "use_cases": [
+    "The management board of a public agency must decide next month whether to fund a major new service it has debated at length; instead of another round of position papers, it wants its key staff to spend five consecutive days building a believable mock-up and observing five citizens using it.",
+    "An education authority is split over a proposed new format for informing families about starting school, and wants the people who will decide to spend one concentrated week shaping a single version and showing it to a few parents before the budget meeting.",
+    "A young company is about to invest its seed money in a new offering that exists only as slides and conviction; the founders want to see, before writing any code, whether a handful of target customers understand a convincing facade of it and can actually use it.",
+    "A ministry policy team wants to know whether a new idea for guiding young people through their options makes sense to them, and would rather find out in a week with a rough version than after a full programme has been commissioned."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 8
+  },
+  "audience": [
+    "product team",
+    "leadership team",
+    "public administration",
+    "education authority",
+    "start-up founders",
+    "service design team"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

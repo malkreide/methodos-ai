@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "One_Two_Four_All",
+  "name": "1-2-4-All",
+  "category": "facilitation",
+  "use_case": "In our meetings the same few people do all the talking while most of the room says nothing, so we only ever hear the loudest or most senior views and the others' ideas are lost. We need a quick way, a quarter of an hour rather than a workshop, to get a contribution from every single person on a shared question and see which ideas the whole group finds strongest, whether there are six of us or two hundred.",
+  "strengths": [
+    "every participant speaks within minutes, without anyone being singled out",
+    "silent writing first lets people form a view before hearing the boss's",
+    "pairs and fours filter weak ideas before they reach the whole room",
+    "takes about fifteen minutes and needs no materials beyond paper",
+    "works the same way with a handful of people or several hundred"
+  ],
+  "weaknesses": [
+    "generates and sorts ideas but does not decide anything on its own",
+    "the tight timing feels rushed to groups used to open discussion",
+    "the plenary round can still be captured by the most confident speakers",
+    "regrouping into pairs and fours is clumsy online without breakout rooms",
+    "wasted on a question that has one right answer or is already decided"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 12,
+    "max_minutes": 30
+  },
+  "references": [
+    "https://www.liberatingstructures.com/1-2-4-all",
+    "https://www.liberatingstructures.com/the-surprising-power-of-liberating-structures",
+    "https://doi.org/10.1111/j.1365-2923.2011.03961.x",
+    "https://www.kent.edu/ctl/think-pair-share",
+    "https://www.sessionlab.com/methods/1-2-4-all"
+  ],
+  "use_cases": [
+    "A town council is holding a public meeting about a new park plan and wants to hear from residents who never take the microphone, not just from the few who speak at every session.",
+    "A lecturer asks a large class an open question and the same three students answer every time while everyone else waits for them.",
+    "At our all-hands the director asks for ideas, there is an awkward silence, and afterwards people say in the corridor what they did not want to say in front of everyone.",
+    "A hospital ward team needs suggestions from nurses, porters and doctors alike on reducing patient waiting, but junior staff defer to senior clinicians whenever they are in the room.",
+    "A remote team call where a couple of people talk over each other and the rest keep their cameras and microphones off."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 1000
+  },
+  "audience": [
+    "team leads",
+    "meeting facilitators",
+    "teachers and lecturers",
+    "community engagement officers",
+    "workshop hosts"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

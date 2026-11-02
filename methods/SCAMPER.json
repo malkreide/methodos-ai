@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "SCAMPER",
+  "name": "SCAMPER",
+  "category": "analysis",
+  "use_case": "An offer, service, product or routine already exists and does its job, but it has gone stale and people have stopped seeing how it could be different. The team wants a steady stream of concrete ideas for changing it, working from the thing as it is today and questioning it piece by piece, rather than inventing something new from a blank page.",
+  "strengths": [
+    "starts from something that already exists, so nobody faces an empty page and every idea is anchored in a real offer or process",
+    "seven fixed prompts push thinking in directions people would not take on their own, such as dropping a part entirely or reversing the order of steps",
+    "can be used by one person at a desk as well as by a group in a workshop, with no materials beyond a list of the prompts",
+    "quick to learn; in one expert study a fifteen-minute introduction was enough for participants to use it",
+    "works on services and administrative processes as well as on physical products",
+    "the prompt that produced each idea is recorded, which makes it easy to see which kinds of change have and have not been considered"
+  ],
+  "weaknesses": [
+    "yields variations of what exists; it rarely leads to a fundamentally different kind of answer",
+    "produces many ideas of very uneven quality and does not help choose between them; a separate evaluation step is always needed",
+    "some prompts fit a given object badly, and groups waste time forcing answers under every letter",
+    "assumes the problem is already understood; it cannot tell whether the existing offer is the right thing to improve at all",
+    "the research evidence is thin: a handful of design studies, mostly small and short, rather than a body of controlled trials",
+    "in a group it inherits the usual problems of spoken idea rounds, such as dominant voices and early criticism, unless the session is structured"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/SCAMPER",
+    "https://de.wikipedia.org/wiki/SCAMPER",
+    "https://www.adb.org/publications/scamper-technique",
+    "https://www.designsociety.org/download-publication/35202/CREATIVITY+IN+TRANSACTIONAL+DESIGN+PROBLEMS%3A+NON-INTUITIVE+FINDINGS+OF+AN+EXPERT+STUDY+USING+SCAMPER",
+    "https://archive.org/details/appliedimaginati00osborich",
+    "https://archive.org/details/scampergamesfori0000eber"
+  ],
+  "use_cases": [
+    "Our school has run the same introduction day for new teachers for years; it covers what it should, but newcomers find it dull, and the team wants ideas for reworking it that start from the programme we already have.",
+    "A teacher has taught the same course unit the same way for a long time and wants to rethink it lesson by lesson, asking for each part what could be swapped, merged, left out or done the other way round.",
+    "A public library's lending and events offer is used steadily but no longer attracts new visitors, and staff want to produce variants of the existing services instead of designing a new programme from nothing.",
+    "A company sells a well-established product and wants a set of variants and spin-offs derived from the current design, by changing its materials, size, uses or the order of its parts one at a time."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "teachers and school leadership",
+    "product and engineering teams",
+    "service designers",
+    "public administration teams",
+    "workshop facilitators",
+    "individuals working on their own offer"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "Cost_of_Delay_WSJF",
+  "name": "Cost of Delay / WSJF (Weighted Shortest Job First)",
+  "category": "prioritization",
+  "use_case": "Several stakeholders compete for the same delivery team and every request arrives labelled urgent, yet nobody can say what is actually lost if a given item waits another month. Estimating each item's cost of delay, the value that drains away for every week it is not delivered, and dividing it by how long the item will occupy the team gives a sequence that puts first the work that loses the most while waiting relative to its duration.",
+  "strengths": [
+    "replaces competing claims of urgency with one comparable figure: value lost per unit of waiting",
+    "separates how valuable an item is from how quickly that value decays, which intuition merges",
+    "dividing by duration rewards splitting large items into smaller deliverable pieces",
+    "surfaces the assumptions behind each estimate so they can be challenged and revised"
+  ],
+  "weaknesses": [
+    "cost of delay and duration are both estimates, and the ranking is only as good as the weakest of them",
+    "relative-point variants invite stakeholders to inflate their own numbers to move up the queue",
+    "the popular scaled-agile formula adds relative scores instead of estimating money lost per week, which loses much of the economic logic",
+    "assumes one shared capacity constraint; dependencies and fixed deadlines still need separate handling",
+    "poor fit for work whose value cannot sensibly be expressed per week, such as long-term capability building"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Cost_of_delay",
+    "https://blackswanfarming.com/cost-of-delay/",
+    "https://blackswanfarming.com/cost-of-delay-divided-by-duration/",
+    "https://blackswanfarming.com/safe-and-weighted-shortest-job-first-wsjf/",
+    "https://framework.scaledagile.com/wsjf"
+  ],
+  "use_cases": [
+    "A cantonal IT department receives change requests from several offices, each marked top priority; some are tied to a legal deadline or expiring funding while others would lose nothing by waiting a year, and the department has to show which is which.",
+    "A regulatory deadline, a seasonal sales window and a contract penalty all compete for one platform team, and the head of delivery wants to put a price on each week of slipping before deciding what goes first.",
+    "A portfolio board keeps starting its biggest projects first and finishing everything late, and wants to test whether running short, time-sensitive jobs ahead of them would lose less value overall.",
+    "Before the school year starts, a district's small IT team faces requests from every school; some are worthless if they miss the first day of term, others are just as useful in November."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "product managers",
+    "portfolio boards",
+    "IT demand management",
+    "delivery leads",
+    "agile release trains"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

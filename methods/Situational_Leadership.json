@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Situational_Leadership",
+  "name": "Situational Leadership",
+  "category": "decision-making",
+  "use_case": "A leader treats every member of staff the same way, so people who are new to a piece of work get too little instruction and flounder, while seasoned people get checked and corrected far more than they need and lose their drive. For each person and each important task, the leader judges how much skill and how much confidence and motivation the person currently brings to that particular task, chooses the matching mix of guidance and encouragement, from close step-by-step instruction through coaching and backing to handing the task over entirely, says openly which approach they are taking and why, and shifts it as the person grows or stalls.",
+  "strengths": [
+    "gives a leader a simple vocabulary for something they otherwise do by instinct: how much instruction and how much encouragement this person needs on this task",
+    "the unit of judgement is a person on a task, not a person overall, which makes it easier to see that an expert can still be a beginner at something new",
+    "explains both classic complaints at once: newcomers left to sink and experienced staff who feel watched",
+    "talking openly about which approach the leader is taking turns an implicit judgement into an agreement both sides can revisit",
+    "quick to learn and widely taught, so many managers and school leaders will already know the four styles"
+  ],
+  "weaknesses": [
+    "empirical support is weak: independent tests have found at best partial backing, mostly for people new to a task, and the revised version fared no better than the original",
+    "critics have long pointed to an ambiguous notion of readiness or development level and to problems with the rules that match a style to it",
+    "four boxes oversimplify; real people are rarely clearly in one of them, and the diagnosis rests on the leader's own reading",
+    "used carelessly, the levels become labels that stick to a person instead of describing their current grip on one task",
+    "about one leader and one person; it says nothing about dynamics, conflict or roles within the team as a whole",
+    "two diverging commercial versions with different names and level definitions cause confusion in training and in research"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://www.situational.com/situational-leadership/",
+    "https://en.wikipedia.org/wiki/Situational_leadership_theory",
+    "https://jewlscholar.mtsu.edu/handle/mtsu/6787",
+    "https://aquila.usm.edu/fac_pubs/6864/",
+    "https://doi.org/10.5465/amr.1983.4284738",
+    "https://doi.org/10.1037/0021-9010.72.3.444",
+    "https://doi.org/10.1016/S1048-9843(97)90014-X",
+    "https://doi.org/10.1016/j.leaqua.2009.06.014"
+  ],
+  "use_cases": [
+    "I lead everyone on my team the same way, and the new colleagues feel left on their own while the experienced ones complain that I breathe down their necks.",
+    "One of my strongest people is struggling with an unfamiliar assignment I gave her, because I left her alone with it the way I always do with her regular work.",
+    "A school principal accompanies a newly qualified teacher in the first term and, at the same time, two experienced teachers who have just taken on the role of subject coordinator, and wants to decide how closely to guide each of them.",
+    "A section head in a municipal office has a keen new hire who keeps making mistakes on permit files and a long-serving case officer who knows the work inside out but has lost heart after a reorganisation, and wonders how much instruction and how much encouragement each one needs.",
+    "A volunteer coordinator in a nonprofit finds that long-time volunteers drift away when every step is prescribed, while first-timers quit because nobody showed them what to do."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 2
+  },
+  "audience": [
+    "team leads and line managers",
+    "school leadership",
+    "public administration supervisors",
+    "volunteer coordinators",
+    "mentors and onboarding buddies"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

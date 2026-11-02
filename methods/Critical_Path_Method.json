@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Critical_Path_Method",
+  "name": "Critical Path Method (CPM)",
+  "category": "analysis",
+  "use_case": "A one-off project has a finish date that cannot move, and it consists of many tasks where one cannot begin until another is done. Nobody can say which late task will push back the end date and which could slip for days without harming anything. Listing every task with its duration and its predecessors, and calculating the longest chain of dependent tasks through that network, shows which tasks set the finish date and how much leeway each of the others has.",
+  "strengths": [
+    "shows which few tasks actually determine the finish date, so attention goes there instead of everywhere",
+    "puts a number on the leeway of every other task, which makes trade-offs and reassignments explicit",
+    "makes hidden dependencies visible, often revealing work that nobody had planned to start early enough",
+    "lets the team test a change before making it: what happens to the end date if this delivery is a week late",
+    "works with nothing more than a task list, sticky notes and simple arithmetic for small and medium projects"
+  ],
+  "weaknesses": [
+    "every duration is a single estimate, so the calculated finish date looks more certain than it is",
+    "the basic calculation assumes unlimited people and equipment; two critical tasks needing the same person are not detected",
+    "only as good as the dependency list: a missing link produces a wrong critical path without any warning",
+    "the network has to be updated as work progresses, or it quickly stops describing the real project",
+    "costs more effort than it saves on small projects or on iterative work whose scope keeps changing"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://doi.org/10.1145/1460299.1460318",
+    "https://doi.org/10.1287/opre.7.5.646",
+    "https://hbr.org/1963/09/the-abcs-of-the-critical-path-method",
+    "https://en.wikipedia.org/wiki/Critical_path_method",
+    "https://en.wikipedia.org/wiki/Program_evaluation_and_review_technique",
+    "https://en.wikipedia.org/wiki/Critical_chain_project_management",
+    "https://www.gao.gov/products/gao-16-89g"
+  ],
+  "use_cases": [
+    "A school has to move into a new building before the first day of term: the builders hand over late, furniture and IT cannot go in until then, and teachers can only unpack once both are done. The school leadership wants to know which hold-up would actually cost the opening date.",
+    "A public office is replacing its case-management software, and data migration, staff training, interfaces to other agencies and testing each have to wait for something else to finish first; the project lead needs to know which hold-up would delay the whole changeover.",
+    "An organising team is preparing a conference or large event on a date that cannot change, with venue, permits, speakers, catering and printing all waiting on earlier decisions, and wants to know what must be finished first and what can safely wait.",
+    "A project is already running late and the sponsor asks where adding people or money would bring the end date forward; most tasks would gain nothing from it, and the team needs to find the ones that would."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 12
+  },
+  "audience": [
+    "project managers",
+    "school leadership",
+    "public-sector project leads",
+    "event organisers",
+    "IT rollout teams",
+    "construction and facilities managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

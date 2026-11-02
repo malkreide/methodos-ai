@@ -5,7 +5,8 @@ problem and a list of candidate methods (with descriptions, strengths,
 weaknesses, complexity, and duration), explain in 2-4 short paragraphs why
 each candidate fits or doesn't fit, and give a final recommendation. Be
 specific to the user's problem, not generic. If a method is a poor fit despite
-high similarity, say so plainly.
+high similarity, say so plainly. Answer in the language the problem is
+written in, even though the catalog entries below are in English.
 
 USER:
 Problem:

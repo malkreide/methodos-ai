@@ -18,9 +18,14 @@ Three such narrowings exist here, and each has a field:
   * the reranker may be absent        -> `ranking_basis`
   * vector search never returns empty -> `guidance` when the best match is weak
 
-That last one is the important one. `retrieve()` answers every query with its
-nearest neighbours, so "how do I fix my bicycle chain" comes back with Five
-Whys at similarity 0.106 and looks exactly like a real hit.
+and one judgement the ranking cannot make alone:
+
+  * a problem that names a place and a feeling but no goal ("unser Sommerfest
+    ist jedes Jahr ein Durcheinander") -> `clarify` when the ranking is unsure
+
+The weak-match case is the important one. `retrieve()` answers every query with its
+nearest neighbours, so "how do I fix my bicycle chain" comes back with a
+method at similarity 0.146 and looks exactly like a real hit.
 """
 
 from __future__ import annotations
@@ -31,22 +36,74 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from methodos.guide import MethodGuide, parse_guide
-from methodos.models import Category, Method
+from methodos.models import Asset, Category, Context, Format, GroupSize, Method
 from methodos.providers.base import EmbeddingProvider, RerankProvider
 from methodos.search import Candidate, collection_size, retrieve
 
-WEAK_MATCH_SIMILARITY = 0.25
+WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
-Measured against the shipped 23-method catalog, not guessed. The weakest of the
-23 pinned integration probes tops out at 0.321 (Value Stream Mapping); queries
-the catalog genuinely does not cover land far lower — 0.106 for "how do I fix
-my bicycle chain", 0.048 for "what is the capital of France". 0.25 sits in the
-empty band between those two populations.
+Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43,
+47, 51, 55, 59, 63, 67, 71, 79 and 87) with the default multilingual embedding, not guessed. Every
+one of the 174 pinned integration probes (87 English, 87 German) reaches at least
+0.380 with its best match; questions the catalog genuinely does not cover top
+out at 0.329 ("wie flicke ich meine Velokette", 0.265 until the Eisenhower
+Matrix gained a problem-voice use case, "I have far more on my plate…", in the
+71-method catalog), with "Rezept für Zürcher Geschnetzeltes" at 0.291 and "how
+do I fix my bicycle chain" at 0.224. 0.33 sits in the empty band between those
+two populations, now only 0.001 above its upper edge.
+tests/test_integration.py pins both sides.
+
+The band is narrower than it was under the English-only model (0.127-0.321),
+because a multilingual model maps more of everyday language near *something*.
+Re-measure after changing the embedding model or adding many methods.
 
 It is a hint threshold, never a filter: results below it are still returned,
 because a weak match plus a stated caveat is more useful than an empty list
 that a model will fill in from memory.
+"""
+
+UNSURE_TOP_SCORE = 0.0
+UNSURE_MARGIN = 1.0
+"""`clarify` is set when the cross-encoder's best score is below UNSURE_TOP_SCORE
+and leads the runner-up by less than UNSURE_MARGIN.
+
+Measured 2026-10-12 on the 79-method catalog against the 55 problems in
+scripts/search_queries.json and search_queries_holdout.json (problems as people
+type them, with their acceptable methods). The rule catches 12 of the 15 whose
+first result is wrong, at the price of 8 of the 40 whose first result is right.
+Of the 158 pinned integration probes it asks on 5, all of them already right.
+Neither score alone separates them: a wrong first place at +0.6 exists, and a
+right one at -2.
+
+What a person does with the question was measured too. Adding the goal they
+would name ("Wir wollen herausfinden, woran es liegt.") to the problem:
+
+                          first place right     a right one in the top 3
+  wrong before (10)         0 -> 5                  4 -> 8
+  right before  (8)         8 -> 4                  8 -> 7
+
+so a goal moves the right method up about as often as it pushes a right one
+down. The console therefore shows the refined results *and* keeps the earlier
+first place: with it, all 8 stay visible and 8 of the 10 gain a right method.
+Two of the 20 flagged problems had no goal on offer that fits. Re-measure with
+the rule and the goals after changing the reranker or the catalog's wording.
+
+Re-measured 2026-10-13 on 87 methods with scripts/verify_goals.py, which keeps
+each problem's goal in the query files, and for the first time in English, on
+the same 55 problems translated:
+
+                       asked on            first place right   a right one shown
+                       wrong    right      wrong    right      wrong    right
+  German sentences     10/15    7/40       0 -> 5/9 7 -> 3/7   4 -> 8/9 7 -> 6/7
+  English sentences     9/15    5/40       0 -> 4/8 5 -> 4/5   3 -> 5/8 5 -> 4/5
+
+With the earlier first match kept on screen every right answer stays visible in
+both languages. The English sentences lift about as many first places as the
+German ones but fewer into view; where they fail, they mostly fail on problems
+English search already misses badly (an unrelated top three that a goal does
+not move). A difference of one or two problems is within what one wording more
+or less moves.
 """
 
 RankingBasis = Literal["cross-encoder", "embedding-similarity"]
@@ -60,6 +117,19 @@ _WEAK_MATCH_GUIDANCE = (
 )
 
 
+_CLARIFY = (
+    "The ranking is unsure: the best match scored {top:+.2f} and leads the next by "
+    "{margin:.2f}. The problem likely names a situation but not what the user wants "
+    "from it. Ask the user what they want to achieve — understand a cause, learn "
+    "from something that keeps going wrong, decide between options, set "
+    "priorities, involve the people concerned, generate ideas, think through "
+    "consequences beforehand, show whether something works, try it small first, "
+    "resolve a conflict — and call `recommend_methods` again with that goal added "
+    "to the problem in one sentence. Keep the current first match in view: a goal "
+    "added to a problem can push a right answer down as well as up."
+)
+
+
 class MethodMatch(BaseModel):
     """One retrieved method. Mirrors `search.Candidate` as a serialisable model."""
 
@@ -68,6 +138,11 @@ class MethodMatch(BaseModel):
     category: str
     complexity_score: int = Field(ge=1, le=5)
     use_case: str
+    matched_use_case: str | None = Field(
+        default=None,
+        description="The further use case of this method the problem matched, "
+        "when it was not `use_case` itself. Scores refer to this text.",
+    )
     strengths: list[str]
     weaknesses: list[str]
     duration_min: int
@@ -103,6 +178,14 @@ class RecommendResult(BaseModel):
         description="Set when the best match is weak. Names a next step; absence "
         "of it is not a quality guarantee.",
     )
+    clarify: str | None = Field(
+        default=None,
+        description="Set when the cross-encoder could not separate the top matches "
+        "and none of them scored well: ask the user what they want to achieve "
+        "before relying on the order. Never set together with `guidance`, and "
+        "only when ranking_basis is 'cross-encoder' and at least two methods "
+        "were returned.",
+    )
 
 
 class CatalogEntry(BaseModel):
@@ -112,12 +195,20 @@ class CatalogEntry(BaseModel):
     complexity_score: int
     duration_min: int
     duration_max: int
+    contexts: list[Context] = Field(
+        default_factory=list, description="Empty means not yet classified, not 'none'."
+    )
+    formats: list[Format] = Field(default_factory=list)
+    language: str
 
 
 class CatalogResult(BaseModel):
     returned: int
-    total: int = Field(description="Methods in the catalog overall, ignoring `category`.")
+    total: int = Field(
+        description="Methods in the catalog overall, ignoring `category` and `context`."
+    )
     category: str | None = None
+    context: str | None = None
     categories: list[str] = Field(description="Every category present in the catalog.")
     methods: list[CatalogEntry]
 
@@ -133,6 +224,19 @@ class MethodDetail(BaseModel):
     duration_min: int
     duration_max: int
     references: list[str]
+    use_cases: list[str] = Field(default_factory=list)
+    contexts: list[Context] = Field(default_factory=list)
+    formats: list[Format] = Field(default_factory=list)
+    group_size: GroupSize | None = None
+    audience: list[str] = Field(default_factory=list)
+    language: str = "en"
+    assets: list[Asset] = Field(
+        default_factory=list,
+        description="Supporting material. `path` is relative to methods/assets/<id>/; "
+        "`access: premium` assets are licensed separately.",
+    )
+    owner: str | None = None
+    last_reviewed: str | None = Field(default=None, description="ISO date, or null.")
     documentation: str = Field(description="Full Markdown companion document.")
     guide: MethodGuide = Field(
         description="Steps, not-a-fit-when, pitfalls and see-also parsed from "
@@ -151,6 +255,7 @@ def _to_match(c: Candidate) -> MethodMatch:
         category=c.category,
         complexity_score=c.complexity_score,
         use_case=c.use_case,
+        matched_use_case=c.matched_use_case,
         strengths=c.strengths,
         weaknesses=c.weaknesses,
         duration_min=c.duration_min,
@@ -181,7 +286,7 @@ def recommend_with_candidates(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> tuple[RecommendResult, list[Candidate]]:
     """`recommend_methods`, plus the raw candidates it was built from.
 
@@ -221,6 +326,19 @@ def recommend_with_candidates(
             total=total_indexed,
         )
 
+    clarify = None
+    if guidance is None and len(candidates) >= 2:
+        top, second = candidates[0].rerank_score, candidates[1].rerank_score
+        # A weak match is outside the catalog, and asking for the goal will not
+        # bring it in; `guidance` already says what to do there.
+        if (
+            top is not None
+            and second is not None
+            and top < UNSURE_TOP_SCORE
+            and top - second < UNSURE_MARGIN
+        ):
+            clarify = _CLARIFY.format(top=top, margin=top - second)
+
     result = RecommendResult(
         problem=problem,
         returned=len(candidates),
@@ -237,6 +355,7 @@ def recommend_with_candidates(
         ),
         matches=[_to_match(c) for c in candidates],
         guidance=guidance,
+        clarify=clarify,
     )
     return result, candidates
 
@@ -249,7 +368,7 @@ def recommend_methods(
     top_k: int = 5,
     category: str | None = None,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> RecommendResult:
     """Semantic search over the indexed catalog, with the narrowings reported."""
     result, _ = recommend_with_candidates(
@@ -264,14 +383,27 @@ def recommend_methods(
     return result
 
 
-def list_methods(*, methods_dir: Path, category: str | None = None) -> CatalogResult:
-    """The whole catalog. No search, no ranking, no truncation."""
+def list_methods(
+    *, methods_dir: Path, category: str | None = None, context: str | None = None
+) -> CatalogResult:
+    """The whole catalog. No search, no ranking, no truncation.
+
+    `context` keeps only methods that declare it. A method without any
+    `contexts` is unclassified rather than context-free, so it is excluded by
+    the filter — the payload's `total` still counts it.
+    """
     catalog = load_catalog(methods_dir)
-    selected = [m for m in catalog if category is None or m.category.value == category]
+    selected = [
+        m
+        for m in catalog
+        if (category is None or m.category.value == category)
+        and (context is None or context in m.contexts)
+    ]
     return CatalogResult(
         returned=len(selected),
         total=len(catalog),
         category=category,
+        context=context,
         categories=sorted({m.category.value for m in catalog}),
         methods=[
             CatalogEntry(
@@ -281,6 +413,9 @@ def list_methods(*, methods_dir: Path, category: str | None = None) -> CatalogRe
                 complexity_score=m.complexity_score,
                 duration_min=m.estimated_duration.min_minutes,
                 duration_max=m.estimated_duration.max_minutes,
+                contexts=m.contexts,
+                formats=m.formats,
+                language=m.language,
             )
             for m in selected
         ],
@@ -321,6 +456,15 @@ def get_method(*, method_id: str, methods_dir: Path) -> MethodDetail:
         duration_min=found.estimated_duration.min_minutes,
         duration_max=found.estimated_duration.max_minutes,
         references=found.references,
+        use_cases=found.use_cases,
+        contexts=found.contexts,
+        formats=found.formats,
+        group_size=found.group_size,
+        audience=found.audience,
+        language=found.language,
+        assets=found.assets,
+        owner=found.owner,
+        last_reviewed=found.last_reviewed.isoformat() if found.last_reviewed else None,
         documentation=documentation,
         guide=parse_guide(documentation),
     )
@@ -328,3 +472,7 @@ def get_method(*, method_id: str, methods_dir: Path) -> MethodDetail:
 
 def valid_categories() -> list[str]:
     return sorted(c.value for c in Category)
+
+
+def valid_contexts() -> list[str]:
+    return sorted(c.value for c in Context)

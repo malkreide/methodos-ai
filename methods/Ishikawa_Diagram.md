@@ -3,6 +3,14 @@
 Map every candidate cause of a problem onto a spine of fixed categories, so the
 group sees the whole space of explanations before arguing about any one of them.
 
+## Origin
+
+Named after Kaoru Ishikawa, who promoted it in Japanese industrial quality
+control from the 1960s and counted it among the seven basic quality tools in
+his *Guide to Quality Control* (1968). Healthcare improvement bodies such as IHI and NHS
+England teach it for patient-safety and waiting-time problems, and the Carnegie
+Foundation uses it with school improvement teams.
+
 ## The standard categories (6M)
 
 People · Process · Equipment · Materials · Environment · Measurement
@@ -42,3 +50,5 @@ People, Data, and External Dependencies.
 - [Five Whys](Five_Whys.md) — drill down once you've picked a branch
 - [Pre-Mortem Analysis](Pre_Mortem.md) — the same breadth, applied before the failure
 - [ASQ: Fishbone diagram](https://asq.org/quality-resources/fishbone)
+- [IHI: Cause and effect diagram](https://www.ihi.org/library/tools/cause-and-effect-diagram)
+- [NHS England QSIR: Cause and effect (fishbone) (PDF)](https://aqua.nhs.uk/wp-content/uploads/2023/07/qsir-cause-and-effect-fishbone.pdf)

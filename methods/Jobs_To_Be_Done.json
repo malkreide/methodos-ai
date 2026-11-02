@@ -23,6 +23,24 @@
   },
   "references": [
     "https://hbr.org/2016/09/know-your-customers-jobs-to-be-done",
+    "https://www.christenseninstitute.org/theory/jobs-to-be-done/",
+    "https://jobstobedone.org/the-four-forces/",
     "https://en.wikipedia.org/wiki/Outcome-Driven_Innovation"
-  ]
+  ],
+  "use_cases": [
+    "Many first-year students at a university leave before their second year, and the admissions office wants to learn what those students were hoping enrolment would do for them, beyond their grades and background.",
+    "A school is losing families to a new local alternative and wants to hear from parents who recently moved their children what made them decide to leave.",
+    "Our business software wins plenty of free trials that never convert, and the sales lead wants to learn from customers who did sign what finally made them give up their spreadsheets.",
+    "A meal-kit subscription loses most new customers within three months, and the team wants to understand what those people went back to and what made them try it in the first place."
+  ],
+  "contexts": [
+    "business",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

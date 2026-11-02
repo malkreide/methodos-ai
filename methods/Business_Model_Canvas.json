@@ -23,6 +23,28 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Business_Model_Canvas",
-    "https://www.strategyzer.com/library/the-business-model-canvas"
-  ]
+    "https://www.strategyzer.com/library/the-business-model-canvas",
+    "https://www.strategyzer.com/books/business-model-generation",
+    "https://oecd-opsi.org/toolkits/business-model-canvas/",
+    "https://steveblank.com/2016/02/23/the-mission-model-canvas-an-adapted-business-model-canvas-for-mission-driven-organizations/",
+    "https://steveblank.com/2011/12/22/the-national-science-foundation-innovation-corps-class-2-the-business-model-canvas/"
+  ],
+  "use_cases": [
+    "A public agency redesigning a citizen service needs one page showing who the service is for, what it gives them, which partners it relies on and what it costs to run.",
+    "A charity whose main grant is ending wants to work out which of its activities could bring in income and what that would change about who it serves and what it depends on.",
+    "A university research group thinking about a spin-off has to lay out who would pay for its technology, how it would reach them, and what the company would need to own or build.",
+    "An established company whose core revenue is shrinking wants to sketch different ways of earning money from the customers and resources it already has, and compare them side by side."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Team_Charter",
+  "name": "Team Charter (Working Agreement, Team Canvas)",
+  "category": "facilitation",
+  "use_case": "A newly formed or newly merged team starts its work on assumptions nobody has stated: why the team exists, what each member contributes, how it will decide and what rules of collaboration it follows. Within weeks those differing assumptions turn into friction. At the start, the members draft together a one- or two-page agreement on purpose, roles, decision rules and ground rules for working together, and agree when to review it.",
+  "strengths": [
+    "makes expectations that would otherwise surface only as irritation explicit while the group is still new and nobody has a grievance to defend",
+    "covers the whole working relationship in one conversation instead of leaving each topic to be argued out when it first causes trouble",
+    "gives every member, not only the leader, a say in the rules they will later be held to, which makes the rules easier to invoke",
+    "the written result gives a neutral reference point: a member can point to the agreement instead of criticising a colleague",
+    "cheap and quick: a basic version fits into one meeting and needs only a wall, sticky notes and a facilitator",
+    "doubles as an onboarding document when someone joins the group later"
+  ],
+  "weaknesses": [
+    "an agreement that is filed and never looked at again becomes paper; it only works if the group returns to it and amends it",
+    "a charter drafted by the leader and handed out for signature lacks the buy-in that is the main point of the exercise",
+    "agreeing on fine-sounding values is easy; the hard and useful part is concrete rules, and groups often stop before reaching it",
+    "does not resolve a deep conflict or a breach of trust that already exists; it can even paper over one",
+    "cannot change what the wider organisation fixes, such as formal competences, budgets or working-time rules",
+    "the research evidence is modest: the best-known study used MBA student teams in a simulation and found that a charter helped in combination with a sound plan for the task rather than on its own"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://pubmed.ncbi.nlm.nih.gov/19186898/",
+    "https://books.google.com/books?vid=ISBN9781578513338",
+    "https://commonslibrary.org/team-effectiveness-conditions-framework/",
+    "https://theteamcanvas.com/use/",
+    "https://www.cmu.edu/teaching/designteach/design/instructionalstrategies/groupprojects/tools/index.html"
+  ],
+  "use_cases": [
+    "Staff from finance, social services and IT have been seconded to a new cross-department project group; three weeks in, they are irritated with each other because their home offices have different habits about replies, deadlines and decisions, and nobody ever stated what the group is for or how it will operate.",
+    "A school has a newly formed leadership group of a head and three deputies who have never worked together; nobody has agreed how they reach decisions when they see things differently, what stays confidential and what is passed on to the teaching staff, and when.",
+    "Students who will spend a whole semester on a graded group assignment want to settle at the outset how they share the work, how fast they answer each other and what happens if one of them stops pulling their weight.",
+    "Two small units have been combined under one manager; one used to handle everything face to face and the other in writing, and the manager wants the combined group to adopt one shared way of working instead of each half keeping its own.",
+    "A small nonprofit's volunteer committee has been reconstituted after several long-serving members stepped down, and the new members want to start by writing down together what the committee exists for, how it decides and what they can expect of one another."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "new project groups and task forces",
+    "cross-department and inter-agency teams",
+    "school leadership teams and teaching teams",
+    "student project groups and their lecturers",
+    "team leads, facilitators and coaches",
+    "boards and committees of associations"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

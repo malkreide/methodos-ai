@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Customer_Journey_Map",
+  "name": "Customer Journey Map",
+  "category": "analysis",
+  "use_case": "Every department improves its own step of a service, yet nobody sees what it is like to go through the whole thing as the person on the receiving end: which letters, forms, phone calls and counters they meet in what order, where they get confused or annoyed, and where they are passed from one office to the next and fall through the gap. Best used when people abandon a service halfway, complaints arrive but no single unit feels responsible, or staff assume they know how users experience it without ever having followed one through.",
+  "strengths": [
+    "puts the service user's experience, not the organisation chart, at the centre",
+    "makes hand-offs between offices visible from the side that suffers them",
+    "records feelings and confusion alongside actions, which process maps leave out",
+    "gives departments that never meet a shared artefact to argue over",
+    "cheap to start with sticky notes and a handful of interviews"
+  ],
+  "weaknesses": [
+    "a map built from staff assumptions instead of research merely repeats the in-house view",
+    "one map covers one kind of user; different groups need separate maps",
+    "shows where the experience breaks but not the internal cause; that needs a process or cause analysis",
+    "easily ends as a poster on the wall with no owner for the fixes"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://www.wiley.com/en-us/This+is+Service+Design+Thinking%3A+Basics%2C+Tools%2C+Cases-p-9781118156308",
+    "https://www.nngroup.com/articles/journey-mapping-101/",
+    "https://www.nngroup.com/articles/customer-journey-mapping/",
+    "https://digital.gov/guides/research-collaboration/user-needs/journeys",
+    "https://doi.org/10.1509/jm.15.0420",
+    "https://en.wikipedia.org/wiki/Customer_journey"
+  ],
+  "use_cases": [
+    "Parents enrolling a child in school deal with the registry office, the school secretariat, the district and the after-school care service separately, and the school authority wants to understand where families get lost, repeat the same information or give up.",
+    "People applying for a permit or a benefit are passed from one office to the next; each office believes its own step works, yet many applicants give up partway, and the administration wants to follow the procedure as an applicant experiences it from the first enquiry to the final decision.",
+    "Citizens dealing with several authorities for one life event, such as moving house, having a baby or starting a business, are sent back and forth between offices, and the government wants to see the whole sequence from the citizen's point of view.",
+    "Each department of a company reports good figures for its own part, but customers complain about the overall experience; management wants one view of everything a customer goes through, across departments and channels.",
+    "A hospital wants to see the path from referral to discharge and aftercare through the patient's eyes, because patients feel shuffled between wards, clinics and administration and nobody owns the whole stay."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "service owners",
+    "public administration",
+    "school administration",
+    "product team",
+    "customer service",
+    "service designers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "SMART_Goals",
+  "name": "SMART Goals",
+  "category": "strategy",
+  "use_case": "A goal has been agreed, in a plan, an appraisal or a support plan, but it is worded as a good intention such as 'improve communication', so it does not say who should act or by when, and at the review people argue about whether it was reached because nobody said what reaching it would look like. Each goal is rewritten as one precise sentence that states the change, how it will be checked, who answers for it, that it is realistic with the resources at hand, and its deadline.",
+  "strengths": [
+    "turns a vague intention into a statement two people can check in the same way",
+    "makes responsibility and the deadline explicit instead of implied",
+    "quick to learn and to use alone, in a one-to-one talk or in a team",
+    "the checklist exposes wishful targets that have no resources behind them",
+    "rests on a well-replicated finding that specific, demanding goals with feedback beat 'do your best'"
+  ],
+  "weaknesses": [
+    "the letters differ from source to source, so teams can mean different things by the same acronym",
+    "the demand for measurability pushes out aims that matter but are hard to count",
+    "it says how to word a goal, not which goals are worth pursuing or how they fit together",
+    "narrow, specific targets can blind people to everything the goal leaves out and invite gaming",
+    "for complex or unfamiliar tasks a fixed performance target can hinder learning; a learning goal may serve better",
+    "has little direct evidence of its own beyond the broader research on goal setting"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/SMART_criteria",
+    "https://en.wikipedia.org/wiki/Goal_setting",
+    "https://doi.org/10.1037/0003-066X.57.9.705",
+    "https://doi.org/10.5465/amp.2009.37007999",
+    "https://knowledge.wharton.upenn.edu/wp-content/uploads/2013/09/13591.pdf",
+    "https://www.cdc.gov/tb-programs/php/evaluation/objectives.html"
+  ],
+  "use_cases": [
+    "Our school programme says we want to 'strengthen cooperation with parents', and at the end of the year nobody can say whether we did, who was meant to do something about it, or what would have counted as success.",
+    "In the annual appraisal a manager and an employee agree on targets such as 'take on more responsibility', and twelve months later they disagree about whether the targets were met because neither ever said what meeting them would mean.",
+    "A small association applies to a municipal fund whose form asks for objectives stating what will change, for whom, by how much and by when, and its draft only says it wants to raise awareness and support young people.",
+    "A special-needs coordinator writes the goals in a pupil's individual support plan, and 'improve reading' gives the class teacher and the parents nothing to check at the review in three months.",
+    "I make the same resolutions every January, to get fitter and to read more, and by March I have no idea whether I am on track because I never decided what that would mean."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "managers and staff in appraisal talks",
+    "school leadership and teachers",
+    "special-needs coordinators",
+    "programme and project leads",
+    "grant applicants",
+    "individuals"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Backcasting",
+  "name": "Backcasting",
+  "category": "strategy",
+  "use_case": "An organisation or a community has committed to a target that lies decades away and demands a break with the present, such as climate neutrality, zero waste or a fully accessible service. Projected forward, today's trends visibly fall short of it, so the route has to start from the agreed end state and work out what must already be in place a few years before it, and before that, down to what has to begin now.",
+  "strengths": [
+    "frees planning from present trends when those trends are part of the problem",
+    "turns a distant target into dated milestones and concrete first steps",
+    "exposes long-lead measures that must start years before their effect is needed",
+    "separates what the organisation controls from what it can only influence",
+    "gives stakeholders with different interests a shared picture of where they are heading"
+  ],
+  "weaknesses": [
+    "only as sound as the end state: a wishful or contested vision yields a plan nobody owns",
+    "on its own it plans for one future and ignores uncertainty unless combined with scenarios",
+    "milestones far from today are speculative and need regular revision",
+    "too heavy for short-term or operational planning where forecasting from today works",
+    "evidence comes mostly from case studies in energy and sustainability planning"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 1440
+  },
+  "references": [
+    "https://doi.org/10.1016/0301-4215(82)90048-9",
+    "https://doi.org/10.1016/0016-3287(90)90018-D",
+    "https://doi.org/10.1080/13504500009470049",
+    "https://doi.org/10.1016/S0016-3287(96)00044-4",
+    "https://doi.org/10.1016/j.futures.2006.02.010",
+    "https://www.gov.uk/government/publications/futures-toolkit-for-policy-makers-and-analysts/the-futures-toolkit-html",
+    "https://thenaturalstep.org/approach/",
+    "https://en.wikipedia.org/wiki/Backcasting"
+  ],
+  "use_cases": [
+    "We have committed to being climate-neutral by 2040, but every plan we make only continues what we already do, and it will never get us there.",
+    "A city council has adopted a net-zero target for a date twenty years away and must translate it into interim targets for each term of office, and decide which measures need funding in the next budget because they take a decade to show effect.",
+    "A school authority aims for schools that run without fossil heating, and for most pupils to come on foot, by bike or by public transport, by 2040, and needs to know which renovations, contracts and agreements with the transport operator must be settled by 2030 and 2035.",
+    "A manufacturer has promised that all its products will be fully recyclable within fifteen years; product development keeps proposing small improvements to today's materials, and the leadership wants to know which design, supplier and investment decisions have to be taken now for the promise to hold.",
+    "Our long-term goal is agreed and ambitious, but nobody can say what would already have to be true in ten years, or what we must start this year, to actually reach it."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 6,
+    "max_people": 30
+  },
+  "audience": [
+    "executive boards",
+    "municipal and regional government",
+    "school authorities and school leadership",
+    "sustainability and climate teams",
+    "strategy and policy units",
+    "community and stakeholder groups"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Decision_Tree",
+  "name": "Decision Tree",
+  "category": "decision-making",
+  "use_case": "How a course of action ends up depends on something outside our hands that will only be settled later, such as a pending vote, a merger, uncertain demand or a test result, and the debate keeps treating that event as if it were ours to decide. Drawing the sequence of our moves and the possible outside events, with rough odds and the outcome of each path, then calculating back from the end, shows what each move is likely to yield and whether holding off until the event is settled would be worth it.",
+  "strengths": [
+    "forces the group to separate the choices it controls from the events it does not",
+    "makes the timing explicit: what must be settled now and what can be left until more is known",
+    "puts a figure on the worth of waiting, piloting or commissioning a study before committing",
+    "every probability and payoff is written down, so disagreement can be traced to a specific assumption",
+    "shows which single estimate would have to change for a different option to come out ahead"
+  ],
+  "weaknesses": [
+    "the probabilities are usually informed guesses, and a computed average can lend them a precision they do not have",
+    "the number of paths multiplies quickly; beyond a few stages the drawing becomes unreadable",
+    "ranking by average result ignores how much a one-off bad outcome would hurt, unless attitudes to loss are modelled",
+    "outcomes that cannot sensibly be put on one scale, such as fairness or wellbeing, get squeezed into a single number or left out",
+    "breaks down when nobody can even name the possible future events, let alone weigh them"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://hbr.org/1964/07/decision-trees-for-decision-making",
+    "https://archive.org/details/decisionanalysis0000raif",
+    "https://en.wikipedia.org/wiki/Decision_tree",
+    "https://en.wikipedia.org/wiki/Decision_analysis",
+    "https://en.wikipedia.org/wiki/Expected_value_of_perfect_information",
+    "https://www.accaglobal.com/gb/en/student/exam-support-resources/fundamentals-exams-study-resources/f5/technical-articles/decision-trees.html",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4251295/"
+  ],
+  "use_cases": [
+    "A school authority has to decide whether to renovate an ageing school building this year or hold off, because a decision on merging the school with a neighbouring one may come in two years and would make the renovation money partly wasted.",
+    "A public agency is unsure whether to try a new service in one district first or introduce it everywhere at once: the trial costs a year, but it would reveal whether the service actually works before the full budget is spent.",
+    "A company is weighing whether to build a small plant now and extend it later or a large one straight away, while demand for the new product is still unknown and the wrong size would be expensive either way.",
+    "A nonprofit must decide whether to spend part of its budget on a feasibility study before applying for a large grant, and wants to know whether what the study could reveal is worth its cost and the delay.",
+    "A hospital department is choosing between treating patients immediately and ordering a further test first, where the test result would change the treatment for some patients but carries its own cost and delay."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 8
+  },
+  "audience": [
+    "executive boards",
+    "school authorities",
+    "public finance and planning units",
+    "project steering committees",
+    "clinical decision makers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-06"
+}

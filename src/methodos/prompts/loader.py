@@ -34,9 +34,12 @@ def _format_candidate(c: dict[str, Any]) -> str:
     score = f"similarity: {c['similarity']:.2f}"
     if c.get("rerank_score") is not None:
         score += f", rerank: {c['rerank_score']:+.2f}"
+    matched = c.get("matched_use_case")
+    matched_line = f"Matched use case: {matched}\n" if matched else ""
     return (
         f"### {c['name']}  ({score}, complexity: {c['complexity_score']}/5)\n"
         f"Use case: {c['use_case']}\n"
+        f"{matched_line}"
         f"Strengths:\n{strengths_b}\n"
         f"Weaknesses:\n{weaknesses_b}\n"
         f"Duration: {c['duration_min']}-{c['duration_max']} minutes\n"
@@ -93,3 +96,24 @@ def render_explain_prompt(
         "already_done_block": already_done_block,
     }
     return _PLACEHOLDER.sub(lambda m: values[m.group(1)], template)
+
+
+def render_draft_prompt(
+    *, document: str, language: str, contexts: Sequence[str], truncated: bool
+) -> str:
+    """Render the proposal-draft template. `.replace`, not `.format`, for the same
+    reason as `render_explain_prompt`: the document is arbitrary text and the
+    template itself contains a literal JSON object."""
+    note = (
+        "(Only the beginning of a longer document follows; do not guess at the rest.)\n"
+        if truncated
+        else ""
+    )
+    return (
+        load_prompt("draft_proposal")
+        .replace("{language}", language)
+        .replace("{contexts}", ", ".join(contexts))
+        .replace("{truncated_note}", note)
+        # Last, so text inside the document cannot be mistaken for a placeholder.
+        .replace("{document}", document)
+    )

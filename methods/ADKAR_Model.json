@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "ADKAR_Model",
+  "name": "ADKAR Model",
+  "category": "change-management",
+  "use_case": "Staff were trained on a new system or way of working, yet months later many of them still do not use it, and nobody can tell whether they see no reason for it, do not want it, lack the know-how, or cannot manage it in their daily work. The model breaks adoption by one person or one group into five successive conditions, locates the earliest one that is not met, and aims support at that gap instead of repeating the last round of training.",
+  "strengths": [
+    "turns a vague 'they won't adopt it' into a specific question: which condition is missing, for whom",
+    "separates knowing how from being able to, which explains why more training often changes nothing",
+    "points to a different response for each gap: explain the reason, address what people stand to lose, teach, give time and practice, or recognise and follow up",
+    "works for one person in a coaching conversation as well as for a team or a whole staff",
+    "plain enough to explain to the people affected, who can then say for themselves where they are stuck"
+  ],
+  "weaknesses": [
+    "proprietary: the name is a registered trademark of Prosci, and the formal assessment, templates and training are sold by the company",
+    "the published evidence is mostly vendor material and cross-sectional surveys of readiness; whether diagnosing with it improves adoption has not been tested in controlled studies",
+    "the strict sequence oversimplifies: people can know how before they want to, and reinforcement can feed back into desire",
+    "it places the problem in individuals, so structural causes such as missing equipment, workload, broken processes or a bad decision can be misread as low desire or low ability",
+    "self-reported scores are easily shaped by what people think their manager wants to hear",
+    "not a plan for leading the change as a whole: it says nothing about sponsorship, governance or sequencing a programme"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://www.prosci.com/methodology/adkar",
+    "https://www.prosci.com/resources/articles/why-the-adkar-model-works",
+    "https://cclib.ucsd.edu/Library/details.aspx?ID=6511",
+    "https://archive-ouverte.unige.ch/unige:161253",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10950747/"
+  ],
+  "use_cases": [
+    "We trained every teacher on the new learning platform, but six months later most still don't use it, and we don't know whether they don't want to, don't know how, or simply can't.",
+    "We keep sending staff on more courses for the new software, but I suspect training is not what is missing for most of them and I want to find out what actually is before we pay for another round.",
+    "A municipal office switched to electronic case files a year ago; some teams work fully digitally, others keep parallel paper files, and the head of office wants to see team by team where adoption breaks down so that each team gets the help it actually needs.",
+    "A hospital introduced a new structured documentation routine on all wards; uptake differs widely between wards, and the project lead wants a short survey that shows for each ward whether staff see the point, want to, know how, or lack the time and practice.",
+    "As a manager I am coaching one experienced colleague who still avoids the new process, and I want a conversation that finds out whether the obstacle is the reason, the will, the know-how or the ability, without turning it into a reprimand."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 40
+  },
+  "audience": [
+    "school leadership",
+    "line managers",
+    "project leads introducing a new system",
+    "public administration leadership",
+    "HR and organisation development",
+    "health-care managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

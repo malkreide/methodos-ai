@@ -10,8 +10,13 @@ from methodos.providers.base import (
     EmbeddingProvider,
     LLMError,
     LLMProvider,
+    MediaTooLongError,
     RerankError,
     RerankProvider,
+    TranscriberUnavailableError,
+    Transcript,
+    TranscriptionError,
+    TranscriptionProvider,
 )
 
 
@@ -64,14 +69,42 @@ def make_reranker(settings: Settings, *, required: bool = False) -> RerankProvid
     raise ValueError(f"unknown rerank_provider: {settings.rerank_provider}")
 
 
+def make_transcriber(settings: Settings, *, required: bool = False) -> TranscriptionProvider | None:
+    """Construct a transcriber per settings, or None when audio and video can't be read.
+
+    Same degrade-unless-required shape as `make_reranker`: faster-whisper is an
+    optional extra (`transcribe`), and a server without it should still take
+    PDFs and Word files rather than refuse to start.
+    """
+    if settings.transcribe_provider == "none":
+        return None
+    if settings.transcribe_provider == "faster-whisper":
+        if find_spec("faster_whisper") is None:
+            if required:
+                raise TranscriptionError(
+                    'audio and video need faster-whisper: pip install -e ".[transcribe]"'
+                )
+            return None
+        from methodos.providers.transcribe_whisper import FasterWhisperTranscriber
+
+        return FasterWhisperTranscriber(model_name=settings.transcribe_model)
+    raise ValueError(f"unknown transcribe_provider: {settings.transcribe_provider}")
+
+
 __all__ = [
     "EmbeddingError",
     "EmbeddingProvider",
     "LLMError",
     "LLMProvider",
+    "MediaTooLongError",
     "RerankError",
     "RerankProvider",
+    "TranscriberUnavailableError",
+    "Transcript",
+    "TranscriptionError",
+    "TranscriptionProvider",
     "make_embedding",
     "make_llm",
     "make_reranker",
+    "make_transcriber",
 ]

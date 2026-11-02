@@ -12,11 +12,18 @@ One picture instead of three lists.
 The rocks are what list-based formats usually miss: they look backward, this
 one also looks forward.
 
+The format grew out of Luke Hohmann's *Speed Boat* game (Innovation Games,
+2006), where customers marked only the anchors holding a product back. Agile
+teams later added the wind, then the island and the rocks; you will meet
+versions with only some of the four.
+
 ## When to use
 
 - The team has gone quiet in list-format retrospectives
 - Goal, momentum, drag and upcoming risk belong in one conversation
 - Visual thinkers who contribute little in verbal rounds
+- Students reflecting midway through a group project; notes can also be
+  collected asynchronously before the discussion
 
 ## When *not* to use
 
@@ -43,4 +50,7 @@ one also looks forward.
 
 - [Start, Stop, Continue](Start_Stop_Continue.md) — the plainer format this alternates with
 - [After Action Review](After_Action_Review.md) — for one specific event
-- [Atlassian Team Playbook: Retrospective](https://www.atlassian.com/team-playbook/plays/retrospective)
+- Luke Hohmann, [Speed Boat](https://www.lukehohmann.com/innovation-games/speed-boat) — the anchors-only original
+- [Retrospective Wiki: Sailboat](https://retrospectivewiki.org/index.php?title=Sailboat) — the wind-and-anchors team version
+- Maha Bali, [Sailboat Retrospective for Reflection](https://onehe.org/eu-activity/sailboat-retrospective-for-reflection/) (OneHE) — adapted for higher-education classes
+- [Atlassian Team Playbook: Retrospective](https://www.atlassian.com/team-playbook/plays/retrospective) — retrospectives in general

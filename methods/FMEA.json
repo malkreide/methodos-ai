@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "FMEA",
+  "name": "FMEA (Failure Mode and Effects Analysis)",
+  "category": "analysis",
+  "use_case": "An organisation is introducing or changing a procedure where one mistake at a single step would be expensive, and before it starts the people involved want to go through it step by step to see where it could go wrong, how serious each problem would be, whether anyone would notice it in time, and which weak spots to secure first.",
+  "strengths": [
+    "proactive: finds weak points on paper before they hurt anyone, instead of investigating after an incident",
+    "the step-by-step walk-through covers the whole process systematically rather than only the failures someone happens to remember",
+    "separates how a step fails, what that causes and why it happens, which keeps fixes aimed at causes",
+    "asking whether a failure would be caught in time brings existing checks into the analysis and exposes steps that rely on luck",
+    "brings the people who actually do each step into one room, which is often where the most valuable findings come from",
+    "standardised and widely recognised: IEC 60812, the AIAG-VDA handbook in the automotive industry and health-care variants such as HFMEA"
+  ],
+  "weaknesses": [
+    "time-consuming: a full analysis of a real process can take several sessions and a large worksheet",
+    "the classic risk priority number multiplies three ordinal ratings, which is arithmetically unsound and can rank a less serious failure above a more serious one",
+    "ratings are subjective; studies in hospitals found teams' severity and frequency estimates did not match incident data",
+    "looks at one failure at a time and is poor at combinations of failures and at human and organisational factors",
+    "only as complete as the process map and the people in the room; failures nobody present knows about are missed",
+    "easily becomes a box-ticking exercise when it is filled in to satisfy an auditor or customer rather than to change the process"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Failure_mode_and_effects_analysis",
+    "https://webstore.iec.ch/en/publication/26359",
+    "https://www.aiag.org/training-and-resources/manuals/details/FMEAAV-1",
+    "https://www.ihi.org/library/tools/failure-modes-and-effects-analysis-fmea-tool",
+    "https://www.patientsafety.va.gov/professionals/onthejob/hfmea.asp",
+    "https://doi.org/10.1016/S1070-3241(02)28025-6",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC3405478/",
+    "https://doi.org/10.1016/j.eswa.2012.08.010"
+  ],
+  "use_cases": [
+    "Before a public office switches a records procedure to new software, the clerks and IT staff check each processing step and each data transfer for ways a case could be dropped, duplicated or processed wrongly, and for whether anyone would notice before the citizen does.",
+    "A school or university organises written exams for hundreds of candidates and wants to go through the chain of producing, storing, transporting and handing out papers, seating and invigilation to see where a single slip could void an exam or leak its content.",
+    "An organisation is moving its payroll to a new system or provider and wants to check every step of the monthly pay run before the first live month: where wrong data, a missed deadline or an unchecked figure could creep in, how badly staff would be affected, and which weak spots must be secured first.",
+    "A hospital, care home or pharmacy wants to examine how medicines are prescribed, prepared, handed out and recorded, and to find where a wrong dose or a missed dose could reach a patient without anyone noticing.",
+    "A manufacturer or service provider is setting up a new production line or delivery process and wants engineers and operators to work out, operation by operation, how defects could arise and slip past the existing inspections before they reach customers."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 10
+  },
+  "audience": [
+    "process owners",
+    "quality and patient-safety staff",
+    "public administration",
+    "school administration",
+    "engineers and operators",
+    "project teams preparing a go-live"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

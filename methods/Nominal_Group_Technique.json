@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Nominal_Group_Technique",
+  "name": "Nominal Group Technique",
+  "category": "decision-making",
+  "use_case": "A staff conference, working group or committee has to draw up options and put them in order of priority in one sitting, for example which three measures get next year's money, yet the order it ends up with always reflects the wishes of the chair and of the most outspoken colleagues. Each participant first writes down proposals alone, the proposals are collected one per person in turn and clarified, and everyone then ranks the list privately on paper, so the agreed priorities are the total of individual preferences with each participant's ranking weighted equally.",
+  "strengths": [
+    "every member contributes ideas and every member's ranking carries the same weight",
+    "status and persuasion matter less because preferences are given privately",
+    "produces a ranked, countable result in a single sitting",
+    "the full list of contributions stays on record alongside the final order",
+    "needs only paper, a flip chart and a facilitator who keeps to the steps"
+  ],
+  "weaknesses": [
+    "handles one question per session and feels regimented to some groups",
+    "little room for the deep discussion a tangled problem needs",
+    "summing ranks can bury a minority view that was right",
+    "depends on a careful wording of the question and on everyone being in the room",
+    "too much ceremony for a small team that already talks openly"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 150
+  },
+  "references": [
+    "https://doi.org/10.1177/002188637100700404",
+    "https://doi.org/10.2307/255641",
+    "https://www.cdc.gov/healthy-youth/php/program-evaluation/pdf/brief7.pdf",
+    "https://doi.org/10.1007/s11096-016-0257-x",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4909789/",
+    "https://en.wikipedia.org/wiki/Nominal_group_technique"
+  ],
+  "use_cases": [
+    "A school staff conference has a small development budget and one afternoon to agree which few of many improvement proposals to fund; in past years the head and two long-serving teachers argued it out and everyone else went along with them.",
+    "A municipal working group of residents, social workers and officials must hand the council an ordered list of the neighbourhood's most pressing needs, and the officials' views usually prevail because they speak with the most authority.",
+    "A clinic's quality team wants an agreed shortlist of the problems patients and staff consider most urgent, settled in one meeting, with the senior consultant's preference counting no more than a nurse's.",
+    "A charity board has to choose which of its project ideas to put forward for the next funding round, and members want their own order of preference recorded instead of nodding along with the chair."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 5,
+    "max_people": 12
+  },
+  "audience": [
+    "committees and boards",
+    "school conferences and staff teams",
+    "municipal working groups",
+    "health-care quality teams",
+    "community and stakeholder panels",
+    "programme planning groups"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

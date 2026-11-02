@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "Timeboxing",
+  "name": "Timeboxing",
+  "category": "prioritization",
+  "use_case": "I can never concentrate on one piece of writing for long: every few minutes an email, a chat message or a colleague's quick question pulls my attention away, and a text that needs two quiet hours sits half-done. A fixed slot is booked in the calendar in advance for that single piece of work, notifications are switched off, it gets full attention until the slot ends, and a short review decides what goes into the next slot.",
+  "strengths": [
+    "turns a vague intention to work on something into a booked appointment that others can see",
+    "a fixed end point makes it easier to start a daunting task and to stop polishing a finished one",
+    "short focused intervals with planned breaks are easy to learn and need only a timer",
+    "the review at the end of each slot shows how long work really takes, which improves later estimates",
+    "works for one person and, as shared quiet hours, for a whole team"
+  ],
+  "weaknesses": [
+    "does not tell you which task deserves the slot; that choice has to be made first",
+    "unworkable in roles that must answer immediately, such as a front desk, a school office or on-call duty",
+    "if the real problem is more work than time, blocking the calendar only hides the overload",
+    "a rigid interval can cut off a productive stretch of deep concentration",
+    "booked slots are easily overrun by meetings unless colleagues and managers respect them",
+    "few controlled studies; most of the evidence on fixed intervals comes from short studies with students"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 25,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Timeboxing",
+    "https://en.wikipedia.org/wiki/Pomodoro_Technique",
+    "https://www.pomodorotechnique.com/",
+    "https://www.penguinrandomhouse.com/books/555557/the-pomodoro-technique-by-francesco-cirillo/",
+    "https://calnewport.com/deep-habits-the-importance-of-planning-every-minute-of-your-work-day/",
+    "https://www.agilebusiness.org/wp-content/uploads/2026/05/DSDM-Agile-Project-Framework-Handbook.pdf",
+    "https://cris.maastrichtuniversity.nl/en/publications/understanding-effort-regulation-comparing-pomodoro-breaks-and-sel",
+    "https://en.wikipedia.org/wiki/Parkinson%27s_law"
+  ],
+  "use_cases": [
+    "I'm pulled away every few minutes by emails and quick questions, so the report I have to write never gets a single unbroken stretch of my attention.",
+    "I keep putting off a large open-ended writing task, and once I do start I spend the whole afternoon reworking the first page; I need a fixed start and a fixed end to get going and to stop.",
+    "A student revising for exams sits at the desk for hours but keeps drifting to the phone, and wants to study in short stretches of full concentration with planned breaks instead of long hours of half-attention.",
+    "A teacher whose free periods disappear into corridor conversations and messages ends up preparing lessons and marking late at night, and wants fixed, protected slots in the school week for that work.",
+    "Caseworkers in a public office lose the thread of complex cases because the phone and inbox interrupt them all day, and the team wants to agree on shared quiet hours with no calls or meetings."
+  ],
+  "contexts": [
+    "personal",
+    "business",
+    "education",
+    "public-sector"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 15
+  },
+  "audience": [
+    "knowledge workers",
+    "teachers",
+    "students",
+    "writers and researchers",
+    "administrative staff",
+    "team leads"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

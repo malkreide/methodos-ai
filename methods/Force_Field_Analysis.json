@@ -23,6 +23,27 @@
   },
   "references": [
     "https://en.wikipedia.org/wiki/Force-field_analysis",
-    "https://www.mindtools.com/ajm9l1e/force-field-analysis"
-  ]
+    "https://doi.org/10.1177/001872674700100103",
+    "https://www.england.nhs.uk/improvement-hub/wp-content/uploads/sites/44/2018/06/Force-Field-Analysis-Instructions.pdf",
+    "https://doi.org/10.1007/BF03173596"
+  ],
+  "use_cases": [
+    "A hospital ward agreed a safer written handover routine, yet within weeks the nurses have slipped back to the old verbal handover and reminders from the matron have not changed that.",
+    "Staff voted for a new school homework policy last term, but most classrooms still do it the old way and the head teacher wants to know what is actually stopping teachers.",
+    "Two merged sales departments are meant to share one customer database, and every migration deadline slips although nobody openly objects to the plan.",
+    "I have tried several times to change a personal habit, such as exercising before work, and want to see clearly what keeps pulling me back to the old routine."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "id": "Delegation_Poker",
+  "name": "Delegation Poker and Delegation Board",
+  "category": "decision-making",
+  "use_case": "A leader and the team they lead disagree about how much they may decide on their own: the leader complains that people wait for permission and take no ownership, while the team feels its choices get overruled after the fact, and promises of empowerment stay vague. Leader and team go through their recurring kinds of decisions one by one, each privately picks how far the authority should lie with the team on a seven-step scale running from the leader deciding alone to the team deciding alone, the differences are talked through, and the agreed level for every area is posted where everyone can see it and revisited as trust grows.",
+  "strengths": [
+    "replaces the all-or-nothing question of whether a team is empowered with a graded answer per area of work",
+    "the hidden, simultaneous choice stops the most senior person anchoring everyone else's answer",
+    "the interesting part is the spread of choices: a wide gap shows exactly where expectations differ before it causes a conflict",
+    "the resulting board is a standing reference that settles later 'was I allowed to?' questions without escalation",
+    "levels can be raised step by step, so authority grows with demonstrated competence instead of being handed over at once"
+  ],
+  "weaknesses": [
+    "cannot redistribute competences fixed by law, statute or an employment contract; it only clarifies the room left inside them",
+    "where trust is low, people pick the card they think the boss wants, and the exercise becomes theatre",
+    "describes how much say each side has, not who carries out the work or who signs off a single decision",
+    "the board goes stale quickly if nobody revisits it after reorganisations or changes of leader",
+    "the source material is practitioner and training content from a commercial framework; there is little independent research on the game itself"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://management30.com/practice/delegation-poker/",
+    "https://www.informit.com/store/management-3.0-leading-agile-developers-developing-agile-9780321712479",
+    "https://hbr.org/1973/05/how-to-choose-a-leadership-pattern"
+  ],
+  "use_cases": [
+    "A newly appointed team leader says she wants more initiative from her people, yet she rewrites every proposal they bring, and now nobody moves without her go-ahead; both sides want to settle which matters are really the team's to decide.",
+    "A school principal and the subject teams keep clashing over who chooses teaching materials, timetables for project weeks and spending of the team budget, and the staff want it written down how much say they have in each.",
+    "Management has announced that teams are to organise themselves, but nobody knows whether that covers hiring, holiday planning or choosing tools, and the first team that tried was reversed by its manager.",
+    "The head of a unit in a cantonal agency wants her experienced staff to settle more everyday matters without her, while the approvals that the law assigns to her stay with her, and the team wants to know exactly where that line runs.",
+    "A volunteer coordinator and the board of a small association disagree about which spending and event decisions the coordinator may take without asking, and every unclear case ends in irritation on both sides."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 10
+  },
+  "audience": [
+    "team leads and their teams",
+    "self-organising and agile teams",
+    "school leadership and teaching staff",
+    "public administration units",
+    "nonprofit boards and coordinators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

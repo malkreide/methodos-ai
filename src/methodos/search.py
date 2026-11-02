@@ -33,6 +33,14 @@ class Candidate:
     duration_max: int
     doc_path: str
     similarity: float
+    matched_use_case: str | None = None
+    """The further use case that won, or None if it was `use_case` itself.
+
+    Without a reranker this is the text nearest the query in embedding space.
+    With one it is the text the cross-encoder scored highest, which is what
+    `rerank_score` refers to; `similarity` stays the embedding score of the
+    method's nearest text. Either way it is the evidence for the ranking.
+    """
     rerank_score: float | None = None
     """Cross-encoder score when a reranker ran, else None.
 
@@ -48,6 +56,7 @@ class Candidate:
             "rerank_score": self.rerank_score,
             "complexity_score": self.complexity_score,
             "use_case": self.use_case,
+            "matched_use_case": self.matched_use_case,
             "strengths": self.strengths,
             "weaknesses": self.weaknesses,
             "duration_min": self.duration_min,
@@ -64,14 +73,22 @@ class SearchResult:
 def _rehydrate(
     chroma_id: str, document: str, metadata: dict[str, Any], distance: float
 ) -> Candidate:
-    """Reconstruct a Candidate from Chroma's flat metadata."""
+    """Reconstruct a Candidate from Chroma's flat metadata.
+
+    A method with several use cases has several Chroma entries (`Id`, `Id#1`,
+    …); `method_id` and `use_case` in the metadata name the method and its
+    canonical text. Indexes built before those keys existed fall back to the
+    Chroma id and the document, which is what they held.
+    """
     similarity = 1.0 - distance
+    use_case = metadata.get("use_case", document)
     return Candidate(
-        id=chroma_id,
+        id=metadata.get("method_id", chroma_id),
         name=metadata["name"],
         category=metadata["category"],
         complexity_score=int(metadata["complexity_score"]),
-        use_case=document,
+        use_case=use_case,
+        matched_use_case=None if document == use_case else document,
         strengths=json.loads(metadata["strengths_json"]),
         weaknesses=json.loads(metadata["weaknesses_json"]),
         duration_min=int(metadata["duration_min"]),
@@ -82,13 +99,13 @@ def _rehydrate(
 
 
 def _open_collection(chroma_path: Path, embedding: EmbeddingProvider) -> Any:
-    import chromadb
+    from methodos.chroma import persistent_client
 
     if not chroma_path.exists():
         raise StaleIndexError(
             f"chroma path {chroma_path} does not exist — run `methodos ingest` first"
         )
-    client = chromadb.PersistentClient(path=str(chroma_path))
+    client = persistent_client(chroma_path)
     try:
         coll = client.get_collection("methods")
     except Exception as e:
@@ -103,14 +120,63 @@ def _open_collection(chroma_path: Path, embedding: EmbeddingProvider) -> Any:
     return coll
 
 
-def _rerank(query: str, candidates: list[Candidate], reranker: RerankProvider) -> list[Candidate]:
-    """Re-score the shortlist with a cross-encoder and re-sort by that score."""
-    scores = reranker.score(query, [c.use_case for c in candidates])
-    if len(scores) != len(candidates):
+def _method_texts(coll: Any, candidates: list[Candidate]) -> dict[str, list[str]]:
+    """Every indexed text (canonical use_case and further use_cases) per method.
+
+    Indexes built before `method_id` was stored in metadata cannot be filtered
+    by it; they hold one text per method, so the candidate's own text is all
+    there is and the fallback below loses nothing.
+    """
+    ids = [c.id for c in candidates]
+    texts: dict[str, list[str]] = {c.id: [] for c in candidates}
+    got = coll.get(where={"method_id": {"$in": ids}}, include=["documents", "metadatas"])
+    for doc, meta in zip(got["documents"] or [], got["metadatas"] or [], strict=True):
+        mid = (meta or {}).get("method_id")
+        if mid in texts and doc:
+            texts[mid].append(doc)
+    for c in candidates:
+        if not texts[c.id]:
+            texts[c.id] = [c.matched_use_case or c.use_case]
+    return texts
+
+
+def _rerank(
+    query: str,
+    candidates: list[Candidate],
+    reranker: RerankProvider,
+    texts: dict[str, list[str]] | None = None,
+) -> list[Candidate]:
+    """Re-score the shortlist with a cross-encoder and re-sort by that score.
+
+    A method is scored by its *best* text, not by the one the embedding found
+    closest. The two disagree more often than one would hope: a short,
+    loosely phrased further use case can sit nearer a query in embedding space
+    than the canonical description and still be the text the cross-encoder
+    likes least, so handing over only the nearest text could demote a method
+    for having more use cases. `texts` maps method id to all its texts; without
+    it each candidate is scored on the text that retrieved it.
+    """
+    per_method = [texts[c.id] if texts else [c.matched_use_case or c.use_case] for c in candidates]
+    flat = [t for group in per_method for t in group]
+    scores = reranker.score(query, flat)
+    if len(scores) != len(flat):
         raise RerankError(
-            f"{reranker.name} returned {len(scores)} score(s) for {len(candidates)} document(s)"
+            f"{reranker.name} returned {len(scores)} score(s) for {len(flat)} document(s)"
         )
-    rescored = [replace(c, rerank_score=s) for c, s in zip(candidates, scores, strict=True)]
+    rescored: list[Candidate] = []
+    i = 0
+    for c, group in zip(candidates, per_method, strict=True):
+        group_scores = scores[i : i + len(group)]
+        i += len(group)
+        best = max(range(len(group)), key=lambda j: group_scores[j])
+        text = group[best]
+        rescored.append(
+            replace(
+                c,
+                rerank_score=group_scores[best],
+                matched_use_case=None if text == c.use_case else text,
+            )
+        )
     # `sorted` is stable, so ties keep the retrieval order rather than shuffling.
     return sorted(rescored, key=lambda c: c.rerank_score or 0.0, reverse=True)
 
@@ -128,9 +194,26 @@ def collection_size(
     small catalog from a truncated view of a large one.
     """
     coll = _open_collection(chroma_path, embedding)
-    if where is None:
-        return int(coll.count())
-    return len(coll.get(where=where, include=[])["ids"])
+    got = coll.get(where=where, include=["metadatas"])
+    metas = got["metadatas"] or [None] * len(got["ids"])
+    # Methods, not vectors: one method with three use cases is three entries.
+    return len(
+        {
+            (meta or {}).get("method_id", doc_id)
+            for doc_id, meta in zip(got["ids"], metas, strict=True)
+        }
+    )
+
+
+def _best_per_method(candidates: list[Candidate]) -> list[Candidate]:
+    """Keep each method's best-matching use case; input must be best-first."""
+    seen: set[str] = set()
+    out: list[Candidate] = []
+    for c in candidates:
+        if c.id not in seen:
+            seen.add(c.id)
+            out.append(c)
+    return out
 
 
 def retrieve(
@@ -140,7 +223,7 @@ def retrieve(
     chroma_path: Path,
     top_k: int,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
     where: dict[str, Any] | None = None,
 ) -> list[Candidate]:
     """Return up to top_k candidates, best first.
@@ -157,9 +240,18 @@ def retrieve(
     coll = _open_collection(chroma_path, embedding)
     q_vec = embedding.embed([query])[0]
 
+    shortlist = top_k * overfetch_factor
+    # Collapsing a method's use cases into one candidate (below) must not leave
+    # fewer than `shortlist` distinct methods. Either bound guarantees that:
+    # every extra vector could belong to a method already listed, and no method
+    # has more than `per_method` vectors. Take the smaller, so query size grows
+    # with the widest method rather than with the whole catalog.
+    meta = coll.metadata or {}
+    extra = int(meta.get("extra_documents", 0))
+    per_method = int(meta.get("max_documents_per_method", 1))
     raw = coll.query(
         query_embeddings=[q_vec],
-        n_results=top_k * overfetch_factor,
+        n_results=min(shortlist + extra, shortlist * per_method),
         include=["metadatas", "documents", "distances"],
         **({"where": where} if where else {}),
     )
@@ -172,8 +264,9 @@ def retrieve(
         _rehydrate(i, d, m, dist) for i, d, m, dist in zip(ids, docs, metas, dists, strict=True)
     ]
     candidates.sort(key=lambda c: c.similarity, reverse=True)
+    candidates = _best_per_method(candidates)[:shortlist]
     if reranker is not None:
-        candidates = _rerank(query, candidates, reranker)
+        candidates = _rerank(query, candidates, reranker, _method_texts(coll, candidates))
     return candidates[:top_k]
 
 
@@ -191,7 +284,14 @@ def explain(
         already_done=already_done,
     )
     system, user = split_system_user(rendered)
-    return llm.complete(system, user)
+    # Room for a model that thinks before it writes; see LiteLLMProvider. A
+    # ceiling, not a target: a non-thinking model stops where its answer ends.
+    text = llm.complete(system, user, max_tokens=4096)
+    # Swiss spelling, as in the upload draft (proposals.draft_from_text): the
+    # catalog's German readers are Swiss, and models trained mostly on German
+    # German write ß whatever the prompt says — all three Claude models did
+    # (README, Known gaps). English text never contains ß, so no language check.
+    return text.replace("ß", "ss")
 
 
 def search(
@@ -202,7 +302,7 @@ def search(
     chroma_path: Path,
     top_k: int,
     reranker: RerankProvider | None = None,
-    overfetch_factor: int = 2,
+    overfetch_factor: int = 3,
 ) -> SearchResult:
     """End-to-end: retrieve top_k, optionally rerank, then optionally LLM-explain."""
     candidates = retrieve(

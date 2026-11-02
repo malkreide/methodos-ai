@@ -27,8 +27,12 @@ class Settings(BaseSettings):
     long the HTTP /query (and the user page) waits for the explanation."""
 
     embedding_provider: Literal["local", "openai"] = "local"
-    embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     """For provider='local': sentence-transformers model name.
+
+    Multilingual by default: a German question has to find an English method
+    and vice versa. The English-only all-MiniLM-L6-v2 this replaced ranked 7 of
+    23 German probes correctly; see tests/test_integration.py for the numbers.
     For provider='openai': e.g. 'text-embedding-3-small'."""
 
     rerank_provider: Literal["none", "cross-encoder"] = "cross-encoder"
@@ -41,16 +45,69 @@ class Settings(BaseSettings):
     An explicit `--rerank` still fails loudly; see make_reranker(required=...).
     """
 
-    rerank_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    rerank_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
     """Only consulted when rerank_provider != 'none'."""
+
+    transcribe_provider: Literal["none", "faster-whisper"] = "faster-whisper"
+    """Speech to text for uploaded audio and video, run on this machine.
+
+    Needs the `transcribe` extra; without it `make_transcriber` returns None and
+    uploads of audio or video are refused with a 503 while documents still work."""
+
+    transcribe_model: str = "small"
+    """faster-whisper model size or a Hugging Face repo id. 'small' is the
+    smallest that handles German, including Swiss accents, acceptably on a CPU.
+    The Docker image bakes this one in."""
+
+    upload_max_mb: int = Field(default=50, ge=1)
+    """Largest file `POST /proposals/extract` accepts. Checked while the body
+    is still arriving, so an oversized upload never reaches the disk whole."""
+
+    media_max_minutes: int = Field(default=20, ge=1)
+    """Longest recording that gets transcribed. Transcription runs inside the
+    request on a CPU; past this length the browser would give up waiting."""
 
     chroma_path: Path = Path("data/chroma")
     feedback_path: Path = Path("data/feedback.jsonl")
+    proposals_path: Path = Path("data/proposals.jsonl")
+    """Inbox for `POST /proposals`. Same placeholder shape as the feedback log."""
+
+    issue_repo: str | None = "malkreide/methodos-ai"
+    """`owner/repo` whose "Propose a method" issue form the console links to.
+    A fork points this at itself; empty turns the link off and leaves only the
+    server-side inbox."""
+
     top_k: int = Field(default=3, ge=1)
     """Multiplied by overfetch_factor to form Chroma's n_results, which
     rejects zero and negatives with an opaque TypeError — so bound it here."""
 
-    overfetch_factor: int = Field(default=2, ge=1)
+    overfetch_factor: int = Field(default=10, ge=1)
     """Chroma returns top_k * this, then the shortlist is truncated to top_k.
     Raising it gives a reranker more to work with, at linear cost in rerank
-    time; without a reranker it changes nothing but the query size."""
+    time; without a reranker it changes nothing but the query size.
+
+    10 since 2026-10-12, at 87 methods: with 9 (27 of 87) the holdout fell
+    from 10/15 to 9/15 top-3 while search_queries.json held at 33/40 and
+    38/40; taking out any one of four of the eight new methods restored it, so
+    a right method had been crowded out of the shortlist again. At 10 both
+    files are back to main's numbers for about 8 % more rerank time.
+
+    9 since 2026-10-12, at 79 methods: with 8 (24 of 79) Causal Loop Diagram
+    fell to embedding rank 25 for "Die Zahl der Lehrabbrüche steigt und niemand
+    weiss genau warum", where the reranker had put it first: search_queries.json
+    (40 problems) gave 32/40 top-1 and 37/40 top-3 against main's 33 and 38.
+    At 9 both are back to 33/40 and 38/40, the holdout unchanged at 7/15 and
+    10/15, for about 12 % more rerank time. The slot count is fixed while the
+    catalog grows; re-measure as it does.
+
+    8 since 2026-10-09, measured on the 71-method catalog with
+    scripts/audit_search.py — problems phrased the way people type them, not
+    the pinned probes, which all rank first either way. At 3 the shortlist cut
+    hid the right method from the reranker for 7 of 36 such problems; top-1
+    went from 19/36 to 23/36 (the same 36 in English: 18 to 22). Rerank time
+    roughly doubles, about 135 texts instead of 51 (1.1 s to 2.1 s a query on a
+    4-core CPU). Reranking the whole catalog scored lower again (19/36): every
+    extra candidate is one more the reranker can wrongly prefer.
+
+    Was 2 until 39 methods, then 3: two pinned probes had slid to the last slot
+    of a 6-method shortlist."""

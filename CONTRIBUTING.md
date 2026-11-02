@@ -2,12 +2,37 @@
 
 Two kinds of contributions, in increasing order of effort:
 
+## Licensing and sign-off
+
+Contributions are welcome, from anyone. By contributing you agree that your
+work is licensed like the part of the repository it goes into:
+
+- `methods/` (records, guides, assets): **CC BY-SA 4.0**
+- everything else: **MIT**
+
+Sign off every commit (`git commit -s`), which adds
+`Signed-off-by: Your Name <you@example.org>`. That line is your statement under
+the [Developer Certificate of Origin](https://developercertificate.org/) that
+you wrote the change or otherwise have the right to submit it. The `dco` check
+on pull requests enforces it. Forgot? `git rebase --signoff origin/main` and
+push again.
+
+Write method text in your own words. Link sources in `references`; do not paste
+from books, articles or websites — copied prose cannot be relicensed and will
+be rejected.
+
 ## 1. Add a method
 
 Create `methods/<Id>.json` and `methods/<Id>.md`. Validate locally with
 `python scripts/validate_methods.py`. Open a PR. CI does the rest.
 
 The `<Id>` must match the JSON `id` field and starts with a capital letter.
+Field reference, including the optional metadata and assets:
+[docs/method-format.md](docs/method-format.md).
+
+Every method needs one English and one German probe in
+`tests/test_integration.py` (`PROBES` and `PROBES_DE`) — a test fails without
+them.
 
 ## 2. Add a provider
 
@@ -69,7 +94,7 @@ model against the real `methods/` catalog, so they catch a `use_case` that has
 stopped matching the problems it should match:
 
 ```bash
-pytest -m integration                        # needs the `local` extra
+pytest -m integration                        # needs the `local` extra (~930MB of weights)
 METHODOS_INTEGRATION_LLM=1 pytest -m integration   # also hits a real LLM
 ```
 

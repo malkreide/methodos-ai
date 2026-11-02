@@ -7,7 +7,7 @@ from typing import Any
 
 from methodos.providers.base import RerankError
 
-DEFAULT_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+DEFAULT_MODEL = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
 
 
 def _load_cross_encoder(model_name: str) -> Any:
@@ -20,7 +20,7 @@ def _load_cross_encoder(model_name: str) -> Any:
 class CrossEncoderRerank:
     """Lazy-loaded cross-encoder that scores (query, document) pairs jointly.
 
-    The model (~80MB for ms-marco-MiniLM-L-6-v2) downloads on first use into
+    The model (~470MB for the multilingual mMARCO MiniLM) downloads on first use into
     HuggingFace's standard cache. After that, fully offline.
 
     Unlike an embedding model this cannot be precomputed: the query and the

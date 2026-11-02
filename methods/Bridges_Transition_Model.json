@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Bridges_Transition_Model",
+  "name": "Bridges' Transition Model",
+  "category": "change-management",
+  "use_case": "A merger, reorganisation or new role has been decided and announced, but the people affected grieve what they are losing and feel adrift while the old arrangements are gone and the new ones do not yet work, and their managers keep talking up the future while ignoring the loss.",
+  "strengths": [
+    "separates the external change from the inner adjustment people have to make, which explains why a well-planned change can still go badly",
+    "treats loss and grief as normal reactions to be planned for, not as resistance to be overcome",
+    "gives managers concrete questions to ask: who is losing what, what is over and what is not",
+    "takes the confusing in-between period seriously and uses it as a time for temporary structures and new ideas",
+    "works at every scale, from one person stepping into a new role to a whole organisation after a merger",
+    "simple enough to explain to staff, who can then name for themselves where they stand"
+  ],
+  "weaknesses": [
+    "not a plan for the change itself: it offers no steps for deciding, sequencing or governing a programme",
+    "evidence is thin: published applications are mostly single-site case reports without comparison groups, so its effect on how people come through a change has not been tested in controlled studies",
+    "the three phases overlap and people move through them at different speeds, so treating them as a timetable misleads",
+    "it can be misused to recast justified objections to a decision as grief that just needs time",
+    "does not resolve structural grievances such as job losses, pay cuts or unfair selection; acknowledging the loss is no substitute for dealing with them",
+    "offers no measure of progress beyond what people say about where they stand"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://wmbridges.com/about/what-is-transition/",
+    "https://www.hachette.co.uk/titles/william-bridges/managing-transitions/9781473664500/",
+    "https://documents.manchester.ac.uk/display.aspx?DocID=40095",
+    "https://digitalcommons.butler.edu/librarian_papers/74",
+    "https://doi.org/10.3390/children12010022"
+  ],
+  "use_cases": [
+    "Two primary schools are to be merged into one at the start of the next school year; the decision is final, but teachers grieve for the identity and traditions of their own school, and the head wants to plan how staff and pupils take leave of the old schools and settle into the new one.",
+    "Months after a reorganisation of a city administration, staff have new teams, new managers and new remits, yet many say they no longer know where they belong, work has slowed, and the head of department does not know how to lead people through this unsettled interim.",
+    "A small hospital ward is closing and its nurses are moving into a larger unit; management has explained the benefits many times, but the staff are still angry and sad because nobody has acknowledged what they are giving up.",
+    "An experienced teacher has just become deputy head and finds it hard to step out of the old role and the old friendships with colleagues, and wants to understand what is being given up and how to grow into the new position.",
+    "After a small nonprofit was absorbed by a larger partner, long-standing volunteers feel the familiar culture is disappearing and some are quietly leaving, and the board wants to help them make the move instead of simply announcing the new structure."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 30
+  },
+  "audience": [
+    "managers leading a merger or reorganisation",
+    "school leadership",
+    "public administration leadership",
+    "health-care managers",
+    "HR and organisation development",
+    "people stepping into a new role"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

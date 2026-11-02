@@ -19,7 +19,26 @@
   "complexity_score": 4,
   "estimated_duration": { "min_minutes": 240, "max_minutes": 1200 },
   "references": [
+    "https://hbr.org/1979/03/how-competitive-forces-shape-strategy",
     "https://hbr.org/2008/01/the-five-competitive-forces-that-shape-strategy",
-    "https://en.wikipedia.org/wiki/Porter%27s_five_forces_analysis"
-  ]
+    "https://www.isc.hbs.edu/strategy/business-strategy/Pages/the-five-forces.aspx",
+    "https://en.wikipedia.org/wiki/Porter%27s_five_forces_analysis",
+    "https://latisstrategy.umn.edu/porters-five-forces-analysis"
+  ],
+  "use_cases": [
+    "A private college is weighing a new online degree in a field where many universities, bootcamps and free courses already compete for the same students, and it wants to know how much room is left.",
+    "A logistics firm relies on two dominant software suppliers and sells to a handful of very large customers, and it wants to understand how that squeeze from both sides limits its margins.",
+    "An investor comparing two industries for an acquisition wants to know in which one established firms can keep earning healthy profits over the long run.",
+    "Our long-established product is losing sales to a cheaper offering from a different industry that meets the same need, and we want to judge how serious that threat is for the whole sector."
+  ],
+  "contexts": [
+    "business",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-27"
 }

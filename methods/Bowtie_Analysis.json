@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Bowtie_Analysis",
+  "name": "Bowtie Analysis",
+  "category": "analysis",
+  "use_case": "An organisation fears one specific serious incident, such as a data breach, a pupil lost on an excursion, a fire or a fraudulent payment, and cannot say which safeguards really keep it from happening, which ones exist only on paper, what would limit the harm if it happened anyway, and who looks after each safeguard. The incident is placed in the centre of one diagram, with the ways it could come about on one side and its possible outcomes on the other, so that unprotected paths and safeguards nobody owns become visible.",
+  "strengths": [
+    "shows prevention and damage limitation for one event on a single page that non-specialists can read",
+    "makes it obvious when a route to the event has no control, or depends on one person remembering to do something",
+    "asks what happens after the event as well as how to stop it, which purely preventive thinking tends to skip",
+    "gives every control a place where its condition and the person who keeps it working can be recorded and reviewed",
+    "links day-to-day procedures, checks and equipment to the serious event they are supposed to guard against",
+    "widely used in oil and gas, chemicals and aviation, and adopted in health care, defence and information security"
+  ],
+  "weaknesses": [
+    "covers one event at a time; it is not a way of surveying or ranking all of an organisation's risks",
+    "a measure drawn as a barrier is not proof that it works; without checking, the diagram can give false reassurance",
+    "long lists of so-called barriers, many of them training or general management activities, make protection look stronger than it is",
+    "qualitative: it does not say how likely the event is or how much the controls reduce it",
+    "draws each route as a straight line, so combinations of causes and feedback effects are lost",
+    "no single agreed standard for terms and rules, so diagrams from different teams are hard to compare",
+    "evidence for its benefit comes mostly from industry practice and case reports rather than controlled comparisons"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.icheme.org/media/16937/hazards-28-paper-31.pdf",
+    "https://caa.co.uk/Safety-initiatives-and-resources/Working-with-industry/Bowtie/About-Bowtie/Introduction-to-bowtie",
+    "https://www.caa.co.uk/safety-initiatives/working-with-industry/bowtie/about-bowtie/where-did-bowtie-come-from/",
+    "https://www.asems.mod.uk/node/28",
+    "https://doi.org/10.1108/IJHCQA-10-2015-0121",
+    "https://doi.org/10.1108/ICS-11-2018-0132",
+    "https://en.wikipedia.org/wiki/Bow-tie_diagram"
+  ],
+  "use_cases": [
+    "We know a data leak or a child going missing on a school trip would be serious, but nobody can tell us which safeguards we actually rely on to stop it, and what we would do if it happened anyway.",
+    "A municipal office handling citizens' personal records wants to trace, for the single case of data ending up with the wrong person, every way that could come about, what currently stops each one, what would contain the harm afterwards, and which unit is responsible for keeping each of those measures in place.",
+    "A school leadership team reviewing excursion safety wants to see, for a pupil becoming separated from the group, what prevents it, how quickly anyone would notice, what staff would then do, and whether any of it depends on a single teacher remembering.",
+    "A hospital ward wants to look at one serious event, such as a patient receiving the wrong blood or falling from bed, and lay out which checks are meant to prevent it, which responses limit the harm, and which conditions like night shifts, temporary staff or faulty equipment quietly weaken those checks.",
+    "Our safety rules name dozens of precautions, but we cannot tell which of them would really prevent the worst accident, which are only paperwork, and who checks that each one is still in place."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 10
+  },
+  "audience": [
+    "safety and risk managers",
+    "operations and process owners",
+    "public administration",
+    "school leadership",
+    "patient-safety and quality staff",
+    "data-protection and information-security officers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

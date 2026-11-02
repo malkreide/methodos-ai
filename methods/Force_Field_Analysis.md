@@ -9,6 +9,16 @@ driving forces  →→→  │  ←←←  restraining forces
       (weights)      │      (weights)
 ```
 
+## Origin
+
+Kurt Lewin, the social psychologist who founded the Research Center for Group
+Dynamics at MIT, described group life as a quasi-stationary equilibrium held in
+place by opposing forces (*Human Relations*, 1947). The two-column diagram is
+the practical tool that grew out of that idea. It has long been used outside
+business: a US science-education reform programme built its lead-teacher
+training around it (Harwell, 2000), and NHS improvement teams use it to plan
+service changes.
+
 ## When to use
 
 - A change has stalled despite obvious benefits and repeated encouragement
@@ -44,3 +54,4 @@ driving forces  →→→  │  ←←←  restraining forces
 - [Pre-Mortem Analysis](Pre_Mortem.md) — for risks rather than resistance
 - [Start, Stop, Continue](Start_Stop_Continue.md) — to check afterwards whether the restraint actually lifted
 - [Wikipedia: Force-field analysis](https://en.wikipedia.org/wiki/Force-field_analysis)
+- [NHS Improvement: Force field analysis instructions (PDF)](https://www.england.nhs.uk/improvement-hub/wp-content/uploads/sites/44/2018/06/Force-Field-Analysis-Instructions.pdf)

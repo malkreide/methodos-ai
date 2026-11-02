@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Issue_Tree",
+  "name": "Issue Tree (Logic Tree)",
+  "category": "analysis",
+  "use_case": "A large, vague question has to be answered, such as why our costs are going up or how to reduce early school leaving, and the team needs to break it into smaller questions that together cover the whole of it without overlapping, step by step down to questions one analysis can settle, so it can plan what evidence to collect, divide the work between people and be sure no possible explanation or option has been missed.",
+  "strengths": [
+    "turns a sprawling brief into a set of answerable questions with clear owners",
+    "the no-overlap, no-gap test exposes blind spots and duplicated effort early",
+    "makes the team's reasoning visible, so stakeholders can challenge the structure before the analysis starts",
+    "links each end question to the evidence needed, which gives a ready work plan",
+    "works for both diagnostic questions (why is this happening) and solution questions (how could we achieve this)"
+  ],
+  "weaknesses": [
+    "a strictly non-overlapping split is hard to find for messy social problems where causes interlock",
+    "a tree forces a hierarchy onto causes that in reality influence each other in loops",
+    "the first split chosen shapes everything below it, and a poor one misleads the whole analysis",
+    "teams can keep refining branches and never move on to gathering evidence",
+    "says nothing on its own about which branch matters most; that still needs data"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Issue_tree",
+    "https://en.wikipedia.org/wiki/MECE_principle",
+    "https://www.barbaraminto.com/",
+    "https://assets.publishing.service.gov.uk/media/5a816cd1e5274a2e8ab53eb1/Issue_Trees.pdf",
+    "https://www.wiley.com/en-us/Bulletproof+Problem+Solving%3A+The+One+Skill+That+Changes+Everything-p-9781119553021",
+    "https://doi.org/10.1093/acprof:oso/9780190463908.001.0001"
+  ],
+  "use_cases": [
+    "The board asks the finance director why operating costs went up twelve percent this year; every manager names a different culprit, and she wants to split the increase into parts that add up to the total so each one can be checked against the figures.",
+    "A cantonal education department has to reduce the number of young people who leave school without any qualification; officials, teachers and politicians each push their own remedy, and the analysts want to lay out every route to the goal before money is committed to one of them.",
+    "A policy unit has been given a sprawling ministerial brief and a small team of analysts, and needs to carve the brief into separate questions each person can own, with no two people researching the same thing and no part of it left uncovered.",
+    "A charity's income from individual donors has fallen two years running and the trustees disagree about whether it is the economy, the website or the fundraising team; the director wants every possible explanation set out side by side before the evidence is gathered."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 8
+  },
+  "audience": [
+    "analysts and consultants",
+    "policy and public-service teams",
+    "project and programme leads",
+    "finance and controlling teams",
+    "school and education administration"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

@@ -29,7 +29,14 @@ from methodos.api import Providers, app, get_providers, methods_dir
 from methodos.config import Settings
 from methodos.ingest import ingest
 from methodos.providers.base import LLMError
-from tests.conftest import FakeEmbedding, FakeLLM, FakeReranker
+from tests.conftest import (
+    FakeEmbedding,
+    FakeLLM,
+    FakeReranker,
+    FakeTranscriber,
+    make_docx,
+    make_pdf,
+)
 
 
 def _write(dir: Path, id: str, use_case: str, category: str = "strategy") -> None:
@@ -55,6 +62,7 @@ class _FakeProviders(Providers):
         self.embedding = FakeEmbedding(dimensions=8)
         self.reranker = FakeReranker()
         self.llm = llm
+        self.transcriber = None
 
 
 @pytest.fixture
@@ -74,6 +82,7 @@ def env(tmp_path, monkeypatch):
     settings = Settings(
         chroma_path=chroma_path,
         feedback_path=tmp_path / "feedback.jsonl",
+        proposals_path=tmp_path / "proposals.jsonl",
     )
     llm = FakeLLM("Alpha fits because it fits.")
     providers = _FakeProviders(settings, llm)
@@ -106,6 +115,20 @@ def test_health_is_degraded_rather_than_500_when_the_index_is_missing(tmp_path, 
     assert "ingest" in body["index_error"]
 
 
+def test_health_reports_an_unexpected_index_failure_instead_of_500(env, monkeypatch):
+    """Whatever breaks in the index layer, /health must still answer — that is its job."""
+
+    def broken(*a, **kw):
+        raise AttributeError("'RustBindingsAPI' object has no attribute 'bindings'")
+
+    monkeypatch.setattr(api_mod, "collection_size", broken)
+    res = env["client"].get("/health")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["status"] == "degraded"
+    assert body["index_error"].startswith("AttributeError: ")
+
+
 def test_query_returns_the_mcp_narrowing_fields_alongside_the_explanation(env):
     body = env["client"].post("/query", json={"problem": "alpha alpha alpha"}).json()
     assert body["returned"] == 3
@@ -115,6 +138,14 @@ def test_query_returns_the_mcp_narrowing_fields_alongside_the_explanation(env):
     assert body["explanation"] == "Alpha fits because it fits."
     assert body["explanation_error"] is None
     assert body["query_id"]
+
+
+def test_query_explanation_uses_swiss_spelling(env):
+    """The console is the surface people read; it gets "ss" like the CLI."""
+    env["llm"].response = "Alpha passt, weil es die Gruppe ernst nimmt. Außerdem …"
+    body = env["client"].post("/query", json={"problem": "alpha alpha alpha"}).json()
+    assert "ß" not in body["explanation"]
+    assert "Ausserdem" in body["explanation"]
 
 
 def test_query_with_explain_false_never_touches_the_llm(env):
@@ -262,6 +293,7 @@ def test_console_is_served_at_console_and_self_contained(env):
     assert "http://" not in html
     assert "https://" not in html
     assert "src=" not in html, "no external script or stylesheet may be pulled in"
+    assert html.index("</style>") < html.index("</head>") < html.index("<body>")
 
 
 def test_app_is_served_at_root_and_self_contained(env):
@@ -280,7 +312,7 @@ def test_methods_dir_follows_the_env_var(tmp_path, monkeypatch):
 
 
 def test_providers_are_built_once_per_process():
-    """A fresh provider per request would re-load ~80MB of weights every call."""
+    """A fresh provider per request would re-load ~470MB of weights every call."""
     api_mod._build_providers.cache_clear()
     try:
         first = api_mod._build_providers()
@@ -370,3 +402,272 @@ def test_app_bars_do_not_invent_gaps(env):
     html = env["client"].get("/").text
     assert "Math.min(...vals)" not in html
     assert "1 / (1 + Math.exp(" in html  # rerank logits squashed before scaling
+
+
+_PROPOSAL = {
+    "name": "Lean Coffee",
+    "problem": "our meetings follow an agenda nobody asked for and the loudest voices win",
+    "sources": "Jim Benson and Jeremy Lightsmith, 2009",
+    "links": ["https://leancoffee.org/"],
+    "contexts": ["education", "public-sector"],
+}
+
+
+def test_proposal_is_stored_with_the_duplicate_check_and_an_issue_link(env):
+    res = env["client"].post("/proposals", json=_PROPOSAL)
+    assert res.status_code == 200
+    body = res.json()
+    assert body["recorded"] is True
+    assert len(body["similar"]) == 3
+    assert body["similar_error"] is None
+    assert body["issue_url"].startswith(
+        "https://github.com/malkreide/methodos-ai/issues/new?template=method-proposal.yml"
+    )
+
+    stored = [
+        json.loads(line) for line in Path(env["settings"].proposals_path).read_text().splitlines()
+    ]
+    assert len(stored) == 1
+    assert stored[0]["proposal_id"] == body["proposal_id"]
+    assert stored[0]["links"] == ["https://leancoffee.org/"]
+    assert stored[0]["similar_method_ids"] == [m["id"] for m in body["similar"]]
+    assert env["llm"].calls == [], "a proposal never reaches the LLM provider"
+
+
+def test_proposal_without_any_source_is_rejected(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "sources": " ", "links": []})
+    assert res.status_code == 422
+    assert "source" in json.dumps(res.json()["detail"])
+    assert not env["settings"].proposals_path.exists()
+
+
+def test_proposal_for_an_unknown_existing_method_is_rejected(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "existing_method_id": "Typo"})
+    assert res.status_code == 422
+    assert "Alpha" in res.json()["detail"]
+
+
+def test_proposal_survives_an_unusable_index(tmp_path, env):
+    """The duplicate check is a courtesy; losing the proposal over it is not."""
+    env["providers"].settings = env["settings"].model_copy(
+        update={"chroma_path": tmp_path / "nope"}
+    )
+    body = env["client"].post("/proposals", json=_PROPOSAL).json()
+    assert body["recorded"] is True
+    assert body["similar"] == []
+    assert "ingest" in body["similar_error"]
+    assert env["settings"].proposals_path.exists()
+
+
+def test_proposal_issue_link_can_be_switched_off(env):
+    env["providers"].settings = env["settings"].model_copy(update={"issue_repo": ""})
+    body = env["client"].post("/proposals", json=_PROPOSAL).json()
+    assert body["recorded"] is True
+    assert body["issue_url"] is None
+
+
+def test_console_reads_the_contexts_off_the_openapi_schema(env):
+    """The propose form has no copy of the list; it must exist where the page looks."""
+    spec = env["client"].get("/openapi.json").json()
+    assert "education" in spec["components"]["schemas"]["Context"]["enum"]
+
+
+def test_console_has_every_string_in_both_languages(env):
+    """A key missing from one dictionary would show the raw key to that reader."""
+    import re
+
+    html = env["client"].get("/console").text
+    script = html.split("const I18N = {", 1)[1].split("\n};", 1)[0]
+    de, en = script.split("\n  en: {", 1)
+    keys = re.compile(r"^ {4}'?([\w-]+)'?:", re.M)
+    assert set(keys.findall(de)) == set(keys.findall(en))
+
+    used = set(re.findall(r'data-i18n(?:-html|-placeholder)?="([\w-]+)"', html))
+    used |= set(re.findall(r"\bt\('([\w-]+)'", html))
+    assert {"tab_propose", "p_checking", "explain_failed"} <= used
+    assert used <= set(keys.findall(de))
+
+
+def test_console_offers_every_goal_in_both_languages(env):
+    """The goal buttons are built from GOALS with keys the test above cannot see."""
+    import re
+
+    html = env["client"].get("/console").text
+    goals = re.findall(r"'(\w+)'", html.split("const GOALS = [", 1)[1].split("];", 1)[0])
+    assert len(goals) >= 5
+    de, en = html.split("const I18N = {", 1)[1].split("\n};", 1)[0].split("\n  en: {", 1)
+    for g in goals:
+        for d in (de, en):
+            assert f"    goal_{g}:" in d and f"    goal_{g}_q:" in d, g
+
+
+def test_query_carries_the_clarify_field_the_console_reads(env):
+    spec = env["client"].get("/openapi.json").json()
+    assert "clarify" in spec["components"]["schemas"]["QueryResponse"]["properties"]
+    assert "data.clarify" in env["client"].get("/console").text
+
+
+def test_query_logs_the_goal_and_the_search_it_refines(env):
+    client = env["client"]
+    first = client.post("/query", json={"problem": "alpha", "explain": False}).json()
+    client.post(
+        "/query",
+        json={
+            "problem": "alpha We want to find out what is causing it.",
+            "explain": False,
+            "goal": "cause",
+            "refines": first["query_id"],
+        },
+    )
+    lines = env["settings"].feedback_path.read_text(encoding="utf-8").splitlines()
+    a, b = (json.loads(x) for x in lines)
+    assert isinstance(a["clarify"], bool), "the API always knows whether it asked"
+    assert (a["goal"], a["refines"]) == (None, None)
+    assert (b["goal"], b["refines"]) == ("cause", first["query_id"])
+
+
+@pytest.mark.parametrize("extra", [{"goal": "Ursache verstehen"}, {"refines": "not-a-query-id"}])
+def test_query_rejects_a_malformed_goal_or_reference(env, extra):
+    """Free text here would be a second unannounced place for personal data."""
+    body = {"problem": "alpha", "explain": False, **extra}
+    assert env["client"].post("/query", json=body).status_code == 422
+
+
+# --- /proposals/extract -------------------------------------------------------
+
+_DRAFT_JSON = json.dumps(
+    {
+        "name": "Lean Coffee",
+        "problem": "Sitzungen folgen einer Traktandenliste, die niemand gewünscht hat.",
+        "description": "Alle notieren Themen, stimmen ab und besprechen sie in Zeitfenstern.",
+        "sources": "Jim Benson (2009)",
+        "contexts": ["education"],
+        "is_method": True,
+        "note": None,
+    }
+)
+
+
+def _extract(env, name, content, **form):
+    data = {"language": "de", **{k: str(v).lower() for k, v in form.items()}}
+    return env["client"].post("/proposals/extract", files={"file": (name, content)}, data=data)
+
+
+def test_health_reports_what_can_be_uploaded(env):
+    body = env["client"].get("/health").json()
+    assert body["transcriber"] is None
+    assert body["upload_max_mb"] == 50
+    assert body["media_max_minutes"] == 20
+    assert ".pdf" in body["upload_suffixes"]
+    assert ".mp3" not in body["upload_suffixes"], "no transcriber, no audio"
+
+
+def test_extract_reads_a_text_file_and_drafts_from_it(env):
+    env["llm"].response = _DRAFT_JSON
+    res = _extract(env, "notes.md", b"# Lean Coffee\n\nAlle schreiben Themen auf.")
+    assert res.status_code == 200, res.text
+    body = res.json()
+    assert body["kind"] == "text"
+    assert body["text"] == "# Lean Coffee\n\nAlle schreiben Themen auf."
+    assert body["draft"]["name"] == "Lean Coffee"
+    assert body["draft"]["contexts"] == ["education"]
+    assert body["draft_error"] is None
+    system, user = env["llm"].calls[0]
+    assert "German" in system and "Alle schreiben Themen auf." in user
+    assert not env["settings"].proposals_path.exists(), "extracting stores nothing"
+
+
+def test_extract_reads_pdf_and_word(env):
+    pytest.importorskip("pypdf")
+    pdf = _extract(env, "Handout.pdf", make_pdf(["Lean Coffee", "Vote, then talk."]), draft=False)
+    docx = _extract(
+        env, "Notizen.docx", make_docx(["Lean Coffee", "Abstimmen, dann reden."]), draft=False
+    )
+    assert pdf.json()["kind"] == "pdf" and "Vote, then talk." in pdf.json()["text"]
+    assert docx.json()["text"] == "Lean Coffee\nAbstimmen, dann reden."
+
+
+def test_extract_with_draft_off_never_calls_the_llm(env):
+    body = _extract(env, "a.txt", b"Lean Coffee in a few lines.", draft=False).json()
+    assert body["draft"] is None and body["draft_model"] is None
+    assert env["llm"].calls == []
+
+
+def test_a_failing_draft_leaves_the_text(env):
+    """The default fake answers with prose, not JSON."""
+    body = _extract(env, "a.txt", b"Lean Coffee in a few lines.").json()
+    assert body["text"] == "Lean Coffee in a few lines."
+    assert body["draft"] is None
+    assert "JSON" in body["draft_error"]
+
+
+def test_extract_refuses_unknown_types_with_415(env):
+    res = _extract(env, "photo.jpg", b"\xff\xd8\xff")
+    assert res.status_code == 415
+    assert ".pdf" in res.json()["detail"]
+
+
+def test_extract_says_when_there_is_no_text(env):
+    res = _extract(env, "empty.txt", b"   ")
+    assert res.status_code == 422
+
+
+def test_audio_without_a_transcriber_is_503_and_names_the_extra(env):
+    res = _extract(env, "talk.m4a", b"\x00\x00\x00 ftypM4A ")
+    assert res.status_code == 503
+    assert "transcribe" in res.json()["detail"]
+
+
+def test_audio_is_transcribed_and_the_file_is_gone_afterwards(env):
+    fake = FakeTranscriber(text="Erstens   Themen sammeln. Zweitens abstimmen.", duration=90.0)
+    env["providers"].transcriber = fake
+    body = _extract(env, "Workshop Frau Muster.mp4", b"\x00\x00\x00 ftypisom", draft=False).json()
+    assert body["kind"] == "video"
+    assert body["text"] == "Erstens Themen sammeln. Zweitens abstimmen."
+    assert body["duration_seconds"] == 90.0
+    assert body["language"] == "de"
+    assert body["transcriber"] == "fake-transcriber"
+    (path,) = fake.calls
+    assert path.name == "upload.mp4", "the uploaded file name is not kept"
+    assert not path.exists(), "the upload is deleted with the request"
+
+
+def test_a_draft_from_a_recording_carries_the_transcript_warning(env):
+    env["llm"].response = _DRAFT_JSON
+    env["providers"].transcriber = FakeTranscriber(text="Lean Coffee: alle schreiben Themen auf.")
+    body = _extract(env, "talk.m4a", b"\x00\x00\x00 ftypM4A ").json()
+    assert "from_transcript" in body["draft"]["warnings"]
+
+    text = _extract(env, "notes.txt", b"Lean Coffee: alle schreiben Themen auf.").json()
+    assert "from_transcript" not in text["draft"]["warnings"]
+
+
+def test_a_recording_over_the_limit_is_422(env):
+    env["providers"].transcriber = FakeTranscriber(duration=21 * 60)
+    res = _extract(env, "long.mp3", b"ID3")
+    assert res.status_code == 422
+
+
+def test_an_oversized_upload_is_refused_before_it_is_read(env):
+    env["providers"].settings = env["settings"].model_copy(update={"upload_max_mb": 1})
+    res = _extract(env, "big.txt", b"x" * (1024 * 1024 + 128 * 1024))
+    assert res.status_code == 413
+
+
+def test_an_upload_without_content_length_is_refused(env):
+    def body():
+        yield b"--x\r\n"
+
+    res = env["client"].post(
+        "/proposals/extract",
+        content=body(),
+        headers={"content-type": "multipart/form-data; boundary=x"},
+    )
+    assert res.status_code == 411
+
+
+def test_a_proposal_remembers_it_started_from_a_file(env):
+    res = env["client"].post("/proposals", json={**_PROPOSAL, "extracted_from": "pdf"})
+    assert res.status_code == 200
+    stored = json.loads(env["settings"].proposals_path.read_text().splitlines()[0])
+    assert stored["extracted_from"] == "pdf"

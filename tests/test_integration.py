@@ -13,8 +13,8 @@ addopts. Run them explicitly:
     pytest -m integration
 
 Requires the `local` extra (`pip install -e ".[dev,local]"`). The first run
-downloads ~80MB of model weights into the HuggingFace cache; after that it is
-offline. The LLM test needs a reachable backend on top of that and is opted
+downloads ~930MB of model weights (multilingual embedding + cross-encoder) into
+the HuggingFace cache; after that it is offline. The LLM test needs a reachable backend on top of that and is opted
 into separately with METHODOS_INTEGRATION_LLM=1.
 """
 
@@ -26,6 +26,7 @@ from pathlib import Path
 import pytest
 
 from methodos.config import Settings
+from methodos.mcp_tools import WEAK_MATCH_SIMILARITY
 from methodos.providers import make_llm
 from methodos.search import search
 
@@ -57,7 +58,7 @@ def real_embedding():
     )
     from methodos.providers.embedding_local import LocalEmbedding
 
-    return LocalEmbedding(model_name="all-MiniLM-L6-v2")
+    return LocalEmbedding(model_name=Settings().embedding_model)
 
 
 @pytest.fixture(scope="module")
@@ -72,7 +73,7 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
         embedding=real_embedding,
     )
     assert summary.count >= 3, "expected the shipped catalog to ingest"
-    assert summary.dimensions == 384, f"all-MiniLM-L6-v2 is 384d, got {summary.dimensions}"
+    assert summary.dimensions == 384, f"the default model is 384d, got {summary.dimensions}"
     return chroma_path
 
 
@@ -80,12 +81,24 @@ def real_index(tmp_path_factory, real_embedding) -> Path:
 # naming the method or echoing its vocabulary, which would test the query
 # rather than the catalog.
 #
-# Third element is the minimum margin over the runner-up. 0.10 is the default;
-# a lower value is an explicit statement that two methods in the catalog are
-# genuinely adjacent, not a licence to weaken a failing probe. Every value here
-# was measured against the full catalog.
+# What each probe must achieve changed with the move to multilingual models
+# (paraphrase-multilingual-MiniLM-L12-v2 + mMARCO cross-encoder). Measured
+# against the 23-method catalog:
 #
-# Rejected candidates, kept so they don't get re-added:
+#                         English probes   German probes
+#   old embedding only        23/23            7/23      (all-MiniLM-L6-v2)
+#   new embedding only        20/23           19/23
+#   new embedding + rerank    23/23           23/23
+#
+# The multilingual embedding is the weaker *ranker* and a far better
+# *retriever*: it puts the right method at position <= 4 for every probe in
+# both languages, and the cross-encoder does the ordering. So the embedding is
+# now held to "on the shortlist the reranker sees", the pipeline to "first".
+# The old per-probe cosine margins (0.10 over the runner-up) do not survive
+# that change and were dropped rather than lowered until they passed.
+#
+# Rejected phrasings below were measured against the old English-only model
+# and are kept so they don't get re-added without re-measuring:
 #   "internal strengths and weaknesses vs external opportunities and threats"
 #       -> SWOT by 0.041 over Porter's. The four-quadrant vocabulary is shared.
 #   "the same defect keeps coming back after every fix"
@@ -108,167 +121,1040 @@ PROBES = [
         "should we enter this industry? how defensible is the position "
         "against competitors and new entrants",
         "Porters_Five_Forces",
-        0.10,
     ),
     (
         "strategic planning kickoff: assess our own position and the "
         "external landscape in four quadrants",
         "SWOT",
-        0.10,
     ),
     (
         "scan the wider environment: legislation, demographics, climate "
         "exposure and macroeconomic conditions",
         "PESTEL_Analysis",
-        0.10,
     ),
     (
         "map out how this new venture creates and captures value on one page",
         "Business_Model_Canvas",
-        0.10,
     ),
     (
         "should we build this component ourselves, buy it off the shelf, or outsource it",
         "Wardley_Mapping",
-        0.10,
     ),
     (
         "we cannot forecast a single number for this decade, which choices "
         "hold up across several plausible futures",
         "Scenario_Planning",
-        0.10,
     ),
     (
         "who is the approver for this cross-functional decision",
         "DACI_Matrix",
-        0.10,
     ),
     (
         "one group wants a detailed plan up front and another wants to start "
         "experimenting, we disagree on what kind of problem this is",
         "Cynefin_Framework",
-        0.10,
     ),
     (
         "express the costs and the benefits in money, discount them, and "
         "compare the net present value of each option",
         "Cost_Benefit_Analysis",
-        0.10,
     ),
     (
         "the discussion has split into advocates and critics and the same "
         "person is always the sceptic",
         "Six_Thinking_Hats",
-        0.10,
     ),
     (
         "we keep fixing the symptom of this recurring failure instead of what actually causes it",
         "Five_Whys",
-        0.10,
     ),
     (
         "many possible causes across people process equipment and materials, we need to map them",
         "Ishikawa_Diagram",
-        0.10,
     ),
     (
         "before we commit to this launch, imagine it failed and surface "
         "the risks nobody is voicing",
         "Pre_Mortem",
-        0.10,
     ),
     (
         "tickets take six weeks end to end but the actual work is only a few hours",
         "Value_Stream_Mapping",
-        0.10,
     ),
     (
         "interview customers about what they were struggling with when they "
         "switched and what they stopped using",
         "Jobs_To_Be_Done",
-        0.10,
     ),
     (
         "what is resisting this change, and how do we weaken the restraints "
         "instead of pushing harder",
         "Force_Field_Analysis",
-        0.10,
     ),
     # Prioritization is the most crowded corner of the catalog: RICE, MoSCoW,
     # Eisenhower and Value Stream Mapping all speak about too much work and not
     # enough capacity. RICE's distinguishing feature is quantified scoring, and
     # a probe only surfaces that by naming reach/impact/effort — which would be
-    # testing the query. So this probe keeps the user's phrasing and accepts a
-    # narrower margin instead.
+    # testing the query. The embedding alone ranks it second (EN) or fourth
+    # (DE); the reranker is what puts it first.
     (
         "we have more backlog items than capacity and need a defensible ranked order",
         "RICE_Scoring",
-        0.05,
     ),
     (
         "fixed release date, we must agree now which requirements get dropped",
         "MoSCoW_Method",
-        0.10,
     ),
     (
         "which features are table stakes that earn no credit and which would "
         "actually delight customers",
         "Kano_Model",
-        0.10,
     ),
     (
         "my week is eaten by interruptions and the important work never gets started",
         "Eisenhower_Matrix",
-        0.10,
     ),
     (
         "end of sprint team retrospective, what should we start and stop doing",
         "Start_Stop_Continue",
-        0.10,
     ),
     # Two retrospective formats sit close together by construction; this probe
-    # leans on the "one picture" framing to separate them and still only clears
-    # the bar by a little. Expect it to need re-measuring if more retrospective
-    # formats are added.
+    # leans on the "one picture" framing to separate them. The embedding alone
+    # ranks it fourth in English. Expect it to need re-measuring if more
+    # retrospective formats are added.
     (
         "the team has gone quiet in our usual list-based retrospectives, we "
         "need goal drag and upcoming risks in one picture",
         "Sailboat_Retrospective",
-        0.10,
     ),
     (
         "debrief the launch we just finished: what did we expect versus what happened",
         "After_Action_Review",
-        0.10,
+    ),
+    (
+        "whenever we discuss something as a group the same two or three people talk "
+        "and everyone else just nods along, how do I get input from all of them",
+        "One_Two_Four_All",
+    ),
+    (
+        "before we announce the reform, who could stop it or carry it, and which "
+        "groups do we bring in early versus just keep updated",
+        "Stakeholder_Map",
+    ),
+    (
+        "every company-wide initiative we launch fizzles out within a year and staff "
+        "drift back to the old ways",
+        "Kotter_Eight_Steps",
+    ),
+    (
+        "every time we vote the losing side reopens it at the next meeting, and "
+        "waiting for unanimity just drags things out",
+        "Consent_Decision_Making",
+    ),
+    (
+        "the foundation wants to know how all the things our project does are supposed "
+        "to bring about the effect we are aiming for, and nobody here can explain it",
+        "Theory_of_Change",
+    ),
+    (
+        "everyone here is flat out, yet at year end nobody can say what all that work "
+        "actually changed, and our plans are just long lists of tasks",
+        "OKR",
+    ),
+    (
+        "in our weekly team meeting the boss always decides what we talk about, the "
+        "things we really want to discuss never come up, and one point eats the whole hour",
+        "Lean_Coffee",
+    ),
+    (
+        "we keep rolling out new ideas to every department at once and never find out "
+        "whether they actually helped, how can we try them out on a small scale first",
+        "PDCA_Cycle",
+    ),
+    (
+        "how do I get a reliable estimate from a group of specialists in different "
+        "organisations when the famous names dominate every meeting",
+        "Delphi_Method",
+    ),
+    (
+        "we are hosting an evening for about 150 residents and do not want another night "
+        "of speeches, people should discuss a few big questions in depth with each other "
+        "and mix with people they do not know",
+        "World_Cafe",
+    ),
+    (
+        "management already decided we need a new app, but nobody has asked the users "
+        "what problem they actually have",
+        "Double_Diamond",
+    ),
+    (
+        "we have to pick one of four suppliers and every meeting ends with people "
+        "defending their favourite on instinct, we want to agree what matters most "
+        "before comparing the offers",
+        "Weighted_Decision_Matrix",
+    ),
+    (
+        "every improvement plan at our school starts from what we're failing at and the "
+        "teachers have lost all motivation; I want to build on what we already do well",
+        "Appreciative_Inquiry",
+    ),
+    (
+        "every office says its own part of the permit process works fine, yet "
+        "applicants keep getting lost between them and giving up; nobody has "
+        "ever gone through it the way they do",
+        "Customer_Journey_Map",
+    ),
+    (
+        "every measure we take against this problem seems to make it worse a few "
+        "months later, and nobody can explain why",
+        "Causal_Loop_Diagram",
+    ),
+    (
+        "we have dozens of things that might go wrong on this programme, no idea "
+        "which ones deserve money and attention, and nobody knows who handles which",
+        "Risk_Matrix",
+    ),
+    (
+        "we have to talk about the disputed reform in front of three hundred parents; "
+        "a podium panel only gives monologues and an open microphone ends in chaos, "
+        "I want a few people to really argue it out while anyone in the hall can still "
+        "join in",
+        "Fishbowl",
+    ),
+    (
+        "my staff bring me every problem and I just tell them what to do; I'd like our "
+        "one-on-one talks to help them work it out themselves and leave knowing what "
+        "they will do next",
+        "GROW_Model",
+    ),
+    (
+        "every department says its request is top priority, but nobody can tell us "
+        "what we actually lose if one of them waits three more months",
+        "Cost_of_Delay_WSJF",
+    ),
+    (
+        "the reorganisation is decided and announced, but my people are mourning what "
+        "they've lost, nobody knows where they stand any more, and upper management "
+        "only talks about how bright the future will be",
+        "Bridges_Transition_Model",
+    ),
+    (
+        "management steers us purely by the budget figures; whether our service is any "
+        "good, how our processes run and whether staff are developing is invisible in "
+        "every report",
+        "Balanced_Scorecard",
+    ),
+    (
+        "a room in our building frees up next year and we want a long list of possible "
+        "uses for it; when we throw ideas around out loud we run dry after five and each "
+        "one gets picked apart straight away",
+        "Brainwriting_635",
+    ),
+    (
+        "lots of tasks before opening day can only begin once others are finished; which "
+        "of these hold-ups actually move our opening day, and which have room to slip?",
+        "Critical_Path_Method",
+    ),
+    (
+        "our operating costs have gone up by a fifth and the board wants to know why; where "
+        "do we even start, how do we split that into pieces we can each check without "
+        "missing anything",
+        "Issue_Tree",
+    ),
+    (
+        "my team waits for my permission on everything, yet when they do act on their own "
+        "I end up reversing it; how do we pin down what they may settle alone",
+        "Delegation_Poker",
+    ),
+    (
+        "how do I tell a coworker that something he did yesterday really annoyed the team "
+        "without it sounding like I'm attacking him as a person",
+        "SBI_Feedback",
+    ),
+    (
+        "three offices share the work of getting new pupils started each year; some letters "
+        "go out twice, some accounts never get set up, and when we ask why, each office "
+        "thought one of the others was doing it",
+        "RACI_Matrix",
+    ),
+    (
+        "our committee has to agree today which three proposals get funded, and the final "
+        "list always ends up being whatever the chair and the two most talkative members "
+        "wanted; I want everyone to bring their own suggestions and everyone's preferences "
+        "to count the same",
+        "Nominal_Group_Technique",
+    ),
+    (
+        "our customer service team gets hundreds of complaints a month about all sorts of "
+        "things and tries to chase down every one separately; I suspect most of them are "
+        "really about just a couple of issues, but nobody has ever counted",
+        "Pareto_Analysis",
+    ),
+    (
+        "we have to grow next year and the leadership is split: some want to sell more of "
+        "what we already offer to the people we already serve, others want to reach "
+        "completely different groups or launch something brand new, and nobody has "
+        "compared how risky each path is",
+        "Ansoff_Matrix",
+    ),
+    (
+        "one of my pupils has completely shut down and things with his parents keep getting "
+        "worse; our school has no supervisor or coach, and when I mention it in the staff "
+        "room everyone just throws in their own stories and quick tips. I'd like a few "
+        "colleagues to properly help me think it through in under an hour",
+        "Collegial_Case_Consultation",
+    ),
+    (
+        "we've shared an office for years but hardly know each other; people misread one "
+        "another's intentions, nobody really knows how they come across to the others, and "
+        "the trust between us never gets past small talk",
+        "Johari_Window",
+    ),
+    (
+        "we have to decide this year whether to refurbish the building, but a vote that "
+        "might close it could come later and we keep arguing as if that vote were ours to make",
+        "Decision_Tree",
+    ),
+    (
+        "we're planning a new after-school care offer and every meeting ends up comparing "
+        "the same two models; there are several things to settle, like opening hours, "
+        "staffing and location, and I'm sure there are workable mixes nobody has thought "
+        "through",
+        "Morphological_Box",
+    ),
+    (
+        "are we really more expensive than similar companies at handling customer orders? "
+        "every figure we find is calculated in a different way, and I'd like to see how the "
+        "efficient ones actually do it",
+        "Benchmarking",
+    ),
+    (
+        "we've been arguing for months about whether to launch a big new online service, the "
+        "budget decision is next month and all we have are opinions; I want the key people "
+        "locked in a room for a week and to see real people react to something concrete "
+        "before we pay for it",
+        "Design_Sprint",
+    ),
+    (
+        "the new curriculum guidelines run to three hundred pages and our teachers get one "
+        "afternoon to learn what is in them; last time a colleague summarised them on slides "
+        "and the room switched off. Could each of us work properly through one section and "
+        "still come away knowing all of it?",
+        "Jigsaw_Method",
+    ),
+    (
+        "management has just decided every employee gets an AI assistant for their emails, "
+        "and nobody has thought past the obvious; what will that set off further down the "
+        "line, and who will feel it indirectly",
+        "Futures_Wheel",
+    ),
+    (
+        "the parents' council and our school have dug in on opposite demands about the "
+        "timetable; whenever one of us gives a little it feels like losing, and we get on "
+        "worse after every meeting",
+        "Principled_Negotiation",
+    ),
+    (
+        "our new project group pulls in people from four departments and after three weeks "
+        "we're already getting on each other's nerves; nobody ever said what we are actually "
+        "here for, how we settle things when we disagree or how quickly people should reply, "
+        "and I'd like us to sort that out together before it gets worse",
+        "Team_Charter",
+    ),
+    (
+        "our open day for prospective families has run the same way for ten years; nothing is "
+        "really wrong with it, but it feels worn out, and rather than dream up a whole new event "
+        "I'd like a systematic way to come up with changes to the programme we already have",
+        "SCAMPER",
+    ),
+    (
+        "I run a department of two hundred people and only ever see their work through monthly "
+        "figures and meeting slides; I suspect the rules we set upstairs make little sense down "
+        "at the counters, but honestly I no longer know what their working day looks like",
+        "Gemba_Walk",
+    ),
+    (
+        "a big upheaval affects all three hundred of us and everyone sees it differently; "
+        "no planning committee could guess what people need to talk about, so we want to "
+        "bring everybody together for a day or two and let them raise and work on the "
+        "issues themselves",
+        "Open_Space_Technology",
+    ),
+    (
+        "In January our salaries will be paid through a new provider. Before the first payday "
+        "I'd like to check each step of the process for where something could go wrong, how "
+        "badly staff would be hit, and what we need to safeguard first",
+        "FMEA",
+    ),
+    (
+        "our integration project for refugee families keeps reporting how many people came to "
+        "the courses, but I have a feeling the real effects, good and bad, are things we never "
+        "planned to count; I'd like to hear from the families themselves what is different for "
+        "them now and then talk as a team about which of those changes we really care about",
+        "Most_Significant_Change",
+    ),
+    (
+        "the menus on our intranet follow our department structure and nobody can find a form; "
+        "before we reorganise it I want to learn which items employees expect to sit together "
+        "and what they would call those sections",
+        "Card_Sorting",
+    ),
+    (
+        "a boy in my class was picked on for months by a few classmates; they've been "
+        "punished, but he still dreads coming in and the class has split into camps. I want "
+        "the ones who did it to hear from him what it did to him and to agree together how "
+        "they will make it up to him",
+        "Restorative_Circle",
+    ),
+    (
+        "over the years we have piled up so many programmes, offers and initiatives that "
+        "everyone is worn out; some only carry on out of habit while promising new ideas "
+        "never get off the ground, and I want the whole staff to look at all of it together "
+        "and agree what to stop",
+        "Ecocycle_Planning",
+    ),
+    (
+        "about a month ago the parcel scanners at two of our six depots started dropping "
+        "scans; the other depots are fine, and every fix so far was somebody's hunch",
+        "Kepner_Tregoe_Problem_Analysis",
+    ),
+    (
+        "whenever the council asks for public input on the new housing development, the "
+        "same pressure groups and a few loud neighbours dominate; we want to know what an "
+        "ordinary mix of local people would advise once they have properly studied the "
+        "arguments on all sides",
+        "Citizens_Assembly",
+    ),
+    (
+        "the board is about to approve the director's pet project and everyone just nods "
+        "along; before we sign I want a few people who had nothing to do with it to pick it "
+        "apart and make the best case against it",
+        "Red_Team_Review",
+    ),
+    (
+        "head office announces its three priorities every January, but out in the branches "
+        "everyone carries on exactly as before; nobody ever sat down with us to work out what "
+        "our part would be or whether we have the staff for it",
+        "Hoshin_Kanri",
+    ),
+    (
+        "new staff on my team feel abandoned, while the experienced ones feel I control them "
+        "too much; I lead all of them in exactly the same way",
+        "Situational_Leadership",
+    ),
+    (
+        "every teacher here prepares lessons on their own and we never get to see what the "
+        "children in a colleague's class actually do with a new topic, so whatever works in "
+        "one room never reaches the next",
+        "Lesson_Study",
+    ),
+    (
+        "our half-day workshops are all talk: arguments get repeated, nothing is captured, "
+        "and two weeks later everyone remembers a different outcome and no one has picked up "
+        "any of the tasks",
+        "Metaplan",
+    ),
+    (
+        "if a pupil ever went missing on one of our outings, I honestly couldn't say which "
+        "of our precautions would actually prevent it, what would kick in once it had "
+        "happened, or who is supposed to make sure each of those things still works",
+        "Bowtie_Analysis",
+    ),
+    (
+        "we want to launch a paid tutoring service and everyone we talk to thinks it's a "
+        "great idea, but nobody has signed up yet; before we hire tutors and build the "
+        "website, how can we see whether people will really book it",
+        "Build_Measure_Learn",
+    ),
+    (
+        "every time I sit down to write, a message or a colleague pulls me away, and after "
+        "a whole day I have two paragraphs",
+        "Timeboxing",
+    ),
+    (
+        "most of the students who qualify for the free study grant never apply, even "
+        "though the form takes ten minutes and we have advertised it everywhere; more "
+        "posters won't help",
+        "Choice_Architecture",
+    ),
+    (
+        "we rolled out new scheduling software and ran workshops for everyone, yet months "
+        "later most staff still keep their own spreadsheets, and I can't tell whether they "
+        "see no point in it, don't want it, or just don't manage it in their daily work",
+        "ADKAR_Model",
+    ),
+    (
+        "my presentation to the board went badly yesterday and I keep going back over it by "
+        "myself, feeling awful, without learning anything from it",
+        "Gibbs_Reflective_Cycle",
+    ),
+    (
+        "our council signed up to net zero by 2045, but each year's plan just tweaks what "
+        "we did last year, and that will never add up to the target",
+        "Backcasting",
+    ),
+    (
+        "in my yearly review my boss and I agreed I would improve communication with "
+        "clients, and now we disagree about whether I did, because it was never written "
+        "down what that would actually mean",
+        "SMART_Goals",
+    ),
+    (
+        "we lose good people every year and all we ever hear when they go is 'personal "
+        "reasons'; I want to find out what really drives them away and what makes the "
+        "others hold on",
+        "Exit_and_Stay_Interviews",
     ),
 ]
 
+# The same problems as a German-speaking user would put them. Not literal
+# translations where Swiss usage differs ("Pendenzen", "Lancierung", Franken):
+# the point is to probe the language users will actually type.
+PROBES_DE = [
+    (
+        "Sollen wir in diese Branche einsteigen? Wie gut lässt sich die Position "
+        "gegen Konkurrenten und Neueinsteiger verteidigen",
+        "Porters_Five_Forces",
+    ),
+    (
+        "Auftakt der Strategieplanung: unsere eigene Position und das externe "
+        "Umfeld in vier Quadranten beurteilen",
+        "SWOT",
+    ),
+    (
+        "das weitere Umfeld absuchen: Gesetzgebung, Demografie, Klimarisiken und "
+        "gesamtwirtschaftliche Lage",
+        "PESTEL_Analysis",
+    ),
+    (
+        "auf einer Seite darstellen, wie dieses neue Vorhaben Wert schafft und abschöpft",
+        "Business_Model_Canvas",
+    ),
+    (
+        "sollen wir diese Komponente selbst bauen, fertig einkaufen oder auslagern",
+        "Wardley_Mapping",
+    ),
+    (
+        "wir können für dieses Jahrzehnt keine einzelne Zahl prognostizieren, welche "
+        "Entscheidungen halten über mehrere plausible Zukünfte",
+        "Scenario_Planning",
+    ),
+    ("wer genehmigt diesen bereichsübergreifenden Entscheid", "DACI_Matrix"),
+    (
+        "eine Gruppe will vorab einen detaillierten Plan, eine andere will "
+        "experimentieren, wir sind uns uneinig, was für ein Problem das ist",
+        "Cynefin_Framework",
+    ),
+    (
+        "Kosten und Nutzen in Franken ausdrücken, abzinsen und den Kapitalwert "
+        "jeder Option vergleichen",
+        "Cost_Benefit_Analysis",
+    ),
+    (
+        "die Diskussion hat sich in Befürworter und Kritiker gespalten und immer "
+        "dieselbe Person ist die Skeptikerin",
+        "Six_Thinking_Hats",
+    ),
+    (
+        "wir beheben bei diesem wiederkehrenden Fehler immer das Symptom statt der "
+        "eigentlichen Ursache",
+        "Five_Whys",
+    ),
+    (
+        "viele mögliche Ursachen bei Menschen, Prozessen, Geräten und Material, wir "
+        "müssen sie abbilden",
+        "Ishikawa_Diagram",
+    ),
+    (
+        "bevor wir uns auf diese Lancierung festlegen, stellen wir uns vor, sie sei "
+        "gescheitert, und holen die Risiken hervor, die niemand anspricht",
+        "Pre_Mortem",
+    ),
+    (
+        "Tickets brauchen von Anfang bis Ende sechs Wochen, aber die eigentliche "
+        "Arbeit dauert nur ein paar Stunden",
+        "Value_Stream_Mapping",
+    ),
+    (
+        "Kundinnen und Kunden befragen, womit sie kämpften, als sie wechselten, und "
+        "was sie nicht mehr nutzen",
+        "Jobs_To_Be_Done",
+    ),
+    (
+        "was steht dieser Veränderung entgegen, und wie schwächen wir die "
+        "Widerstände, statt stärker zu drücken",
+        "Force_Field_Analysis",
+    ),
+    (
+        "wir haben mehr Pendenzen als Kapazität und brauchen eine begründbare Rangfolge",
+        "RICE_Scoring",
+    ),
+    (
+        "fixer Releasetermin, wir müssen jetzt festlegen, welche Anforderungen wegfallen",
+        "MoSCoW_Method",
+    ),
+    (
+        "welche Funktionen sind selbstverständlich und bringen keine Anerkennung, und "
+        "welche würden Kunden begeistern",
+        "Kano_Model",
+    ),
+    (
+        "meine Woche wird von Unterbrechungen aufgefressen und die wichtige Arbeit beginnt nie",
+        "Eisenhower_Matrix",
+    ),
+    (
+        "Retrospektive am Ende des Sprints, was sollen wir anfangen und was aufhören",
+        "Start_Stop_Continue",
+    ),
+    (
+        "das Team ist in unseren üblichen listenbasierten Retrospektiven verstummt, "
+        "wir brauchen Bremsklötze, Ziel und kommende Risiken in einem Bild",
+        "Sailboat_Retrospective",
+    ),
+    (
+        "Nachbesprechung der eben abgeschlossenen Lancierung: was haben wir "
+        "erwartet und was ist passiert",
+        "After_Action_Review",
+    ),
+    (
+        "bei unseren Besprechungen reden immer die gleichen zwei, drei Leute und der "
+        "Rest hört nur zu, wie bekomme ich von allen Ideen",
+        "One_Two_Four_All",
+    ),
+    (
+        "bevor wir die Reform ankündigen: wer könnte sie zu Fall bringen oder mittragen, "
+        "und welche Gruppen binden wir früh ein, welche halten wir nur auf dem Laufenden",
+        "Stakeholder_Map",
+    ),
+    (
+        "unsere organisationsweiten Initiativen verlaufen nach dem Kickoff jedes Mal "
+        "im Sand und alle kehren zu den alten Gewohnheiten zurück",
+        "Kotter_Eight_Steps",
+    ),
+    (
+        "Im Vorstand wird jeder Mehrheitsentscheid an der nächsten Sitzung wieder "
+        "aufgerollt, und Einstimmigkeit erreichen wir nie",
+        "Consent_Decision_Making",
+    ),
+    (
+        "unser Projekt hat Budget und viele Aktivitäten, aber niemand kann erklären, "
+        "wie daraus die angestrebte Wirkung entstehen soll, und die Stiftung will das wissen",
+        "Theory_of_Change",
+    ),
+    (
+        "Alle sind dauernd ausgelastet, aber Ende Jahr kann niemand sagen, was die ganze "
+        "Arbeit eigentlich bewirkt hat, und unsere Planung ist bloss eine lange Pendenzenliste",
+        "OKR",
+    ),
+    (
+        "in unserer wöchentlichen Teamsitzung bestimmt immer die Chefin, worüber wir "
+        "reden, was uns unter den Nägeln brennt, kommt nie dran, und ein Punkt frisst "
+        "die ganze Stunde",
+        "Lean_Coffee",
+    ),
+    (
+        "Neue Ideen führen wir immer gleich im ganzen Schulhaus ein und merken nie, ob "
+        "sie überhaupt etwas gebracht haben. Wie probieren wir sie zuerst im Kleinen aus?",
+        "PDCA_Cycle",
+    ),
+    (
+        "Welche Kompetenzen Lernende in zwanzig Jahren brauchen, lässt sich mit keinen "
+        "Zahlen belegen; wir wollen das Urteil von Fachleuten aus mehreren Hochschulen, "
+        "ohne dass die bekannteste Professorin allen die Meinung vorgibt",
+        "Delphi_Method",
+    ),
+    (
+        "am Elternabend mit gut hundert Leuten wollen wir keine Referate, sondern dass "
+        "sich alle in wechselnden kleinen Runden über ein paar grosse Fragen zur Schule "
+        "austauschen",
+        "World_Cafe",
+    ),
+    (
+        "Die Stadt hat eine neue App für die Anmeldung lanciert, aber kaum jemand nutzt "
+        "sie. Bevor wir das nächste Angebot bauen, wollen wir verstehen, was die "
+        "Bevölkerung wirklich braucht",
+        "Double_Diamond",
+    ),
+    (
+        "wir müssen uns für eine von drei Schulsoftwares entscheiden und jede Sitzung "
+        "endet beim Bauchgefühl, wir wollen vorher festlegen, was uns wie wichtig ist, "
+        "und dann alle Angebote gleich beurteilen",
+        "Weighted_Decision_Matrix",
+    ),
+    (
+        "bei uns im Team wird nur noch über Mängel geredet und alle sind demotiviert; "
+        "wir möchten die Entwicklung auf dem aufbauen, was schon gut läuft",
+        "Appreciative_Inquiry",
+    ),
+    (
+        "Jedes Amt sagt, sein Teil des Bewilligungsverfahrens funktioniere, trotzdem "
+        "verlieren sich Gesuchsteller zwischen den Stellen und geben auf; niemand "
+        "hat es je so durchlaufen wie sie",
+        "Customer_Journey_Map",
+    ),
+    (
+        "Was immer wir gegen das Problem tun, es kommt ein paar Monate später grösser "
+        "zurück, und niemand kann erklären, warum",
+        "Causal_Loop_Diagram",
+    ),
+    (
+        "bei diesem Vorhaben könnten Dutzende Dinge schiefgehen, wir wissen nicht, "
+        "welche Geld und Aufmerksamkeit verdienen, und niemand weiss, wer sich um was kümmert",
+        "Risk_Matrix",
+    ),
+    (
+        "an der Personalversammlung müssen wir die umstrittene Reorganisation vor allen "
+        "besprechen; ein Podium endet in Monologen und eine offene Fragerunde im Durcheinander, "
+        "ein paar Leute sollen vertieft miteinander diskutieren und wer aus dem Saal etwas "
+        "beizutragen hat, soll mitreden können",
+        "Fishbowl",
+    ),
+    (
+        "In den Mitarbeitergesprächen gebe ich immer gleich die Lösung vor, und am Ende "
+        "weiss niemand, was eigentlich vereinbart wurde; ich möchte, dass meine "
+        "Lehrpersonen selbst draufkommen, wie sie weitermachen",
+        "GROW_Model",
+    ),
+    (
+        "alle Aufträge sind als dringend markiert; welche werden wirklich teurer, "
+        "je länger sie liegen bleiben",
+        "Cost_of_Delay_WSJF",
+    ),
+    (
+        "Die Zusammenlegung unserer zwei Schulen ist beschlossen, doch das Kollegium "
+        "trauert dem Alten nach und hängt in der Luft, und die Schulleitung redet nur "
+        "noch davon, wie toll alles wird",
+        "Bridges_Transition_Model",
+    ),
+    (
+        "Unser Amt wird nur über Budget und Fallzahlen gesteuert; ob die Leistung für die "
+        "Bevölkerung gut ist, wie rund unsere Abläufe laufen und ob sich das Personal "
+        "weiterentwickelt, taucht in keinem Bericht an die Geschäftsleitung auf",
+        "Balanced_Scorecard",
+    ),
+    (
+        "wir brauchen möglichst viele Vorschläge, wie mehr Eltern an die Elternabende "
+        "kommen; wenn wir in der Runde Ideen zurufen, ist nach ein paar Minuten Schluss "
+        "und jeder Vorschlag wird sofort zerredet",
+        "Brainwriting_635",
+    ),
+    (
+        "Der Umzug ins neue Schulhaus muss bis zum Schuljahresbeginn klappen; vieles kann "
+        "erst losgehen, wenn anderes erledigt ist, und niemand weiss, welche Verzögerung "
+        "uns den Termin kostet und wo wir noch Luft haben",
+        "Critical_Path_Method",
+    ),
+    (
+        "Die Geschäftsleitung will wissen, warum unsere Betriebskosten dieses Jahr um einen "
+        "Fünftel höher sind als budgetiert; jede Abteilung zeigt auf eine andere, und ich weiss "
+        "nicht, wie ich die Frage so aufteile, dass wir alles prüfen und nichts doppelt machen",
+        "Issue_Tree",
+    ),
+    (
+        "Meine Leute fragen mich bei jeder Kleinigkeit um Erlaubnis, und wenn sie einmal selbst "
+        "etwas entscheiden, kippe ich es; wir wollen festhalten, worüber das Team künftig "
+        "allein bestimmt",
+        "Delegation_Poker",
+    ),
+    (
+        "Wie sage ich einem Kollegen, dass mich etwas, das er gestern getan hat, gestört "
+        "hat, ohne dass er es als Angriff auf seine Person versteht?",
+        "SBI_Feedback",
+    ),
+    (
+        "In unserem Team weiss bei den wiederkehrenden Aufgaben niemand genau, wer was macht; "
+        "manches erledigen zwei Leute doppelt, anderes vergessen alle, weil jeder dachte, "
+        "jemand anders sei dran",
+        "RACI_Matrix",
+    ),
+    (
+        "In der Schulkonferenz müssen wir heute festlegen, welche drei Vorhaben aus dem "
+        "Budget Geld bekommen; am Schluss steht immer das zuoberst, was die Schulleitung und "
+        "die Lautesten wollten. Alle sollen eigene Vorschläge einbringen, und die Meinung "
+        "jeder Person soll gleich viel zählen",
+        "Nominal_Group_Technique",
+    ),
+    (
+        "Bei uns gehen jede Woche unzählige Reklamationen und Anfragen zu allen möglichen "
+        "Themen ein, und wir versuchen, jede einzeln zu erledigen. Ich vermute, dass die "
+        "meisten eigentlich nur ein paar wenige Themen betreffen, aber gezählt hat das noch "
+        "nie jemand",
+        "Pareto_Analysis",
+    ),
+    (
+        "Wir sollen wachsen, aber die Geschäftsleitung ist uneins: die einen wollen den "
+        "bisherigen Kunden mehr vom Gleichen verkaufen, andere ganz andere Zielgruppen "
+        "gewinnen oder etwas völlig Neues anfangen, und niemand hat verglichen, wie riskant "
+        "welcher Weg ist",
+        "Ansoff_Matrix",
+    ),
+    (
+        "Ich komme mit einem Schüler in meiner Klasse nicht mehr weiter, und mit seinen "
+        "Eltern ist es völlig verfahren. Supervision gibt es bei uns im Schulhaus keine, "
+        "und im Lehrerzimmer hat jede und jeder sofort einen gut gemeinten Tipp. Wie können "
+        "mir ein paar Leute aus dem Team in einer Dreiviertelstunde geordnet weiterhelfen?",
+        "Collegial_Case_Consultation",
+    ),
+    (
+        "Wir arbeiten seit Jahren Tür an Tür und wissen trotzdem kaum, wie die anderen uns "
+        "sehen oder was sie von uns erwarten; ständig gibt es Missverständnisse, und das "
+        "Vertrauen untereinander bleibt an der Oberfläche",
+        "Johari_Window",
+    ),
+    (
+        "Sollen wir das Schulhaus jetzt sanieren oder warten? Vielleicht entscheidet die "
+        "Gemeinde in zwei Jahren über eine Fusion mit dem Nachbarschulhaus, dann wäre das "
+        "Geld zum Teil verloren",
+        "Decision_Tree",
+    ),
+    (
+        "Wir planen ein neues Beratungsangebot, aber in jeder Sitzung vergleichen wir nur "
+        "dieselben zwei Varianten. Es gibt mehrere Stellschrauben wie Kanal, Zeiten und "
+        "Personal, und ich vermute, dass wir viele mögliche Kombinationen nie durchgedacht "
+        "haben",
+        "Morphological_Box",
+    ),
+    (
+        "Der Gemeinderat behauptet, die Nachbargemeinden führten ihre Werkhöfe viel günstiger "
+        "als wir. Belegen kann das niemand, weil jede Gemeinde ihre Kosten anders verbucht, und "
+        "was die Günstigeren anders machen, weiss auch keiner",
+        "Benchmarking",
+    ),
+    (
+        "Seit Monaten streiten wir in der Geschäftsleitung, ob wir ein neues "
+        "Informationsangebot für Eltern aufbauen sollen; bald wird das Budget gesprochen, und "
+        "bisher haben wir nur Meinungen. Wir möchten die Frage in einer Woche klären und "
+        "vorher sehen, wie echte Eltern auf etwas Greifbares reagieren",
+        "Design_Sprint",
+    ),
+    (
+        "Vor der Strategieklausur haben wir fünf dicke Berichte bekommen, die niemand alle "
+        "lesen kann; fassen zwei Leute sie zusammen, hören die anderen bloss zu. Wie schaffen "
+        "wir es, dass sich jede Person gründlich in ein Stück einarbeitet und am Ende trotzdem "
+        "alle den ganzen Inhalt kennen?",
+        "Jigsaw_Method",
+    ),
+    (
+        "Die Geschäftsleitung hat entschieden, dass alle einen KI-Assistenten für E-Mails "
+        "bekommen, und niemand denkt über das Offensichtliche hinaus; welche Folgewirkungen "
+        "könnte das weiter hinten haben",
+        "Futures_Wheel",
+    ),
+    (
+        "Die Personalkommission und wir als Amtsleitung haben uns bei der neuen "
+        "Arbeitszeitregelung festgefahren; wer nachgibt, verliert das Gesicht, und das "
+        "Vertrauen zwischen uns schwindet",
+        "Principled_Negotiation",
+    ),
+    (
+        "Unsere neue Schulleitung besteht aus vier Personen, die noch nie zusammengearbeitet "
+        "haben. Schon nach ein paar Wochen gibt es Missverständnisse, weil nie besprochen "
+        "wurde, wozu wir eigentlich da sind, wie wir entscheiden und wie wir einander auf dem "
+        "Laufenden halten. Das möchte ich mit allen gemeinsam klären, bevor es knallt",
+        "Team_Charter",
+    ),
+    (
+        "Unser Einführungskurs für neue Mitarbeitende läuft seit Jahren gleich ab; er erfüllt "
+        "seinen Zweck, wirkt aber abgestanden. Wir wollen nicht bei null anfangen, sondern das "
+        "Bestehende Teil für Teil durchgehen und möglichst viele konkrete Abwandlungen finden",
+        "SCAMPER",
+    ),
+    (
+        "In der Geschäftsleitung entscheiden wir über die Abläufe in der Küche und am Schalter "
+        "nur aufgrund von Berichten und Sitzungsunterlagen; ich habe das Gefühl, wir wissen gar "
+        "nicht mehr, womit die Leute vor Ort im Alltag tatsächlich kämpfen",
+        "Gemba_Walk",
+    ),
+    (
+        "Vierzig Vereine, Ämter und Fachstellen in unserer Region arbeiten am gleichen "
+        "drängenden Problem, aber jede sieht es anders; statt eines Programms, das ein "
+        "Ausschuss festlegt, sollen alle zwei Tage lang selbst einbringen, woran sie "
+        "arbeiten wollen, und sich dafür zusammentun",
+        "Open_Space_Technology",
+    ),
+    (
+        "Ab Januar laufen unsere Löhne über einen neuen Anbieter. Vor dem ersten Zahltag "
+        "möchte ich jeden Schritt prüfen: wo kann etwas schiefgehen, wie schlimm träfe es "
+        "die Mitarbeitenden, und was müssen wir zuerst absichern",
+        "FMEA",
+    ),
+    (
+        "Unser Schulentwicklungsprogramm läuft seit drei Jahren, und in den Berichten stehen nur "
+        "durchgeführte Kurse und Teilnehmerzahlen. Wir möchten von Lehrpersonen, Eltern und "
+        "Kindern selbst hören, was sich für sie tatsächlich verändert hat, auch Unerwartetes, "
+        "und im Leitungsteam darüber reden, welche dieser Veränderungen uns wirklich etwas "
+        "bedeuten",
+        "Most_Significant_Change",
+    ),
+    (
+        "Auf unserer Gemeinde-Website sind die Angebote nach unserer internen Abteilungsstruktur "
+        "abgelegt, und die Einwohnerinnen finden darin kaum etwas. Bevor wir die Navigation neu "
+        "aufbauen, möchten wir herausfinden, welche Themen die Leute selbst als zusammengehörig "
+        "sehen und wie sie sie benennen würden",
+        "Card_Sorting",
+    ),
+    (
+        "Ein paar Jugendliche haben in unserem Jugendtreff den Gemeinschaftsraum verwüstet. "
+        "Den Schaden haben sie bezahlt, aber die anderen Jugendlichen und die Betreuenden "
+        "fühlen sich hintergangen. Die Verursacher sollen von ihnen direkt hören, was sie "
+        "angerichtet haben, und mit allen zusammen abmachen, wie sie es wiedergutmachen",
+        "Restorative_Circle",
+    ),
+    (
+        "Über die Jahre sind bei uns so viele Angebote, Projekte und Initiativen dazugekommen, "
+        "dass alle am Anschlag sind; manches läuft nur aus Gewohnheit weiter, gute neue Ideen "
+        "kommen nie vom Fleck. Ich möchte mit dem ganzen Kollegium alles gemeinsam anschauen "
+        "und entscheiden, womit wir aufhören",
+        "Ecocycle_Planning",
+    ),
+    (
+        "Seit ein paar Wochen stürzen in zwei unserer Filialen die Kassen immer wieder ab, "
+        "in den anderen nie, und jeder hat eine andere Vermutung, woran es liegt",
+        "Kepner_Tregoe_Problem_Analysis",
+    ),
+    (
+        "Bei jeder Mitwirkung zur Umgestaltung des Dorfplatzes melden sich nur die üblichen "
+        "Verbände und ein paar Lautstarke. Der Gemeinderat möchte wissen, was ganz gewöhnliche "
+        "Einwohnerinnen und Einwohner empfehlen würden, wenn sie sich gründlich mit allen "
+        "Argumenten auseinandergesetzt hätten",
+        "Citizens_Assembly",
+    ),
+    (
+        "Die Geschäftsleitung ist von ihrem Lieblingsprojekt begeistert und alle nicken nur. "
+        "Bevor wir den Kredit sprechen, sollen ein paar Leute, die nicht daran beteiligt waren, "
+        "es auseinandernehmen und die Gegenposition so stark wie möglich vertreten",
+        "Red_Team_Review",
+    ),
+    (
+        "Die Geschäftsleitung verkündet jedes Jahr ihre strategischen Schwerpunkte, aber in "
+        "den Abteilungen ändert sich nichts; niemand hat mit uns geklärt, was wir konkret "
+        "beitragen sollen und ob wir das mit unseren Leuten überhaupt schaffen",
+        "Hoshin_Kanri",
+    ),
+    (
+        "Die Neuen im Team fühlen sich von mir im Stich gelassen, und die Erfahrenen ärgern "
+        "sich, weil ich ihnen dauernd über die Schulter schaue. Ich behandle offenbar alle "
+        "gleich, egal wie lange sie schon dabei sind",
+        "Situational_Leadership",
+    ),
+    (
+        "Bei uns bereitet jede Lehrerin ihren Unterricht allein vor. Wir sehen nie, wie die "
+        "Kinder in den Klassen der anderen mit einem neuen Thema tatsächlich zurechtkommen, "
+        "und was in einem Schulzimmer gut funktioniert, kommt nie im nächsten an",
+        "Lesson_Study",
+    ),
+    (
+        "Nach jedem Workshop hat jeder etwas anderes verstanden, festgehalten wird nichts, "
+        "und beim nächsten Treffen fängt die Diskussion wieder von vorne an",
+        "Metaplan",
+    ),
+    (
+        "Wenn bei uns Personendaten von Bürgerinnen und Bürgern bei den Falschen landen, "
+        "wäre das gravierend. Aber niemand kann sagen, was das heute konkret verhindert, "
+        "was wir tun würden, wenn es trotzdem passiert, und wer dafür sorgt, dass diese "
+        "Vorkehrungen auch wirklich funktionieren",
+        "Bowtie_Analysis",
+    ),
+    (
+        "Wir planen einen bezahlten Nachhilfedienst und alle finden die Idee toll, aber bisher "
+        "hat sich niemand angemeldet. Bevor wir Leute einstellen und eine Website bauen, "
+        "möchten wir wissen, ob überhaupt jemand das tatsächlich buchen würde",
+        "Build_Measure_Learn",
+    ),
+    (
+        "Ständig reissen mich Mails und kurze Fragen aus der Arbeit, nach einem ganzen Tag "
+        "habe ich am Bericht zwei Absätze geschrieben",
+        "Timeboxing",
+    ),
+    (
+        "Viele Steuerpflichtige reichen ihre Steuererklärung erst nach der zweiten Mahnung "
+        "ein, obwohl ihnen das nur Ärger bringt; noch mehr Mahnungen wollen wir nicht "
+        "verschicken, sondern herausfinden, was sie abhält, und im Kleinen ausprobieren, "
+        "was hilft",
+        "Choice_Architecture",
+    ),
+    (
+        "Seit einem Jahr haben wir das neue Ticketsystem und alle waren in der Schulung, "
+        "aber viele Mitarbeitende erledigen ihre Anfragen weiterhin per Mail. Ich weiss "
+        "nicht, ob sie den Nutzen nicht sehen, keine Lust darauf haben oder im Alltag "
+        "damit einfach nicht zurechtkommen",
+        "ADKAR_Model",
+    ),
+    (
+        "Nach einem missglückten Hausbesuch geht mir die Situation nicht aus dem Kopf; ich "
+        "möchte für mich allein sauber durchdenken, was passiert ist und was ich beim "
+        "nächsten Mal anders mache",
+        "Gibbs_Reflective_Cycle",
+    ),
+    (
+        "Wir haben beschlossen, dass unsere Schulhäuser ab 2040 ohne Öl und Gas auskommen. "
+        "Unsere Planung verbessert aber jedes Jahr nur ein bisschen das Bestehende, und "
+        "damit erreichen wir das Ziel nie",
+        "Backcasting",
+    ),
+    (
+        "Im Mitarbeitergespräch haben meine Chefin und ich abgemacht, dass ich die "
+        "Kommunikation mit den Kunden verbessere; jetzt sind wir uns uneinig, ob mir das "
+        "gelungen ist, weil nie festgehalten wurde, was das konkret heissen soll",
+        "SMART_Goals",
+    ),
+    (
+        "In unserer Pflegeabteilung kündigen jedes Jahr erfahrene Leute, und beim Abschied "
+        "heisst es nur «persönliche Gründe». Wir wollen endlich wissen, was sie wirklich "
+        "vertreibt und was die anderen noch hält",
+        "Exit_and_Stay_Interviews",
+    ),
+]
 
-@pytest.mark.parametrize(("problem", "expected_top", "min_margin"), PROBES)
-def test_query_path_ranks_the_right_method_first(
-    real_index, real_embedding, problem, expected_top, min_margin
+ALL_PROBES = PROBES + PROBES_DE
+
+# Questions the catalog does not cover. The weak-match floor in mcp_tools must
+# sit above all of these and below every probe, in both languages.
+OFF_TOPIC = [
+    "how do I fix my bicycle chain",
+    "what is the capital of France",
+    "wie flicke ich meine Velokette",
+    "was ist die Hauptstadt von Frankreich",
+    "Rezept für Zürcher Geschnetzeltes",
+]
+
+
+@pytest.mark.parametrize(("problem", "expected"), ALL_PROBES)
+def test_embedding_puts_the_right_method_on_the_shortlist(
+    real_index, real_embedding, problem, expected
 ):
+    """The retrieval half: the reranker can only promote what it is shown."""
+    settings = Settings()
+    shortlist = settings.top_k * settings.overfetch_factor
     result = search(
         query=problem,
         embedding=real_embedding,
         llm=None,
         chroma_path=real_index,
-        top_k=3,
+        top_k=shortlist,
     )
 
     assert result.explanation is None, "llm=None must skip the explanation call"
-    assert len(result.candidates) == 3
-    top, runner_up = result.candidates[0], result.candidates[1]
-    assert top.id == expected_top, (
-        f"expected {expected_top} first for {problem!r}, got "
+    ids = [c.id for c in result.candidates]
+    assert expected in ids, (
+        f"{expected} not in the {shortlist}-method shortlist for {problem!r}: "
         f"{[(c.id, round(c.similarity, 3)) for c in result.candidates]}"
     )
-    # A real model should be decisive here, not win by rounding noise. The bar
-    # leaves room for model updates and for the catalog growing denser, while
-    # still failing if a `use_case` rewrite blurs two methods together.
-    margin = top.similarity - runner_up.similarity
-    assert margin > min_margin, (
-        f"{expected_top} won by only {margin:.3f} over {runner_up.id} (bar {min_margin})"
+    assert result.candidates[0].similarity >= WEAK_MATCH_SIMILARITY, (
+        f"a probe the catalog covers scored {result.candidates[0].similarity:.3f}, "
+        f"below the weak-match floor {WEAK_MATCH_SIMILARITY}"
+    )
+
+
+@pytest.mark.parametrize("problem", OFF_TOPIC)
+def test_uncovered_questions_stay_below_the_weak_match_floor(real_index, real_embedding, problem):
+    """The other side of the floor: these must trigger `guidance`."""
+    top = search(
+        query=problem, embedding=real_embedding, llm=None, chroma_path=real_index, top_k=1
+    ).candidates[0]
+    assert top.similarity < WEAK_MATCH_SIMILARITY, (
+        f"{problem!r} reached {top.similarity:.3f} ({top.id}), at or above the floor "
+        f"{WEAK_MATCH_SIMILARITY} — guidance would stay silent on an uncovered question"
     )
 
 
@@ -342,7 +1228,9 @@ def test_every_method_in_the_catalog_has_a_probe():
     nothing here would notice.
     """
     catalog = {p.stem for p in REPO_METHODS.glob("*.json")}
-    probed = {expected for _, expected, _ in PROBES}
+    probed = {expected for _, expected in PROBES}
+    probed_de = {expected for _, expected in PROBES_DE}
+    assert probed_de == probed, f"German probes out of step: {sorted(probed ^ probed_de)}"
     assert catalog == probed, (
         f"methods with no probe: {sorted(catalog - probed)}; "
         f"probes naming an unknown method: {sorted(probed - catalog)}"
@@ -361,45 +1249,85 @@ def real_reranker():
     )
     from methodos.providers.rerank_cross_encoder import CrossEncoderRerank
 
-    return CrossEncoderRerank()
+    return CrossEncoderRerank(model_name=Settings().rerank_model)
 
 
-@pytest.mark.parametrize(("problem", "expected_top", "min_margin"), PROBES)
-def test_rerank_keeps_every_pinned_probe_correct(
-    real_index, real_embedding, real_reranker, problem, expected_top, min_margin
+@pytest.mark.parametrize(("problem", "expected"), ALL_PROBES)
+def test_rerank_puts_every_pinned_probe_first(
+    real_index, real_embedding, real_reranker, problem, expected
 ):
-    """Reranking must not break what embedding-only retrieval already gets right.
-
-    `min_margin` is unused here on purpose: cross-encoder outputs are logits on
-    a different scale from cosine similarity, so the 0.10 bar does not transfer.
-    What matters is that the ordering survives.
-    """
+    """The pipeline as shipped — default top_k and overfetch — ranks it first."""
     from methodos.search import retrieve
 
+    settings = Settings()
     out = retrieve(
         query=problem,
         embedding=real_embedding,
         chroma_path=real_index,
-        top_k=3,
+        top_k=settings.top_k,
         reranker=real_reranker,
-        overfetch_factor=4,
+        overfetch_factor=settings.overfetch_factor,
     )
-    assert out[0].id == expected_top, (
-        f"rerank moved {expected_top} off the top for {problem!r}: "
-        f"{[(c.id, round(c.rerank_score or 0, 2)) for c in out]}"
+    assert out[0].id == expected, (
+        f"expected {expected} first for {problem!r}, got "
+        f"{[(c.id, round(c.similarity, 3), round(c.rerank_score or 0, 2)) for c in out]}"
     )
     assert all(c.rerank_score is not None for c in out)
     scores = [c.rerank_score for c in out]
     assert scores == sorted(scores, reverse=True)
 
 
+# Problem-first wording, as people actually type it, for a situation the pinned
+# probes miss because they use each method's own vocabulary ("debrief the
+# launch"). Before After_Action_Review and Start_Stop_Continue got a use case
+# for recurring events and recurring frictions, these led with Appreciative
+# Inquiry, Risk Matrix or Lean Coffee. More than one method is a right answer
+# here, so the assertion is a set, not a pinned id.
+RECURRING_MISTAKES = [
+    "Nach jedem Schulprojekt wiederholen wir dieselben Fehler",
+    "Fehler aus dem letzten Schuljahr passieren uns wieder",
+    "After every school project we repeat the same mistakes",
+    "we never learn from our projects, the same problems come up every time",
+]
+LEARNING_FROM_EXPERIENCE = {
+    "After_Action_Review",
+    "Start_Stop_Continue",
+    "Sailboat_Retrospective",
+    "PDCA_Cycle",
+}
+
+
+@pytest.mark.parametrize("problem", RECURRING_MISTAKES)
+def test_recurring_mistakes_lead_with_a_method_for_learning_from_them(
+    real_index, real_embedding, real_reranker, problem
+):
+    from methodos.search import retrieve
+
+    settings = Settings()
+    out = retrieve(
+        query=problem,
+        embedding=real_embedding,
+        chroma_path=real_index,
+        top_k=settings.top_k,
+        reranker=real_reranker,
+        overfetch_factor=settings.overfetch_factor,
+    )
+    assert out[0].id in LEARNING_FROM_EXPERIENCE, (
+        f"{problem!r} led with {out[0].id}: "
+        f"{[(c.id, round(c.similarity, 3), round(c.rerank_score or 0, 2)) for c in out]}"
+    )
+
+
 # Probes that embedding-only retrieval cannot separate — each was rejected
 # during PR #12/#13 for landing under the 0.10 bar or missing outright, which
 # forced the pinned probe to be reworded. Measured against the 23-method
-# catalog with overfetch_factor=4:
+# catalog with overfetch_factor=4, under the English-only models:
 #
 #   SWOT probe    : embedding 0.004 behind Porter's (miss) -> rerank +15.3 ahead
 #   Wardley probe : embedding 0.009 behind (miss)          -> rerank  +9.3 ahead
+#
+# Both still hold with the multilingual pair; the SWOT probe is now ranked
+# third by the embedding (0.526, behind PESTEL 0.609 and Porter's 0.562).
 #
 # These assert only the reranked outcome. Asserting the embedding-only failure
 # too would turn a future embedding improvement into a spurious test failure.
@@ -452,7 +1380,7 @@ def test_rerank_leaves_the_retrieval_similarity_intact(real_index, real_embeddin
         assert c.rerank_score is not None
 
 
-def test_switching_provider_without_reingest_is_a_stale_index(real_index):
+def test_switching_provider_without_reingest_is_a_stale_index(real_index, real_embedding):
     """local → openai without a rebuild must be caught before any API call.
 
     OpenAIEmbedding reads its dimensionality from a static table, so it can be
@@ -472,7 +1400,7 @@ def test_switching_provider_without_reingest_is_a_stale_index(real_index):
             top_k=2,
         )
     message = str(excinfo.value)
-    assert "local:all-MiniLM-L6-v2" in message, "must name the provider the index was built with"
+    assert real_embedding.name in message, "must name the provider the index was built with"
     assert "openai:text-embedding-3-small" in message, "must name the provider now configured"
     assert "ingest" in message, "must say how to fix it"
 
@@ -541,14 +1469,14 @@ def test_real_llm_leads_with_the_reranked_top_not_the_most_similar(
 
     Non-deterministic wording, so nothing is asserted about content.
 
-    NOTE: this has never passed. It was written where no backend was reachable,
-    so it has only ever failed at the litellm call with retrieval and the
-    precondition below both holding. First green run is real news — see #22.
+    First passed on 2026-10-09 against anthropic/claude-opus-5 (#22), after
+    months of only failing at the litellm call. Re-run it when the model
+    changes: whether a model honours the order is a property of the model.
     """
     # Same query as scripts/verify_explain.py, and for the same reason: at
-    # top_k=3 the reranker puts SWOT (sim 0.457) above both Porter's (0.469)
-    # and PESTEL (0.465), so the prompt genuinely shows a top entry that is
-    # less similar than the ones under it.
+    # top_k=3 the reranker puts SWOT (sim 0.526) above PESTEL (0.609) and the
+    # Risk Matrix (0.527), with Porter's (0.562) reranked out, so the prompt
+    # genuinely shows a top entry that is less similar than the ones under it.
     query = "internal strengths and weaknesses vs external opportunities and threats"
     settings = Settings()
     result = search(

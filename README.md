@@ -10,14 +10,20 @@ problem stated in natural language.
   with two files; no Python required.
 - **`schemas/method_schema.json`** — generated from a Pydantic model; CI
   enforces freshness.
-- **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`.
+- **`methodos` CLI** — `query`, `list`, `show`, `feedback`, `stats`, `goals`.
 - **HTTP API + browser page** — `docker compose up`, then describe a problem,
   pick a method and apply it at `http://localhost:8000`; the developer console
-  is at `/console`. See [Deploy](#deploy-http--docker).
+  (ask, read, rate, propose) is at `/console`. See [Deploy](#deploy-http--docker).
 - **MCP server** — the catalog as three read-only tools for Claude Desktop or
   any other MCP client.
 - **Provider-neutral** — Anthropic, OpenAI, Google, Mistral, Ollama, etc., via
   one `LLMProvider` Protocol (litellm-backed).
+- **Multilingual** — ask in German (or ~50 other languages), get the right method.
+- **Agent-curated** — an audit script and two Claude Code agents keep the
+  catalog current as reviewable pull requests ([docs/curation.md](docs/curation.md)).
+
+Access tiers and the path to a paid offering are in
+[docs/strategie-zugang-monetarisierung.md](docs/strategie-zugang-monetarisierung.md) (German).
 
 ## Quickstart
 
@@ -39,9 +45,11 @@ methodos ingest
 methodos query "we need to enter a new market without burning cash"
 ```
 
-The default config is **fully offline**: Ollama for the LLM (`ollama/llama3.1:8b`),
-`sentence-transformers/all-MiniLM-L6-v2` for embeddings, and a cross-encoder
-rerank step on the shortlist. One env var
+The default config is **fully offline** and **multilingual**: Ollama for the LLM
+(`ollama/llama3.1:8b`), `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+for embeddings, and the multilingual cross-encoder
+`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` as a rerank step on the shortlist.
+Ask in German, get the right English method — see [Languages](#languages). One env var
 (`METHODOS_MODEL`) swaps the LLM to any cloud provider supported by litellm.
 
 ## Recommended cloud LLM
@@ -87,16 +95,18 @@ survives restarts in a named volume.
 | Endpoint | |
 |---|---|
 | `GET /` | The Methodos page — describe a problem, pick a method, apply it step by step |
-| `GET /console` | Developer console — ask, read the explanation, rate a method, see raw scores |
+| `GET /console` | Developer console — ask, read the explanation, rate a method, propose one, see raw scores. German or English, by browser language; `?lang=de` / `?lang=en` forces one |
 | `GET /docs` | OpenAPI, with every field documented |
 | `POST /query` | `{problem, top_k, category, explain, rerank}` → matches + explanation + `query_id` |
 | `GET /health` | Config, provider names, index size. No LLM call — backs the container health check |
 | `POST /llm/check` | One real completion. **This is the yes/no on whether your key and model work.** |
 | `GET /methods`, `GET /methods/{id}` | The catalog and one method's full Markdown |
 | `POST /feedback`, `GET /stats` | The same JSONL loop the CLI writes |
+| `POST /proposals` | Propose a missing method: name, problem, sources and links → stored in `proposals.jsonl`, with the closest existing methods and a prefilled GitHub issue link. Publishes nothing — see [docs/curation.md](docs/curation.md) |
+| `POST /proposals/extract` | Multipart upload of a PDF, Word (.docx), text, audio or video file → its text, and optionally an LLM draft that prefills the proposal form. Stores nothing; see [Uploads](#uploads) |
 
 `/query` returns the MCP server's payload — `ranking_basis`, `guidance`,
-`total_in_scope` — plus the explanation. It carries the same meaning here, and
+`clarify`, `total_in_scope` — plus the explanation. It carries the same meaning here, and
 [What the results tell you](#what-the-results-tell-you) applies unchanged.
 
 **A failing LLM does not fail a query.** Retrieval and explanation are
@@ -105,10 +115,40 @@ provider's error in `explanation_error` — hiding a working ranking behind an L
 outage would be the worse failure. `POST /llm/check` is the endpoint that fails
 loudly, and `"explain": false` is the API's `--no-llm`.
 
+### Uploads
+
+The console's *Propose a method* tab can start from a file. What happens to it:
+
+1. The file is written to a temporary directory and **deleted before the
+   response is sent**. Its name is not kept.
+2. PDF (`pypdf`), Word `.docx` (standard library) and `.txt`/`.md` are read
+   in-process. Scanned PDFs (no text layer), legacy `.doc` and images are
+   refused with a message saying what to do instead.
+3. Audio and video are transcribed **on this server** with faster-whisper
+   (the `transcribe` extra; the image bakes in the `small` model). Video is
+   reduced to its audio track. The recording never leaves the machine.
+4. With *Draft with the LLM* on, the extracted **text** — not the file — goes
+   to the configured model, which returns a draft for the form. The person
+   edits it and submits as usual; only what they submit is stored, plus the
+   kind of file it started from (`extracted_from`).
+
+Limits: `METHODOS_UPLOAD_MAX_MB` (default 50, checked against Content-Length
+before the body is read) and `METHODOS_MEDIA_MAX_MINUTES` (default 20, checked
+from the file header before decoding). Transcription runs inside the request:
+on a 4-core CPU the `small` model needs very roughly a quarter of the
+recording's length, and about 1 GB of RAM while it runs. Behind a reverse
+proxy, raise its body-size limit to match and its read timeout to several
+minutes, or long recordings will fail at the proxy rather than here.
+`docker build --build-arg WHISPER_MODEL=base .` makes a smaller image with a
+weaker German transcript.
+
+Without the `transcribe` extra the server still starts and reads documents;
+`/health` lists what it accepts in `upload_suffixes`.
+
 Without Docker:
 
 ```bash
-pip install -e ".[dev,local,api]"
+pip install -e ".[dev,local,api,transcribe]"
 methodos ingest && make serve      # the server reads the index, it does not build one
 ```
 
@@ -127,7 +167,12 @@ docker compose run --rm cli stats
    python scripts/validate_methods.py
    ```
 3. `methodos ingest && methodos query "<your test problem>"`
-4. Open a PR. CI validates the JSON against `schemas/method_schema.json`.
+4. Add one English and one German probe to `tests/test_integration.py` and run
+   `pytest -m integration`.
+5. Open a PR. CI validates the JSON against `schemas/method_schema.json`.
+
+Every field — including the optional ones for further use cases, contexts,
+formats and assets — is described in [docs/method-format.md](docs/method-format.md).
 
 ## Cross-encoder reranking (optional)
 
@@ -137,8 +182,21 @@ through one model together — much more accurate, far too slow to run over a
 whole corpus. So it runs on the shortlist only:
 
 ```
-Chroma returns top_k × overfetch_factor  →  cross-encoder rescores  →  top_k
+Chroma returns top_k × overfetch_factor methods
+  →  cross-encoder scores every text of each (use_case + use_cases)
+  →  each method keeps its best score  →  top_k
 ```
+
+Scoring every text, rather than only the one the embedding found nearest, is
+what makes adding a use case safe: a method can only gain from another text,
+never lose. Under nearest-text scoring a loosely phrased use case that sat
+closer to a query than the canonical description could replace it in front of
+the cross-encoder and drag the method down — measured on RICE, one added use
+case cut its English probe margin from 16.8 to 6.4 and its German one from 4.0
+to 1.7. With best-text scoring the same addition changes nothing, and a better
+one lifts the German probe from 4.0 to 6.1. The price is fairer competition:
+rivals are scored on their best text too, so margins over the runner-up fell
+on 16 of 48 probes (at most 2.8, all still first).
 
 **On by default.** Turn it off per query or permanently:
 
@@ -149,26 +207,34 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 ```
 
 It reuses sentence-transformers from the `local` extra and downloads
-`cross-encoder/ms-marco-MiniLM-L-6-v2` (~80MB) on first use. Costs roughly
-66 ms per query over the default 6-candidate shortlist.
+`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
+grows with the number of texts on the shortlist — about 170 for the default
+30-method shortlist of the current 87-method catalog, up from 6 when only one
+text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
 queries do **not** fail. Reranking is a quality enhancement, so it degrades to
 embedding-only ranking and says so. An explicit `--rerank` still errors, because
 silently ignoring a direct request would be worse.
 
-Measured against the 23-method catalog: all 23 pinned retrieval probes keep
-ranking correctly, and it additionally resolves problem statements that
-embedding-only retrieval cannot separate — for example *"internal strengths
-and weaknesses vs external opportunities and threats"*, which the embedding
-ranks 0.004 **behind** Porter's Five Forces and the reranker puts SWOT
-15.3 ahead of.
+With the multilingual models the reranker is no longer optional polish — it
+does the ordering. The embedding alone ranks 20 of 23 English and 19 of 23
+German probes first, but puts the right method within the top four every time;
+the cross-encoder then ranks all 46 first. Turning reranking off still works
+and still degrades gracefully, but expect noticeably worse ordering.
 
-`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 2, i.e.
-`top_k × 2`). On the current 23-method catalog, raising it buys nothing —
-factors 2, 3, 4 and 6 all score 23/23 on the pinned probes — while cost grows
-linearly (66 → 200 ms). It becomes worth raising as the catalog grows and the
-right answer starts landing further down the embedding ranking.
+`METHODOS_OVERFETCH_FACTOR` controls the shortlist length (default 10, i.e.
+`top_k × 10`). The pinned probes all rank first at 3, but they were written in
+each method's own vocabulary, and several were reworded until this reranker
+put them first. Problems phrased the way people type them
+(`scripts/search_queries.json`, measured with `scripts/audit_search.py`) tell
+a different story: at 3 the right method never reached the reranker for 7 of
+36; at 8 top-1 rose from 19 to 23 of 36, in English as in German, for about
+twice the rerank time (1.1 s to 2.1 s a query on a 4-core CPU). Reranking the
+whole catalog did worse again. At 79 methods, 8 lost one of the 36 again — the
+right method had slipped to the 25th slot — and 9 brought it back; at 87,
+9 lost one holdout problem the same way and 10 brought it back. The slot
+count is fixed while the catalog grows, so re-measure as it does.
 
 ## MCP server
 
@@ -214,7 +280,7 @@ running instance; it stays a CLI command.
 
 A vector search answers *every* query with its nearest neighbours and never
 returns an empty list — so "no results" never appears, and a bad question comes
-back looking exactly like a good one. Three fields exist so the calling model
+back looking exactly like a good one. Four fields exist so the calling model
 can tell the difference rather than guess:
 
 - **`returned` / `total_in_scope` / `total_indexed`** — a caller shown 3 methods
@@ -223,46 +289,210 @@ can tell the difference rather than guess:
   key and a lower-similarity method may rank above a higher one on purpose.
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
-- **`guidance`** — set when the best match falls below 0.25, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 23 pinned
-  integration probes scores 0.321, while questions the catalog genuinely does
-  not cover reach 0.127 at most (*"how do I fix my bicycle chain"* → Five Whys
-  at 0.106). Weak matches are still returned — `guidance` is a caveat, never a
+- **`guidance`** — set when the best match falls below 0.33, with a concrete
+  next step. That floor is measured, not guessed: the weakest of the 174 pinned
+  integration probes (English and German) scores 0.380, while questions the
+  catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
+  Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a
   filter, because an empty list is what a model fills in from memory.
+- **`clarify`** — set when the cross-encoder's best score is below 0 and leads
+  the runner-up by less than 1.0: the problem probably names a situation but
+  not what the person wants from it. It asks the caller to find out the goal
+  and search again. On the 55 benchmark problems it catches 12 of the 15 whose
+  first result is wrong and asks needlessly on 8 of the 40 that are right; it
+  fires on 5 of the 158 pinned probes. The console turns it into *«Was möchten
+  Sie erreichen?»* with ten goals to click, each adding one sentence to the
+  problem — no model call. Because a goal pushes a right answer down about as
+  often as it lifts one up, the console keeps the earlier first match on screen
+  when the refined search drops it. The numbers are in `mcp_tools.UNSURE_TOP_SCORE`;
+  `scripts/verify_goals.py` re-measures them in German and English, on the
+  benchmark problems and their English translations (`search_queries_en.json`,
+  `search_queries_holdout_en.json`), each labelled with the goal a person would pick.
+
+  Those numbers come from goals picked by whoever ran the benchmark. Whether
+  the people with the problem pick the same ones, and whether it helps them,
+  `methodos goals` reads off `feedback.jsonl`: how often the question was
+  asked and answered, which goals were picked and which never were, how often
+  a goal changed the first method, and the ratings after the goal set against
+  the rating of the first method before it. Under 30 questions asked it says
+  its numbers are anecdotes. Only searches made through the API since the log
+  recorded the question count; the CLI never asks.
+
+  To read the report before real data exists, `scripts/sample_goal_log.py`
+  writes an invented log of the same shape (every search marked
+  `model: "sample-data"`; it refuses to touch the real log):
+
+  ```bash
+  python scripts/sample_goal_log.py /tmp/sample.jsonl
+  METHODOS_FEEDBACK_PATH=/tmp/sample.jsonl methodos goals
+  ```
+
+  Even its 60 questions leave each goal a handful of picks and a few ratings,
+  and the means stray up to a point from the profiles the script drew them
+  from — a fair preview of how little a few weeks of real use will say per
+  goal. The report therefore puts every mean of fewer than 10 ratings in
+  parentheses, `(3 · 3.7)`, and says below the table that those are too few
+  to tell whether a goal helps. With `--questions 600` the three most frequent
+  goals clear that line in both columns and each shows the direction its
+  profile has, better after the goal than before; the rarest stay in
+  parentheses throughout.
+
+## Languages
+
+The catalog is written in English; questions can be asked in any of the ~50
+languages the models cover. Measured on the 23 pinned problems, phrased once in
+English and once in Swiss-German usage:
+
+| | English | German |
+|---|---|---|
+| previous default (`all-MiniLM-L6-v2`, English-only) | 23/23 | 7/23 |
+| multilingual embedding + multilingual reranker | 23/23 | 23/23 |
+
+The LLM explanation answers in the language of the question. The switch costs
+image size (model weights ~160MB → ~930MB) and about 40 ms per query.
+
+**Existing installs must re-ingest** after upgrading: the index records which
+model built it, and a query against an index from the old model fails with a
+`StaleIndexError` naming both, rather than returning nonsense.
+
+To go back to the English-only models:
+
+```bash
+METHODOS_EMBEDDING_MODEL=all-MiniLM-L6-v2
+METHODOS_RERANK_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
+```
 
 ## Improvement potentials (planned)
 
 1. Online learning re-ranker informed by feedback ratings.
 2. JSONL → SQLite migration when feedback volume grows.
 4. Hybrid search (BM25 over name/category + semantic).
-5. Multilingual embeddings.
+
+## Privacy
+
+What leaves the user's hands, and where it goes:
+
+| Data | Stored | Sent elsewhere |
+|---|---|---|
+| The question (`/query`, `methodos query`) | verbatim in `feedback.jsonl`, with a timestamp | to the LLM provider when the explanation runs |
+| A problem copied into `search_queries_holdout_log.json` | only after a person rewrote it so nobody can be recognised and set `keep` — see `scripts/holdout_from_log.py` | it is in the public repository from then on |
+| A goal picked after the question back (`/query`) | in `feedback.jsonl`: the goal's key and the id of the search it refines — no free text | no |
+| Rating note (`/feedback`, `--note`) | verbatim in `feedback.jsonl` | no |
+| Method proposal (`/proposals`) | verbatim in `proposals.jsonl`, with a timestamp | no — the GitHub link is opened, and submitted, by the person themselves |
+| Uploaded file (`/proposals/extract`) | no — a temporary file for the length of the request, then deleted | no — audio and video are transcribed locally |
+| Text extracted from an upload | no — returned to the browser only | to the LLM provider when the draft runs |
+| Client IP | not by Methodos; uvicorn's access log prints it to stdout | depends on your log shipping |
+
+The MCP server logs nothing and calls no LLM.
+
+Recordings are the sensitive case: a workshop or a lesson carries the voices
+of people who did not choose to be in a catalog's inbox. Transcription is
+local by contract (`TranscriptionProvider` in `providers/base.py`), and the
+console asks people not to upload recordings of others without their
+consent — but the transcript does reach the LLM provider when the draft is
+on, and a name spoken in a recording becomes a name in that text.
+
+The console, the OpenAPI field descriptions and the CLI help all tell the person
+typing to leave out personal data. That is a notice, not a filter: nothing
+scrubs names out of free text. If you operate a public instance you are the one
+processing that data, so publish a privacy notice that names the LLM provider,
+set a retention period for `feedback.jsonl` and `proposals.jsonl`, and run uvicorn with
+`--no-access-log` if you do not need IPs.
 
 ## Known gaps
 
-**The LLM explain path has never been verified against a live backend** ([#22]).
-The `METHODOS_INTEGRATION_LLM=1` tests exist and are opt-in, but they were
-written where no model was reachable — they have never passed, only failed at
-the litellm call with everything upstream holding. That covers both whether the
-call works at all and, more interestingly, whether a real model honours the
-`ranking_basis` sentence instead of re-sorting the candidates by similarity.
-`scripts/verify_explain.py` is the tool for answering the second one against
-whatever model you deploy.
+**The explain path is verified on three Claude models, and needs re-checking
+whenever the model changes** ([#22]). On 2026-10-09 both
+`METHODOS_INTEGRATION_LLM=1` tests passed against `anthropic/claude-opus-5`, the
+Docker default, and `scripts/verify_explain.py` was run with
+`anthropic/claude-opus-5`, `claude-sonnet-5-5` and `claude-haiku-5-5` on two
+queries where the reranker promotes a less similar method: the default English
+one (SWOT, similarity 0.526, ahead of PESTEL at 0.609) and *"In unseren
+Teamsitzungen reden immer dieselben, die anderen schweigen"* (1-2-4-All, 0.495,
+ahead of Lean Coffee at 0.543). All six explanations lead with the reranked top,
+and none argues against the order — each says why the most similar candidate
+fits worse (PESTEL "covers only half your question"; Lean Coffee "löst ein
+benachbartes, aber anderes Problem"). The `ranking_basis` wording needed no
+change. One run each; this says nothing about other providers.
 
-The HTTP deployment does not close this gap, but it makes it cheap to close,
-in that order:
+What the runs did show: German explanations are written with "ß" (all three
+models), although this catalog's German readers are Swiss. Like the upload
+draft, the explanation now replaces it with "ss" after the model answers; the
+prompt alone does not stop it.
+
+Before relying on a different model, re-run the same checks against it:
 
 ```bash
-docker compose up -d
-curl -sX POST localhost:8000/llm/check   # does the key/model work at all?
-docker compose run --rm --entrypoint python cli scripts/verify_explain.py
+docker compose run --rm cli ingest   # the cli service does not ingest on its own
+curl -sX POST localhost:8000/llm/check   # with `docker compose up`: does the key work?
+docker compose run --rm --entrypoint python cli scripts/verify_explain.py --model <model>
 ```
 
-The first is a yes/no. The second prints the reranked order next to the model's
-prose and a verdict line, for a human to judge — there is no threshold at which
-an explanation is "correct", which is why it is a script and not a test.
+The script prints the reranked order next to the model's prose and a verdict
+line, for a human to judge — there is no threshold at which an explanation is
+"correct", which is why it is a script and not a test.
+
+**Search leads with a right method for most everyday problems, not all.**
+`scripts/audit_search.py` runs problems as a school leader or an office would
+phrase them — *"Lohnt sich der Bau einer eigenen Mensa finanziell?"* — each with
+the methods that would be a right answer. On 2026-10-11: top-1 33/40 and top-3
+38/40 on `scripts/search_queries.json`, which use cases were written against,
+and 7/15 and 10/15 on `scripts/search_queries_holdout.json`, which they were
+not; the second pair is the honest one. The same problems in English
+(`search_queries_en.json`, `search_queries_holdout_en.json`) scored 32/40 and
+8/15 on 87 methods (2026-10-13); three problem-voice lines (Eisenhower Matrix,
+Pre-Mortem, Ishikawa Diagram) and one reworded Morphological Box line that
+named "support programme" brought that to 36/40 in English and 34/40 in German
+— and left both holdouts where they were, 8/15 and 7/15. Neither the language nor the models
+were the main cause: the same 36 in English scored the same, a much larger
+multilingual reranker (`BAAI/bge-reranker-v2-m3`) scored no better at fifteen
+times the time, and a larger embedding model
+(`paraphrase-multilingual-mpnet-base-v2`) scored slightly worse. The gains came
+from the catalog — a short use case per method that states the problem in the
+voice of the person who has it. What is left fails on how vaguely the problem is
+put rather than on German: *"Unser Sommerfest ist jedes Jahr ein Durcheinander"*
+misses in English too, while *"the same things go wrong every year; we want to
+learn from it"* finds After Action Review. A problem that names its need is
+found; one that only names a place and a feeling is not. A model restating the
+problem before search does not close that gap: `scripts/verify_rewrite.py` with
+`anthropic/claude-opus-5` on the 71-method catalog (2026-10-12) scored 25/40 and
+9/15 on the restatement alone and 29/40 and 9/15 on problem plus restatement,
+against 33/40 and 7/15 as typed. The restatements were accurate but alike — many
+became "the person wants to understand why this keeps happening" — and lost the
+words that told methods apart. Not built in. What is built in instead is a
+question back: when the ranking is unsure, the console asks for the goal
+(`clarify`, above). With the goal a person would pick, 5 of 10 wrong first
+places became right and 8 of 10 got a right method into the top three — but 4
+of 8 right first places were pushed down, which is why the earlier first match
+stays visible. The acceptable answers in both files are judgement; review them
+as you would a method.
+
+**The upload draft has been run once per case, not measured.**
+`scripts/verify_draft.py` runs five fixed cases through the real draft path.
+With `ollama/llama3.1:8b` the format held every time, but the model obeyed an
+instruction planted in the document, and in individual runs answered in the
+wrong language or named a misheard word as the source. With the Docker default
+`anthropic/claude-opus-5` (one run, 7–16 s a case) all five came out as
+intended: the planted instruction was ignored and reported in `note`, the
+English handout gave a German draft, the letter to parents was marked as no
+method, and the garbled transcript got no source and a `note` saying what was
+misheard — though the misheard name ("Leanne Koffee") stayed the method's name.
+Two things are left to the reviewer: a `note` can add facts from the model's
+own knowledge (a fuller name form for a credited author), and a non-method
+still gets a name and a problem. `check_draft` flags copied passages,
+instruction-like text in the document, sources the document does not contain
+and drafts in the wrong language, and the console shows those warnings. Opus 5
+takes no `temperature`, so another run can differ; with another model, run
+`python scripts/verify_draft.py --model <METHODOS_MODEL>` before relying on it.
 
 [#22]: https://github.com/malkreide/methodos-ai/issues/22
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+- **Code** (everything outside `methods/`): MIT, see [LICENSE](LICENSE).
+- **Method catalog** (`methods/`, including assets): CC BY-SA 4.0, see
+  [methods/LICENSE](methods/LICENSE). Reuse it commercially if you like, with
+  attribution, and share your changes under the same licence.
+
+Releases up to 0.5.0 shipped the catalog under MIT as well; those copies keep
+those terms.

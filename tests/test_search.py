@@ -74,6 +74,25 @@ def test_search_calls_llm_with_rendered_prompt(tmp_path, fake_embedding, fake_ll
     assert "alpha" in user
 
 
+def test_explanation_uses_swiss_spelling(tmp_path, fake_embedding):
+    """Claude Opus 5, Sonnet 5.5 and Haiku 5.5 all wrote "ß" in German
+    explanations; the catalog's German readers write "ss"."""
+    from tests.conftest import FakeLLM
+
+    chroma_path = _seed(tmp_path, fake_embedding)
+    llm = FakeLLM("Für «die anderen schweigen» ist es bestenfalls eine Teilmaßnahme. Außerdem …")
+    out = search(
+        query="alpha alpha alpha",
+        embedding=fake_embedding,
+        llm=llm,
+        chroma_path=chroma_path,
+        top_k=2,
+    )
+    assert out.explanation == (
+        "Für «die anderen schweigen» ist es bestenfalls eine Teilmassnahme. Ausserdem …"
+    )
+
+
 def test_search_with_no_llm_skips_explanation(tmp_path, fake_embedding, fake_llm):
     chroma_path = _seed(tmp_path, fake_embedding)
     out = search(
@@ -146,10 +165,11 @@ def test_retrieve_reranks_the_overfetched_pool_not_just_top_k(
         chroma_path=chroma_path,
         top_k=1,
         reranker=fake_reranker,
+        overfetch_factor=2,
     )
     assert len(out) == 1
     assert out[0].id == "Match"
-    # top_k=1 with the default factor of 2 means the reranker saw 2 candidates.
+    # top_k=1 with a factor of 2 means the reranker saw 2 candidates.
     assert len(fake_reranker.calls) == 1
     assert len(fake_reranker.calls[0][1]) == 2
 
@@ -216,3 +236,38 @@ def test_retrieve_survives_a_reranker_returning_wrong_count(tmp_path, fake_embed
             top_k=3,
             reranker=BadReranker(),
         )
+
+
+def test_concurrent_first_opens_of_an_index_do_not_fail(tmp_path, fake_embedding):
+    """Two requests reaching a freshly started server at once must both get an answer.
+
+    Chroma starts its per-path system on the first client construction, and
+    two threads that both arrive first used to share a half-started one: the
+    Docker health check and a first browser request turned /health into a 500.
+    Clearing Chroma's cache puts this process back in that freshly started state.
+    """
+    import threading
+
+    from chromadb.api.shared_system_client import SharedSystemClient
+
+    from methodos.search import collection_size
+
+    chroma_path = _seed(tmp_path, fake_embedding)
+    errors: list[str] = []
+    for _ in range(5):
+        SharedSystemClient.clear_system_cache()
+        barrier = threading.Barrier(8)
+
+        def open_index(barrier: threading.Barrier = barrier) -> None:
+            barrier.wait()
+            try:
+                assert collection_size(chroma_path, fake_embedding) == 3
+            except Exception as e:
+                errors.append(f"{type(e).__name__}: {e}")
+
+        threads = [threading.Thread(target=open_index) for _ in range(8)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+    assert errors == []

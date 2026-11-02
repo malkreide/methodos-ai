@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Build_Measure_Learn",
+  "name": "Build-Measure-Learn (Lean Startup Experiment Cycle)",
+  "category": "strategy",
+  "use_case": "A new product, service or programme is planned on the assumption that people will want it, but nobody has seen anyone actually sign up, pay or come back. The team states that assumption as a prediction with a threshold fixed beforehand, offers the cheapest real version to a few people, counts what they do, and decides on that evidence whether to continue, change direction or drop the idea before investing in the full build.",
+  "strengths": [
+    "turns a vague 'we believe people want this' into a prediction that can visibly fail, with the bar agreed before anyone sees the numbers",
+    "measures what people do, such as sign-ups, bookings, payments or repeat use, instead of what they say in interviews or surveys",
+    "puts a decision point into the plan, so stopping or changing course is a planned outcome rather than an admission of failure",
+    "the first test is usually a hand-run service, a landing page or a small pilot that costs days or weeks, not the full build",
+    "repeatable: each round answers one question and sets up the next, so learning accumulates instead of being argued over"
+  ],
+  "weaknesses": [
+    "only as honest as its threshold: a pass mark set after the data arrive, or a count of page views and downloads, will confirm almost anything",
+    "small, early tests are noisy; a few dozen users can mislead in either direction, and a weak result may say more about the crude test than about the idea",
+    "unsuitable where a half-built offer can harm people or where the law requires the full service to every eligible person from day one",
+    "a public service cannot simply abandon the residents who relied on a trial version, so pivots and stops need an exit plan agreed in advance",
+    "evidence that it improves outcomes comes mainly from a small number of trials with early-stage entrepreneurs; transfer to large organisations and public services is plausible but largely untested"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Lean_startup",
+    "https://theleanstartup.com/principles",
+    "https://en.wikipedia.org/wiki/Minimum_viable_product",
+    "https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works",
+    "https://insights.bu.edu/what-digital-health-startups-can-tell-us-about-teaching-students-to-be-effective-entrepreneurs/"
+  ],
+  "use_cases": [
+    "We need to know whether our new service will actually be used before we roll it out everywhere, and we want a way to stop early if it isn't.",
+    "We are about to spend our whole budget building something new on the hope that people will want it, and we have no point at which we would admit it is not working.",
+    "Our founders are certain customers will pay, but so far the only evidence is enthusiastic feedback in conversations, not a single order.",
+    "A city innovation team wants funding for a new digital service for residents, and before the council pays for a full build it has to show that enough households would actually take it up, for example by running it by hand for a few streets and counting who uses it.",
+    "A university's continuing-education unit is considering a new paid evening programme and, before hiring lecturers or booking rooms, wants to publish the course page with a registration form and see whether enough people really enrol."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "start-up founders",
+    "product team",
+    "public-sector innovation lab",
+    "service design team",
+    "education authority",
+    "programme managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

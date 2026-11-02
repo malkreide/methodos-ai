@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Gibbs_Reflective_Cycle",
+  "name": "Gibbs' Reflective Cycle",
+  "category": "retrospective",
+  "use_case": "One person keeps going over a single experience of their own that went badly or left them unsettled, such as a tense conversation, a lesson that fell apart or a shift where something went wrong, but the thinking circles between what happened and how it felt and never reaches what they would do differently. They work through it alone, in a fixed order: what happened, what they felt, what went well and what did not, why, what else they could have done, and what they will do if a similar situation comes up again.",
+  "strengths": [
+    "a fixed order of questions keeps one person from jumping straight from the event to a verdict about themselves",
+    "names feelings as a separate step, so they are acknowledged instead of colouring every other answer",
+    "ends with a concrete plan for the next similar situation rather than a general resolution",
+    "needs no facilitator, group or materials; works as a short note, a journal entry or a talk with a mentor",
+    "widely taught in nursing, teacher education and social work, so trainees and supervisors share the vocabulary"
+  ],
+  "weaknesses": [
+    "when it is a graded or compulsory written assignment it easily turns into box-ticking under six headings",
+    "relies entirely on one person's own account, which memory and self-justification can distort",
+    "not a substitute for supervision or therapy, and unsuitable for working through traumatic events alone",
+    "an individual tool: it does not resolve problems that lie in a team's process or in the organisation",
+    "evidence that structured reflection models change later practice is mostly descriptive rather than from controlled studies"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://reflection.ed.ac.uk/reflectors-toolkit/reflecting-on-experience/gibbs-reflective-cycle",
+    "https://ebsco.com/research-starters/education/gibbs-reflective-cycle",
+    "https://en.wikipedia.org/wiki/Reflective_practice",
+    "https://en.wikipedia.org/wiki/Experiential_learning"
+  ],
+  "use_cases": [
+    "After a difficult conversation with a parent I keep replaying it in my head, but I never get to what I would actually do differently next time.",
+    "Something I handled at work went badly and I either blame myself for everything or tell myself it was all the others' fault; I want to look at my own part in it calmly and come away with something I can use.",
+    "A student teacher on placement has to write a reflection after a lesson that went wrong, and what comes out is either a diary of events or a page of self-criticism, with no explanation of why it went wrong and nothing to try in the next lesson.",
+    "A nurse or social worker wants to think through a shift or a home visit that did not go as intended, keeping apart what happened and how it felt, and record for her portfolio or her next supervision what she would do the next time such a situation arises.",
+    "A newly appointed head of section in a public office wants a short routine for thinking through, on her own, each meeting or staff conversation in her first months that did not go as planned, and noting one thing she will handle differently."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "nonprofit",
+    "business",
+    "personal"
+  ],
+  "formats": [
+    "async",
+    "in-person",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 2
+  },
+  "audience": [
+    "student teachers and teachers",
+    "nursing and health care students and staff",
+    "social workers",
+    "new managers and team leads",
+    "mentors and supervisors of trainees",
+    "individuals reflecting on their own practice"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

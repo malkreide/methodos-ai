@@ -18,6 +18,11 @@ invisible │               └── commodity
 - Build versus buy versus outsource, argued with a picture instead of opinions
 - Several teams appear to be reinventing the same capability
 - The roadmap keeps funding components the market already commoditised
+- Public bodies: departments running their own copies of the same system, or a
+  programme CIO who has to explain technology strategy to non-technical directors
+  (UK government and HS2 have used it this way)
+- Before one large outsourcing contract: separate the parts a supplier can price from
+  the novel parts that will keep changing, and treat them differently
 
 ## When *not* to use
 
@@ -44,4 +49,7 @@ invisible │               └── commodity
 
 - [Business Model Canvas](Business_Model_Canvas.md) — the commercial logic the map serves
 - [Scenario Planning](Scenario_Planning.md) — for uncertainty the evolution axis doesn't capture
-- [Learn Wardley Mapping](https://learnwardleymapping.com/)
+- Simon Wardley, *Wardley Maps* (CC BY-SA 4.0), on the author's site: [ch. 2, Finding a path](https://www.swardleymaps.com/posts/2016-08-10-finding-a-path) (how to draw a map), [ch. 4, Doctrine](https://www.swardleymaps.com/posts/2016-08-16-doctrine) (duplication, methods and outsourcing by stage of evolution), [Better for Less](https://www.swardleymaps.com/posts/2017-08-23-better-for-less) (UK government)
+- [Learn Wardley Mapping: Landscape](https://learnwardleymapping.com/landscape/) — step-by-step map making and the evolution cheat sheet
+- [GOV.UK Government Technology blog: Mapping the way to a strategy](https://governmenttechnology.blog.gov.uk/2014/04/16/guest-post-mapping-the-way-to-a-strategy/) — HS2's technology strategy
+- [Miro: How to build your first Wardley Map](https://miro.com/blog/wardley-maps-whiteboard-canvas/) — mapping on a shared online canvas

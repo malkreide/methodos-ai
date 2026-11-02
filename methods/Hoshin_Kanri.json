@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Hoshin_Kanri",
+  "name": "Hoshin Kanri (Policy Deployment)",
+  "category": "strategy",
+  "use_case": "The organisation sets strategic goals at the top, but they never turn into different work further down: by the time they have passed through divisions, departments and teams, each level has either ignored them, relabelled its existing plans to fit, or been handed targets nobody asked whether it could meet. It narrows the strategy to a few breakthrough objectives and passes them down one level at a time, with each level proposing how it will contribute and settling targets and resources with the level above, then reviews the whole chain every month.",
+  "strengths": [
+    "connects a small number of top-level objectives to concrete targets and means at every level, so each team can say which objective its work serves",
+    "the negotiation between levels exposes unrealistic targets and missing resources before the year starts rather than at the year-end review",
+    "people who do the work help set their own contribution, which builds commitment and uses their knowledge of what is feasible",
+    "built-in monthly and annual reviews treat the plan as a hypothesis to be checked and corrected, not a document to be filed",
+    "separates the few breakthrough objectives from routine daily management, so the strategy is not buried under everything else the organisation measures"
+  ],
+  "weaknesses": [
+    "run by the book, it is a heavy annual planning machine with many forms, meetings and review layers that can become bureaucracy in its own right",
+    "the X-matrix and related charts intimidate newcomers and can turn into a documentation exercise that nobody outside the planning office reads",
+    "needs leadership attention that stays steady over several annual cycles; a change of director or a crisis often stops it half-way",
+    "negotiation between levels only works if the upper level is genuinely willing to change targets or add resources; otherwise it is top-down target-setting with extra meetings",
+    "evidence is mostly practitioner accounts and qualitative case studies of single organisations, with little comparative research on outcomes",
+    "slow to adjust within the year; it suits organisations with a stable direction better than ones facing rapid, unpredictable change"
+  ],
+  "complexity_score": 5,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://www.routledge.com/Hoshin-Kanri-Policy-Deployment-for-Successful-TQM/Akao/p/book/9781563273117",
+    "https://doi.org/10.1111/1467-6486.00253",
+    "https://doi.org/10.1016/S0024-6301(99)00036-9",
+    "https://doi.org/10.1016/S0024-6301(01)00039-5",
+    "https://doi.org/10.1080/14783360701601868",
+    "https://etheses.durham.ac.uk/id/eprint/4234/",
+    "https://impact.ref.ac.uk/casestudies/CaseStudy.aspx?Id=7658",
+    "https://www.routledge.com/Hoshin-Kanri-for-the-Lean-Enterprise-Developing-Competitive-Capabilities/Jackson/p/book/9781563273421",
+    "https://www.routledge.com/Hoshin-Kanri-in-Higher-Education-A-Guide-to-Strategy-Development-Deployment/Balzer-Sinha/p/book/9781032391564",
+    "https://www.lean.org/lexicon-terms/hoshin-kanri/"
+  ],
+  "use_cases": [
+    "Every year the leadership announces strategic goals, but by the time they reach the schools or teams nobody knows what they should do differently, and the goals change nothing.",
+    "Our strategy looks convincing on paper, but the units below never changed their own plans because of it; nobody worked out with them what their share would be, and targets simply arrive from above without asking whether there are the people or the budget to meet them.",
+    "The priorities are decided at headquarters and simply passed on to the regions; nobody there is asked what they could contribute or what they would need, so local plans carry on as before and the targets are quietly missed.",
+    "A school authority responsible for forty schools has agreed a strategy with three priorities and wants each school leadership to work out what its own school will contribute, agree that with the authority, and have both sides check progress during the year.",
+    "A university has adopted a new institutional strategy, and the faculties and central services each keep writing plans in their own format; the rectorate wants a single annual cycle in which every unit proposes its contribution to the few institutional priorities and agrees it with the level above."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 5,
+    "max_people": 300
+  },
+  "audience": [
+    "executive board",
+    "senior leadership team",
+    "middle managers",
+    "school authority and school leaders",
+    "university leadership",
+    "hospital management"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

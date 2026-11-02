@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Most_Significant_Change",
+  "name": "Most Significant Change (MSC)",
+  "category": "analysis",
+  "use_case": "A programme, project or service affects people in ways its indicators were never designed to pick up: the figures show how many took part, but not what is now different in participants' lives, and certainly not the side effects nobody intended. Instead of counting, the people involved are asked an open question about the most significant change they have experienced in a set period and why it matters to them. Their accounts are read aloud by groups at successive levels of the organisation, each group picks the account it finds most significant and writes down why, and those choices and reasons are passed back down. Repeated over several rounds, this brings unexpected outcomes to light and makes the organisation discuss openly which kinds of change it values.",
+  "strengths": [
+    "picks up outcomes, including unintended and negative ones, that predefined indicators miss",
+    "gives participants and frontline staff a voice in the words they would use themselves",
+    "needs no statistical training: anyone can tell or read an account of something that changed",
+    "forces selection panels to state their criteria, which exposes what different levels of the organisation actually value",
+    "works for programmes whose outcomes differ from one participant to the next and cannot be reduced to one shared measure"
+  ],
+  "weaknesses": [
+    "the sample is deliberately selective, so it cannot say how typical any change is or how many people experienced it",
+    "accounts lean heavily towards good news unless negative change is explicitly invited and taken seriously",
+    "favours people who tell a story well and the views of whoever sits on the selection panels",
+    "time-consuming: collecting, transcribing and discussing accounts over several cycles takes real staff hours",
+    "only works where there are actual participants with first-hand experience to ask",
+    "a poor fit for accountability reporting or a quick, cheap verdict on a programme"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://www.mande.co.uk/wp-content/uploads/2005/MSCGuide.pdf",
+    "https://doi.org/10.1177/109821400302400202",
+    "https://en.wikipedia.org/wiki/Most_significant_change_technique",
+    "https://gsdrc.org/document-library/the-most-significant-change-msc-technique-a-guide-to-its-use/"
+  ],
+  "use_cases": [
+    "A school development programme has run across several schools for three years; the reports list courses held and attendance, and the steering group now wants teachers, pupils and parents to say in their own words what has really changed for them, including effects nobody planned.",
+    "A social integration project for newly arrived families counts how many people came to its courses, yet staff suspect the effects that count lie elsewhere, in new friendships or confidence in dealing with the authorities, and want to hear that from the families before discussing it with the board.",
+    "A counselling or family support service tailors its help to each client, so no standard measure of progress fits; the team wants a regular way to collect clients' accounts of what is different since they came, and to argue out as a management team which of those differences the service exists to produce.",
+    "A development organisation works with many village groups whose activities and results vary widely; accounts of change written in the field pass through district and head-office panels to the funders, each of which says which changes it values and why."
+  ],
+  "contexts": [
+    "nonprofit",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 15
+  },
+  "audience": [
+    "programme managers",
+    "evaluators",
+    "nonprofit leadership",
+    "funders and grant makers",
+    "school leadership",
+    "social services",
+    "public administration"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-07"
+}

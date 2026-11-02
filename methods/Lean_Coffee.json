@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Lean_Coffee",
+  "name": "Lean Coffee",
+  "category": "facilitation",
+  "use_case": "Our regular team meeting follows a list of topics the manager chooses beforehand, so the subjects the rest of the team actually wants to talk about never come up, and whenever one discussion does get going it overruns and crowds out the rest. We want a meeting that still has structure but where the participants pick the topics themselves at the start, take the most wanted ones first, and give each a fixed slot of discussion time unless they agree to extend it.",
+  "strengths": [
+    "the agenda reflects what participants care about on the day, not what one person guessed beforehand",
+    "needs almost no preparation: a board, sticky notes, pens and a timer",
+    "short time slots stop a single topic from eating the whole meeting",
+    "the group decides openly whether a topic deserves more time, instead of the chair cutting it off",
+    "the board leaves a visible record of what was covered and what is still waiting"
+  ],
+  "weaknesses": [
+    "built for discussion and shared learning, not for reaching or recording decisions",
+    "topics that matter but are unpopular, or that only one person raises, may never be chosen",
+    "fixed items such as mandatory announcements or formal approvals still need a separate slot",
+    "short slots can feel abrupt for complex subjects that need sustained analysis",
+    "loses momentum when the facilitator lets the timer slide or the group extends every topic"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://leancoffee.org/",
+    "https://agilecoffee.com/leancoffee/",
+    "https://openpracticelibrary.com/practice/lean-coffee/",
+    "https://opensource.com/article/22/5/open-practice-library-lean-coffee",
+    "https://www.sessionlab.com/methods/lean-coffee",
+    "https://www.infoq.com/presentations/Lean-Coffee/"
+  ],
+  "use_cases": [
+    "Our school staff meeting is filled with announcements from the head teacher, and the classroom problems teachers want to talk through with colleagues are always squeezed into the last five minutes or dropped.",
+    "Officials from several municipal departments meet once a month to learn from each other, but nobody owns the meeting, so each time we spend the first half hour working out what to talk about.",
+    "A monthly community meetup or practitioner circle has no organiser preparing talks, and attendees want to bring their own questions and spend the time on the ones most people are curious about.",
+    "Our team meeting discussions run over: one topic takes most of the hour and the other things colleagues wanted to talk through are never reached.",
+    "Students in a revision class each have different questions about the material, and the teacher wants the class to choose together which ones to spend the lesson on, given limited time."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote",
+    "hybrid",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 20
+  },
+  "audience": [
+    "team leads",
+    "meeting facilitators",
+    "agile coaches",
+    "communities of practice",
+    "teachers and school staff",
+    "public-sector working groups"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-04"
+}

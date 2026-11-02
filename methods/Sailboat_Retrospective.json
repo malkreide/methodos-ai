@@ -22,7 +22,26 @@
     "max_minutes": 120
   },
   "references": [
-    "https://en.wikipedia.org/wiki/Retrospective",
+    "https://www.lukehohmann.com/innovation-games/speed-boat",
+    "https://retrospectivewiki.org/index.php?title=Sailboat",
+    "https://www.retrium.com/retrospective-techniques/sailboat",
+    "https://onehe.org/eu-activity/sailboat-retrospective-for-reflection/",
     "https://www.atlassian.com/team-playbook/plays/retrospective"
-  ]
+  ],
+  "use_cases": [
+    "A university lecturer wants students halfway through a group project to reflect on what is carrying them forward, what is holding them back and which obstacles they see before the deadline.",
+    "A team spread across several countries meets on a shared online whiteboard and wants a retrospective where people place notes on a picture instead of speaking in turn."
+  ],
+  "contexts": [
+    "business",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-09-28"
 }

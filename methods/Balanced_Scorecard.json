@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "Balanced_Scorecard",
+  "name": "Balanced Scorecard (and Strategy Map)",
+  "category": "strategy",
+  "use_case": "Leadership steers almost entirely by the budget and the financial results, or by counts of output, so the quality of the work, the people it is meant to serve, how well internal processes run and whether staff are building the skills the future needs only come up once they have turned into a crisis. The strategy exists on paper, but nothing in the regular reports shows whether it is being carried out. The organisation translates its strategy into a small, stable set of linked objectives and measures across several perspectives (money or resources, the people served, internal processes, and learning and growth) and leadership reviews them together on a fixed cycle.",
+  "strengths": [
+    "puts quality, the people served, processes and staff capability on the same page as the money",
+    "forces leadership to say which few things the strategy depends on before choosing any measure",
+    "the strategy map makes the assumed chain from staff and processes to outcomes visible and open to challenge",
+    "pairs early-warning indicators with lagging results, so drift shows up before the annual accounts",
+    "stable enough to steer an organisation for years, so trends can be compared across periods",
+    "adapts to public and nonprofit bodies by putting the mission and the people served at the top"
+  ],
+  "weaknesses": [
+    "easily grows into a dashboard of dozens of indicators that nobody discusses",
+    "every measure becomes a target that people learn to hit without improving the thing it stands for",
+    "in public administration it often ends up as a reporting duty filled in for the ministry and never used to decide anything",
+    "cannot create a strategy; without one it just sorts the existing indicators into four boxes",
+    "the cause-and-effect links on the map are assumptions that are rarely tested",
+    "building it takes months of senior time, and it decays quickly if leadership stops using it"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 720,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://hbr.org/1992/01/the-balanced-scorecard-measures-that-drive-performance-2",
+    "https://hbr.org/2007/07/using-the-balanced-scorecard-as-a-strategic-management-system",
+    "https://hbr.org/2000/09/having-trouble-with-your-strategy-then-map-it",
+    "https://www.hbs.edu/ris/Publication%20Files/10-074_0bf3c151-f82b-4592-b885-cdde7f5d97a6.pdf",
+    "https://doi.org/10.1002/nml.11308",
+    "https://shura.shu.ac.uk/27799/",
+    "https://doi.org/10.1108/09513551211224234",
+    "https://en.wikipedia.org/wiki/Balanced_scorecard",
+    "https://en.wikipedia.org/wiki/Goodhart%27s_law"
+  ],
+  "use_cases": [
+    "A city administration steers its departments through budget lines and case counts alone, and the council wants a few measures that also show what residents actually experience, how well the processes behind each service work and whether staff are being developed, all tied to the city's long-term goals.",
+    "A hospital board's monthly report covers only the financial result and bed occupancy; patient experience, clinical quality and the loss of experienced nurses are invisible to it until they reach the press.",
+    "A school district is judged by its budget and enrolment figures, and the superintendent wants one report that shows learning outcomes, the quality of teaching, how smoothly support services run and how teachers are being developed, linked to the district's development plan.",
+    "A manufacturer's quality figures have improved for three years in a row while sales and margins fell, and the executive team realises that none of its reports connects operational improvements to what customers value or to the financial result.",
+    "A nonprofit's board looks only at donations and the overhead ratio, and the director wants the board to see each year whether the mission is being achieved and what in the organisation is driving or blocking it."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 5,
+    "max_people": 20
+  },
+  "audience": [
+    "executive team",
+    "board",
+    "agency management",
+    "municipal leadership",
+    "school district leadership",
+    "hospital management",
+    "strategy and controlling staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}

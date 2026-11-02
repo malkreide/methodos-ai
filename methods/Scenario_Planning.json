@@ -23,6 +23,26 @@
   },
   "references": [
     "https://hbr.org/2013/05/living-in-the-futures",
-    "https://en.wikipedia.org/wiki/Scenario_planning"
-  ]
+    "https://hbr.org/1985/09/scenarios-uncharted-waters-ahead",
+    "https://en.wikipedia.org/wiki/Scenario_planning",
+    "https://www.gov.uk/government/publications/futures-toolkit-for-policy-makers-and-analysts",
+    "https://www.gov.uk/government/publications/scenarios-facilitation-worksheet/scenarios-facilitation-worksheet",
+    "https://doi.org/10.1787/178ef527-en"
+  ],
+  "use_cases": [
+    "A government department is drafting a long-term policy, for example on transport or energy, and wants to check whether its options still work if technology and public attitudes move in very different directions.",
+    "An education ministry or a large school authority must commit to buildings, teacher training and curriculum for the next twenty years without knowing what role schools will play by then.",
+    "An energy or utility company has to plan capacity for a period in which regulation, technology and customer behaviour could each shift in either direction."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-01"
 }

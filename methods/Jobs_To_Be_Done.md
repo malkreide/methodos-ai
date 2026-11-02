@@ -5,6 +5,15 @@ the situation and the struggle, and the roadmap stops being a request queue.
 
 > "When I *[situation]*, I want to *[motivation]*, so I can *[expected outcome]*."
 
+## Origin
+
+Clayton Christensen and colleagues brought the idea to a wide audience; the
+2016 HBR article below is the usual starting point. The interview method
+described here, with its four forces, comes from Bob Moesta and Chris Spiek.
+The Christensen Institute has applied the same lens to education, for example
+to why students choose a college. Outcome-Driven Innovation (Tony Ulwick) is
+a separate, survey-based branch that quantifies the outcomes of each job.
+
 ## When to use
 
 - Requested features keep shipping without moving adoption
@@ -39,3 +48,5 @@ the situation and the struggle, and the roadmap stops being a request queue.
 - [Business Model Canvas](Business_Model_Canvas.md) — the Value Proposition block this feeds
 - [RICE Scoring](RICE_Scoring.md) — to rank the work once the jobs are known
 - [HBR: Know Your Customers' Jobs To Be Done](https://hbr.org/2016/09/know-your-customers-jobs-to-be-done)
+- [Christensen Institute: Jobs to be Done](https://www.christenseninstitute.org/theory/jobs-to-be-done/)
+- [Moesta and Spiek: The four forces of progress](https://jobstobedone.org/the-four-forces/)

@@ -12,7 +12,7 @@ from methodos.providers.base import (
 )
 from methodos.providers.embedding_local import LocalEmbedding
 from methodos.providers.embedding_openai import OpenAIEmbedding
-from methodos.providers.llm_litellm import LiteLLMProvider
+from methodos.providers.llm_litellm import LiteLLMProvider, key_problem
 
 
 def test_protocols_are_runtime_checkable():
@@ -82,6 +82,111 @@ def test_litellm_provider_passes_messages_correctly():
     ]
     assert kwargs["max_tokens"] == 10
     assert kwargs["temperature"] == 0.5
+    assert kwargs["drop_params"] is True, "else models that refuse temperature fail"
+
+
+def _serve_fake_anthropic(seen: dict):
+    """A localhost stand-in for the Messages API that records the request body."""
+    import json
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            seen["body"] = json.loads(self.rfile.read(int(self.headers["content-length"])))
+            out = json.dumps(
+                {
+                    "id": "msg_test",
+                    "type": "message",
+                    "role": "assistant",
+                    "model": seen["body"]["model"],
+                    "content": [{"type": "text", "text": "ok"}],
+                    "stop_reason": "end_turn",
+                    "usage": {"input_tokens": 1, "output_tokens": 1},
+                }
+            ).encode()
+            self.send_response(200)
+            self.send_header("content-type", "application/json")
+            self.send_header("content-length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+
+        def log_message(self, *a):
+            pass
+
+    server = HTTPServer(("127.0.0.1", 0), Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    return server
+
+
+@pytest.mark.parametrize(
+    ("model", "sends_temperature"),
+    [("anthropic/claude-opus-5", False), ("anthropic/claude-sonnet-4-6", True)],
+)
+def test_temperature_reaches_only_models_that_take_it(monkeypatch, model, sends_temperature):
+    """The Docker default (claude-opus-5) refuses `temperature`; litellm used to
+    refuse the whole call on its behalf, so every explanation and every upload
+    draft failed. Runs the real litellm against a localhost endpoint: no key, no
+    network, but the exact request body that would go out."""
+    seen: dict = {}
+    server = _serve_fake_anthropic(seen)
+    try:
+        monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+        monkeypatch.setenv("ANTHROPIC_API_BASE", f"http://127.0.0.1:{server.server_port}")
+        monkeypatch.setenv("NO_PROXY", "127.0.0.1")
+        out = LiteLLMProvider(model=model).complete("s", "u", temperature=0.2)
+    finally:
+        server.shutdown()
+    assert out == "ok"
+    assert ("temperature" in seen["body"]) is sends_temperature
+
+
+def test_litellm_provider_names_an_exhausted_budget():
+    """A thinking model can spend max_tokens before it writes anything."""
+    fake = MagicMock()
+    fake.choices = [MagicMock(message=MagicMock(content=None), finish_reason="length")]
+    with (
+        patch("methodos.providers.llm_litellm.litellm.completion", return_value=fake),
+        pytest.raises(LLMError, match="max_tokens=16"),
+    ):
+        LiteLLMProvider(model="anthropic/claude-opus-5").complete("s", "u", max_tokens=16)
+
+
+@pytest.mark.parametrize(
+    ("key", "found"),
+    [
+        ("sk-ant-api03-\u2026", "'…' at position 13"),
+        ("sk-ant-api03-abc def", "' ' at position 16"),
+        ("sk-ant-...", "placeholder"),
+        ("<your key>", "placeholder"),
+    ],
+)
+def test_litellm_provider_names_a_key_that_is_not_one(monkeypatch, key, found):
+    """The docs' placeholder pasted as the key used to fail inside litellm as
+    "'ascii' codec can't encode character '\\u2026' in position 13" — on a
+    real machine, with the image freshly built. Now it fails before the call,
+    naming the variable, and without repeating the key."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", key)
+    with (
+        patch("methodos.providers.llm_litellm.litellm.completion") as m,
+        pytest.raises(LLMError, match="ANTHROPIC_API_KEY") as ei,
+    ):
+        LiteLLMProvider(model="anthropic/claude-opus-5").complete("s", "u")
+    assert found in str(ei.value)
+    m.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("model", "env"),
+    [
+        ("anthropic/claude-opus-5", {"ANTHROPIC_API_KEY": "sk-ant-api03-" + "x" * 95}),
+        ("anthropic/claude-opus-5", {}),  # missing: litellm says so itself
+        ("ollama/llama3.1:8b", {"ANTHROPIC_API_KEY": "sk-ant-api03-\u2026"}),  # not its key
+        ("gpt-4o-mini", {"OPENAI_API_KEY": "sk-\u2026"}),  # no provider prefix: not guessed
+    ],
+)
+def test_key_problem_leaves_usable_and_unrelated_keys_alone(model, env):
+    assert key_problem(model, env) is None
 
 
 def test_litellm_provider_passes_a_timeout():
@@ -393,3 +498,171 @@ def test_make_reranker_rejects_unknown_provider(monkeypatch):
     monkeypatch.setenv("METHODOS_RERANK_PROVIDER", "magic")
     with pytest.raises(ValidationError):
         Settings(_env_file=None)
+
+
+# --- transcription ---------------------------------------------------------
+
+
+def test_fake_transcriber_satisfies_the_protocol():
+    from methodos.providers.base import TranscriptionProvider
+    from tests.conftest import FakeTranscriber
+
+    assert isinstance(FakeTranscriber(), TranscriptionProvider)
+
+
+def test_faster_whisper_satisfies_the_protocol_without_loading_anything():
+    from methodos.providers.base import TranscriptionProvider
+    from methodos.providers.transcribe_whisper import FasterWhisperTranscriber
+
+    t = FasterWhisperTranscriber(model_name="small")
+    assert isinstance(t, TranscriptionProvider)
+    assert t.name == "faster-whisper:small"
+    assert t._model is None
+
+
+def test_make_transcriber_is_on_by_default(monkeypatch):
+    from methodos.providers import make_transcriber
+    from methodos.providers.transcribe_whisper import FasterWhisperTranscriber
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=object()) as fs:
+        assert isinstance(make_transcriber(Settings(_env_file=None)), FasterWhisperTranscriber)
+    fs.assert_called_once_with("faster_whisper")
+
+
+def test_make_transcriber_degrades_when_the_extra_is_missing(monkeypatch):
+    """Documents must keep working on a server without the `transcribe` extra."""
+    from methodos.providers import make_transcriber
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with patch("methodos.providers.find_spec", return_value=None):
+        assert make_transcriber(Settings(_env_file=None)) is None
+
+
+def test_make_transcriber_raises_when_required_but_missing(monkeypatch):
+    from methodos.providers import make_transcriber
+    from methodos.providers.base import TranscriptionError
+
+    monkeypatch.delenv("METHODOS_TRANSCRIBE_PROVIDER", raising=False)
+    with (
+        patch("methodos.providers.find_spec", return_value=None),
+        pytest.raises(TranscriptionError, match="transcribe"),
+    ):
+        make_transcriber(Settings(_env_file=None), required=True)
+
+
+def test_make_transcriber_returns_none_when_disabled(monkeypatch):
+    from methodos.providers import make_transcriber
+
+    monkeypatch.setenv("METHODOS_TRANSCRIBE_PROVIDER", "none")
+    assert make_transcriber(Settings(_env_file=None)) is None
+
+
+def _segment(text):
+    s = MagicMock()
+    s.text = text
+    return s
+
+
+def test_whisper_refuses_a_long_recording_before_loading_the_model(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import MediaTooLongError
+
+    with (
+        patch.object(tw, "_probe_duration", return_value=3600.0),
+        patch.object(tw, "_load_whisper") as load,
+        pytest.raises(MediaTooLongError, match="60 minutes"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+    load.assert_not_called()
+
+
+def test_whisper_joins_segments_and_reports_the_language(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+
+    model = MagicMock()
+    info = MagicMock(duration=42.0, language="de")
+    model.transcribe.return_value = (
+        iter([_segment(" Erstens "), _segment(""), _segment("zweitens.")]),
+        info,
+    )
+    with (
+        patch.object(tw, "_probe_duration", return_value=42.0),
+        patch.object(tw, "_load_whisper", return_value=model),
+    ):
+        t = tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+    assert t.text == "Erstens zweitens."
+    assert t.language == "de"
+    assert t.duration_seconds == 42.0
+
+
+def test_whisper_checks_the_decoded_length_when_the_header_has_none(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import MediaTooLongError
+
+    model = MagicMock()
+    model.transcribe.return_value = (iter([]), MagicMock(duration=5000.0, language="de"))
+    with (
+        patch.object(tw, "_probe_duration", return_value=None),
+        patch.object(tw, "_load_whisper", return_value=model),
+        pytest.raises(MediaTooLongError),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_whisper_wraps_backend_failures(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import TranscriptionError
+
+    model = MagicMock()
+    model.transcribe.side_effect = RuntimeError("decoder exploded")
+    with (
+        patch.object(tw, "_probe_duration", return_value=10.0),
+        patch.object(tw, "_load_whisper", return_value=model),
+        pytest.raises(TranscriptionError, match="decoder exploded"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_whisper_that_will_not_load_is_unavailable_not_a_bad_file(tmp_path):
+    from methodos.providers import transcribe_whisper as tw
+    from methodos.providers.base import TranscriberUnavailableError
+
+    with (
+        patch.object(tw, "_probe_duration", return_value=10.0),
+        patch.object(tw, "_load_whisper", side_effect=OSError("no such model")),
+        pytest.raises(TranscriberUnavailableError, match="no such model"),
+    ):
+        tw.FasterWhisperTranscriber().transcribe(tmp_path / "a.mp3", max_seconds=1200)
+
+
+def test_faster_whisper_can_decode_with_the_installed_pyav(tmp_path):
+    """faster-whisper and PyAV must agree on av.open()'s signature.
+
+    PyAV 19 dropped an argument faster-whisper 1.2.1 still passes, which broke
+    every transcription in the Docker image while a 3.11 dev box (av 18) was
+    fine. No model is loaded: decoding a generated tone exercises exactly the
+    call that broke. Skipped where the `transcribe` extra is not installed.
+    """
+    import math
+    import struct
+    import wave
+
+    pytest.importorskip("faster_whisper")
+    from faster_whisper.audio import decode_audio
+
+    from methodos.providers.transcribe_whisper import _probe_duration
+
+    path = tmp_path / "tone.wav"
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(16000)
+        w.writeframes(
+            b"".join(
+                struct.pack("<h", int(8000 * math.sin(2 * math.pi * 440 * i / 16000)))
+                for i in range(16000)
+            )
+        )
+    assert len(decode_audio(str(path))) == 16000
+    assert _probe_duration(path) == pytest.approx(1.0, abs=0.05)

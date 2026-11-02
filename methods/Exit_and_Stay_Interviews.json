@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Exit_and_Stay_Interviews",
+  "name": "Exit and Stay Interviews",
+  "category": "analysis",
+  "use_case": "Staff turnover is high and the organisation can only guess why capable people keep leaving: the reasons recorded at departure are polite and vague, every manager has a private theory, and the next resignation comes as a surprise. People who are leaving are interviewed with the same core questions by someone outside their line management, and people the organisation wants to keep are asked, while they are still there, what holds them and what would make them go. The answers are pooled over many conversations into recurring themes, leaders decide what to change, and staff are told what was done.",
+  "strengths": [
+    "turns scattered anecdotes about departures into patterns that hold across many cases",
+    "stay interviews reach people while there is still time to act, instead of after notice is given",
+    "standard questions make answers comparable across units, years and interviewers",
+    "the conversation itself shows staff that their view of the job is wanted",
+    "needs no special tools: a question guide, a note template and someone to pool the notes"
+  ],
+  "weaknesses": [
+    "people who are leaving often give safe, socially acceptable reasons and keep the real ones to themselves",
+    "research on how far stated reasons for leaving match the actual ones is mixed and largely sceptical",
+    "useless without aggregation and visible follow-up; unanswered interviews breed cynicism",
+    "in small units individual answers are easy to attribute, which suppresses candour and raises data protection issues",
+    "when the line manager interviews, criticism of that manager rarely surfaces",
+    "can become a ritual that substitutes for fixing problems everyone already knows about"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://hbr.org/2016/04/making-exit-interviews-count",
+    "https://www.shrm.org/topics-tools/news/employee-relations/how-to-conduct-stay-interviews-core-features-advantages",
+    "https://www.shrm.org/topics-tools/news/employee-relations/how-to-conduct-stay-interviews-5-key-questions",
+    "https://www.uni-saarland.de/fileadmin/upload/lehrstuhl/koenig/PDFs-Publikationen/ms_exitint_final.pdf",
+    "https://articlegateway.com/index.php/JOP/article/view/276",
+    "https://www.schools.utah.gov/teachutah/_teachutah/6.2.11.2_U-ECTR_Brief_Stay_Interviews_Final_Approved_508c.pdf",
+    "https://ies.ed.gov/use-work/resource-library/resource/fact-sheetinfographicfaq/implementing-stay-interviews-teacher-retention-strategy"
+  ],
+  "use_cases": [
+    "Good teachers keep leaving our school after two or three years, and nobody really knows why; at the farewell everyone is friendly and we learn nothing.",
+    "We only find out what bothered people once they have handed in their notice, and by then it is too late to keep them.",
+    "A school district wants coaches or district staff, not the teachers' own principals, to talk with early-career teachers about what keeps them in the job and what they would change, and to bring the themes from all schools to the board.",
+    "A municipal social services department loses experienced caseworkers to neighbouring authorities every year; HR records a one-line reason per departure, and the head of department wants consistent conversations with leavers and with those who stay so that the pattern across the year becomes visible.",
+    "A hospital wants to hear from its experienced nurses what keeps them on the ward and what would make them go, before they decide to leave rather than at the farewell.",
+    "A sports club or a charity loses most new volunteers within their first season, and the committee wants to hear from those who drop out and from long-serving volunteers what makes the difference between leaving and staying.",
+    "Engineers at a growing company resign within eighteen months of joining, each manager has a different explanation, and the leadership team wants evidence pooled across departures on whether it is pay, management, the work itself or career prospects."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 3
+  },
+  "audience": [
+    "school leadership",
+    "human resources",
+    "line managers",
+    "public administration",
+    "nursing management",
+    "nonprofit management"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-11"
+}

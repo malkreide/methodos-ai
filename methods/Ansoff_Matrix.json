@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "Ansoff_Matrix",
+  "name": "Ansoff Matrix",
+  "category": "strategy",
+  "use_case": "An organisation or public service wants to grow or reach more people, and its leadership keeps arguing between doing more of what it already does, serving new groups, creating new offerings, or starting something entirely new, without seeing how differently risky those paths are. Sorts the growth options by whether the offering and the audience are existing or new, so the paths can be compared on risk and on how far each one stretches what the organisation already knows how to do.",
+  "strengths": [
+    "turns a vague 'we must grow' into four concrete, comparable directions",
+    "makes the jump in risk visible as a path moves away from known people and known offerings",
+    "quick to learn and to run with a board or leadership team that has no strategy background",
+    "translates directly to services, courses and fundraising by reading 'product' as offering and 'market' as audience"
+  ],
+  "weaknesses": [
+    "says nothing about whether a path is attractive, affordable or wanted; it only sorts options",
+    "the existing/new split hides degrees of novelty: a slightly adapted course and a completely new one land in the same box",
+    "assumes growth is the goal, which may not fit a public body whose mandate is to serve a defined population well",
+    "ignores how competitors, partners or funders will respond to a move",
+    "a 'new' audience can quietly require a new offering, so the boxes blur in practice"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": { "min_minutes": 90, "max_minutes": 240 },
+  "references": [
+    "https://en.wikipedia.org/wiki/Ansoff_matrix",
+    "https://www.cpaireland.ie/CPAIreland/media/Education-Training/2024%20Examinations/Articles/SL-Strategy-and-Leadership-Ansoff-Article.pdf",
+    "https://courses.lumenlearning.com/suny-marketing-spring2016/chapter/reading-strategic-opportunity-matrix/",
+    "https://www.managementcentre.co.uk/fundraising/ansoffs-matrix/"
+  ],
+  "use_cases": [
+    "An adult-education centre with flat enrolment cannot decide whether to fill its existing evening classes, take the same classes to retirees and newly arrived residents, design new course types for its regular learners, or open something unrelated such as a coworking space.",
+    "A municipal library asked to widen its reach is split between winning back lapsed card holders, bringing its current services to neighbourhoods that never visit, and launching new services such as a tool-lending shelf or help with online forms.",
+    "A charity's fundraising team must raise more next year and argues whether to ask current donors for more, find new kinds of supporters for its existing appeals, invent new ways for current supporters to give, or chase a source of money it has never approached.",
+    "A family bakery that has saturated its home town wants to know whether selling more to regulars, opening in the next town, adding a catering line for its customers or starting an unrelated venture is the safest way to grow.",
+    "A regional museum told to attract more visitors weighs getting its regulars to come more often, reaching people who have never set foot inside, creating new formats such as evening events for its members, or running a venture that has nothing to do with its collection."
+  ],
+  "contexts": [
+    "business",
+    "nonprofit",
+    "public-sector",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": { "min_people": 3, "max_people": 12 },
+  "audience": [
+    "executive board",
+    "leadership team",
+    "nonprofit board",
+    "fundraising team",
+    "adult-education management",
+    "library management",
+    "small business owners"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-10-05"
+}
