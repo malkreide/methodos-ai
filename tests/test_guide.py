@@ -1,13 +1,15 @@
 """Parsing the Markdown companions into guidance the user page can render.
 
 The last test runs against the shipped catalog on purpose: the parser is only
-as good as its fit to the 23 real files, and a method whose outline stops
+as good as its fit to the real files, and a method whose outline stops
 parsing must fail here rather than show an empty checklist to a user.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+
+import pytest
 
 from methodos.guide import MethodGuide, parse_guide
 
@@ -72,6 +74,23 @@ def test_see_also_separates_methods_from_urls():
     assert g.see_also[1].url == "https://en.wikipedia.org/wiki/Five_whys"
 
 
+@pytest.mark.parametrize(
+    ("heading", "duration"),
+    [
+        ("Facilitation outline", None),
+        (
+            "Outline (about 30 minutes, alone or with a mentor)",
+            "about 30 minutes, alone or with a mentor",
+        ),
+        ("Facilitation outline: one selection meeting (2 h)", "one selection meeting (2 h)"),
+    ],
+)
+def test_outline_heading_variants_in_the_catalog(heading, duration):
+    g = parse_guide(FIVE_WHYS_LIKE.replace("Facilitation outline (45 min)", heading))
+    assert len(g.steps) == 3
+    assert g.outline_duration == duration
+
+
 def test_missing_sections_degrade_to_empty():
     g = parse_guide("# Only a title\n\nSome prose.\n")
     assert g == MethodGuide(
@@ -87,6 +106,5 @@ def test_every_shipped_method_yields_usable_guidance():
         g = parse_guide(md.read_text(encoding="utf-8"))
         assert len(g.steps) >= 3, md.name
         assert g.not_a_fit_when and g.pitfalls and g.see_also, md.name
-        assert g.outline_duration, md.name
         for link in g.see_also:
             assert link.method_id is None or link.method_id in ids, (md.name, link.method_id)

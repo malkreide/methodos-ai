@@ -412,7 +412,7 @@ function renderApply() {
     <h2>${esc(d.name)}</h2>
     <div class="track">${steps.map((_, i) =>
       `<span class="${done.has(i) ? 'done' : i === now ? 'now' : ''}"></span>`).join('')}</div>
-    <div class="muted">${done.size} of ${steps.length} steps done${d.guide.outline_duration ? ` · about ${esc(d.guide.outline_duration)} in total` : ''}</div>
+    <div class="muted">${done.size} of ${steps.length} steps done${d.guide.outline_duration ? ` · outline: ${esc(d.guide.outline_duration)}` : ''}</div>
     <ol class="steps">${steps.map((s, i) => `<li class="step ${done.has(i) ? 'done' : i === now ? 'now' : ''}">
       <input type="checkbox" data-step="${i}" ${done.has(i) ? 'checked' : ''} aria-label="Step ${i + 1} done">
       <div><span class="text">${s.time_box ? `<span class="box">${esc(s.time_box)}</span>` : ''}${esc(s.text)}</span></div>

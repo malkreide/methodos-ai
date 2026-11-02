@@ -4,6 +4,7 @@ Every `methods/*.md` follows the same shape, and this module relies on it:
 
   * `## When *not* to use`               -> bullets             -> `not_a_fit_when`
   * `## Facilitation outline (<length>)` -> numbered steps      -> `steps`, `outline_duration`
+    (also `## Outline (<length>)` and `## Facilitation outline: <label>`; the length is optional)
   * `## Common pitfalls`                 -> bullets             -> `pitfalls`
   * `## See also`                        -> `- [Label](Target) — note` -> `see_also`
 
@@ -26,7 +27,9 @@ from pydantic import BaseModel, Field
 _NUMBERED = re.compile(r"^\d+\.\s+(.*)$")
 _BULLET = re.compile(r"^-\s+(.*)$")
 _TIME_BOX = re.compile(r"^\((\d[^)]*)\)\s*(.*)$")
-_OUTLINE = re.compile(r"^Facilitation outline\s*(?:\((.+)\))?\s*$")
+# "Facilitation outline (45 min)", but also "Outline (...)" and
+# "Facilitation outline: one selection meeting (2 h)" — the catalog has all three.
+_OUTLINE = re.compile(r"^(?:Facilitation )?[Oo]utline\s*(?::\s*(.+?)|\((.+)\))?\s*$")
 _SEE_ALSO = re.compile(r"^\[([^\]]+)\]\(([^)\s]+)\)\s*(?:—\s*(.*))?$")
 _LINK = re.compile(r"\[([^\]]+)\]\([^)]*\)")
 _EMPHASIS = re.compile(r"(\*{1,2})([^*]+)\1")
@@ -93,7 +96,7 @@ def parse_guide(markdown: str) -> MethodGuide:
     for heading, body in sections.items():
         m = _OUTLINE.match(heading)
         if m:
-            outline_duration = m.group(1)
+            outline_duration = m.group(1) or m.group(2)
             for item in _items(body, _NUMBERED):
                 box = _TIME_BOX.match(item)
                 text, time_box = (box.group(2), box.group(1)) if box else (item, None)
