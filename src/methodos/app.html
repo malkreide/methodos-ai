@@ -233,8 +233,11 @@ function duration(min, max) {
 function widths(matches) {
   const squash = (x) => 1 / (1 + Math.exp(-x));
   const vals = matches.map((m) => (m.rerank_score == null ? m.similarity : squash(m.rerank_score)));
-  const hi = Math.max(...vals);
-  return vals.map((v) => (hi > 0 ? Math.max(4, Math.round(100 * v / hi)) : 100));
+  // Cosine reaches -1: with no positive top score, shift onto [0, 1] first so
+  // weak matches keep their differences instead of all reading 100%.
+  const pos = Math.max(...vals) > 0 ? vals : vals.map((v) => (v + 1) / 2);
+  const hi = Math.max(...pos);
+  return pos.map((v) => (hi > 0 ? Math.max(4, Math.round(100 * v / hi)) : 100));
 }
 
 function fitWord(i, w, weak) {

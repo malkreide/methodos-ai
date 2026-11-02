@@ -404,6 +404,12 @@ def test_app_bars_do_not_invent_gaps(env):
     assert "1 / (1 + Math.exp(" in html  # rerank logits squashed before scaling
 
 
+def test_app_bars_keep_differences_when_every_similarity_is_negative(env):
+    """Cosine reaches -1; with no positive top score every bar would read 100%."""
+    html = env["client"].get("/").text
+    assert "(v + 1) / 2" in html
+
+
 _PROPOSAL = {
     "name": "Lean Coffee",
     "problem": "our meetings follow an agenda nobody asked for and the loudest voices win",
