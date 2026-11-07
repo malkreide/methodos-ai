@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Mind_Mapping",
+  "name": "Mind Mapping",
+  "category": "analysis",
+  "use_case": "I have to write a report, a proposal or a plan on a topic I know plenty about, but my thoughts on it are a jumble: I don't know where to start, which pieces belong together or what I have left out, and I want to see the shape of the whole before I write the first sentence.",
+  "strengths": [
+    "fast to start: one word in the middle of a blank page, no template, no software and no training needed",
+    "gets everything a person knows onto one page, so gaps and lopsided parts of a topic become visible at a glance",
+    "the main branches turn directly into the chapters of a text, the sections of a plan or the parts of a talk",
+    "keywords instead of sentences keep the writer from polishing wording before the structure is clear",
+    "works for one person at a desk and equally as a shared drawing on a whiteboard or in a simple online tool",
+    "easy to extend later: a forgotten point is added to its branch without rewriting anything"
+  ],
+  "weaknesses": [
+    "every point must sit under exactly one branch, so topics whose parts influence each other are forced into a tree that hides the links between them",
+    "it orders a topic but does not weigh, rank or decide anything; choosing between options needs a separate step",
+    "a map is often readable only by its author, because the keywords and private abbreviations carry meaning nobody else shares",
+    "large maps become cluttered and hard to read, and their hierarchy usually needs redrawing more than once",
+    "it captures what the author already knows; it does not by itself produce new information or test whether that knowledge is right",
+    "research support is modest: controlled studies on mind maps are few and small, and strong claims in popular books about memory and brain power go well beyond the evidence"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 15,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Mind_map",
+    "https://de.wikipedia.org/wiki/Mindmap",
+    "https://archive.org/details/useyourhead0000buza_t8g2",
+    "https://archive.org/details/mindmapbook0000buza_r0d5",
+    "https://cmap.ihmc.us/Publications/ResearchPapers/TheoryUnderlyingConceptMaps.pdf",
+    "https://www.sfu.ca/~jcnesbit/articles/nesbitadesope2006.htm"
+  ],
+  "use_cases": [
+    "I have to write a concept for the new library at our school and so far it is all a muddle in my mind; I cannot see where to begin or how the various parts fit together.",
+    "A project officer in a municipal office has to draft the plan for a new neighbourhood service; what she knows is spread across meeting notes, e-mails and her own thoughts, and she wants to gather all of it on one page and group it before she writes an outline.",
+    "Pupils who are asked to write an essay or prepare a presentation keep getting stuck on the first sentence; the teacher wants them to set down everything they know about the subject first, grouped into a few main points, and only then decide on an order.",
+    "A student working through a long lecture or a dense report wants notes on a single page that show how the points relate to the main subject, instead of pages of sentences copied down line by line."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "business",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 6
+  },
+  "audience": [
+    "anyone preparing a text, plan or talk",
+    "teachers and pupils",
+    "students",
+    "project and programme staff",
+    "public administration staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}

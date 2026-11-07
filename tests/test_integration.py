@@ -605,6 +605,28 @@ PROBES = [
         "others hold on",
         "Exit_and_Stay_Interviews",
     ),
+    (
+        "every few months someone spends a Saturday clearing out the storeroom we all use, "
+        "and three weeks later it looks the same again: nobody can find the extension "
+        "cables and we've just bought a fourth laminator",
+        "Five_S",
+    ),
+    (
+        "people on my team get stuck for days without telling anyone, and we only hear "
+        "about it in the long weekly meeting once the deadline is already gone",
+        "Daily_Standup",
+    ),
+    (
+        "a colleague who joined last month asked why we use this booking system rather than "
+        "the cheaper one, and nobody could tell her; the people who chose it have gone and we "
+        "are about to have the whole debate all over again",
+        "Decision_Log",
+    ),
+    (
+        "I'm supposed to write up a proposal for our new after-school club, and my thoughts "
+        "on it are all over the place; I can't tell where to begin or what goes with what",
+        "Mind_Mapping",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1103,6 +1125,30 @@ PROBES_DE = [
         "heisst es nur «persönliche Gründe». Wir wollen endlich wissen, was sie wirklich "
         "vertreibt und was die anderen noch hält",
         "Exit_and_Stay_Interviews",
+    ),
+    (
+        "In unserem Werkraum liegt alles kreuz und quer, man sucht ewig nach dem richtigen "
+        "Werkzeug, Material wird doppelt bestellt, und nach jeder grossen Aufräumaktion "
+        "herrscht nach ein paar Wochen wieder das gleiche Durcheinander",
+        "Five_S",
+    ),
+    (
+        "Bei uns merkt man erst in der Wochensitzung, dass jemand seit Tagen auf etwas "
+        "wartet und nicht weiterkommt, und die Sitzung selbst besteht zur Hälfte aus "
+        "Berichten, wer was gemacht hat",
+        "Daily_Standup",
+    ),
+    (
+        "Bei uns werden alte Fragen immer wieder neu aufgerollt: Niemand weiss mehr, was vor "
+        "einem Jahr eigentlich abgemacht wurde und weshalb, und wer neu dazukommt, versteht "
+        "nicht, warum wir es so machen",
+        "Decision_Log",
+    ),
+    (
+        "Ich soll für die Gemeinde einen Bericht über das neue Freizeitangebot für "
+        "Jugendliche schreiben. Ich habe tausend Gedanken dazu, aber keine Ordnung darin, "
+        "und weiss nicht, womit ich anfangen soll",
+        "Mind_Mapping",
     ),
 ]
 

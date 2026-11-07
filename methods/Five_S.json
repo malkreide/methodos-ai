@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "Five_S",
+  "name": "5S Workplace Organisation",
+  "category": "change-management",
+  "use_case": "Supplies, tools or files that a team shares are kept without any order: shelves, cupboards or folders fill up with things nobody uses, people hunt for what they need, buy items that are already in stock, and a big clear-out holds for a few weeks at most because no one agreed where each item belongs or who checks it. The team discards or archives what it does not need, gives every remaining item a labelled place, cleans and inspects the area, writes the agreed layout down and checks it in short, regular rounds.",
+  "strengths": [
+    "gives fast, visible results that the people working in the space can see and feel",
+    "needs no special tools or expertise: labels, tape, a camera and an hour of the team's time",
+    "a marked place for everything shows at a glance what is missing, broken or running low",
+    "turns a recurring argument about mess into an agreement the whole team made",
+    "cleaning as inspection brings faults, leaks and expired stock to light early",
+    "works the same way for physical spaces and for shared folders and drives"
+  ],
+  "weaknesses": [
+    "decays quickly once the check-ups stop; the last two steps are where most efforts fail",
+    "imposed from above, it feels like policing and people comply only while being watched",
+    "easily shrinks to a cosmetic tidy-up with labels and photos but no agreed standard",
+    "fixed places can get in the way of creative or highly variable work",
+    "throwing out what is not needed produces a burst of waste that has to be disposed of properly",
+    "published evidence is mostly before-and-after case studies from manufacturing and health care"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://www.lean.org/lexicon-terms/five-s/",
+    "https://www.epa.gov/sustainability/lean-thinking-and-methods-5s",
+    "https://www.routledge.com/product/isbn/9781563270475",
+    "https://www.lean.org/the-lean-post/articles/5s-for-information/",
+    "https://www.lean.org/the-lean-post/articles/the-snowstorm-on-your-server/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4950714/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4390558/",
+    "https://doi.org/10.1108/02656711011014320",
+    "https://doi.org/10.1108/IJQRM-03-2015-0045",
+    "https://doi.org/10.1108/00251740810865067"
+  ],
+  "use_cases": [
+    "The storeroom everyone uses is so cluttered that we search for ages for tools, cables and materials, order things we already have, and every big clear-out slides back into the old mess.",
+    "Before every practical class for students the lab technicians hunt for pipettes, cables and kits on cluttered shared benches, broken equipment stays on the shelves for years, and nobody throws out what no one has claimed.",
+    "In a municipal department the network drive is a maze of duplicate folders and outdated templates and forms; finding the current version of a file takes ages, so staff keep their own copies on their desktops.",
+    "On a hospital ward the supply room and the emergency trolley are stocked differently by every shift, night staff search for dressings and equipment when they need them, and items expire unnoticed at the back of the shelves.",
+    "In a municipal maintenance workshop the tools lie wherever the last person used them, every job begins with a search for the right one, and worn parts and small leaks go unnoticed under the grime."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 15
+  },
+  "audience": [
+    "team leads",
+    "office and administrative teams",
+    "school staff",
+    "ward and clinic teams",
+    "workshop and warehouse teams",
+    "facility managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}
