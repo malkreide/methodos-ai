@@ -616,6 +616,12 @@ PROBES = [
         "about it in the long weekly meeting once the deadline is already gone",
         "Daily_Standup",
     ),
+    (
+        "a colleague who joined last month asked why we use this booking system rather than "
+        "the cheaper one, and nobody could tell her; the people who chose it have gone and we "
+        "are about to have the whole debate all over again",
+        "Decision_Log",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1126,6 +1132,12 @@ PROBES_DE = [
         "wartet und nicht weiterkommt, und die Sitzung selbst besteht zur Hälfte aus "
         "Berichten, wer was gemacht hat",
         "Daily_Standup",
+    ),
+    (
+        "Bei uns werden alte Fragen immer wieder neu aufgerollt: Niemand weiss mehr, was vor "
+        "einem Jahr eigentlich abgemacht wurde und weshalb, und wer neu dazukommt, versteht "
+        "nicht, warum wir es so machen",
+        "Decision_Log",
     ),
 ]
 

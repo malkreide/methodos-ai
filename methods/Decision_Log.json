@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "Decision_Log",
+  "name": "Decision Log (Decision Record, Decision Register)",
+  "category": "decision-making",
+  "use_case": "Nobody can say any more what we decided earlier, on what grounds or which alternatives we already ruled out, so settled questions are argued over afresh and every newcomer inherits arrangements no one can justify. For each significant decision the group writes one short, dated entry in a shared place: the situation at the time, the options weighed, what was decided and by whom, the reasons, the expected consequences and a date to revisit it. A changed decision gets a new entry that supersedes the old one, so the record of what holds and why stays complete.",
+  "strengths": [
+    "cheap: an entry is a few paragraphs written while the reasons are still fresh, and the format needs no tool beyond a shared document or folder",
+    "lets newcomers and successors understand why something is the way it is without depending on whoever happens to remember",
+    "turns a returning debate into a concrete question: has the situation recorded in the entry changed, or not",
+    "recording the options that were rejected stops the same alternatives being proposed again as if they were new",
+    "a review date and the expected consequences give the group something to check the decision against later, instead of judging it by memory",
+    "fits organisations that must account for their decisions anyway, such as public bodies, boards and audited programmes"
+  ],
+  "weaknesses": [
+    "it records decisions; it does not make them better. A poor decision written down carefully is still a poor decision",
+    "becomes bureaucracy if it is applied to small, easily reversed choices; it pays off only for decisions that are costly to undo or likely to be questioned",
+    "a log that is not kept current or that nobody consults is worse than none, because it gives a false picture of what holds",
+    "entries written after the fact tend to tidy up the reasoning and leave out the doubts and pressures that really drove the choice",
+    "in public bodies, entries may fall under freedom-of-information and records-management rules and must not carry personal data beyond what is needed, which shapes what can be written",
+    "the evidence for its benefits comes mainly from practitioner reports, largely from software teams, rather than from controlled studies"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 15,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions",
+    "https://adr.github.io/",
+    "https://learn.microsoft.com/en-us/azure/well-architected/architect-role/architecture-decision-record",
+    "https://gds-way.digital.cabinet-office.gov.uk/standards/architecture-decisions.html",
+    "https://www.legislation.gov.uk/uksi/2014/2095/regulation/7/made",
+    "https://en.wikipedia.org/wiki/Minutes",
+    "https://doi.org/10.1109/MS.2005.27"
+  ],
+  "use_cases": [
+    "We have the same discussion every few months about something we thought was settled, because nobody wrote down what we agreed back then or why, and the people who were there remember it differently.",
+    "We need a simple way to keep track of what we agreed and why, so that people who join later or take over from us neither undo it by accident nor have to argue it all over again.",
+    "Developers who join the team keep asking why the system was built the way it was, and the engineers who made those architecture choices have moved on without leaving their reasoning anywhere.",
+    "A municipal department delegates many decisions to its officers and must be able to show later, when a resident, councillor or auditor asks, what was decided, on what grounds and which alternatives were rejected.",
+    "A new head teacher inherits dozens of school rules and arrangements and cannot find out who agreed them, when or for what reason, so she can neither defend them to parents nor tell what would break if she dropped them.",
+    "The board of a volunteer association turns over every two years and its minutes list who attended but not what was resolved or why, so each new board starts without knowing what its predecessors already settled."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 30
+  },
+  "audience": [
+    "software and architecture teams",
+    "leadership and management teams",
+    "school leadership",
+    "boards and committees",
+    "public administration",
+    "project and programme teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}
