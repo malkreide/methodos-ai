@@ -622,6 +622,11 @@ PROBES = [
         "are about to have the whole debate all over again",
         "Decision_Log",
     ),
+    (
+        "I'm supposed to write up a proposal for our new after-school club, and my thoughts "
+        "on it are all over the place; I can't tell where to begin or what goes with what",
+        "Mind_Mapping",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1138,6 +1143,12 @@ PROBES_DE = [
         "einem Jahr eigentlich abgemacht wurde und weshalb, und wer neu dazukommt, versteht "
         "nicht, warum wir es so machen",
         "Decision_Log",
+    ),
+    (
+        "Ich soll für die Gemeinde einen Bericht über das neue Freizeitangebot für "
+        "Jugendliche schreiben. Ich habe tausend Gedanken dazu, aber keine Ordnung darin, "
+        "und weiss nicht, womit ich anfangen soll",
+        "Mind_Mapping",
     ),
 ]
 
