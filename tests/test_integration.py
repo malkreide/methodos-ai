@@ -605,6 +605,12 @@ PROBES = [
         "others hold on",
         "Exit_and_Stay_Interviews",
     ),
+    (
+        "every few months someone spends a Saturday clearing out the storeroom we all use, "
+        "and three weeks later it looks the same again: nobody can find the extension "
+        "cables and we've just bought a fourth laminator",
+        "Five_S",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1103,6 +1109,12 @@ PROBES_DE = [
         "heisst es nur «persönliche Gründe». Wir wollen endlich wissen, was sie wirklich "
         "vertreibt und was die anderen noch hält",
         "Exit_and_Stay_Interviews",
+    ),
+    (
+        "In unserem Werkraum liegt alles kreuz und quer, man sucht ewig nach dem richtigen "
+        "Werkzeug, Material wird doppelt bestellt, und nach jeder grossen Aufräumaktion "
+        "herrscht nach ein paar Wochen wieder das gleiche Durcheinander",
+        "Five_S",
     ),
 ]
 
