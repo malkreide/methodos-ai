@@ -633,6 +633,12 @@ PROBES = [
         "buried somewhere on page three",
         "Pyramid_Principle",
     ),
+    (
+        "our team has taken on far too much at the same time; everything is half "
+        "finished, almost nothing gets done, and nobody can tell where each piece of "
+        "work is held up",
+        "Kanban_Board",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1161,6 +1167,11 @@ PROBES_DE = [
         "fragen sie mich jedes Mal, was ich denn eigentlich von ihnen will. Der Entscheid, "
         "den ich brauche, geht irgendwo auf Seite drei unter",
         "Pyramid_Principle",
+    ),
+    (
+        "Wir haben viel zu vieles gleichzeitig angefangen: Alles ist halb fertig, nichts "
+        "wird abgeschlossen, und niemand sieht, wo welche Aufgabe gerade hängt",
+        "Kanban_Board",
     ),
 ]
 

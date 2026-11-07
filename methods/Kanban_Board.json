@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "Kanban_Board",
+  "name": "Kanban Board with WIP Limits",
+  "category": "change-management",
+  "use_case": "Our team has far too much work open at once: each of us picks up the next request before the last one is done, so dozens of items sit half-finished and hardly anything gets completed. Every item goes on a card on a shared board with one column per stage, the team agrees a maximum number of cards allowed in each working column, a new item is pulled in only when another has moved on, and the team regularly looks at where cards pile up.",
+  "strengths": [
+    "makes all open work and its stage visible to everyone at once, instead of being spread across personal lists and inboxes",
+    "the limit on cards per column forces the team to finish or unblock work before starting more, which shortens the time each item takes",
+    "a column that keeps filling up shows where the real bottleneck is, so the team can help there instead of starting new work elsewhere",
+    "starts from the process the team already has: no new roles, sprints or meetings are required to begin",
+    "works with a wall and sticky notes or any online board, and fits offices, service desks and project groups as well as software teams"
+  ],
+  "weaknesses": [
+    "a board without agreed limits is only a shared to-do list; the effect depends on the team actually refusing to start work when a column is full",
+    "choosing the limits is guesswork at first and has to be adjusted over several weeks; there is no reliable rule for the right number",
+    "the board only reflects reality if everyone moves their cards; a stale board misleads more than no board",
+    "it does not decide which request matters most or set deadlines; ordering the queue needs a separate agreement or method",
+    "teams that cannot say no to incoming requests, because a manager or another unit keeps pushing work in, hit the limits at once and need backing from above",
+    "the evidence for knowledge work is mostly practitioner reports and case studies; reviews note few rigorous studies and almost no published failures"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://kanban.university/kanban-guide/",
+    "https://www.prokanban.org/the-kanban-guide",
+    "https://www.lean.org/lexicon-terms/kanban/",
+    "https://insidegovuk.blog.gov.uk/2017/02/15/how-we-use-kanban-on-the-gov-uk-publishing-platform-team/",
+    "https://doi.org/10.1186/s40411-018-0057-1"
+  ],
+  "use_cases": [
+    "We take on new work faster than we finish it: half-done items pile up, and whatever waits for a colleague's input or a sign-off lies forgotten until somebody chases it.",
+    "A school's administration team handles enrolment forms, room bookings and parent letters in parallel; each person has twenty requests open, several wait days for a teacher's signature, and the team lead only finds out when someone chases them.",
+    "A municipal service desk handles permit questions and requests from other departments arriving by e-mail, phone and at the counter; each clerk has many half-processed files open at once, begins whatever arrived last, and files waiting for another office are forgotten.",
+    "A small communications team writes posts, flyers, newsletters and press texts and works on fifteen of them in parallel; each piece is late because it sits waiting for a draft, feedback or sign-off that no one is tracking.",
+    "A nonprofit project group made up partly of volunteers: people say they will take on a job and then it sits untouched for weeks, while the coordinator cannot see which jobs are actually moving and which have quietly stalled."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 15
+  },
+  "audience": [
+    "school administration teams",
+    "municipal service and front-desk teams",
+    "communications and editorial teams",
+    "nonprofit project groups",
+    "software and IT teams",
+    "team leads",
+    "individuals managing their own workload"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}
