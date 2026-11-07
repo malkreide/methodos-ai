@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Daily_Standup",
+  "name": "Daily Stand-up",
+  "category": "facilitation",
+  "use_case": "A colleague is blocked for days and the rest of us only hear about it in the next round of reports, when the deadline has already passed. For a few minutes every day, at the same time and place, the team stands at its board and goes through what is finished, what is next and what is stuck, and anything that needs longer is sorted out afterwards by those concerned.",
+  "strengths": [
+    "a hold-up or a dependency becomes visible within a day instead of at the next weekly meeting",
+    "short and fixed in time and place, so it needs no invitation, agenda or minutes",
+    "everyone hears what the others are working on, which catches duplicated work and clashes early",
+    "moving detailed discussions to afterwards keeps the whole group from waiting through conversations that concern two people",
+    "works the same way for software teams, hospital wards, factory shifts and administrative offices"
+  ],
+  "weaknesses": [
+    "easily turns into daily status reporting to a manager, which field studies link to frustration and low engagement",
+    "every day is too often for work that changes slowly or where colleagues barely depend on each other",
+    "drags past its time limit as soon as people start solving problems inside it",
+    "hard to hold when people work part-time, in shifts or across time zones, because the whole group is rarely present",
+    "beyond about a dozen people each person's turn becomes irrelevant to most listeners",
+    "the evidence is mostly practitioner experience; the few field studies report mixed value"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 5,
+    "max_minutes": 15
+  },
+  "references": [
+    "https://scrumguides.org/scrum-guide.html",
+    "https://martinfowler.com/articles/itsNotJustStandingUp.html",
+    "https://arxiv.org/abs/1808.07650",
+    "https://www.ihi.org/insights/get-your-priorities-straight-tips-using-safety-huddles",
+    "https://psnet.ahrq.gov/primer/improving-patient-safety-and-team-communication-through-daily-huddles",
+    "https://www.leanblog.org/2026/04/lean-daily-management-what-how-start/"
+  ],
+  "use_cases": [
+    "Half of our long meetings go on everyone reading out what they did, and we still find out days too late that someone has been stuck.",
+    "Since most of us work from home, I no longer know what my colleagues are working on from one day to the next, and we only find out that someone is waiting on someone else when something has already gone wrong.",
+    "At the start of every shift a hospital ward or a clinic team needs a few minutes to hear who is missing today, which patients need extra watching and what nearly went wrong yesterday, without holding a full meeting.",
+    "In our school, news that a colleague is off sick, a room has changed or a class trip leaves early reaches the teachers concerned only once lessons have started, because the whole staff meets just once a week."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "project and delivery teams",
+    "software teams",
+    "team leads",
+    "hospital ward and clinic teams",
+    "production shift teams",
+    "administrative offices",
+    "school leadership and office staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}

@@ -611,6 +611,11 @@ PROBES = [
         "cables and we've just bought a fourth laminator",
         "Five_S",
     ),
+    (
+        "people on my team get stuck for days without telling anyone, and we only hear "
+        "about it in the long weekly meeting once the deadline is already gone",
+        "Daily_Standup",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1115,6 +1120,12 @@ PROBES_DE = [
         "Werkzeug, Material wird doppelt bestellt, und nach jeder grossen Aufräumaktion "
         "herrscht nach ein paar Wochen wieder das gleiche Durcheinander",
         "Five_S",
+    ),
+    (
+        "Bei uns merkt man erst in der Wochensitzung, dass jemand seit Tagen auf etwas "
+        "wartet und nicht weiterkommt, und die Sitzung selbst besteht zur Hälfte aus "
+        "Berichten, wer was gemacht hat",
+        "Daily_Standup",
     ),
 ]
 
