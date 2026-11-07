@@ -627,6 +627,12 @@ PROBES = [
         "on it are all over the place; I can't tell where to begin or what goes with what",
         "Mind_Mapping",
     ),
+    (
+        "the papers I send up to the executive team are thorough, but they always come back "
+        "with 'so what do you actually want from us?' because the decision I need ends up "
+        "buried somewhere on page three",
+        "Pyramid_Principle",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1149,6 +1155,12 @@ PROBES_DE = [
         "Jugendliche schreiben. Ich habe tausend Gedanken dazu, aber keine Ordnung darin, "
         "und weiss nicht, womit ich anfangen soll",
         "Mind_Mapping",
+    ),
+    (
+        "Meine Berichte an die Geschäftsleitung sind ausführlich und sorgfältig, trotzdem "
+        "fragen sie mich jedes Mal, was ich denn eigentlich von ihnen will. Der Entscheid, "
+        "den ich brauche, geht irgendwo auf Seite drei unter",
+        "Pyramid_Principle",
     ),
 ]
 
