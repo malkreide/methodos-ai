@@ -657,6 +657,11 @@ PROBES = [
         "and we can't even agree on the order things happened in",
         "Timeline_Retrospective",
     ),
+    (
+        "I'd like to switch into our analytics department one day, but I don't know a single "
+        "person over there, and every time I mean to start reaching out I put it off again",
+        "Working_Out_Loud",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1208,6 +1213,13 @@ PROBES_DE = [
         "aber jede und jeder erinnert sich nur an die eigenen Wochen, und was im Herbst "
         "war, weiss kaum noch jemand",
         "Timeline_Retrospective",
+    ),
+    (
+        "Bei uns kennt kaum jemand Leute ausserhalb der eigenen Abteilung, und wer etwas "
+        "erreichen will, wartet, bis der Chef Türen öffnet; wir suchen etwas Freiwilliges, "
+        "bei dem sich kleine gemischte Gruppen über ein paar Monate gegenseitig "
+        "weiterbringen, ganz ohne Trainer",
+        "Working_Out_Loud",
     ),
 ]
 
