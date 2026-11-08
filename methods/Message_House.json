@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Message_House",
+  "name": "Message House",
+  "category": "strategy",
+  "use_case": "A project is being explained in contradictory ways: the head describes it one way at the parents' evening, the website another, the local paper a third, and the audience is left confused or suspects that something is being hidden. Before anything more goes out, the spokespeople agree on a single overarching statement to lead with, three or so supporting messages beneath it, and the facts, figures and examples that back each one, so that every speech, letter and webpage tells the same story.",
+  "strengths": [
+    "fits on one page, so everyone who speaks for the project can keep it to hand and check a draft against it",
+    "forces the team to agree on what the project is about before the first public statement, not after the contradictions appear",
+    "the foundation of facts and examples shows at once which claims are backed and which are only asserted",
+    "lets different spokespeople and channels adapt tone and length while keeping the same core content",
+    "quick to draft in a single workshop and easy to update when the project changes",
+    "gives people who are not communication professionals, such as teachers, case workers or volunteers, something concrete to say when they are asked"
+  ],
+  "weaknesses": [
+    "evidence is practitioner-based: it comes from public-relations and communications practice, and there are no controlled studies of its effect on how audiences understand a project",
+    "turns into spin if the foundation is thin: a polished roof over weak or selective proof points makes the project less credible, not more",
+    "it settles what the organisation will say; it does not find out what the audience thinks, so it is no replacement for consultation, dialogue or listening to the people affected",
+    "strict message discipline can sound scripted, and staff who repeat the same sentences word for word may come across as evasive",
+    "a single house for very different audiences tends to become vague; staff, parents and the press may each need their own version",
+    "does not decide who is told what, when and through which channel; that still needs a communication plan"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 180
+  },
+  "references": [
+    "https://messagehouse.org/wp-content/uploads/2022/01/Message-House-eBook.pdf",
+    "https://www.communicatierijk.nl/vakkennis/tools-in-english/factor-c-in-english/message-house-in-english",
+    "https://comms.msu.edu/academic-toolkit/talking-to-the-media",
+    "https://brand.gatech.edu/brand-assets/messaging"
+  ],
+  "use_cases": [
+    "The head explains our plans one way at the parents' evening, the website says something else and the newspaper printed a third version, so parents are confused and some suspect we are hiding something; before the next letter goes out we want one agreed account, backed by facts, for everyone who speaks about it.",
+    "A municipal department is being reorganised, and the change has to be explained at the same time to staff, to the council, to residents who use its counters and to the local press; the communications officer wants the head of department, the press office and the front-desk staff to give the same explanation.",
+    "A charity launching a campaign has volunteers, board members and partner organisations all talking to supporters and journalists, and wants every leaflet, speech and social-media post to rest on the same central claim and the same checked figures.",
+    "A project lead is about to give interviews and public talks about a contested change and wants a short sheet with the main points to keep returning to, each backed by a fact or an example, so that a hostile question does not pull the answer off course."
+  ],
+  "contexts": [
+    "public-sector",
+    "education",
+    "nonprofit",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "school leadership",
+    "communications officers",
+    "public administration",
+    "nonprofit campaigners",
+    "project leads",
+    "press offices"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}

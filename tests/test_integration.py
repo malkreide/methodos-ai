@@ -645,6 +645,12 @@ PROBES = [
         "and who actually depends on what comes out at the end",
         "SIPOC_Diagram",
     ),
+    (
+        "our director explained the reorganisation one way at the staff meeting, the press "
+        "release put it another way and the counter staff tell residents a third story; "
+        "people are confused and some think we're hiding something",
+        "Message_House",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1184,6 +1190,12 @@ PROBES_DE = [
         "sind wir uns nicht einmal einig, wo der Ablauf anfängt, wo er aufhört und für wen "
         "er eigentlich da ist",
         "SIPOC_Diagram",
+    ),
+    (
+        "Die Schulleiterin erklärt die neue Tagesschule am Elternabend anders, als es auf "
+        "unserer Homepage steht, und die Zeitung hat nochmals eine dritte Version gebracht; "
+        "die Eltern sind verunsichert und manche glauben, wir verschweigen etwas",
+        "Message_House",
     ),
 ]
 
