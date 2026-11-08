@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "Timeline_Retrospective",
+  "name": "Timeline Retrospective",
+  "category": "retrospective",
+  "use_case": "A group wants to look back on a long project or a whole school year, but its members each remember a different part: some joined late, some left halfway, and most recall the last few weeks far better than the first months. Before any lessons can be drawn, the group rebuilds the sequence of events together on one line from start to finish, marks how each phase felt to the people in it, and then looks across the whole period for patterns and turning points before agreeing what to carry forward.",
+  "strengths": [
+    "gives people who were present at different times one common picture of the whole period before anyone draws conclusions",
+    "counters the pull of recent events by walking through the early months explicitly",
+    "putting the mood of each phase next to the events shows connections that a list of issues hides, such as a dip that followed a decision months earlier",
+    "newcomers and people who left early can each contribute the stretch they know best",
+    "works with simple materials: a long strip of paper or a wide online board and sticky notes"
+  ],
+  "weaknesses": [
+    "takes longer than a short iteration retrospective; the reconstruction alone can fill an hour",
+    "memory is selective and people may disagree about dates or causes; without documents to check against, the timeline can harden a mistaken account",
+    "marking low points in front of colleagues needs trust, and in a tense group the emotional layer stays polite and empty",
+    "the volume of events can swamp the session so that little time is left for lessons and actions",
+    "less useful when the period was short or when everyone took part in all of it throughout"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://fileadmin.cs.lth.se/serg/ExperimentPackages/RetroMethod/RetrospectiveGuidelines_v01.pdf",
+    "https://lup.lub.lu.se/record/3125141",
+    "https://pragprog.com/titles/dlret/agile-retrospectives/",
+    "https://www.atlassian.com/blog/teamwork/revitalize-retrospectives-fresh-techniques",
+    "https://www.parabol.co/blog/how-to-run-a-postmortem-or-retrospective-on-a-big-project/"
+  ],
+  "use_cases": [
+    "We want to look back on the whole of a long project together, but each person was there for different months and remembers a different part, so first we have to put the events back in the order they happened, from the first month to the last.",
+    "At the end of the school year the staff want to go back over the whole year together, term by term: what happened when, and when the work went well or the mood sank.",
+    "A cross-department team in a municipal administration is closing a three-year programme in which members changed more than once; before writing up its lessons it wants to piece together the course of the programme phase by phase, including the months when commitment fell away.",
+    "A volunteer committee hands over to successors at the end of a two-year term and wants to retrace with the outgoing members which events and decisions shaped those two years, so the newcomers understand how things came to be as they are."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 20
+  },
+  "audience": [
+    "project teams at the end of a long project",
+    "teaching teams and school leadership",
+    "programme teams in public administration",
+    "volunteer committees and boards",
+    "facilitators and agile coaches"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-08"
+}

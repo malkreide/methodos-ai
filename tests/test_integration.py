@@ -651,6 +651,12 @@ PROBES = [
         "people are confused and some think we're hiding something",
         "Message_House",
     ),
+    (
+        "our project lasted almost two years with people joining and leaving along the way; "
+        "now it's over and we want to look back, but everyone remembers a different part "
+        "and we can't even agree on the order things happened in",
+        "Timeline_Retrospective",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1196,6 +1202,12 @@ PROBES_DE = [
         "unserer Homepage steht, und die Zeitung hat nochmals eine dritte Version gebracht; "
         "die Eltern sind verunsichert und manche glauben, wir verschweigen etwas",
         "Message_House",
+    ),
+    (
+        "Das Schuljahr ist vorbei und wir möchten im Kollegium gemeinsam zurückschauen, "
+        "aber jede und jeder erinnert sich nur an die eigenen Wochen, und was im Herbst "
+        "war, weiss kaum noch jemand",
+        "Timeline_Retrospective",
     ),
 ]
 
