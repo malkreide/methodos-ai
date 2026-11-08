@@ -662,6 +662,11 @@ PROBES = [
         "person over there, and every time I mean to start reaching out I put it off again",
         "Working_Out_Loud",
     ),
+    (
+        "in every product meeting someone says users want this, but each of us is "
+        "picturing a different person, and nobody checks it against the interviews we did",
+        "Personas",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1220,6 +1225,11 @@ PROBES_DE = [
         "bei dem sich kleine gemischte Gruppen über ein paar Monate gegenseitig "
         "weiterbringen, ganz ohne Trainer",
         "Working_Out_Loud",
+    ),
+    (
+        "Wir entwickeln unser Angebot für einen Durchschnittskunden, den es nicht gibt; "
+        "dabei haben wir ganz unterschiedliche Kundengruppen",
+        "Personas",
     ),
 ]
 

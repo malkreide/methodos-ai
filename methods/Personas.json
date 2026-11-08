@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Personas",
+  "name": "Personas",
+  "category": "analysis",
+  "use_case": "A team designing a service argues about what 'the user' wants, and it turns out that everyone has a different person in mind: usually someone much like themselves, or an imagined average user who does not exist. Interviews and survey results were collected but sit unread when decisions are made. The method condenses that research into a small set of distinct, named user archetypes, each with goals, circumstances, skills and frustrations, so that design and priority decisions can be checked against the real groups who will use the service rather than against the designers' own habits.",
+  "strengths": [
+    "replaces the invisible 'average user' with a few concrete groups the whole team can name",
+    "turns interview and survey findings into something people remember and refer to in meetings",
+    "exposes design choices that suit the team but not the people the service is for",
+    "gives a shared reference for briefing new staff, agencies and testers",
+    "makes it explicit which user group a decision favours and which it leaves out"
+  ],
+  "weaknesses": [
+    "personas invented from the team's assumptions look just as convincing as researched ones and merely dress up existing prejudice",
+    "names, photos and biographical colour easily slide into stereotypes of age, gender or origin",
+    "a few archetypes hide the spread within each group and the people at the edges",
+    "needs genuine user research first, which takes time and access to users",
+    "often produced once, pinned to a wall and never used or updated"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 240,
+    "max_minutes": 1920
+  },
+  "references": [
+    "https://www.nngroup.com/articles/persona/",
+    "https://www.nngroup.com/articles/why-personas-fail/",
+    "https://ixdf.org/literature/article/personas-why-and-how-you-should-use-them",
+    "https://assisteddigital.blog.gov.uk/2014/08/28/assisted-digital-user-personas/",
+    "https://doi.org/10.1145/997078.997089",
+    "https://doi.org/10.1145/2858036.2858151",
+    "https://doi.org/10.1016/j.destud.2010.06.002",
+    "https://en.wikipedia.org/wiki/Persona_(user_experience)"
+  ],
+  "use_cases": [
+    "In our design discussions everyone argues on behalf of 'the user', but one colleague imagines a tech-savvy young professional, another pictures her own elderly mother, and we never settle whom we are actually building the app for.",
+    "A tax administration redesigning its online filing service knows from interviews that first-time filers, self-employed people with piles of receipts and pensioners who file for a relative have very different needs, yet the project keeps designing for an average taxpayer who matches none of them.",
+    "A university library rebuilding its digital services holds interview and survey data on first-year undergraduates, doctoral researchers and part-time distance learners, and wants developers and enquiry staff to keep these groups' different goals and constraints in view instead of designing for a generic student.",
+    "We keep designing for some average customer, although our customers are really several groups with very different needs; we even ran a large research project, but developers still decide by gut feeling, and the findings should become a few memorable user portraits that stay on the table whenever priorities are set.",
+    "A charity giving advice by phone, chat and in person serves anxious first-time callers, carers acting for someone else and repeat clients in crisis, and the team redesigning the service needs a shared, research-based picture of these groups instead of relying on whoever they last spoke to."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 10
+  },
+  "audience": [
+    "product team",
+    "service designers",
+    "public administration",
+    "user researchers",
+    "digital services team",
+    "university administration"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-08"
+}
