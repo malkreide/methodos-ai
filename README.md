@@ -209,7 +209,7 @@ echo 'METHODOS_RERANK_PROVIDER=none' >> .env
 It reuses sentence-transformers from the `local` extra and downloads
 `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (~470MB) on first use. Cost
 grows with the number of texts on the shortlist — about 175 for the default
-30-method shortlist of the current 91-method catalog, up from 6 when only one
+30-method shortlist of the current 95-method catalog, up from 6 when only one
 text per method was scored.
 
 If sentence-transformers is not installed — an OpenAI-embeddings setup, say —
@@ -233,8 +233,8 @@ a different story: at 3 the right method never reached the reranker for 7 of
 twice the rerank time (1.1 s to 2.1 s a query on a 4-core CPU). Reranking the
 whole catalog did worse again. At 79 methods, 8 lost one of the 36 again — the
 right method had slipped to the 25th slot — and 9 brought it back; at 87,
-9 lost one holdout problem the same way and 10 brought it back; at 91,
-10 still held every guard. The slot
+9 lost one holdout problem the same way and 10 brought it back; at 91 and
+95, 10 still held every guard. The slot
 count is fixed while the catalog grows, so re-measure as it does.
 
 ## MCP server
@@ -291,7 +291,7 @@ can tell the difference rather than guess:
   Without the `local` extra the reranker degrades to nothing, and this field is
   how the caller learns the order changed meaning.
 - **`guidance`** — set when the best match falls below 0.33, with a concrete
-  next step. That floor is measured, not guessed: the weakest of the 182 pinned
+  next step. That floor is measured, not guessed: the weakest of the 190 pinned
   integration probes (English and German) scores 0.380, while questions the
   catalog genuinely does not cover reach 0.329 at most (*"wie flicke ich meine
   Velokette"*), just under the floor. Weak matches are still returned — `guidance` is a caveat, never a

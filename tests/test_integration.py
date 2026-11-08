@@ -627,6 +627,30 @@ PROBES = [
         "on it are all over the place; I can't tell where to begin or what goes with what",
         "Mind_Mapping",
     ),
+    (
+        "the papers I send up to the executive team are thorough, but they always come back "
+        "with 'so what do you actually want from us?' because the decision I need ends up "
+        "buried somewhere on page three",
+        "Pyramid_Principle",
+    ),
+    (
+        "our team has taken on far too much at the same time; everything is half "
+        "finished, almost nothing gets done, and nobody can tell where each piece of "
+        "work is held up",
+        "Kanban_Board",
+    ),
+    (
+        "our working group is meant to speed up how invoices get paid, but after two "
+        "meetings we still disagree on where the whole thing begins, where it finishes "
+        "and who actually depends on what comes out at the end",
+        "SIPOC_Diagram",
+    ),
+    (
+        "our director explained the reorganisation one way at the staff meeting, the press "
+        "release put it another way and the counter staff tell residents a third story; "
+        "people are confused and some think we're hiding something",
+        "Message_House",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1149,6 +1173,29 @@ PROBES_DE = [
         "Jugendliche schreiben. Ich habe tausend Gedanken dazu, aber keine Ordnung darin, "
         "und weiss nicht, womit ich anfangen soll",
         "Mind_Mapping",
+    ),
+    (
+        "Meine Berichte an die Geschäftsleitung sind ausführlich und sorgfältig, trotzdem "
+        "fragen sie mich jedes Mal, was ich denn eigentlich von ihnen will. Der Entscheid, "
+        "den ich brauche, geht irgendwo auf Seite drei unter",
+        "Pyramid_Principle",
+    ),
+    (
+        "Wir haben viel zu vieles gleichzeitig angefangen: Alles ist halb fertig, nichts "
+        "wird abgeschlossen, und niemand sieht, wo welche Aufgabe gerade hängt",
+        "Kanban_Board",
+    ),
+    (
+        "Wir sollen die Anmeldung für die Tagesschule verbessern, aber in der Arbeitsgruppe "
+        "sind wir uns nicht einmal einig, wo der Ablauf anfängt, wo er aufhört und für wen "
+        "er eigentlich da ist",
+        "SIPOC_Diagram",
+    ),
+    (
+        "Die Schulleiterin erklärt die neue Tagesschule am Elternabend anders, als es auf "
+        "unserer Homepage steht, und die Zeitung hat nochmals eine dritte Version gebracht; "
+        "die Eltern sind verunsichert und manche glauben, wir verschweigen etwas",
+        "Message_House",
     ),
 ]
 

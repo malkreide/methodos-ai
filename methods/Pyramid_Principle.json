@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "Pyramid_Principle",
+  "name": "Pyramid Principle (Minto)",
+  "category": "analysis",
+  "use_case": "My reports and e-mails to senior management are long and thorough, yet the readers have to dig through pages of background before they reach what I am asking them to decide, and they write back asking what I actually want from them; I need each document to open with the recommendation and then back it with a few grouped reasons in a deliberate order.",
+  "strengths": [
+    "the reader learns the recommendation or request in the first lines and can stop reading once convinced",
+    "a short opening of situation, complication and question ties the answer to something the reader already accepts, without a long history",
+    "grouping the support into a few non-overlapping points shows the writer where an argument is missing or repeats itself",
+    "the same structure serves a two-line e-mail, a one-page memo, a long report and a slide deck",
+    "the top of the pyramid doubles as the executive summary and the subject line, so they no longer have to be written separately",
+    "a reviewer can check the logic by reading only the headings and first sentences"
+  ],
+  "weaknesses": [
+    "the writer must have reached a conclusion; it does not help while the thinking is still open",
+    "readers who expect the reasoning before the conclusion, as in some national and organisational cultures, can find an answer-first text abrupt or presumptuous",
+    "academic, legal and other genres with fixed conventions of their own do not fit the order",
+    "bad or unwelcome news stated in the first line can provoke rejection before the reasons are read",
+    "strictly non-overlapping groups are hard to find when the reasons are intertwined",
+    "the evidence is practitioner experience and consulting practice; controlled studies of the method itself are scarce"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 20,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://www.barbaraminto.com/",
+    "https://www.barbaraminto.com/textbook",
+    "https://en.wikipedia.org/wiki/Barbara_Minto",
+    "https://en.wikipedia.org/wiki/MECE_principle",
+    "https://de.wikipedia.org/wiki/Pyramidales_Prinzip",
+    "https://archive.org/details/pyramidprinciple0000mint",
+    "https://www.archives.gov/open/plain-writing/10-principles"
+  ],
+  "use_cases": [
+    "How do I write a report or an e-mail to management so that the decision I need from them is clear in the first paragraph instead of buried under the background?",
+    "The head of a school's administration has to get the board to approve a new timetable model in writing; the last paper ran to six pages, and the members spent the meeting asking what exactly they were supposed to approve.",
+    "A project lead's monthly status memo to the steering committee walks through every workstream in the order things happened, and the one item that needs the committee's approval, extra money for a supplier who is late, sits at the bottom and goes unnoticed.",
+    "An officer in a city administration needs the head of department to approve switching the old town's street lighting to LED; her draft memo reads like the history of the file, and she wants the request and its strongest reasons on the first half page."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 4
+  },
+  "audience": [
+    "staff writing for management or boards",
+    "project and programme leads",
+    "school and education administration",
+    "public administration",
+    "communications staff",
+    "analysts and consultants"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}
