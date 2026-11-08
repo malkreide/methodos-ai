@@ -639,6 +639,12 @@ PROBES = [
         "work is held up",
         "Kanban_Board",
     ),
+    (
+        "our working group is meant to speed up how invoices get paid, but after two "
+        "meetings we still disagree on where the whole thing begins, where it finishes "
+        "and who actually depends on what comes out at the end",
+        "SIPOC_Diagram",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1172,6 +1178,12 @@ PROBES_DE = [
         "Wir haben viel zu vieles gleichzeitig angefangen: Alles ist halb fertig, nichts "
         "wird abgeschlossen, und niemand sieht, wo welche Aufgabe gerade hängt",
         "Kanban_Board",
+    ),
+    (
+        "Wir sollen die Anmeldung für die Tagesschule verbessern, aber in der Arbeitsgruppe "
+        "sind wir uns nicht einmal einig, wo der Ablauf anfängt, wo er aufhört und für wen "
+        "er eigentlich da ist",
+        "SIPOC_Diagram",
     ),
 ]
 

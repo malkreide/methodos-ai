@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "SIPOC_Diagram",
+  "name": "SIPOC Diagram",
+  "category": "analysis",
+  "use_case": "Before a recurring process such as enrolment, invoicing or admission is improved, the people involved have to settle its boundaries: where the process begins and where it ends, what has to come into it and from whom, what it delivers, and who receives and relies on that result. They fill one page with five columns (suppliers, inputs, four to six high-level steps, outputs and the recipients of those outputs) so that everyone works on the same agreed scope before any detailed mapping, measuring or redesign starts.",
+  "strengths": [
+    "settles the start and end point of a process in one short session, before effort goes into detail",
+    "forces the question of who the process is for, which internal discussions often skip",
+    "fits on one page that a sponsor, a newcomer or a neighbouring department can read in a minute",
+    "lists the inputs a process depends on, so missing or late inputs can be named as part of the scope",
+    "needs no data or software; a wall, sticky notes and the right people are enough",
+    "gives later tools such as a detailed flow map or a responsibility table an agreed frame to work in"
+  ],
+  "weaknesses": [
+    "deliberately coarse: with only a handful of steps it cannot show where work queues, loops back or gets delayed",
+    "drawn by managers alone it records the process as they believe it runs, not as the people doing it experience it",
+    "easily filled in as a ritual at project start and never looked at again",
+    "says nothing about who is responsible for each step or how well each step performs",
+    "the evidence for it is practitioner experience in quality-improvement programmes, not controlled studies"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/SIPOC",
+    "https://www.isixsigma.com/sipoc-copis/sipoc-diagram/",
+    "https://nationalhighways.co.uk/media/ap2ap2ch/guide-to-sipoc-suppliers-inputs-process-outputs-customers.pdf",
+    "https://www.cityoftulsa.org/media/9364/continuous-improvement-playbook.pdf"
+  ],
+  "use_cases": [
+    "Our working group is supposed to improve the enrolment procedure for school places, and we cannot even agree where the procedure starts, where it ends, or who it is actually for.",
+    "A school administration wants to rework its admissions procedure, and the secretariat, the head teacher and the class teachers each draw a different first and last step and name different recipients of the result.",
+    "A municipal finance unit wants to improve how supplier invoices are paid and first needs the sponsor, the departments that submit invoices and the accounts team to agree on one starting point, one end point and the few main stages in between.",
+    "A hospital team about to work on patient admission first wants one page showing which referrals and information arrive from whom, the main stages of admission, and what the ward, the patient and the billing unit each receive at the end.",
+    "A nonprofit's grants team wants to redesign its application round and must first pin down which documents come from applicants, reviewers and the finance team, what the round produces, and which of the people receiving those results the redesign should serve."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "process improvement teams",
+    "school administration",
+    "public administration",
+    "hospital quality teams",
+    "project sponsors"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-07"
+}
