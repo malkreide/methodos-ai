@@ -672,6 +672,11 @@ PROBES = [
         "the argument goes round in circles",
         "Pairwise_Comparison",
     ),
+    (
+        "Every brainstorm about how our team could improve ends with the same clichés, "
+        "and I think we are sabotaging ourselves without admitting it",
+        "Reverse_Brainstorming",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1240,6 +1245,11 @@ PROBES_DE = [
         "Wir haben zwölf Themen gesammelt und schaffen es nicht, sie in eine Reihenfolge "
         "zu bringen; jede Diskussion darüber, was am wichtigsten ist, dreht sich im Kreis",
         "Pairwise_Comparison",
+    ),
+    (
+        "Wenn wir im Kollegium überlegen, wie wir besser werden, kommen immer dieselben "
+        "Floskeln. Ich glaube, wir stehen uns mit unseren eigenen Gewohnheiten selbst im Weg.",
+        "Reverse_Brainstorming",
     ),
 ]
 
