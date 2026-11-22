@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Data_Wise_Improvement_Process",
+  "name": "Data Wise Improvement Process",
+  "category": "change-management",
+  "use_case": "A school's test results and assessment reports are filed after a brief look at the bar charts instead of being turned into a shared question about pupils' learning and a change in lessons. A team of teachers and school leaders needs a recurring cycle: set up meeting time, norms and the skills to read assessments; move from an overview of results to pupils' work, name one learning problem many pupils share and find the matching problem in the team's own teaching; then agree an instructional change, decide how to measure pupils' progress, carry it out and check.",
+  "strengths": [
+    "turns assessment results into a question about student learning and then about teaching, instead of stopping at a ranking of classes or a list of weak scores",
+    "insists on looking beyond one test to students' work, classroom observation and what students say, so a team does not act on a single number",
+    "puts the team's own instruction under examination rather than explaining weak results by students' backgrounds",
+    "the preparation phase deals explicitly with collaboration norms and with what each assessment can and cannot show, which data meetings usually skip",
+    "each phase ends in something concrete (a priority question, a learner-centred problem, a problem of practice, an action plan with short- and long-term measures), so a team can tell where it is",
+    "widely used, with free and paid materials from the Harvard Graduate School of Education and a shared vocabulary across schools in a district"
+  ],
+  "weaknesses": [
+    "needs protected, recurring team time and leadership support over at least a school year; squeezed into staff meetings it shrinks to looking at charts",
+    "where test scores drive accountability, rankings or pay, teams tend to chase the score rather than the learning, and classroom observation is felt as inspection",
+    "a school drowning in data can make it worse: dashboards, item analyses and reports pile up while the team never gets as far as the classroom",
+    "good evidence of effect on student achievement is lacking: the What Works Clearinghouse rated the research behind data-use cycles as minimal, and a federally funded randomised trial of Data Wise could not be run as planned",
+    "much of the guidance is written for US schools with state tests and instructional coaches, and needs translation to systems without them",
+    "full training and coaching are offered commercially; the published book alone leaves a team to work out many facilitation details itself"
+  ],
+  "complexity_score": 4,
+  "estimated_duration": {
+    "min_minutes": 600,
+    "max_minutes": 3000
+  },
+  "references": [
+    "https://www.gse.harvard.edu/ideas/ed-magazine/12/01/data-wise-process",
+    "https://www.ascd.org/el/articles/eight-steps-to-becoming-data-wise",
+    "https://www.gse.harvard.edu/ideas/usable-knowledge/05/07/use-assessment-improve-instruction",
+    "https://www.gse.harvard.edu/ideas/news/15/04/path-data-wisdom",
+    "https://www.gse.harvard.edu/hgse100/story/wise-about-data",
+    "https://www.gse.harvard.edu/ideas/news/26/07/common-language-improvement",
+    "https://ies.ed.gov/ncee/wwc/PracticeGuide/12",
+    "https://ies.ed.gov/use-work/awards/initial-efficacy-study-data-wise",
+    "https://www.sri.com/education-learning/project/cdi-toolkit/"
+  ],
+  "use_cases": [
+    "Every year piles of test results and assessment reports land in our school, and our lessons stay exactly the same.",
+    "Our staff look at the annual test results as bar charts by class, file them, and teach as before; I want them to use the results and pupils' work to agree on one skill to teach differently.",
+    "A secondary mathematics department sees in exam results that students lose most marks on multi-step word problems, and wants to study students' scripts to find what exactly they misunderstand, then examine how the topic is taught before agreeing on one common change and how to measure it.",
+    "An education authority wants every school's instructional team to follow the same steps from assessment results to pupils' work to lesson observation and an action plan, instead of just sending test scores up the line."
+  ],
+  "contexts": [
+    "education",
+    "public-sector"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 12
+  },
+  "audience": [
+    "school leadership",
+    "instructional and data teams",
+    "teachers and grade-level or subject teams",
+    "instructional coaches",
+    "school district or education authority staff"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}

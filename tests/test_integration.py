@@ -677,6 +677,12 @@ PROBES = [
         "and I think we are sabotaging ourselves without admitting it",
         "Reverse_Brainstorming",
     ),
+    (
+        "every year we get stacks of test scores and assessment reports, yet the teachers "
+        "never sit down together to work out what the kids aren't learning and what we "
+        "should teach differently",
+        "Data_Wise_Improvement_Process",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1250,6 +1256,12 @@ PROBES_DE = [
         "Wenn wir im Kollegium überlegen, wie wir besser werden, kommen immer dieselben "
         "Floskeln. Ich glaube, wir stehen uns mit unseren eigenen Gewohnheiten selbst im Weg.",
         "Reverse_Brainstorming",
+    ),
+    (
+        "Jedes Jahr kommen bei uns Stapel von Testresultaten und Auswertungen an, aber im "
+        "Kollegium schaut sie kaum jemand richtig an. Wir fragen uns nie gemeinsam, was die "
+        "Kinder offenbar nicht verstehen, und am Unterricht ändert sich nichts",
+        "Data_Wise_Improvement_Process",
     ),
 ]
 
