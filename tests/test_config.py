@@ -58,3 +58,10 @@ def test_top_k_must_be_positive(monkeypatch):
     monkeypatch.setenv("METHODOS_TOP_K", "0")
     with pytest.raises(ValidationError):
         Settings(_env_file=None)
+
+
+def test_the_suite_keeps_user_data_out_of_the_checkout(tmp_path):
+    """Four CLI tests once appended to the real data/feedback.jsonl on every run."""
+    s = Settings()
+    assert s.feedback_path.is_relative_to(tmp_path)
+    assert s.proposals_path.is_relative_to(tmp_path)
