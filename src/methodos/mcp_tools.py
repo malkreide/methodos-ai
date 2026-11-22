@@ -44,8 +44,8 @@ WEAK_MATCH_SIMILARITY = 0.33
 """Below this cosine similarity, `recommend_methods` attaches `guidance`.
 
 Measured against the shipped catalog (23 methods, re-checked at 27, 39, 43,
-47, 51, 55, 59, 63, 67, 71, 79, 87, 91 and 95) with the default multilingual embedding, not guessed. Every
-one of the 190 pinned integration probes (95 English, 95 German) reaches at least
+47, 51, 55, 59, 63, 67, 71, 79, 87, 91, 95 and 98) with the default multilingual embedding, not guessed. Every
+one of the 196 pinned integration probes (98 English, 98 German) reaches at least
 0.380 with its best match; questions the catalog genuinely does not cover top
 out at 0.329 ("wie flicke ich meine Velokette", 0.265 until the Eisenhower
 Matrix gained a problem-voice use case, "I have far more on my plate…", in the
