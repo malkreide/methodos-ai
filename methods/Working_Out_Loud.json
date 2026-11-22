@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Working_Out_Loud",
+  "name": "Working Out Loud (WOL Circle)",
+  "category": "facilitation",
+  "use_case": "In a large organisation most people only know the colleagues in their own unit, keep their work to themselves and wait for a training course or a manager to open doors, so expertise never travels across departments and individuals stall on goals they care about. Four or five people from different units, who do not report to one another, form a small confidential group that runs itself without a trainer: for an hour a week over twelve weeks, each pursues a personal goal of their own, lists the people connected to it, makes contact by offering them something useful before asking for anything, and shows more of their own work, with a weekly guide setting the exercises and the group holding each other to the next small step.",
+  "strengths": [
+    "runs without trainers or facilitators once the guide is in people's hands, so an organisation can grow it from one group to hundreds without needing a trainer for each",
+    "each person chooses their own goal, which keeps motivation high and makes the twelve weeks feel useful rather than imposed",
+    "mixing people from different units who would not otherwise meet builds connections across organisational boundaries as a side effect of pursuing individual goals",
+    "small weekly steps and peer accountability turn a vague intention such as building a network or learning a new field into visible progress",
+    "the habit of contributing before asking changes how participants approach colleagues long after the twelve weeks end",
+    "an intervention study with over five hundred participants found gains in working-out-loud behaviour and psychological empowerment that still held six months later"
+  ],
+  "weaknesses": [
+    "twelve consecutive weekly meetings are a real commitment; groups thin out when holidays, workload peaks or reorganisations interrupt the rhythm",
+    "a member who has no goal they genuinely care about, or who was sent by their manager, drags the whole group down",
+    "built for individual growth and networking, not for solving a shared team problem or reaching a group decision",
+    "the effect on the organisation as a whole is hard to measure; most evidence comes from practitioner reports and self-assessment",
+    "in a culture that punishes visible mistakes or treats sharing work in progress as self-promotion, the visibility exercises feel risky",
+    "the official workbooks are copyrighted and sold per participant, and company-wide use needs a licence, so it is not free to roll out at scale"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 60
+  },
+  "references": [
+    "https://workingoutloud.com/about",
+    "https://workingoutloud.com/circles-global-edition",
+    "https://www.workingoutloud.com/blog/the-working-out-loud-goal-clinic-part-1-of-2",
+    "https://workingoutloud.com/blog/ten-years-of-working-out-loud",
+    "https://thebryceswrite.com/2010/11/29/when-will-we-work-out-loud-soon/",
+    "https://pagetwo.com/book/working-out-loud/",
+    "https://doi.org/10.1108/JWL-04-2023-0067"
+  ],
+  "use_cases": [
+    "I want to move into a different field inside our company, but I don't know anyone who already works there, and every month I tell myself I will start reaching out and then don't.",
+    "A corporation with tens of thousands of employees in many countries wants staff in different divisions to start helping each other directly, without building yet another central programme that needs trainers in every location.",
+    "Staff in a large public administration spread over many offices rarely meet anyone outside their own department; the personnel office wants a low-cost, voluntary peer format in which small mixed groups of employees support each other in reaching goals they set themselves.",
+    "Doctoral candidates and early-career researchers at a university each work alone on their own project and want a small group of peers from other faculties who meet weekly for a few months and push each other to build the contacts their careers depend on.",
+    "After losing my job I need to find my next role, but I feel isolated and keep putting off contacting people, and I would like a few others in the same situation to meet with me every week and keep me moving."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 5
+  },
+  "audience": [
+    "employees of large organisations",
+    "public administration staff",
+    "people development and HR teams",
+    "researchers and university staff",
+    "people in career transition",
+    "managers seeking cross-unit networks"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-08"
+}

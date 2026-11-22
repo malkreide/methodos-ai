@@ -651,6 +651,22 @@ PROBES = [
         "people are confused and some think we're hiding something",
         "Message_House",
     ),
+    (
+        "our project lasted almost two years with people joining and leaving along the way; "
+        "now it's over and we want to look back, but everyone remembers a different part "
+        "and we can't even agree on the order things happened in",
+        "Timeline_Retrospective",
+    ),
+    (
+        "I'd like to switch into our analytics department one day, but I don't know a single "
+        "person over there, and every time I mean to start reaching out I put it off again",
+        "Working_Out_Loud",
+    ),
+    (
+        "in every product meeting someone says users want this, but each of us is "
+        "picturing a different person, and nobody checks it against the interviews we did",
+        "Personas",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1196,6 +1212,24 @@ PROBES_DE = [
         "unserer Homepage steht, und die Zeitung hat nochmals eine dritte Version gebracht; "
         "die Eltern sind verunsichert und manche glauben, wir verschweigen etwas",
         "Message_House",
+    ),
+    (
+        "Das Schuljahr ist vorbei und wir möchten im Kollegium gemeinsam zurückschauen, "
+        "aber jede und jeder erinnert sich nur an die eigenen Wochen, und was im Herbst "
+        "war, weiss kaum noch jemand",
+        "Timeline_Retrospective",
+    ),
+    (
+        "Bei uns kennt kaum jemand Leute ausserhalb der eigenen Abteilung, und wer etwas "
+        "erreichen will, wartet, bis der Chef Türen öffnet; wir suchen etwas Freiwilliges, "
+        "bei dem sich kleine gemischte Gruppen über ein paar Monate gegenseitig "
+        "weiterbringen, ganz ohne Trainer",
+        "Working_Out_Loud",
+    ),
+    (
+        "Wir entwickeln unser Angebot für einen Durchschnittskunden, den es nicht gibt; "
+        "dabei haben wir ganz unterschiedliche Kundengruppen",
+        "Personas",
     ),
 ]
 
