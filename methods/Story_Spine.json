@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Story_Spine",
+  "name": "Story Spine",
+  "category": "change-management",
+  "use_case": "The reasons behind a change or a project have been presented as facts, figures and bullet points without a thread, so the people who heard them forget the explanation or pass it on garbled. The team retells it as a short story built on fixed sentence openings: how things were, what used to happen routinely, the event that broke the routine, the consequences that followed one from another, the turning point and what has been different since, until anyone can tell it back in a minute in their own words.",
+  "strengths": [
+    "eight fixed sentence openings are quick to learn and need no materials beyond a sheet of paper or a whiteboard",
+    "the chain of 'because of that' sentences exposes a missing or unconvincing causal link in the explanation before an audience notices it",
+    "starting from the ordinary routine reminds the tellers to describe the situation as the listeners know it, not only the end state the planners care about",
+    "short enough to be retold from memory, which slides and written briefings are not",
+    "can be practised in a few minutes as a circle exercise, so a group gets better at it by drafting several versions rather than polishing one",
+    "works as a check on an existing presentation: if the content cannot be fitted onto the spine, the presentation probably has no storyline either"
+  ],
+  "weaknesses": [
+    "evidence is practitioner-based: it comes from improvisational theatre and screenwriting teaching, and there are no studies of its effect on how well staff understand or retell an organisational change",
+    "a neat story can oversimplify a messy decision, hide real uncertainty or turn contested choices into an inevitable sequence",
+    "the fairy-tale tone of the openings can sound flippant for painful changes such as job cuts, and the wording usually has to be adapted before it is used in front of an audience",
+    "it structures an explanation the organisation has already settled on; it does not gather the views of the people affected or replace consultation",
+    "the 'ever since then' ending invites claiming results before they exist when the change is still under way",
+    "does not decide who should hear the story, when or through which channels"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://www.aerogrammestudio.com/2013/06/05/back-to-the-story-spine/",
+    "https://www.npr.org/transcripts/nx-s1-5750619",
+    "https://www.sketchplanations.com/the-story-spine",
+    "https://cartoonbrew.com/ideas-commentary/must-read-commentary-on-pixar-joe-ranft-and-the-22-rules-of-storytelling-90047.html",
+    "https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/"
+  ],
+  "use_cases": [
+    "We have explained the change several times with slides full of figures, and still, when I ask colleagues why it is happening, they cannot say it back to me; I need the reasons told as a sequence of events with a cause and an outcome that people remember and can tell someone else.",
+    "A project team in a city department has collected many good points for a presentation about its work but cannot see how they hang together; it wants a simple frame that puts them in order from starting situation through trigger and consequences to resolution, and shows which link in the chain is still missing.",
+    "A school that is changing the shape of its school day wants every teacher to be able to tell a newly hired colleague, in two minutes, how the change came about: what the day used to look like, what happened that settled it, and what has followed from it since.",
+    "Pupils' written stories wander from one event to the next and stop without an ending, and a teacher wants a short scaffold of sentence starters so that they plan a beginning, a middle driven by cause and effect, and a resolution before they write."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 20
+  },
+  "audience": [
+    "project leads",
+    "change managers",
+    "school leadership",
+    "teachers",
+    "public administration",
+    "team leads"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}

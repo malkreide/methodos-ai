@@ -683,6 +683,11 @@ PROBES = [
         "should teach differently",
         "Data_Wise_Improvement_Process",
     ),
+    (
+        "the explanation of why we changed our opening hours is just a list of figures, and "
+        "staff can't pass it on to customers in their own words",
+        "Story_Spine",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1262,6 +1267,12 @@ PROBES_DE = [
         "Kollegium schaut sie kaum jemand richtig an. Wir fragen uns nie gemeinsam, was die "
         "Kinder offenbar nicht verstehen, und am Unterricht ändert sich nichts",
         "Data_Wise_Improvement_Process",
+    ),
+    (
+        "Wir haben den Umbau der Abteilung schon mehrmals mit Folien und Zahlen erklärt, "
+        "aber die Mitarbeitenden können hinterher nicht wiedergeben, wie es dazu kam. Ich "
+        "möchte es so erzählen, dass jede und jeder es in eigenen Worten weitergeben kann",
+        "Story_Spine",
     ),
 ]
 
