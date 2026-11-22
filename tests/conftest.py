@@ -68,6 +68,17 @@ class FakeReranker:
         return [float(sum(1 for t in terms if t in doc.lower())) for doc in documents]
 
 
+@pytest.fixture(autouse=True)
+def _user_data_in_tmp(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Point the append-only logs at tmp, so no test writes to the real ones.
+
+    Their defaults are relative to the working directory, which is the checkout
+    when pytest runs. A test that sets either variable itself still wins.
+    """
+    monkeypatch.setenv("METHODOS_FEEDBACK_PATH", str(tmp_path / "user_data" / "feedback.jsonl"))
+    monkeypatch.setenv("METHODOS_PROPOSALS_PATH", str(tmp_path / "user_data" / "proposals.jsonl"))
+
+
 @pytest.fixture
 def fake_llm() -> FakeLLM:
     return FakeLLM()
