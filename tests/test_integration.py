@@ -693,6 +693,11 @@ PROBES = [
         "working on, without the meeting turning into me defending my choices?",
         "Tuning_Protocol",
     ),
+    (
+        "our strategy paper lists a dozen strengths, but I suspect most of them any rival "
+        "could get just as easily; which of them actually give us an edge that lasts?",
+        "VRIO_Analysis",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1283,6 +1288,12 @@ PROBES_DE = [
         "Ich hätte gern von ein paar Kolleginnen eine ehrliche Rückmeldung zu meinem Entwurf, "
         "bevor er fertig ist, aber bei uns endet jede Kritik damit, dass ich mich rechtfertige",
         "Tuning_Protocol",
+    ),
+    (
+        "In unserer Strategie stehen viele Stärken, aber ehrlich gesagt könnte die Konkurrenz "
+        "das meiste davon schnell auch haben. Was davon verschafft uns wirklich einen "
+        "Vorsprung, der auch in ein paar Jahren noch hält?",
+        "VRIO_Analysis",
     ),
 ]
 

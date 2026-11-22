@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "VRIO_Analysis",
+  "name": "VRIO Analysis (Valuable, Rare, Inimitable, Organised)",
+  "category": "strategy",
+  "use_case": "An organisation can name many strengths but cannot say which of them actually set it apart and will keep doing so: which could another provider acquire or copy within a year, and which rest on history, relationships or know-how that others cannot easily reproduce. Each resource and capability is put through four questions in turn: does it matter to those served, do few others have it, would others find it hard to obtain or imitate, and is the organisation set up to make use of it. Attention then goes to the few that pass all four.",
+  "strengths": [
+    "turns a long, flattering list of strengths into a short list of the few that are genuinely hard for others to match",
+    "separates what merely keeps an organisation level with others from what can carry a lasting edge",
+    "the organisation question exposes advantages that exist on paper but that structures, incentives or processes leave unused",
+    "pushes the discussion towards intangible assets such as trust, culture and accumulated know-how, which are usually harder to copy than equipment or money",
+    "rests on one of the most cited theories in strategic management, so the vocabulary is widely understood"
+  ],
+  "weaknesses": [
+    "the answers are judgements; groups tend to rate their own capabilities as rarer and harder to copy than outsiders would",
+    "static: it assesses what the organisation holds today and says little about how to build new capabilities or when an advantage will erode",
+    "assumes rivals who could take the same customers, funds or mandate; where no one else offers the service, the rarity and imitation questions lose much of their meaning",
+    "'value' is loosely defined, which lets almost any resource be argued as valuable",
+    "tells you which resources matter, not how to develop or protect them",
+    "looks only inward, so it needs a separate view of the environment and of those the organisation serves"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://doi.org/10.1177/014920639101700108",
+    "https://doi.org/10.5465/ame.1995.9512032192",
+    "https://en.wikipedia.org/wiki/VRIO",
+    "https://en.wikipedia.org/wiki/Resource-based_view",
+    "https://mpra.ub.uni-muenchen.de/21442/",
+    "https://doi.org/10.1177/0149206309350775",
+    "https://strathprints.strath.ac.uk/9485/",
+    "https://doi.org/10.1111/j.1540-6210.2007.00754.x",
+    "https://www.management-poland.com/Resource-based-view-in-strategic-management-of-public-organizations-a-review-of-the,157860,0,2.html"
+  ],
+  "use_cases": [
+    "We list plenty of strengths, but most of them our competitors have too or could quickly acquire; we want to know which of our capabilities give us a lasting advantage that others cannot easily copy.",
+    "We describe ourselves as unique, but other providers say exactly the same; what advantage do we really have over them that they could not simply copy?",
+    "A public training institute that now has to bid against private providers for government contracts wants to pin down what it can offer that the others cannot easily replicate, instead of repeating that it is experienced and trusted.",
+    "A charity competing with many similar organisations for the same grants wants to establish what it can do that others in its field could not readily copy, such as long-built trust in a neighbourhood, and whether its own structure actually puts that to use.",
+    "A university faculty losing applicants to neighbouring institutions that offer much the same degrees wants to work out which of its assets are genuinely distinctive and hard to reproduce elsewhere, before deciding what to invest in."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "executive team",
+    "board",
+    "strategy staff",
+    "agency management",
+    "nonprofit leadership",
+    "university leadership",
+    "business unit heads"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}
