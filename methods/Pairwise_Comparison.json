@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Pairwise_Comparison",
+  "name": "Pairwise Comparison (Paired Comparison Analysis)",
+  "category": "prioritization",
+  "use_case": "A group has six to fifteen items of the same kind, such as goals, topics, features or decision criteria, and cannot settle which of them matters most: whenever it tries to weigh the whole list at once the argument goes in circles, because nobody can hold that many items in mind together and the favourite changes with whoever spoke last. The list is broken into single head-to-head questions, two items at a time, until every item has met every other; counting how often each item wins turns many small judgements the group can actually make into a full ranking, and shows where its preferences contradict themselves.",
+  "strengths": [
+    "each judgement is small enough to answer: two items, one question",
+    "every item meets every other item, so none is ranked high simply by being discussed first or last",
+    "the win counts show not just the order but how close neighbouring items are",
+    "contradictions (A beats B, B beats C, C beats A) become visible instead of staying hidden in a gut ranking",
+    "the resulting counts or shares can serve directly as criteria weights for a scoring table",
+    "needs nothing more than a grid on paper or a spreadsheet"
+  ],
+  "weaknesses": [
+    "the number of pairs grows quickly: ten items mean 45 comparisons, twenty mean 190",
+    "a plain win count says that A beats B, not by how much, unless a strength scale is added",
+    "the items must be comparable on one question; mixing apples and oranges produces a meaningless order",
+    "fatigue late in a long grid makes the last comparisons less careful than the first",
+    "in a group, a dominant voice can still decide each pair unless judgements are made individually first",
+    "adding or removing an item can change the order among the others"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Pairwise_comparison_(psychology)",
+    "https://en.wikipedia.org/wiki/Law_of_comparative_judgment",
+    "https://en.wikipedia.org/wiki/Analytic_hierarchy_process",
+    "https://assets.publishing.service.gov.uk/media/5a790545e5274a2acd18b975/1132618.pdf",
+    "https://www.mindtools.com/auvbv1a/paired-comparison-analysis"
+  ],
+  "use_cases": [
+    "We have ten items on our list and cannot agree which matters most; every time we try to rank them the discussion goes round in circles and we end up where we started.",
+    "We have settled on our criteria but cannot say how much each one should count; asked for percentages people guess, yet asked whether one criterion is more important than another they can answer straight away.",
+    "A school leadership team has gathered twelve possible focus areas for the next development plan, and two attempts to sort them on a flip chart have ended in stalemate because every colleague holds up a different area as the most pressing.",
+    "A public authority wants to learn which of nine service qualities residents care about most; asked to rank all nine at once people give inconsistent answers, while asked again and again to choose the better of two they answer readily and consistently."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "project and product teams",
+    "school leadership",
+    "steering committees",
+    "planning and evaluation staff",
+    "individuals facing a personal ranking"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}

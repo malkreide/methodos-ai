@@ -667,6 +667,11 @@ PROBES = [
         "picturing a different person, and nobody checks it against the interviews we did",
         "Personas",
     ),
+    (
+        "there are ten priorities on our whiteboard and whenever we try to put them in order "
+        "the argument goes round in circles",
+        "Pairwise_Comparison",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1230,6 +1235,11 @@ PROBES_DE = [
         "Wir entwickeln unser Angebot für einen Durchschnittskunden, den es nicht gibt; "
         "dabei haben wir ganz unterschiedliche Kundengruppen",
         "Personas",
+    ),
+    (
+        "Wir haben zwölf Themen gesammelt und schaffen es nicht, sie in eine Reihenfolge "
+        "zu bringen; jede Diskussion darüber, was am wichtigsten ist, dreht sich im Kreis",
+        "Pairwise_Comparison",
     ),
 ]
 
