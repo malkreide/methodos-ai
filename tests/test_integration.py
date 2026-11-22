@@ -688,6 +688,11 @@ PROBES = [
         "staff can't pass it on to customers in their own words",
         "Story_Spine",
     ),
+    (
+        "how can a few colleagues give me genuinely useful feedback on something I'm still "
+        "working on, without the meeting turning into me defending my choices?",
+        "Tuning_Protocol",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1273,6 +1278,11 @@ PROBES_DE = [
         "aber die Mitarbeitenden können hinterher nicht wiedergeben, wie es dazu kam. Ich "
         "möchte es so erzählen, dass jede und jeder es in eigenen Worten weitergeben kann",
         "Story_Spine",
+    ),
+    (
+        "Ich hätte gern von ein paar Kolleginnen eine ehrliche Rückmeldung zu meinem Entwurf, "
+        "bevor er fertig ist, aber bei uns endet jede Kritik damit, dass ich mich rechtfertige",
+        "Tuning_Protocol",
     ),
 ]
 

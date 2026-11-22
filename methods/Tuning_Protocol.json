@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Tuning_Protocol",
+  "name": "Tuning Protocol",
+  "category": "facilitation",
+  "use_case": "Someone has a piece of work still in progress, such as a project assignment with its marking criteria, a service design, a programme plan or a funding application, and wants colleagues to help improve it before it is finalised. Ordinary review rounds either produce polite praise or turn into the author justifying every choice, and the comments scatter instead of addressing what the author needs to know. A small group needs a facilitated sequence of about an hour: the author presents the work, its goals and one focusing question; the group asks factual questions and studies the material; then the group discusses among themselves where the work meets its goals and where it falls short while the author only listens and takes notes; finally the author reflects aloud on what to change.",
+  "strengths": [
+    "the author listening in silence while colleagues discuss the work removes the attack-and-defend dynamic that makes most review meetings unproductive",
+    "the author's own focusing question and goals steer the feedback, so comments are judged against what the work is meant to achieve rather than against each reviewer's taste",
+    "alternating appreciative and probing comments keeps critique specific and usable without turning the session into either praise or a teardown",
+    "the author, not the group, decides what to take from the feedback, so ownership of the work stays where it belongs",
+    "fits a standard meeting slot, needs only the work itself, a facilitator and a timer, and can be run in a video call with shared documents"
+  ],
+  "weaknesses": [
+    "only as good as the material brought: a vague focusing question or a work sample that is too large to examine in the time leads to generic comments",
+    "groups slip back into questioning the presenter or offering solutions too early unless the facilitator holds the phases firmly",
+    "feels artificial the first few times, and some presenters find sitting silently while being discussed uncomfortable",
+    "trust matters: with a line manager or assessor in the circle, participants tend to soften the probing comments and presenters bring safe work",
+    "evidence of its effects comes mainly from practitioner accounts and small qualitative studies in teacher education rather than controlled comparisons"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 75
+  },
+  "references": [
+    "https://www.clee.org/resources/tuning-protocol/",
+    "https://www.ascd.org/el/articles/how-the-tuning-protocol-works",
+    "https://doi.org/10.5032/jae.2016.03018",
+    "https://hthgse.edu/how-students-can-use-tuning-protocols-for-peer-critique/"
+  ],
+  "use_cases": [
+    "I want my colleagues to look hard at a draft of my work before it is final, but whenever we review each other's work people are either too polite to say anything useful or I end up defending every comment instead of listening.",
+    "A teacher has designed a new end-of-term project together with its marking rubric and wants a few colleagues to examine the task and a handful of the first submissions, telling her where the work students produced matches what the project was meant to assess and where it misses.",
+    "A product designer brings a half-finished prototype to the team and wants honest critique measured against the goals it was supposed to meet, without the session sliding into a debate in which the designer justifies each decision.",
+    "A working group in a cantonal department has written the first version of new internal guidelines for its staff and wants colleagues from other units to read the draft against what it is meant to achieve, saying where it already works and where it leaves gaps, so the group can revise the text itself.",
+    "Doctoral students in a writing group bring a chapter or grant application in turn and want peers to say what is strong and what is missing while the author just listens, instead of a free discussion the author ends up dominating."
+  ],
+  "contexts": [
+    "education",
+    "public-sector",
+    "business",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 10
+  },
+  "audience": [
+    "teachers and teaching teams",
+    "school leaders and instructional coaches",
+    "lecturers and teacher educators",
+    "design and product teams",
+    "project teams in public administration",
+    "researchers and writing groups"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}
