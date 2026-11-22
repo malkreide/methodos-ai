@@ -698,6 +698,12 @@ PROBES = [
         "could get just as easily; which of them actually give us an edge that lasts?",
         "VRIO_Analysis",
     ),
+    (
+        "every stakeholder wants their favourite feature in the next release, and I have "
+        "no way to show which of these requests would actually move the number we were "
+        "asked to improve",
+        "Impact_Mapping",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1294,6 +1300,11 @@ PROBES_DE = [
         "das meiste davon schnell auch haben. Was davon verschafft uns wirklich einen "
         "Vorsprung, der auch in ein paar Jahren noch hält?",
         "VRIO_Analysis",
+    ),
+    (
+        "Jede Abteilung will ihre Wunschfunktionen in unserem Produkt haben, und niemand "
+        "kann begründen, welche davon uns dem vereinbarten Ziel wirklich näherbringen",
+        "Impact_Mapping",
     ),
 ]
 

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Impact_Mapping",
+  "name": "Impact Mapping",
+  "category": "strategy",
+  "use_case": "A product or project has been handed a growing pile of requested features and activities, but nobody can show how any single one of them helps reach the goal the work is paid for, so the scope keeps swelling. Starting from one goal with a number attached, the group names the people whose actions could bring it closer or get in its way, writes down what each of them would have to start doing differently, and only then decides what to build or do to cause that change; whatever cannot be traced back through such a change in behaviour to the goal is left out.",
+  "strengths": [
+    "every deliverable carries its reason with it, so a feature request can be answered with 'which person will act differently because of this, and how does that serve the goal?'",
+    "the middle layer of behaviour changes forces the conversation away from solutions and towards what the users, customers or colleagues concerned actually need to do",
+    "makes scope creep visible: items that hang from no impact, or from an impact nobody considers important, stand out on the map and can be dropped with a stated reason",
+    "brings sponsors and the delivery team around one picture, which they can use again for later scope decisions and for reporting what changed",
+    "quick to start: a first map can be drawn on a whiteboard or a shared online board in one to two hours"
+  ],
+  "weaknesses": [
+    "only as useful as its goal: a vague goal such as 'better service' gives every deliverable a plausible link and the pruning stops working",
+    "the links from deliverable to behaviour to goal are assumptions; the map makes them visible but does not show that they hold, so the behaviour changes still have to be observed after delivery",
+    "groups slip back into listing features at the impact level ('use the new dashboard') instead of describing what people will do differently",
+    "a tree drawn from one goal hides interactions between goals and side effects on people who are not on the map",
+    "written for software products and projects; outside that setting there is little published practice beyond practitioner reports"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://www.impactmapping.org/",
+    "https://www.impactmapping.org/drawing.html",
+    "https://www.impactmapping.org/about.html",
+    "https://www.impactmapping.org/book.html",
+    "https://www.votito.com/methods/impact-mapping/",
+    "https://github.com/impactmapping/open-impact-mapping-workshop",
+    "https://www.designsociety.org/download-publication/29623/From+Business+to+Buttons"
+  ],
+  "use_cases": [
+    "We have a long wish list of features for our product, and nobody can say which of them would actually help us reach the goal behind the project.",
+    "Everyone wants their own request in the next release, the scope keeps growing, and nobody can tell which of these requests we actually need to reach our target.",
+    "A tax administration wants most self-employed people to file their returns online within two years; the IT project has sixty requested functions, and the project lead wants to see which of them would make taxpayers, their accountants and the administration's own clerks act differently, and drop the others.",
+    "A university wants more students to finish their degree in the standard time and has collected proposals for apps, portals and campaigns; the vice-rector wants every proposal tied to a specific group, such as first-year students, study advisers or lecturers, and to what that group would do differently, before any money is committed.",
+    "A retailer's online shop has to raise repeat orders by a fifth this year; marketing, sales and IT each bring their own feature requests, and the product owner needs to show which requests would change how returning buyers behave and which would make no difference to them."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 12
+  },
+  "audience": [
+    "product team",
+    "product owners",
+    "project sponsors",
+    "business analysts",
+    "digital service teams",
+    "IT project leads"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}
