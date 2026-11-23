@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Ladder_of_Inference",
+  "name": "Ladder of Inference",
+  "category": "facilitation",
+  "use_case": "People leap from a handful of things they happened to notice to a firm verdict, about someone's motives, another department's intentions or whether a decision has worked, and treat that verdict as fact; when two of them hold opposite verdicts they argue for ages about who is right without ever comparing which incidents each is going on or what each read into them. Laying out the steps of that leap (what could be observed, the details picked out, the meanings and assumptions added, the conclusion, the belief and the action) lets people climb back down, see which step was a guess, and ask the others what they saw and how they got from there to their verdict.",
+  "strengths": [
+    "a simple picture that people grasp in a few minutes and that gives a team a shared phrase for slowing down (\"which rung are you on?\")",
+    "turns an argument about who is right into a comparison of what each person noticed and how they read it",
+    "can be used alone, in seconds, before reacting to an email or a remark, as well as in a facilitated team session",
+    "draws attention to the reinforcing loop in which an existing belief decides which details a person notices next time",
+    "pairs naturally with balanced advocacy and inquiry: stating one's own reasoning from the bottom up and asking for the other person's"
+  ],
+  "weaknesses": [
+    "it is a model of reasoning, not an evidence base; its claims about how people think rest on Argyris's action-science work and practitioner experience rather than on controlled studies",
+    "people readily use it on others (\"you are high up your ladder\") rather than on themselves, which sounds like an accusation and hardens positions",
+    "the rungs blur in practice, and groups can spend their time debating whether a statement is an assumption or a conclusion instead of checking it",
+    "climbing down needs time and calm; in an acute dispute or when trust has broken down it is not enough on its own",
+    "it shows where reasoning went beyond the data but does not settle a disagreement about values or interests that remains once the facts are agreed"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 15,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://www.ausport.gov.au/officiating/support-for-sport/supporting-others/the-ladder-of-inference",
+    "https://cdn.shopify.com/s/files/1/0145/8808/4272/files/B3870-06.pdf",
+    "https://wit.edu/sites/default/files/2020-10/Up-and-Down-the-Ladder-of-Inference.pdf",
+    "https://www.harvardbusiness.org/the-ladder-of-inference-building-self-awareness-to-be-a-better-human-centered-leader/",
+    "https://en.wikipedia.org/wiki/Chris_Argyris"
+  ],
+  "use_cases": [
+    "I made up my mind early on that the woman at the desk next to mine does not care about the job, because she says nothing in team meetings and leaves on the dot; I have stopped passing her anything important and now wonder whether I built all of that on a couple of observations.",
+    "I size people up within minutes of meeting them, and once my first impression is set I only notice what confirms it; I want a way to catch myself before I treat that impression as fact and act on it.",
+    "After two terse replies and one cancelled appointment, a municipal team is convinced that the finance office is deliberately making life hard for it; every mention of finance now sets off a round of blaming, and the head of unit wants the team to separate what the finance staff actually said and did from the motives it has read into it.",
+    "A head teacher decided after one tense staff meeting that two long-serving colleagues are against her plans, and now reads every question they ask as a dig at her; her coach asks her what exactly they said and what she added to it.",
+    "A steering group is split over whether a pilot worked: one side points to the falling usage figures, the other to enthusiastic comments from users, and each defends its verdict without saying which facts it picked or why they lead there.",
+    "A youth coach shouted at a player he took to be lazy after she left an opponent unmarked, and a coach developer wants to help him check, the next time he is about to react, whether his judgement rests on what he really saw."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 15
+  },
+  "audience": [
+    "team leads and managers",
+    "project and steering groups",
+    "school staff teams",
+    "public service teams",
+    "coaches and coach developers",
+    "facilitators and mediators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-23"
+}

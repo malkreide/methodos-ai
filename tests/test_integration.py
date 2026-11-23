@@ -704,6 +704,12 @@ PROBES = [
         "asked to improve",
         "Impact_Mapping",
     ),
+    (
+        "in our meetings we argue for an hour about whether the other department is "
+        "sabotaging us, and when I ask what actually happened, everyone is going on one "
+        "or two incidents",
+        "Ladder_of_Inference",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1305,6 +1311,11 @@ PROBES_DE = [
         "Jede Abteilung will ihre Wunschfunktionen in unserem Produkt haben, und niemand "
         "kann begründen, welche davon uns dem vereinbarten Ziel wirklich näherbringen",
         "Impact_Mapping",
+    ),
+    (
+        "Ich merke, dass ich mir über Leute sehr schnell ein Urteil bilde, oft nach einer "
+        "einzigen Begegnung, und danach sehe ich nur noch, was dazu passt.",
+        "Ladder_of_Inference",
     ),
 ]
 
