@@ -704,6 +704,31 @@ PROBES = [
         "asked to improve",
         "Impact_Mapping",
     ),
+    (
+        "in our meetings we argue for an hour about whether the other department is "
+        "sabotaging us, and when I ask what actually happened, everyone is going on one "
+        "or two incidents",
+        "Ladder_of_Inference",
+    ),
+    (
+        "my two senior nurses have been feuding for months and the ward is now split behind "
+        "them; one has asked for a transfer and the other talks of a formal complaint. Is "
+        "this still something a mediator can fix, or do I need to make a ruling?",
+        "Glasl_Conflict_Escalation",
+    ),
+    (
+        "our team only came together this year; at the start people were cautious and "
+        "looked to me for every instruction, now meetings turn into arguments about who is "
+        "in charge of what and whether my calls are right. Is this a normal part of a new "
+        "team settling in, and what should I as lead do differently at this point?",
+        "Tuckman_Team_Development",
+    ),
+    (
+        "we've got about thirty possible fixes for our help desk and not much time; I'd like "
+        "to see quickly which ones are cheap and would still make a real difference, and "
+        "which would cost a lot for almost nothing",
+        "Impact_Effort_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1305,6 +1330,31 @@ PROBES_DE = [
         "Jede Abteilung will ihre Wunschfunktionen in unserem Produkt haben, und niemand "
         "kann begründen, welche davon uns dem vereinbarten Ziel wirklich näherbringen",
         "Impact_Mapping",
+    ),
+    (
+        "Ich merke, dass ich mir über Leute sehr schnell ein Urteil bilde, oft nach einer "
+        "einzigen Begegnung, und danach sehe ich nur noch, was dazu passt.",
+        "Ladder_of_Inference",
+    ),
+    (
+        "Zwischen zwei Abteilungsleitern schwelt es seit Monaten. Inzwischen haben beide ihre "
+        "Leute um sich geschart, reden nur noch schriftlich miteinander und drohen mit "
+        "Konsequenzen. Ich muss einschätzen, wie ernst die Lage ist: reicht noch ein klärendes "
+        "Gespräch, braucht es eine Mediatorin, oder muss ich selbst entscheiden?",
+        "Glasl_Conflict_Escalation",
+    ),
+    (
+        "Unser Team besteht erst seit einem halben Jahr. Anfangs waren alle zurückhaltend "
+        "und haben auf meine Vorgaben gewartet, jetzt wird fast jede meiner Entscheidungen "
+        "hinterfragt und darum gerangelt, wer wofür zuständig ist. Ist das eine normale "
+        "Phase, und was braucht die Gruppe jetzt von mir als Leitung?",
+        "Tuckman_Team_Development",
+    ),
+    (
+        "Wir haben rund dreissig mögliche Massnahmen beisammen, aber wenig Zeit. Ich möchte "
+        "rasch sehen, welche kaum etwas kosten und trotzdem spürbar etwas bringen, und welche "
+        "viel Arbeit für wenig Nutzen wären",
+        "Impact_Effort_Matrix",
     ),
 ]
 
