@@ -710,6 +710,12 @@ PROBES = [
         "or two incidents",
         "Ladder_of_Inference",
     ),
+    (
+        "my two senior nurses have been feuding for months and the ward is now split behind "
+        "them; one has asked for a transfer and the other talks of a formal complaint. Is "
+        "this still something a mediator can fix, or do I need to make a ruling?",
+        "Glasl_Conflict_Escalation",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1316,6 +1322,13 @@ PROBES_DE = [
         "Ich merke, dass ich mir über Leute sehr schnell ein Urteil bilde, oft nach einer "
         "einzigen Begegnung, und danach sehe ich nur noch, was dazu passt.",
         "Ladder_of_Inference",
+    ),
+    (
+        "Zwischen zwei Abteilungsleitern schwelt es seit Monaten. Inzwischen haben beide ihre "
+        "Leute um sich geschart, reden nur noch schriftlich miteinander und drohen mit "
+        "Konsequenzen. Ich muss einschätzen, wie ernst die Lage ist: reicht noch ein klärendes "
+        "Gespräch, braucht es eine Mediatorin, oder muss ich selbst entscheiden?",
+        "Glasl_Conflict_Escalation",
     ),
 ]
 

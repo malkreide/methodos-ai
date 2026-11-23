@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Glasl_Conflict_Escalation",
+  "name": "Glasl's Nine Stages of Conflict Escalation",
+  "category": "analysis",
+  "use_case": "A conflict between colleagues, between two teams or between a team and its management has dragged on for weeks or months, and the person responsible has to judge how far it has gone before choosing what to do about it: whether the parties can still settle it between themselves, whether a moderated conversation is enough, or whether it now needs a professional mediator, a binding ruling or a superior who steps in and decides. Observed behaviour is matched against nine typical stages, from hardened standpoints and sharp debate through forming camps, public discrediting and ultimatums to attempts to damage the other side at any cost, and the stage reached points to the kind of help that still has a chance of working.",
+  "strengths": [
+    "gives managers, HR staff and counsellors a shared vocabulary for how serious a dispute is, so the choice of help rests on observed behaviour rather than on who complains loudest",
+    "ties each band of stages to a type of third-party help, which prevents both overreacting with a formal procedure and sending a facilitator into a feud that is far beyond a facilitated talk",
+    "the stage descriptions are concrete enough to check against what people actually do: whether they still talk directly, recruit supporters, spread damaging stories or issue threats",
+    "makes visible that each step down is harder to reverse, which helps a hesitant leader see why waiting is itself a decision",
+    "works for disputes between two people as well as between groups and departments, and is a standard reference in German-speaking mediation and HR training"
+  ],
+  "weaknesses": [
+    "a diagnosis aid, not a way of resolving anything; once the stage is known, the actual work of moderation, mediation or a decision still has to be done",
+    "the parties seldom agree on how bad things are and each tends to see the other as the aggressor, so an assessment based on one side's account is unreliable",
+    "real conflicts rarely move neatly from stage to stage; critics call the model too deterministic, and there has been little empirical testing because escalation is hard to measure",
+    "the bands of suitable interventions overlap and are guidance from practice rather than tested rules, so the stage narrows the choice but does not settle it",
+    "assessing a conflict openly can itself be read as taking sides, and naming a stage in front of the parties can harden their positions"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://content.e-bookshelf.de/media/reading/L-24122911-b73205687c.pdf",
+    "https://de.wikipedia.org/wiki/Konflikteskalation_nach_Friedrich_Glasl",
+    "https://en.wikipedia.org/wiki/Friedrich_Glasl%27s_model_of_conflict_escalation",
+    "https://www.socialnet.de/rezensionen/3439.php",
+    "https://www.socialnet.de/rezensionen/10972.php",
+    "https://doi.org/10.3389/fpsyg.2023.1164990",
+    "https://www.uni-kassel.de/hochschulverwaltung/themen/personal-und-organisationsentwicklung/konfliktmanagement/teil-1-hintergrundwissen.html"
+  ],
+  "use_cases": [
+    "A feud between two of my staff has been building for months and is now affecting the whole team; before I bring anyone in I have to work out how serious it is, because a moderated talk, a professional mediator and a decision from me fit very different situations.",
+    "An HR adviser in a municipal administration is asked by the head of one unit to deal with a neighbouring unit and, before proposing anything, wants to know whether the two still disagree only about responsibilities and workload or have begun spreading damaging stories about each other, because that decides between a joint clarification meeting and a formal procedure.",
+    "A school inspector receives a letter, signed by half the staff, about their head's conduct, while the head accuses the signatories of a campaign against her; before choosing between coaching for the team, a mediator and an order from the authority, the inspector has to judge how bitter the dispute has become.",
+    "The board of a sports club has split into two camps after a disputed election; members threaten to resign and take their sponsors with them, and the regional association has to decide whether sending a mediator still makes sense or whether it must impose a solution."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 6
+  },
+  "audience": [
+    "line managers and team leaders",
+    "HR advisers",
+    "school leaders and school authorities",
+    "mediators and conflict counsellors",
+    "organisation developers and coaches",
+    "boards of clubs and associations"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-23"
+}
