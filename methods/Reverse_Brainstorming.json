@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Reverse_Brainstorming",
+  "name": "Reverse Brainstorming (TRIZ, \"make it worse\")",
+  "category": "facilitation",
+  "use_case": "A group has stalled on a goal it has held for a long time, and asking how to do better only produces the same worn slogans and good intentions. It needs a safe way to name the habits and routines of its own that work against the goal. Members first list everything that would guarantee the worst possible result, then check honestly which of those items they already do in some form, and agree which counterproductive practices to drop and the first step for each.",
+  "strengths": [
+    "inventing ways to fail is playful, so a stalled or cautious group starts talking freely within minutes",
+    "naming a harmful habit as an item on an absurd list is less personal than criticising a colleague's behaviour directly",
+    "turns attention from adding new initiatives to removing what already gets in the way, which costs nothing to try",
+    "simple to host: one clear worst outcome, individual lists, small groups and a short plenary",
+    "ends with concrete first steps for stopping, not just with insight"
+  ],
+  "weaknesses": [
+    "the laughter of the first round can stay superficial if the host does not insist on the honest second step",
+    "needs enough trust that people will admit a shared habit; in a blaming culture it produces only safe, distant items",
+    "stopping a habit is harder than naming it, and old routines tend to return without a follow-up",
+    "deliberately one-sided: it finds what to stop and says little about what to build instead",
+    "the evidence is practitioner experience and facilitation guides; there are no controlled studies of its effect",
+    "the Liberating Structures name TRIZ invites confusion with Altshuller's engineering method of the same name, which is a different technique"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 40,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://www.liberatingstructures.com/creative-destruction",
+    "https://www.liberatingstructures.com/the-surprising-power-of-liberating-structures",
+    "https://de.wikipedia.org/wiki/Kopfstandmethode",
+    "https://www.sessionlab.com/methods/reverse-brainstorming",
+    "https://ki.se/media/54224/download"
+  ],
+  "use_cases": [
+    "Whenever we brainstorm how to get better, we only hear the same clichés and nothing changes; I suspect we are getting in our own way with routines of our own, but no one wants to be the first to name them.",
+    "A school has declared for years that its pupils should take more responsibility, yet every staff conference ends with the same good intentions; the head wants the staff to own up to which of its shared rules and routines quietly teach pupils to wait to be told.",
+    "A building-permit team in a municipality wants applicants to find the process less frustrating, and staff should face which of their own forms, replies and handover habits already create the frustration that complaints describe.",
+    "A leadership team has launched several culture campaigns without effect and now wants to uncover the meeting habits, approval loops and unwritten rules by which it undermines its own people."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 60
+  },
+  "audience": [
+    "teams stuck on a long-standing goal",
+    "school leadership and teaching staff",
+    "public administration teams",
+    "leadership teams",
+    "facilitators of workshops and retreats"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-22"
+}

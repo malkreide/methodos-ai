@@ -667,6 +667,43 @@ PROBES = [
         "picturing a different person, and nobody checks it against the interviews we did",
         "Personas",
     ),
+    (
+        "there are ten priorities on our whiteboard and whenever we try to put them in order "
+        "the argument goes round in circles",
+        "Pairwise_Comparison",
+    ),
+    (
+        "Every brainstorm about how our team could improve ends with the same clichés, "
+        "and I think we are sabotaging ourselves without admitting it",
+        "Reverse_Brainstorming",
+    ),
+    (
+        "every year we get stacks of test scores and assessment reports, yet the teachers "
+        "never sit down together to work out what the kids aren't learning and what we "
+        "should teach differently",
+        "Data_Wise_Improvement_Process",
+    ),
+    (
+        "the explanation of why we changed our opening hours is just a list of figures, and "
+        "staff can't pass it on to customers in their own words",
+        "Story_Spine",
+    ),
+    (
+        "how can a few colleagues give me genuinely useful feedback on something I'm still "
+        "working on, without the meeting turning into me defending my choices?",
+        "Tuning_Protocol",
+    ),
+    (
+        "our strategy paper lists a dozen strengths, but I suspect most of them any rival "
+        "could get just as easily; which of them actually give us an edge that lasts?",
+        "VRIO_Analysis",
+    ),
+    (
+        "every stakeholder wants their favourite feature in the next release, and I have "
+        "no way to show which of these requests would actually move the number we were "
+        "asked to improve",
+        "Impact_Mapping",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1230,6 +1267,44 @@ PROBES_DE = [
         "Wir entwickeln unser Angebot für einen Durchschnittskunden, den es nicht gibt; "
         "dabei haben wir ganz unterschiedliche Kundengruppen",
         "Personas",
+    ),
+    (
+        "Wir haben zwölf Themen gesammelt und schaffen es nicht, sie in eine Reihenfolge "
+        "zu bringen; jede Diskussion darüber, was am wichtigsten ist, dreht sich im Kreis",
+        "Pairwise_Comparison",
+    ),
+    (
+        "Wenn wir im Kollegium überlegen, wie wir besser werden, kommen immer dieselben "
+        "Floskeln. Ich glaube, wir stehen uns mit unseren eigenen Gewohnheiten selbst im Weg.",
+        "Reverse_Brainstorming",
+    ),
+    (
+        "Jedes Jahr kommen bei uns Stapel von Testresultaten und Auswertungen an, aber im "
+        "Kollegium schaut sie kaum jemand richtig an. Wir fragen uns nie gemeinsam, was die "
+        "Kinder offenbar nicht verstehen, und am Unterricht ändert sich nichts",
+        "Data_Wise_Improvement_Process",
+    ),
+    (
+        "Wir haben den Umbau der Abteilung schon mehrmals mit Folien und Zahlen erklärt, "
+        "aber die Mitarbeitenden können hinterher nicht wiedergeben, wie es dazu kam. Ich "
+        "möchte es so erzählen, dass jede und jeder es in eigenen Worten weitergeben kann",
+        "Story_Spine",
+    ),
+    (
+        "Ich hätte gern von ein paar Kolleginnen eine ehrliche Rückmeldung zu meinem Entwurf, "
+        "bevor er fertig ist, aber bei uns endet jede Kritik damit, dass ich mich rechtfertige",
+        "Tuning_Protocol",
+    ),
+    (
+        "In unserer Strategie stehen viele Stärken, aber ehrlich gesagt könnte die Konkurrenz "
+        "das meiste davon schnell auch haben. Was davon verschafft uns wirklich einen "
+        "Vorsprung, der auch in ein paar Jahren noch hält?",
+        "VRIO_Analysis",
+    ),
+    (
+        "Jede Abteilung will ihre Wunschfunktionen in unserem Produkt haben, und niemand "
+        "kann begründen, welche davon uns dem vereinbarten Ziel wirklich näherbringen",
+        "Impact_Mapping",
     ),
 ]
 
