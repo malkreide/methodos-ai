@@ -716,6 +716,13 @@ PROBES = [
         "this still something a mediator can fix, or do I need to make a ruling?",
         "Glasl_Conflict_Escalation",
     ),
+    (
+        "our team only came together this year; at the start people were cautious and "
+        "looked to me for every instruction, now meetings turn into arguments about who is "
+        "in charge of what and whether my calls are right. Is this a normal part of a new "
+        "team settling in, and what should I as lead do differently at this point?",
+        "Tuckman_Team_Development",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1329,6 +1336,13 @@ PROBES_DE = [
         "Konsequenzen. Ich muss einschätzen, wie ernst die Lage ist: reicht noch ein klärendes "
         "Gespräch, braucht es eine Mediatorin, oder muss ich selbst entscheiden?",
         "Glasl_Conflict_Escalation",
+    ),
+    (
+        "Unser Team besteht erst seit einem halben Jahr. Anfangs waren alle zurückhaltend "
+        "und haben auf meine Vorgaben gewartet, jetzt wird fast jede meiner Entscheidungen "
+        "hinterfragt und darum gerangelt, wer wofür zuständig ist. Ist das eine normale "
+        "Phase, und was braucht die Gruppe jetzt von mir als Leitung?",
+        "Tuckman_Team_Development",
     ),
 ]
 

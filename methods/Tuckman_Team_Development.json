@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Tuckman_Team_Development",
+  "name": "Tuckman's Stages of Team Development",
+  "category": "analysis",
+  "use_case": "A group that was set up a few months ago starts to rub: after a cautious, polite start the members jostle over who is responsible for what and openly question the decisions of whoever leads them, or they stay agreeable and steer clear of every hard question. The lead wants to know whether this is a normal stage new groups pass through and what the group needs at this point. The model describes five stages, from getting oriented, through the struggle over roles and influence, settling on shared ways of working and largely running its own work, to breaking up, so that lead and group can name where they stand and what would help them move on.",
+  "strengths": [
+    "gives a lead and a team a shared, easily remembered language for talking about how the group itself is doing, separate from the work",
+    "reframes friction after the first weeks as a common phase of a group finding its shape rather than as proof that the team was badly chosen",
+    "points to what the group tends to need at each stage, from clear orientation early on to more room and less direction once it works well",
+    "reminds leads that a change of members or of lead often sends a settled group back to an earlier stage",
+    "the fifth stage draws attention to ending a group's work deliberately instead of letting it fade out"
+  ],
+  "weaknesses": [
+    "it is a synthesis of a literature review, not a tested prescriptive model: the 1965 article drew on about fifty studies, many of them therapy and training groups, whose quality the journal editor initially doubted",
+    "real groups do not move through the stages in a fixed order or at a fixed pace; they skip stages, overlap them and fall back, and the model says little about what triggers a move",
+    "later research proposes other patterns, for example a shift around the midpoint of a team's allotted time rather than gradual stages, so the model should not be read as the only description",
+    "it says little about the organisation around the team, such as deadlines, resources or a sponsor's demands, which can explain friction better than the group's development",
+    "it can be misused to wave away serious problems, such as bullying or an unworkable remit, as a phase that will pass",
+    "placing a group on a stage is a judgement; members often disagree, and the label alone tells nobody what to do"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://doi.org/10.1037/h0022100",
+    "https://doi.org/10.1177/105960117700200404",
+    "https://garfield.library.upenn.edu/classics1984/A1984TD25600001.pdf",
+    "https://doi.org/10.1080/13678861003589099",
+    "https://doi.org/10.2307/256496",
+    "https://en.wikipedia.org/wiki/Tuckman%27s_stages_of_group_development",
+    "https://en.wikipedia.org/wiki/Group_development"
+  ],
+  "use_cases": [
+    "Our team is only a few months old and it is not coming together: after a cautious start there is constant friction over who is responsible for what, and my decisions as team lead are questioned all the time. Is this a normal stage for a new team, and what does the group need from me now?",
+    "Two new specialists and a new section head have joined a long-established unit of a municipal office; the smooth routines of the old group are gone, people are testing the new head and each other again, and the head wants to understand why the team seems to be back at the start.",
+    "A school head formed a new working group of staff this autumn; after friendly first meetings two members now openly compete over who sets the agenda and the others wait to see who wins, and the head wants to judge whether the group is still finding its shape or needs her to step in.",
+    "A new group I lead has stopped arguing, but now everyone just agrees, nobody raises an objection and difficult topics are dropped; I want to know whether the team has really settled how it works together or is only avoiding friction, and what I should do as its lead.",
+    "A close-knit working group is about to be dissolved because its assignment ends next month; members are already mentally in their next jobs, the last tasks are left undone and some are sad or uneasy about splitting up, and the lead wants to bring the group to a proper close rather than let it fizzle out."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "team leads",
+    "project leads",
+    "school leadership",
+    "heads of unit in public administration",
+    "HR and organisation development",
+    "team coaches"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-23"
+}
