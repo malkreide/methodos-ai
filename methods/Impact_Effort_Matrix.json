@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Impact_Effort_Matrix",
+  "name": "Impact/Effort Matrix",
+  "category": "prioritization",
+  "use_case": "A group already holds a collection of possible actions, often twenty or more concrete fixes gathered earlier, and has to decide in one short session which of them to take on, with neither the time nor the figures for a scoring model. Each action is placed by the group's rough shared judgement on a board with two axes, the benefit it is expected to bring against the effort it will take, so that everyone can see at a glance which cheap, high-benefit actions can start straight away, which large worthwhile undertakings need proper planning, which minor easy jobs can fill spare capacity, and which costly, low-benefit items are better dropped.",
+  "strengths": [
+    "fast: a few dozen actions can be placed and discussed within an hour",
+    "needs no numbers, only relative judgements the group can make on the spot",
+    "the board is visible to everyone, so disagreements about a single item surface as soon as it is placed",
+    "the low-benefit, high-effort corner gives the group explicit grounds for dropping pet ideas",
+    "picking a few cheap, high-benefit actions first produces early results that build support for the larger work"
+  ],
+  "weaknesses": [
+    "placements are guesses, and groups routinely underestimate effort, so the cheap corner fills up with items that turn out not to be cheap",
+    "benefit means different things to different people unless the group agrees first what it is aiming at",
+    "ignores risk, dependencies between actions and deadlines",
+    "says nothing about the order within a quadrant",
+    "a board dominated by quick fixes can push out the few large undertakings that would make the real difference"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://www.mindtools.com/agst6d0/the-action-priority-matrix",
+    "https://www.sc.edu/about/offices_and_divisions/organizational_excellence/resources/facilitation/impact_effort_grid.php",
+    "https://qilothian.scot.nhs.uk/prioritisation-matrix-1",
+    "https://en.wikipedia.org/wiki/PICK_chart"
+  ],
+  "use_cases": [
+    "We have collected a long list of things we could fix, and before anyone commits to something big I want us to see which of them are cheap to do and would still make a noticeable difference, so we can get a few of them done this month.",
+    "After a review of its counter service, the staff of a municipal registry hold around thirty concrete fixes for waiting times, signage and opening hours; with a small budget and no analyst, the head of service wants the team to sort them in one hour into what can be done right away, what needs a budget request, and what would cost a lot for little gain.",
+    "A school's IT coordinator has listed about twenty fixes for the shared laptops and the network, from labelling chargers to rewiring a whole floor, and wants to see which take an afternoon yet would end a daily nuisance in lessons, and which would eat the school holidays for little gain.",
+    "A small manufacturer has a pile of possible measures to cut its energy bill, from switching machines off overnight to replacing the heating, and the owner wants a rough first sort into what pays off quickly for little outlay and what is a large undertaking worth calculating properly.",
+    "A volunteer association's board has a dozen possible ways of winning new members but only a few hours of volunteer time a month, and wants to see which would bring in people for little work and which would exhaust its volunteers for almost nothing."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 15
+  },
+  "audience": [
+    "improvement teams",
+    "project teams",
+    "school working groups",
+    "public service managers",
+    "association boards",
+    "facilitators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-23"
+}

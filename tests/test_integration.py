@@ -723,6 +723,12 @@ PROBES = [
         "team settling in, and what should I as lead do differently at this point?",
         "Tuckman_Team_Development",
     ),
+    (
+        "we've got about thirty possible fixes for our help desk and not much time; I'd like "
+        "to see quickly which ones are cheap and would still make a real difference, and "
+        "which would cost a lot for almost nothing",
+        "Impact_Effort_Matrix",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1343,6 +1349,12 @@ PROBES_DE = [
         "hinterfragt und darum gerangelt, wer wofür zuständig ist. Ist das eine normale "
         "Phase, und was braucht die Gruppe jetzt von mir als Leitung?",
         "Tuckman_Team_Development",
+    ),
+    (
+        "Wir haben rund dreissig mögliche Massnahmen beisammen, aber wenig Zeit. Ich möchte "
+        "rasch sehen, welche kaum etwas kosten und trotzdem spürbar etwas bringen, und welche "
+        "viel Arbeit für wenig Nutzen wären",
+        "Impact_Effort_Matrix",
     ),
 ]
 
