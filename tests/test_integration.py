@@ -735,6 +735,12 @@ PROBES = [
         "from them what to watch out for",
         "Peer_Assist",
     ),
+    (
+        "since the parking permit application moved online, half of what comes in is "
+        "filled out wrong and our phone line is swamped; before we change anything I want "
+        "to see with my own eyes where ordinary residents go wrong when they try it",
+        "Usability_Testing",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1367,6 +1373,12 @@ PROBES_DE = [
         "hat das schon umgesetzt. Wie können wir vor dem Start von ihren Erfahrungen "
         "profitieren?",
         "Peer_Assist",
+    ),
+    (
+        "Seit unser neues Anmeldeformular online ist, rufen täglich Leute an, weil sie nicht "
+        "verstehen, was sie wo eintragen sollen. Bevor wir es überarbeiten, möchten wir ein "
+        "paar Betroffenen zuschauen, wie sie es ausfüllen, und sehen, wo sie hängen bleiben",
+        "Usability_Testing",
     ),
 ]
 
