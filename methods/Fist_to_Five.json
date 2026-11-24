@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Fist_to_Five",
+  "name": "Fist to Five",
+  "category": "facilitation",
+  "use_case": "People leave a meeting apparently in agreement, yet some were fully behind the change, others merely tolerated it and a few had doubts they never voiced, so it is quietly not carried out. To see this while still in the room, everyone shows at the same moment a closed fist or one to five fingers for how strongly they support it, and those showing low numbers say what would have to change for them.",
+  "strengths": [
+    "takes a minute or two and needs nothing but hands, or a chat or poll in a video call",
+    "everyone answers at the same moment, so nobody can wait to see what the boss or the majority shows",
+    "the graded scale separates 'I can live with it' from real enthusiasm, which a yes/no show of hands hides",
+    "low readings are an invitation to speak, so reservations are heard before the plan is settled rather than in the corridor afterwards",
+    "can be repeated after the plan is amended, which shows whether the change actually won people over"
+  ],
+  "weaknesses": [
+    "the reading is public, so in a group with low trust or a strong hierarchy people may show what they think is expected",
+    "the meaning of each number and the threshold for going ahead must be agreed beforehand, or the same hand means different things to different people",
+    "it only gauges support; who decides, and what happens after a fist, still has to be settled by the group's own decision rule",
+    "if every fist simply stops the plan, a single person gets an informal veto",
+    "too blunt for sensitive or contested matters, where an anonymous poll or a structured objection round serves better"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 5,
+    "max_minutes": 20
+  },
+  "references": [
+    "https://bpm.berkeley.edu/node/105",
+    "https://www.mountaingoatsoftware.com/blog/four-quick-ways-to-gain-or-assess-team-consensus",
+    "https://www.scrum.org/resources/blog/five-ways-build-consensus",
+    "https://www.techtarget.com/whatis/definition/fist-to-five-fist-of-five",
+    "https://learn.k20center.ou.edu/strategy/68",
+    "https://www.informit.com/store/collaboration-explained-facilitation-skills-for-software-9780321268778"
+  ],
+  "use_cases": [
+    "Things seem agreed when the meeting ends, then people drag their feet and admit they had doubts all along; I want a quick way, still in the meeting, to see how much support it really has and who is only tolerating it.",
+    "When my team says yes to a change, I can never tell who is truly for it and who just does not want a fuss; I would like everyone to show quickly and at the same time how much they support it.",
+    "At the staff meeting the teachers seemed to accept the new rule on mobile phones, yet in the following weeks hardly anyone enforces it; next time the head wants to see on the spot how many really stand behind it before it counts as agreed.",
+    "The volunteers of our association agree at the meeting to run the summer fair a new way, but when the day comes only a handful help; next time the organisers want to see first who is really keen and who is only putting up with the idea.",
+    "In our working group silence counts as agreement; the chair wants a one-minute check of how much backing the draft really has, so that the hesitant members' reservations come out before the item is closed.",
+    "The class agreed on a plan for the school trip, but afterwards several pupils complained they had only gone along with it because their friends did; the teacher wants every pupil to show at the same moment how much they support it."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 30
+  },
+  "audience": [
+    "meeting facilitators",
+    "team leads",
+    "agile teams and Scrum Masters",
+    "school leadership and teaching staff",
+    "teachers and student councils",
+    "working groups and committees"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

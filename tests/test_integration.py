@@ -741,6 +741,12 @@ PROBES = [
         "to see with my own eyes where ordinary residents go wrong when they try it",
         "Usability_Testing",
     ),
+    (
+        "in meetings people seem to agree and nobody says anything against it, but afterwards "
+        "it turns out several of them were never really behind it and things stall. How can I "
+        "see right there how much backing it actually has?",
+        "Fist_to_Five",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1379,6 +1385,12 @@ PROBES_DE = [
         "verstehen, was sie wo eintragen sollen. Bevor wir es überarbeiten, möchten wir ein "
         "paar Betroffenen zuschauen, wie sie es ausfüllen, und sehen, wo sie hängen bleiben",
         "Usability_Testing",
+    ),
+    (
+        "Bei uns nicken in der Sitzung alle, aber hinterher zeigt sich, dass die Hälfte gar "
+        "nicht dahintersteht. Wie sehe ich noch in der Sitzung rasch, wie gross die "
+        "Unterstützung wirklich ist, bevor wir es festhalten?",
+        "Fist_to_Five",
     ),
 ]
 
