@@ -729,6 +729,12 @@ PROBES = [
         "which would cost a lot for almost nothing",
         "Impact_Effort_Matrix",
     ),
+    (
+        "our team is starting a kind of project we have never done, but a team in another "
+        "branch did the same thing last year; before we commit to a plan I'd like to hear "
+        "from them what to watch out for",
+        "Peer_Assist",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1355,6 +1361,12 @@ PROBES_DE = [
         "rasch sehen, welche kaum etwas kosten und trotzdem spürbar etwas bringen, und welche "
         "viel Arbeit für wenig Nutzen wären",
         "Impact_Effort_Matrix",
+    ),
+    (
+        "Wir starten bald ein Projekt, das wir noch nie gemacht haben. Eine andere Gemeinde "
+        "hat das schon umgesetzt. Wie können wir vor dem Start von ihren Erfahrungen "
+        "profitieren?",
+        "Peer_Assist",
     ),
 ]
 
