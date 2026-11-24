@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Logic_Model",
+  "name": "Logic Model",
+  "category": "strategy",
+  "use_case": "A programme has to set out its plan in a chart a funder, board or council can read at a glance: the staff, money and partners it puts in, the activities it runs, the outputs those produce, the short-term and longer-term outcomes expected for participants, and the wider impact. Its reports so far mix up what was delivered with what changed, and nobody has fixed in advance which figure will show progress at which stage. The team fills the columns, usually writing the intended results first, notes the assumptions and the outside factors it does not control, and gives each output and outcome an indicator, a data source and a date.",
+  "strengths": [
+    "separates what a programme delivers from what is supposed to change because of it, the distinction most progress reports blur",
+    "turns into a monitoring plan almost directly: every output and outcome cell can carry an indicator, a data source and a date",
+    "short and in a format many funders, public bodies and boards already ask for, so one document serves planning, reporting and evaluation",
+    "quick to draft with the people who run the programme, and easy to show to newcomers, partners and evaluators",
+    "the assumptions and external-factor rows make visible what the programme does not control before results are judged"
+  ],
+  "weaknesses": [
+    "the columns suggest a tidy straight line, while real effects arrive with delays, feedback and many outside causes",
+    "lists what is expected without arguing why one column should lead to the next; that reasoning needs a theory of change",
+    "easily filled in once for an application and never opened again",
+    "teams tend to fill the outcome columns with more activities or outputs, which leaves nothing worth measuring",
+    "shows the intended path only; it says nothing about whether the programme is worth its cost or better than an alternative"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 120,
+    "max_minutes": 360
+  },
+  "references": [
+    "https://wkkf.issuelab.org/resources/10124/10124.pdf",
+    "https://fyi.extension.wisc.edu/programdevelopment/files/2016/03/lmguidecomplete.pdf",
+    "https://www.cdc.gov/evaluation/php/evaluation-framework-action-guide/step-2-describe-the-program.html",
+    "https://ctb.ku.edu/en/table-of-contents/overview/models-for-community-health-and-development/logic-model-development/main"
+  ],
+  "use_cases": [
+    "Our annual report lists the courses we ran and the head count, and the board now wants a plan of which results we will measure next year, at which stage, and where the figures will come from.",
+    "We report every year how many sessions we held and how many people attended, but we have never agreed in advance what should be different for participants afterwards, or which figures would show it.",
+    "Our sponsors want to see, step by step, how staff and money turn into activities, what those activities produce and what should change for participants, with a way of measuring each step.",
+    "The grant application asks us to fill in resources, activities, outputs and outcomes, and our team keeps putting what we deliver in the column for what is supposed to change because of it.",
+    "A cantonal social department is setting up a debt-advice service for young adults and, before it opens, wants the resources, the consultations planned, the people to be reached and the changes expected after one and after three years laid out side by side, each with a way of measuring it.",
+    "A teacher-training college runs a mentoring scheme for newly qualified teachers paid for by the ministry, which asks each year for the resources used, the mentoring sessions held, the teachers reached and the changes expected in their first years of teaching, each with an indicator.",
+    "A grant-making body supports twenty small neighbourhood initiatives and wants each grantee to fill in the same chart, from resources through activities and outputs to expected outcomes and indicators, so that their yearly progress reports can be compared."
+  ],
+  "contexts": [
+    "nonprofit",
+    "public-sector",
+    "education",
+    "business"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "programme managers",
+    "nonprofit staff",
+    "grant applicants and funders",
+    "public administration",
+    "school leadership",
+    "evaluators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

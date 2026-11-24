@@ -765,6 +765,12 @@ PROBES = [
         "a couple of colleagues within half an hour?",
         "Troika_Consulting",
     ),
+    (
+        "every year we tell our sponsors how many workshops we held and how many people "
+        "turned up, but we have never pinned down what should be different for those people "
+        "afterwards or what numbers would show it",
+        "Logic_Model",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1428,6 +1434,12 @@ PROBES_DE = [
         "mit, aber die Kursleitung kann unmöglich alle einzeln beraten. Wie können sich die "
         "Leute in kurzer Zeit gegenseitig weiterhelfen, sodass jede und jeder einmal drankommt?",
         "Troika_Consulting",
+    ),
+    (
+        "Im Jahresbericht an die Gemeinde zählen wir nur Kurse und Teilnehmende auf; jetzt "
+        "sollen wir darlegen, was wir einsetzen, was wir tun und was sich bei den Leuten "
+        "dadurch verändern soll, und woran wir das messen.",
+        "Logic_Model",
     ),
 ]
 
