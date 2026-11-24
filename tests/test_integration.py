@@ -753,6 +753,12 @@ PROBES = [
         "together what goes on in their heads and how they really feel day to day",
         "Empathy_Map",
     ),
+    (
+        "We have an exciting vision for a new service, but it stays vague, and whenever we talk "
+        "it through someone pokes holes in it before it is even fleshed out. How do we get from "
+        "the wild idea to something concrete we could actually carry out?",
+        "Walt_Disney_Method",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1404,6 +1410,12 @@ PROBES_DE = [
         "Alltag aussieht; wir möchten unsere Gesprächsnotizen zuerst gemeinsam durchgehen, "
         "bevor wir Ideen sammeln",
         "Empathy_Map",
+    ),
+    (
+        "Ich habe eine grosse Idee für ein eigenes Projekt, aber entweder schwärme ich nur davon "
+        "oder ich rede sie mir sofort selbst aus. Wie wird daraus Schritt für Schritt etwas "
+        "Durchdachtes, das ich wirklich umsetzen kann?",
+        "Walt_Disney_Method",
     ),
 ]
 
