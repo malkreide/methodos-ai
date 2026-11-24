@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Troika_Consulting",
+  "name": "Troika Consulting",
+  "category": "facilitation",
+  "use_case": "Someone wants quick, candid advice from two peers on a challenge in their own work and is willing to advise them on theirs in return, without a coach or a long consultation. In threes, for about half an hour, they coach one another in turn: one person describes the challenge and the help they want, the other two ask clarifying questions, then the person asking turns their back while the two talk over advice for them as if they were not there, and finally the person turns round and says which advice was useful. Then the roles rotate until all three have had their turn as the one asking for advice.",
+  "strengths": [
+    "in half an hour every participant receives help with a question of their own and gives help twice, so nobody is only an audience",
+    "turning one's back takes away eye contact, so the person asking listens instead of defending and the two helpers speak more candidly than they would face to face",
+    "needs no moderator, no trained coach and no materials: three chairs per group and a clock are enough, and many trios can run in the same room at once",
+    "works with any number of participants from three upwards, which makes it usable at the start of a team meeting as well as on a course or conference day",
+    "the person asking decides what to take from the advice, so the challenge stays theirs"
+  ],
+  "weaknesses": [
+    "ten minutes per person is enough for a concrete next step, not for a tangled situation with a long history; that needs a longer case consultation",
+    "two helpers bring only two sets of experience, and trios of close colleagues tend to share the same assumptions",
+    "people unused to it feel awkward turning their back, and some groups skip that step, which brings back the defending it is meant to stop",
+    "confidential or sensitive matters are hard to raise with whoever happens to land in the same trio",
+    "evidence for it comes from practitioner reports rather than systematic studies"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 25,
+    "max_minutes": 40
+  },
+  "references": [
+    "https://www.liberatingstructures.com/troika-consulting",
+    "https://www.liberatingstructures.com/the-surprising-power-of-liberating-structures",
+    "https://www.liberatingstructures.de/troika-consulting",
+    "https://www.sessionlab.com/methods/troika-consulting"
+  ],
+  "use_cases": [
+    "A few of us each have a work problem we cannot crack on our own; we would like to swap help in threes, each of us in turn getting the other two's ideas on our problem, and be done in half an hour.",
+    "I want the people in my team to coach each other in threes: each in turn brings a challenge from their own work and gets ten minutes of advice from the other two, so that after half an hour all three have had advice on their own challenge.",
+    "On our programme for newly appointed team leaders each participant brings a real problem from their own job, and the trainer cannot coach them all one by one; the participants should coach each other in small groups, in turn, so that each leaves with practical advice on their own question.",
+    "My students are working on separate projects and each has hit a different problem; instead of all of them waiting for my advice, I want them to advise each other in threes, taking turns to describe their problem while two classmates discuss what they could try.",
+    "Heads of service in a municipal administration each carry a difficulty from their own area; at their regular get-together they want to coach one another in threes, taking turns of about ten minutes each, without needing a moderator."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 300
+  },
+  "audience": [
+    "team leads",
+    "trainers and course leaders",
+    "teachers and lecturers",
+    "leadership programme participants",
+    "public administration managers",
+    "workshop hosts"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

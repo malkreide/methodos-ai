@@ -759,6 +759,12 @@ PROBES = [
         "the wild idea to something concrete we could actually carry out?",
         "Walt_Disney_Method",
     ),
+    (
+        "at our monthly get-together each of us is wrestling with a problem of our own, but "
+        "there is only ever time to talk about one; how can every person get useful ideas from "
+        "a couple of colleagues within half an hour?",
+        "Troika_Consulting",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1416,6 +1422,12 @@ PROBES_DE = [
         "oder ich rede sie mir sofort selbst aus. Wie wird daraus Schritt für Schritt etwas "
         "Durchdachtes, das ich wirklich umsetzen kann?",
         "Walt_Disney_Method",
+    ),
+    (
+        "In unserem Kurs bringt jede Teilnehmerin eine eigene Knacknuss aus dem Arbeitsalltag "
+        "mit, aber die Kursleitung kann unmöglich alle einzeln beraten. Wie können sich die "
+        "Leute in kurzer Zeit gegenseitig weiterhelfen, sodass jede und jeder einmal drankommt?",
+        "Troika_Consulting",
     ),
 ]
 
