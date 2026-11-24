@@ -747,6 +747,12 @@ PROBES = [
         "see right there how much backing it actually has?",
         "Fist_to_Five",
     ),
+    (
+        "we talked to a handful of people who look after a sick relative at home, but everyone on "
+        "the team remembers different bits; before we come up with ideas I want us to understand "
+        "together what goes on in their heads and how they really feel day to day",
+        "Empathy_Map",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1391,6 +1397,13 @@ PROBES_DE = [
         "nicht dahintersteht. Wie sehe ich noch in der Sitzung rasch, wie gross die "
         "Unterstützung wirklich ist, bevor wir es festhalten?",
         "Fist_to_Five",
+    ),
+    (
+        "Wir planen ein Angebot für Asylsuchende in unserer Gemeinde, aber niemand im Team "
+        "weiss wirklich, was diese Menschen beschäftigt, wovor sie Angst haben und wie ihr "
+        "Alltag aussieht; wir möchten unsere Gesprächsnotizen zuerst gemeinsam durchgehen, "
+        "bevor wir Ideen sammeln",
+        "Empathy_Map",
     ),
 ]
 
