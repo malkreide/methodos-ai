@@ -1,4 +1,4 @@
-# Theory of Change (and Logic Model)
+# Theory of Change
 
 Many programmes can list what they do and what they hope to achieve, but not
 what has to happen in between. A theory of change fills that gap: starting
@@ -127,6 +127,7 @@ and covers how to use them in evaluation.
 - [Pre-Mortem Analysis](Pre_Mortem.md) — stress-test the riskiest assumptions in the chain
 - [After Action Review](After_Action_Review.md) — compare what the theory predicted with what happened
 - [Business Model Canvas](Business_Model_Canvas.md) — the commercial counterpart
+- [Logic Model](Logic_Model.md) — the one-page, column-by-column summary of a programme for planning indicators and reporting
 - [Center for Theory of Change: What is Theory of Change?](https://www.theoryofchange.org/what-is-theory-of-change/)
 - [Center for Theory of Change: ToC origins](https://www.theoryofchange.org/what-is-theory-of-change/toc-background/toc-origins/)
 - [Weiss, C. H. (1995). Nothing as Practical as Good Theory. In Connell, J. P. et al. (eds.), *New Approaches to Evaluating Community Initiatives*, Vol. 1. Aspen Institute](https://www.aspeninstitute.org/publications/new-approaches-evaluating-community-initiatives-volume-1-concepts-methods-contexts/)
