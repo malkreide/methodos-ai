@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "Usability_Testing",
+  "name": "Usability Testing (Think-Aloud)",
+  "category": "analysis",
+  "use_case": "An online form, website, app, official letter or set of signs is already in use or about to go live, and people keep tripping over it: they enter the wrong thing in a field, cannot find the button they need, misread what they are being asked to do or walk past the right door, and the help desk answers the same questions every day. The team that made it knows it too well to see it with fresh eyes and argues about what is wrong. It wants to sit a handful of typical users down one at a time, give each the ordinary tasks people really come to do, watch quietly while they say aloud what they are thinking, and fix the spots where several of them stumble before trying again.",
+  "strengths": [
+    "a handful of participants is usually enough to expose the most serious stumbling blocks, so a round fits into a day",
+    "shows not only where people go wrong but, through what they say aloud, why they misunderstood",
+    "watching real people struggle convinces sceptical colleagues and managers faster than any report",
+    "needs no lab or special equipment: a quiet room or a video call, the thing being tested and a note-taker",
+    "works at any stage, from a paper sketch of a form to a service that has been live for years",
+    "applies to anything people have to read or operate, not just software: letters, leaflets, signs, machines"
+  ],
+  "weaknesses": [
+    "a few sessions find problems but give no reliable figures on how often they occur or how many people are affected",
+    "thinking aloud is unnatural; some participants filter what they say or slow down because they are being watched",
+    "a facilitator who helps, hints or asks leading questions changes what participants do and spoils the result",
+    "tests whether people can use the thing, not whether they want or need it in the first place",
+    "if the participants are colleagues or the project team's friends rather than the real audience, the problems found are the wrong ones",
+    "finding problems is the easy half; without time set aside to fix them and test again, nothing improves"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/",
+    "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/",
+    "https://www.nngroup.com/articles/usability-testing-101/",
+    "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+    "https://sensible.com/rocket-surgery-made-easy/",
+    "https://sensible.com/Downloads/rsme-samplechapter.pdf",
+    "https://sensible.com/downloads/",
+    "https://en.wikipedia.org/wiki/Usability_testing",
+    "https://en.wikipedia.org/wiki/Think_aloud_protocol"
+  ],
+  "use_cases": [
+    "Since our application form moved online, a large share of what comes in is filled out wrong or left incomplete, and the phone line is swamped with the same questions. I want to watch a few ordinary people fill it in, without helping them, to see exactly where they go wrong and why.",
+    "We rewrote the letter that tells families how to enrol their child at school, yet the secretariat still gets dozens of calls asking what they are supposed to do. Before it goes out again, we want a few parents to read it in front of us, say what they think it asks of them, and try to do it.",
+    "First-time visitors to our campus cannot tell which entrance leads to the student office and keep asking at the porter's desk. We want to send a few newcomers to find specific rooms, walk behind them, and note at which sign they hesitate or take a wrong turn.",
+    "Customers keep sending the wrong details through our prescription-renewal app and then phone the pharmacy to sort it out, while the developers insist the screens are clear. I want to give five people who have never used it a couple of everyday tasks and watch, without helping, where they hesitate, tap the wrong thing or misread a screen.",
+    "We are weeks away from switching on our redesigned website and only the project team has ever used it. Before it goes live, we want a handful of outsiders, including older people and people who rarely go online, to try the things visitors most often come for while we watch, so we can fix what confuses them first."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 8
+  },
+  "audience": [
+    "digital and web teams",
+    "UX researchers",
+    "public administration",
+    "school administration",
+    "communications teams",
+    "product team",
+    "service design team"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

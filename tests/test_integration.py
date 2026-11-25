@@ -729,6 +729,24 @@ PROBES = [
         "which would cost a lot for almost nothing",
         "Impact_Effort_Matrix",
     ),
+    (
+        "our team is starting a kind of project we have never done, but a team in another "
+        "branch did the same thing last year; before we commit to a plan I'd like to hear "
+        "from them what to watch out for",
+        "Peer_Assist",
+    ),
+    (
+        "since the parking permit application moved online, half of what comes in is "
+        "filled out wrong and our phone line is swamped; before we change anything I want "
+        "to see with my own eyes where ordinary residents go wrong when they try it",
+        "Usability_Testing",
+    ),
+    (
+        "in meetings people seem to agree and nobody says anything against it, but afterwards "
+        "it turns out several of them were never really behind it and things stall. How can I "
+        "see right there how much backing it actually has?",
+        "Fist_to_Five",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1355,6 +1373,24 @@ PROBES_DE = [
         "rasch sehen, welche kaum etwas kosten und trotzdem spürbar etwas bringen, und welche "
         "viel Arbeit für wenig Nutzen wären",
         "Impact_Effort_Matrix",
+    ),
+    (
+        "Wir starten bald ein Projekt, das wir noch nie gemacht haben. Eine andere Gemeinde "
+        "hat das schon umgesetzt. Wie können wir vor dem Start von ihren Erfahrungen "
+        "profitieren?",
+        "Peer_Assist",
+    ),
+    (
+        "Seit unser neues Anmeldeformular online ist, rufen täglich Leute an, weil sie nicht "
+        "verstehen, was sie wo eintragen sollen. Bevor wir es überarbeiten, möchten wir ein "
+        "paar Betroffenen zuschauen, wie sie es ausfüllen, und sehen, wo sie hängen bleiben",
+        "Usability_Testing",
+    ),
+    (
+        "Bei uns nicken in der Sitzung alle, aber hinterher zeigt sich, dass die Hälfte gar "
+        "nicht dahintersteht. Wie sehe ich noch in der Sitzung rasch, wie gross die "
+        "Unterstützung wirklich ist, bevor wir es festhalten?",
+        "Fist_to_Five",
     ),
 ]
 

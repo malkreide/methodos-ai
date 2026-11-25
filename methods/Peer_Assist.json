@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "Peer_Assist",
+  "name": "Peer Assist",
+  "category": "facilitation",
+  "use_case": "A group is about to do something for the first time, such as opening a new service, entering a new market or running an unfamiliar kind of project, and knows that colleagues at another site or in another organisation have already done much the same. Instead of starting from scratch and rediscovering on its own what those people already learned, it invites a few of them, before its approach is settled, to a facilitated session of half a day to a day: the hosts briefly describe their goal and intended approach, the visitors question them and then talk it over among themselves, drawing on their own experience, while the hosts listen, and finally the visitors pass on what they would watch out for, leaving the hosts to decide what to take on.",
+  "strengths": [
+    "learning happens before the money and the commitments are spent, when the plan can still change",
+    "draws on people who have done the work rather than on documents, so it brings out the practical detail written reports leave out",
+    "peers at the same level speak more openly than in a review for management, especially when the notes go only to the host team",
+    "cheap to organise: it needs a room or a video call, a facilitator and a day of a few people's time",
+    "builds contacts the host team can call on again once the work is under way"
+  ],
+  "weaknesses": [
+    "only works if someone has genuinely done something comparable and can be found and freed up in time",
+    "falls flat when the host team really wants approval for a plan it has already settled and listens defensively",
+    "visitors' experience may not transfer to a different setting; the host team has to judge what fits",
+    "easily slides into a judgement of the plan, or into visitors telling the hosts what to do, unless the facilitator holds the roles",
+    "evidence comes mainly from practitioner accounts at BP and in development organisations rather than from controlled studies"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://www.adb.org/publications/conducting-peer-assists",
+    "https://cdn.odi.org/media/documents/6427.pdf",
+    "https://thesystemsthinker.com/capturing-the-knowledge-of-100000-of-the-worlds-brightest-people/",
+    "https://books.google.com/books?vid=ISBN9781841125091"
+  ],
+  "use_cases": [
+    "This is the first time we are doing this kind of project, but another team did almost the same thing last year. Before we commit to how we will go about it, I want to hear from the people who were involved what caught them out, rather than discover it all again ourselves.",
+    "Next year our school opens a bilingual class for the first time. A school in the neighbouring town has run one for several years, and before our working group settles the details we want to invite some of their staff for an afternoon to tell us what they learned when they set theirs up.",
+    "Our town council has decided to introduce something none of us has done before, and the town next door went through exactly that a few years ago. Before we get started, we would like to bring over the people who did it there and learn from their experience.",
+    "A relief organisation is opening its first country office in a region where it has not worked, and colleagues from a sister office went through exactly that start-up a year ago; before the budget and staffing are committed, the new office's staff want a structured session in which those colleagues share what they learned.",
+    "Nobody on my team has ever done what we have just been asked to do, but I know people elsewhere in the company who have done almost exactly that; before we begin I want to hear their experience in an open conversation among equals, not a formal review for management."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 6,
+    "max_people": 15
+  },
+  "audience": [
+    "project teams",
+    "project leads",
+    "school leadership",
+    "public administration",
+    "development organisations",
+    "knowledge managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}
