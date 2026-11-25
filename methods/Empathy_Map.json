@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "Empathy_Map",
+  "name": "Empathy Map",
+  "category": "analysis",
+  "use_case": "A design or service team holds scattered notes from conversations with patients, applicants, pupils or customers and wants a shared picture of one such person's inner experience: their words, thoughts, feelings and actions, what they see and hear, their fears and hopes. It sorts the notes onto one canvas, notices where words and actions do not match and sees which gaps need more research.",
+  "strengths": [
+    "quick and cheap: a rough map takes under an hour with sticky notes and the notes the team already has",
+    "puts feelings and unspoken thoughts next to observable behaviour, which task lists and process maps leave out",
+    "makes contradictions between what people say and what they do visible, which is often where the real need lies",
+    "an empty or thin area shows at a glance what the team does not yet know",
+    "gives everyone in a mixed team the same picture of the person before ideas are generated"
+  ],
+  "weaknesses": [
+    "filled from the team's assumptions instead of research, it only dresses up existing opinions as insight",
+    "'thinks' and 'feels' are inferences, and confident guesses easily pass for findings",
+    "a single map shows a snapshot of one person or group, not the variety within it or how things change over time",
+    "a group defined too broadly yields contradictory notes that cancel each other out",
+    "often made once at the start of a project and never revisited"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://www.nngroup.com/articles/empathy-mapping/",
+    "https://xplane.com/the-empathy-map-a-human-centered-tool-for-understanding-how-your-audience-thinks/",
+    "https://gamestorming.com/empathy-mapping/",
+    "https://ixdf.org/literature/topics/empathy-mapping",
+    "https://your.wa.gov/cx-resources/empathy-mapping/",
+    "https://en.wikipedia.org/wiki/Empathy_map"
+  ],
+  "use_cases": [
+    "We talked with a few people caring for an ill relative at home, and each of us came away remembering something different. We want to bring our notes together and understand what goes on in these carers' heads and how they feel day to day.",
+    "I want my team to put itself in our customers' shoes: what they really think and feel, what they say and what they actually do when they use our service.",
+    "We have recorded long interviews with patients on our ward, and the team wants a shared sense of what these people go through, what they fear and what they hope for.",
+    "Our municipality is setting up support for asylum seekers, people none of us really knows; before collecting ideas we want to go through the notes from our conversations with them and understand what worries them and what their days look like.",
+    "Our teachers are planning support for pupils who have just arrived in the country, but none of us has ever been in their position; we want to get a feel for their world, what worries them and what their afternoons look like, before we decide anything."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "product team",
+    "service designers",
+    "user researchers",
+    "public administration",
+    "teaching staff",
+    "health-care teams"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

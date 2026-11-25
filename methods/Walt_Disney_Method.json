@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "Walt_Disney_Method",
+  "name": "Walt Disney Method (Dreamer, Realist, Critic)",
+  "category": "facilitation",
+  "use_case": "A promising idea keeps stalling between two extremes: it stays a pleasant daydream that nobody translates into concrete steps, or doubts pull it apart while it is still half-formed. The person or group wants to keep dreaming, working it out and criticising apart: first picture the idea at its best without limits, then describe how it would really be done, then pick holes in that version, and go round again until the idea holds up.",
+  "strengths": [
+    "keeps imagining, planning and finding faults apart, so an idea is fully pictured before anyone judges it",
+    "works for one person thinking alone as well as for a small group, with no materials beyond a few marked places",
+    "the critique is aimed at the plan, not at whoever had the idea, which makes doubts easier to voice and to hear",
+    "each round ends with a sharper version of the same idea and a concrete list of what is still missing",
+    "simple to explain: three roles, one question each"
+  ],
+  "weaknesses": [
+    "the model comes from neuro-linguistic programming (NLP), whose broader claims are not supported by research; only the separation of thinking roles is borrowed here",
+    "the account of how Walt Disney himself worked rests on recollections by his animators and on Dilts' interpretation, not on anything Disney wrote down",
+    "evidence of its effect is thin: practitioner reports and one small quasi-experimental classroom study",
+    "people who dislike role play may find walking between marked places contrived",
+    "develops one idea at a time; it does not compare several options or decide between them"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 45,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Disney_method",
+    "https://www.mindtools.com/abyeaeb/the-disney-creative-strategy",
+    "https://lateralaction.com/articles/walt-disney/",
+    "https://doi.org/10.29333/iji.2020.13320a"
+  ],
+  "use_cases": [
+    "I have a big idea for a project of my own, but each time I start picturing it, a voice in my head lists every reason it cannot work, so I end up with neither a clear picture of what I want nor a plan for getting there.",
+    "We dream up exciting visions for our work together, but they stay vague slogans: whenever we discuss one, someone tears it apart before it is fleshed out, and we never work out the actual steps, people and money it would need.",
+    "A teacher wants students developing a project idea, such as a school garden or a charity event, to imagine it freely first, then plan how they would really do it, and only then look for its flaws, instead of rejecting each other's suggestions the moment they are made.",
+    "A municipal team has an ambitious picture of a new neighbourhood service for older residents and wants to turn that ideal into a concrete plan of how it would run, then examine the plan for gaps, and go round again until it is solid.",
+    "A founder has a vision for a new product that still lives only in her head and needs to get from the dream to a realistic way of building it, and then put that plan through honest scrutiny before showing it to anyone."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "individuals developing an idea of their own",
+    "project and product teams",
+    "teachers and students",
+    "public administration teams",
+    "founders",
+    "coaches and facilitators"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

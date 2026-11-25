@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "Theory_of_Change",
-  "name": "Theory of Change (and Logic Model)",
+  "name": "Theory of Change",
   "category": "strategy",
   "use_case": "A programme or project has activities, staff and a budget, but nobody can explain step by step how what it does is supposed to produce the long-term effect it promises. Funders ask what difference it makes, evaluators do not know what to measure, and managers cannot tell whether a disappointing result means the work was done badly or the idea behind it was wrong. Working backwards from the intended long-term outcome, the team spells out the chain of intermediate results that must happen first, the assumptions linking each step, and the evidence that would show whether the chain is holding.",
   "strengths": [
@@ -66,5 +66,5 @@
   ],
   "language": "en",
   "owner": "Hayal Özkan",
-  "last_reviewed": "2026-10-11"
+  "last_reviewed": "2026-11-25"
 }

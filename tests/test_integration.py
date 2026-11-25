@@ -747,6 +747,30 @@ PROBES = [
         "see right there how much backing it actually has?",
         "Fist_to_Five",
     ),
+    (
+        "we talked to a handful of people who look after a sick relative at home, but everyone on "
+        "the team remembers different bits; before we come up with ideas I want us to understand "
+        "together what goes on in their heads and how they really feel day to day",
+        "Empathy_Map",
+    ),
+    (
+        "We have an exciting vision for a new service, but it stays vague, and whenever we talk "
+        "it through someone pokes holes in it before it is even fleshed out. How do we get from "
+        "the wild idea to something concrete we could actually carry out?",
+        "Walt_Disney_Method",
+    ),
+    (
+        "at our monthly get-together each of us is wrestling with a problem of our own, but "
+        "there is only ever time to talk about one; how can every person get useful ideas from "
+        "a couple of colleagues within half an hour?",
+        "Troika_Consulting",
+    ),
+    (
+        "every year we tell our sponsors how many workshops we held and how many people "
+        "turned up, but we have never pinned down what should be different for those people "
+        "afterwards or what numbers would show it",
+        "Logic_Model",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1391,6 +1415,31 @@ PROBES_DE = [
         "nicht dahintersteht. Wie sehe ich noch in der Sitzung rasch, wie gross die "
         "Unterstützung wirklich ist, bevor wir es festhalten?",
         "Fist_to_Five",
+    ),
+    (
+        "Wir planen ein Angebot für Asylsuchende in unserer Gemeinde, aber niemand im Team "
+        "weiss wirklich, was diese Menschen beschäftigt, wovor sie Angst haben und wie ihr "
+        "Alltag aussieht; wir möchten unsere Gesprächsnotizen zuerst gemeinsam durchgehen, "
+        "bevor wir Ideen sammeln",
+        "Empathy_Map",
+    ),
+    (
+        "Ich habe eine grosse Idee für ein eigenes Projekt, aber entweder schwärme ich nur davon "
+        "oder ich rede sie mir sofort selbst aus. Wie wird daraus Schritt für Schritt etwas "
+        "Durchdachtes, das ich wirklich umsetzen kann?",
+        "Walt_Disney_Method",
+    ),
+    (
+        "In unserem Kurs bringt jede Teilnehmerin eine eigene Knacknuss aus dem Arbeitsalltag "
+        "mit, aber die Kursleitung kann unmöglich alle einzeln beraten. Wie können sich die "
+        "Leute in kurzer Zeit gegenseitig weiterhelfen, sodass jede und jeder einmal drankommt?",
+        "Troika_Consulting",
+    ),
+    (
+        "Im Jahresbericht an die Gemeinde zählen wir nur Kurse und Teilnehmende auf; jetzt "
+        "sollen wir darlegen, was wir einsetzen, was wir tun und was sich bei den Leuten "
+        "dadurch verändern soll, und woran wir das messen.",
+        "Logic_Model",
     ),
 ]
 
