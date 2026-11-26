@@ -795,6 +795,12 @@ PROBES = [
         "ideas on how to handle it better from now on.",
         "Feedforward",
     ),
+    (
+        "Our project has around forty tasks spread over the next eight months and nobody has "
+        "one overview of what happens in which week and who is doing it. The steering group "
+        "keeps asking whether we are behind.",
+        "Gantt_Chart",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1487,6 +1493,12 @@ PROBES_DE = [
         "bitte ich Kolleginnen und Kollegen um konkrete Tipps für das nächste Mal, ohne dass "
         "wir über alte Fehler reden und ich mich rechtfertigen muss?",
         "Feedforward",
+    ),
+    (
+        "Für unser Projekt laufen über zehn Monate viele Aufgaben nebeneinander, aber niemand "
+        "sieht auf einen Blick, was gerade dran ist, was als Nächstes kommt und ob wir hinter "
+        "dem Plan liegen.",
+        "Gantt_Chart",
     ),
 ]
 
