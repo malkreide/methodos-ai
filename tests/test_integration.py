@@ -777,6 +777,12 @@ PROBES = [
         "knowing it is a test?",
         "Mystery_Shopping",
     ),
+    (
+        "I want to understand what really keeps each of my team members going at work, and "
+        "whether the upcoming switch to the new team structure makes that better or worse "
+        "for them.",
+        "Moving_Motivators",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1452,6 +1458,11 @@ PROBES_DE = [
         "werden, nicht wie es im Leitbild steht. Wie prüfen wir das, ohne dass die "
         "Mitarbeitenden merken, dass es ein Test ist?",
         "Mystery_Shopping",
+    ),
+    (
+        "Ich möchte im Einzelgespräch herausfinden, was meine Mitarbeitenden wirklich antreibt "
+        "und ob die geplante Umstellung ihnen davon etwas nimmt oder gibt.",
+        "Moving_Motivators",
     ),
 ]
 
