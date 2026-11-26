@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "Mystery_Shopping",
+  "name": "Mystery Shopping (Mystery Calls)",
+  "category": "analysis",
+  "use_case": "The service charter, the training material and the monthly reports all describe how customers or citizens are meant to be treated at the counter, on the phone, by e-mail or through a website enquiry, but the people in charge cannot tell what a real enquirer actually meets: whether anyone picks up, whether the information given is correct and complete, how long a reply takes and how people are spoken to. Complaints are anecdotal, satisfaction surveys come late and rely on memory, and staff behave differently when a manager is in the room. Trained testers pose as ordinary enquirers, go through real contacts following prepared scenarios, and record straight afterwards against a checklist what happened, so that the pattern across many contacts shows where delivery falls short of the promise.",
+  "strengths": [
+    "records what actually happened in a real contact, not what customers remember weeks later or what staff say they do",
+    "a written scenario and checklist let many contacts across sites, channels and times of day be compared on the same terms",
+    "works for every channel people use to reach a service: counter visits, phone calls, e-mails, letters, web chat and contact forms",
+    "can check things customers cannot judge themselves, such as whether advice was legally correct or a required safety question was asked",
+    "can be run cheaply by trained volunteers, residents' panels or staff from another unit, not only by agencies",
+    "turns vague complaints into concrete evidence about which step of the encounter fails, which makes the follow-up training specific"
+  ],
+  "weaknesses": [
+    "each contact is a snapshot of one moment; a few dozen tests show patterns, not reliable rates for every branch or person",
+    "testers must remember details until they can write them down, and their own appearance, manner and expectations colour what they get and report",
+    "it involves deception, so staff who were not told it might happen, or who see results used to blame individuals, lose trust and push back",
+    "every test call or visit takes up real staff time, which matters for overstretched services and for staff paid on commission",
+    "scenarios that are too clever or rehearsed are spotted, and repeated tests teach staff to look out for testers rather than serve everyone well",
+    "it shows what went wrong in the encounter but not why; causes such as staffing, rules or systems need follow-up with the staff themselves"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 960,
+    "max_minutes": 4800
+  },
+  "references": [
+    "https://www.mrs.org.uk/pdf/2013-01-14%20Mystery%20Shopping%20Research%20Guidelines.pdf",
+    "https://network.healthwatch.co.uk/guidance/2023-02-13/mystery-shopping-guidance",
+    "https://network.healthwatch.co.uk/sites/network.healthwatch.co.uk/files/20221213%20Mystery%20shopping%20guidance.pdf",
+    "https://researchonline.ljmu.ac.uk/id/eprint/5499/1/Mystery%20shoppers%20-%20evaluation.pdf",
+    "https://strathprints.strath.ac.uk/45595/",
+    "https://www.croydon.gov.uk/housing/information-council-tenants/resident-involvement/mystery-shopping",
+    "https://en.wikipedia.org/wiki/Mystery_shopping",
+    "https://de.wikipedia.org/wiki/Mystery_Shopping"
+  ],
+  "use_cases": [
+    "Customers can reach us by letter, e-mail or the contact form on our site, and the customer-care report says every enquiry gets a correct answer within two days. I want testers posing as customers to send in typical questions under made-up names and log how long the answer took and whether it was right.",
+    "People tell us the tax office's phone line rings out, or that they hear something different every time they ring. We want callers the staff do not know to phone at various hours with the same prepared questions, and note whether they got through, how long it took and whether what they were told was right.",
+    "The residents' registration office has a written standard for how people are greeted and advised in person and by phone. The head of office wants testers unknown to the staff to come in and call with everyday matters such as registering a move, and check the advice they get against that standard.",
+    "Our bank trained its branch advisers to ask about a customer's situation and explain the risks before recommending any savings product. Head office wants to know whether that really happens at the desk, so people posing as interested customers will sit down with advisers and afterwards tick off what was and was not asked.",
+    "A chain of forty shops wants the same welcome, advice and handling of returns in every outlet, but area managers only ever see their stores on announced visits. We want unannounced visits by people who look like any other shopper, each following the same script and scoring sheet.",
+    "Our tenants' association keeps hearing that the council's repairs line is hopeless, while the council quotes good figures. We would like trained tenant volunteers to ring with realistic repair requests and write down exactly what happened, so that we bring evidence to the housing committee instead of anecdotes.",
+    "A university says that prospective students get a helpful reply to every enquiry, whether they phone, send an e-mail or use the chat on the admissions pages. The head of student services wants staff from another campus to pose as applicants with typical questions and check how fast and how accurately each channel responds.",
+    "A patients' organisation wants to know whether pharmacies ask the safety questions they are supposed to ask before selling a common painkiller. Volunteers acting as normal customers will ask for it in a sample of pharmacies and record which questions, if any, they were asked."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 30
+  },
+  "audience": [
+    "customer service management",
+    "public administration",
+    "quality management",
+    "retail and branch networks",
+    "banks and regulators",
+    "housing providers and tenant panels",
+    "patient and consumer organisations",
+    "student services"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

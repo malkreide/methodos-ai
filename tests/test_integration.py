@@ -771,6 +771,12 @@ PROBES = [
         "afterwards or what numbers would show it",
         "Logic_Model",
     ),
+    (
+        "Our counters and hotline say they are friendly and quick, but I suspect what a normal "
+        "caller actually gets is quite different. How can we find out without the staff "
+        "knowing it is a test?",
+        "Mystery_Shopping",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1440,6 +1446,12 @@ PROBES_DE = [
         "sollen wir darlegen, was wir einsetzen, was wir tun und was sich bei den Leuten "
         "dadurch verändern soll, und woran wir das messen.",
         "Logic_Model",
+    ),
+    (
+        "Wir wollen wissen, wie Anfragen am Schalter und am Telefon in Wirklichkeit beantwortet "
+        "werden, nicht wie es im Leitbild steht. Wie prüfen wir das, ohne dass die "
+        "Mitarbeitenden merken, dass es ein Test ist?",
+        "Mystery_Shopping",
     ),
 ]
 
