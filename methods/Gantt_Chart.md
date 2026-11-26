@@ -54,8 +54,8 @@ than to Gantt's charts.
 
 - **To find out what work the project contains.** A Gantt chart needs a task
   list. If nobody yet knows what has to be produced, break the scope down first
-  (a work breakdown structure does exactly that) and put the resulting packages
-  on the calendar afterwards.
+  (a [Work Breakdown Structure](Work_Breakdown_Structure.md) does exactly
+  that) and put the resulting packages on the calendar afterwards.
 - **To find the tasks that determine the end date.** The chart shows
   dependencies but does not compute the longest chain or each task's leeway.
   For that, run the [Critical Path Method](Critical_Path_Method.md); most
@@ -119,9 +119,9 @@ than to Gantt's charts.
   of dependent tasks and the float of every other task. A Gantt chart
   *displays* a schedule and is often drawn from that calculation; the two are
   complements, not alternatives.
-- A work breakdown structure breaks a project's scope into deliverables and
-  work packages with no time axis. A Gantt chart takes those packages and puts
-  them on a calendar.
+- [Work Breakdown Structure](Work_Breakdown_Structure.md) breaks a
+  project's scope into deliverables and work packages with no time axis. A
+  Gantt chart takes those packages and puts them on a calendar.
 - [Kanban Board](Kanban_Board.md) visualises the flow of work through stages
   and limits work in progress, without dates. Use it for a stream of
   requests; use a Gantt chart for a project with a planned end.

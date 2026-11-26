@@ -127,6 +127,7 @@ and only then build the schedule and the budget from the packages.
 ## See also
 
 - [Critical Path Method](Critical_Path_Method.md) — sequences and times the work packages once they exist
+- [Gantt Chart](Gantt_Chart.md) — puts the work packages on a calendar so everyone can see what happens when
 - [Issue Tree](Issue_Tree.md) — the same tree shape, applied to a question instead of a scope of work
 - [RACI Matrix](RACI_Matrix.md) — once the packages exist, records who does, approves and is consulted on each
 - [Impact Mapping](Impact_Mapping.md) — tests whether a deliverable serves the goal before it enters the tree
