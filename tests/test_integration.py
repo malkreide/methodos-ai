@@ -813,6 +813,12 @@ PROBES = [
         "match?",
         "McKinsey_7S",
     ),
+    (
+        "Our customers want far more from the next release than we can afford to build, and "
+        "when I ask each of them they say everything is essential. How do I get them to give "
+        "things up and show me what they would actually spend on together?",
+        "Buy_a_Feature",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1522,6 +1528,12 @@ PROBES_DE = [
         "Nach der Fusion passen Aufbau, Abläufe, Führungsstil und gelebte Werte der beiden "
         "Häuser nicht zusammen. Wie finden wir heraus, wo es überall hakt?",
         "McKinsey_7S",
+    ),
+    (
+        "Der Verein hat für nächstes Jahr nur ein kleines Budget, die Mitglieder wünschen sich "
+        "aber zehnmal so viel. Wie bringe ich sie dazu, gemeinsam abzuwägen, wofür das Geld "
+        "wirklich reicht, statt dass jeder einfach alles fordert?",
+        "Buy_a_Feature",
     ),
 ]
 
