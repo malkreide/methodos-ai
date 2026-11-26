@@ -789,6 +789,12 @@ PROBES = [
         "and handed to someone?",
         "Work_Breakdown_Structure",
     ),
+    (
+        "My manager told me I come across as impatient with people. I don't want another talk "
+        "about what I did wrong last month; I just want a few colleagues to give me concrete "
+        "ideas on how to handle it better from now on.",
+        "Feedforward",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1475,6 +1481,12 @@ PROBES_DE = [
         "überblickt, was alles dazugehört. Wie zerlegen wir das Ganze in Teile, die man "
         "einzeln schätzen und jemandem übergeben kann?",
         "Work_Breakdown_Structure",
+    ),
+    (
+        "Ich möchte lernen, in Sitzungen besser zuzuhören statt dauernd zu unterbrechen. Wie "
+        "bitte ich Kolleginnen und Kollegen um konkrete Tipps für das nächste Mal, ohne dass "
+        "wir über alte Fehler reden und ich mich rechtfertigen muss?",
+        "Feedforward",
     ),
 ]
 
