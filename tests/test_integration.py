@@ -783,6 +783,12 @@ PROBES = [
         "for them.",
         "Moving_Motivators",
     ),
+    (
+        "We have just been given a big project and nobody can say what all has to be "
+        "produced; how do we split it into chunks small enough that each one can be priced "
+        "and handed to someone?",
+        "Work_Breakdown_Structure",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1463,6 +1469,12 @@ PROBES_DE = [
         "Ich möchte im Einzelgespräch herausfinden, was meine Mitarbeitenden wirklich antreibt "
         "und ob die geplante Umstellung ihnen davon etwas nimmt oder gibt.",
         "Moving_Motivators",
+    ),
+    (
+        "Wir haben den Auftrag für ein grosses Bauprojekt der Gemeinde bekommen, aber niemand "
+        "überblickt, was alles dazugehört. Wie zerlegen wir das Ganze in Teile, die man "
+        "einzeln schätzen und jemandem übergeben kann?",
+        "Work_Breakdown_Structure",
     ),
 ]
 

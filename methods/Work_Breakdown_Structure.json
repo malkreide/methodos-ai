@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Work_Breakdown_Structure",
+  "name": "Work Breakdown Structure (WBS)",
+  "category": "analysis",
+  "use_case": "A project has been approved, but its scope exists only as a title and a handful of headings: effort figures are guesses, pieces of work surface late and unplanned, and nobody can say what each team is meant to hand over. The whole scope is split step by step into a tree of deliverables, where the parts under each element add up to exactly that element and nothing outside the scope appears, until the lowest pieces are small enough to estimate with confidence, give to one owner and check off as done.",
+  "strengths": [
+    "makes the full scope visible before work starts, so forgotten deliverables are found on paper instead of halfway through",
+    "gives cost and effort estimates a solid base: small, concrete pieces are estimated far more reliably than a whole project",
+    "every piece of work has a place in the tree, which makes it easy to give each one a single owner and see what is still unassigned",
+    "provides a shared skeleton for the budget, the schedule, contracts and progress reports, so they all refer to the same pieces",
+    "makes requests for extra work recognisable as such, because anything not in the tree was not part of the agreed scope"
+  ],
+  "weaknesses": [
+    "has no time axis: it says what has to be produced, not in which order or by when, so a schedule still has to be built on top of it",
+    "a tree organised by activities or departments instead of deliverables easily misses work or counts it twice",
+    "breaking down too far produces hundreds of tiny elements that cost more to track than they help",
+    "only as complete as the knowledge of the people who build it; work nobody in the room knows about stays missing",
+    "on exploratory work whose outcome is not yet known, a detailed tree is soon out of date and has to be kept to the upper levels"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 90,
+    "max_minutes": 360
+  },
+  "references": [
+    "https://www.nasa.gov/wp-content/uploads/2023/08/nasa-work-breakdown-structure-handbook.pdf",
+    "https://www.gao.gov/products/gao-20-195g",
+    "https://hermes.admin.ch/en/project-management/user-information/planning.html",
+    "https://en.wikipedia.org/wiki/Work_breakdown_structure",
+    "https://en.wikipedia.org/wiki/Product_breakdown_structure",
+    "https://en.wikipedia.org/wiki/Work_package"
+  ],
+  "use_cases": [
+    "Management wants a figure and a delivery date from us for this job, and every number we name is a guess because we have not yet worked out what the work actually consists of.",
+    "Our last two projects ran over budget because jobs no estimate had included kept appearing midway, such as migrating old records and acceptance tests; for the next one I want the full scope written down from day one.",
+    "Our project plan is a to-do list of several hundred lines, and I cannot tell which lines belong to which result, whether a result is finished or whether something is missing altogether.",
+    "A municipality is starting a construction project, and before it goes to tender the project lead wants the entire job laid out as a tree of deliverables, from the whole building down to parts a single firm can take on, so that every bidder prices the same thing and later change requests can be told apart from work that was included all along.",
+    "A school leadership team is taking over a second school site, with furniture and IT, timetables, recruiting staff and information for families, and wants every part listed and grouped so that each can go to one colleague and nothing slips between the cracks.",
+    "A volunteer committee runs a sports club's centenary, and the chair wants every deliverable, from the venue contract to the commemorative booklet, assigned to exactly one sub-group, with nothing left over and nothing done twice.",
+    "A nonprofit is applying for a multi-year grant, and the funder asks for the budget to be set out per work package, each with a named deliverable and a cost, so that spending can later be checked against what was delivered."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 10
+  },
+  "audience": [
+    "project managers",
+    "public-sector project leads",
+    "school leadership",
+    "construction and facilities managers",
+    "procurement and tender teams",
+    "grant applicants"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}
