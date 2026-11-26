@@ -807,6 +807,12 @@ PROBES = [
         "of just competing harder on the same things?",
         "Strategy_Canvas",
     ),
+    (
+        "We announced a new direction last year, but our org chart, our bonus rules and the way "
+        "managers actually behave still pull the other way. How do we see where things don't "
+        "match?",
+        "McKinsey_7S",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1511,6 +1517,11 @@ PROBES_DE = [
         "und wir kämpfen nur noch über den Preis. Wie entwickeln wir ein Angebot, das sich klar "
         "von der Konkurrenz unterscheidet?",
         "Strategy_Canvas",
+    ),
+    (
+        "Nach der Fusion passen Aufbau, Abläufe, Führungsstil und gelebte Werte der beiden "
+        "Häuser nicht zusammen. Wie finden wir heraus, wo es überall hakt?",
+        "McKinsey_7S",
     ),
 ]
 

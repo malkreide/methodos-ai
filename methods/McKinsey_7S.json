@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "McKinsey_7S",
+  "name": "McKinsey 7-S Framework",
+  "category": "analysis",
+  "use_case": "The organisation announced a change of direction or a merger some time ago, yet the rest of the organisation still fits the old arrangement: how units are set up, budgets, procedures and pay rules, what senior managers actually do and how they decide, who gets hired and promoted, what staff are good at, and what the place really values. These parts reinforce or undercut one another, so the new course is contradicted by everyday signals, and leaders cannot see where the mismatches sit. The framework describes the organisation through seven interlinked elements, three harder ones (strategy, structure, systems) and four softer ones (shared values, style, staff, skills), records the current and the intended state of each, and checks the elements against each other pair by pair to locate where they do not fit.",
+  "strengths": [
+    "puts the soft side of an organisation (leadership habits, lived values, people and capabilities) on the same sheet as strategy and structure, where it is otherwise left out",
+    "the pairwise fit check exposes contradictions that a review of each element on its own misses, such as a cooperative strategy paid for by individual bonuses",
+    "seven familiar headings make two organisations, or the before and after state of one, easy to compare on the same terms",
+    "needs no data system or software; documents, interviews and one workshop are enough for a first picture",
+    "widely known among managers and consultants, so the vocabulary is quickly shared"
+  ],
+  "weaknesses": [
+    "a consulting heuristic: the claim that fit between the seven elements drives performance has had little rigorous empirical testing",
+    "looks only inside the organisation; markets, funders, regulation and users appear only indirectly through strategy",
+    "describes a state at one moment and says nothing about the order or the pace in which to change things",
+    "the soft elements are hard to observe, so the result depends heavily on how honestly people describe style and lived values",
+    "the boundaries between elements are fuzzy (skills versus staff, style versus shared values), and groups can spend their time arguing about which box something belongs in",
+    "a well-aligned organisation can also be rigidly aligned to the wrong strategy; fit is not the same as fitness for the future"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 960
+  },
+  "references": [
+    "https://doi.org/10.1016/0007-6813(80)90027-0",
+    "https://www.tompeters.com/2011/03/a-brief-history-of-the-7-s-mckinsey-7-s-model/",
+    "https://en.wikipedia.org/wiki/McKinsey_7S_Framework",
+    "https://de.wikipedia.org/wiki/7-S-Modell",
+    "https://www.ebsco.com/research-starters/business-and-management/mckinsey-7s-framework",
+    "https://doi.org/10.1186/s12913-021-07402-3",
+    "https://doi.org/10.1108/10878570510594442"
+  ],
+  "use_cases": [
+    "Our board adopted a strategy that depends on units working together, yet money is still allocated unit by unit, each unit is judged only on its own results, and the people who get promoted are the ones who defend their own patch. I want to lay these pieces side by side and see which of them contradict the strategy.",
+    "A year after we changed course the results still have not come. I suspect we rewrote the plan and redrew the boxes, while the pay system, the hiring profile and what our managers do every day still reward the old way of working.",
+    "We grew from twenty to two hundred people in three years. The founders still settle everything in corridor conversations, roles are unclear, the tools were chosen for a small company, and the experienced people we hired bring skills the old culture does not reward. Something no longer fits together and I want to find out what.",
+    "A tax administration wants to become a service for residents rather than a control authority, but its job descriptions, its performance figures, its training courses and the tone set by senior officials still reflect the old role. The director wants to check where each of these works against the new aim before anything is changed.",
+    "Two hospitals have been joined into one group: one was run centrally with tight procedures and a formal hierarchy, the other by its senior doctors with a lot of local freedom. Before deciding how the joint organisation should work, the executive team wants to compare the two side by side and see where their set-ups clash.",
+    "We are about to take over a smaller competitor and want to know beforehand how well its way of operating matches ours: how decisions are taken, how people are paid and promoted, what its staff are good at, and what it really values.",
+    "A university wants research groups to work across faculties, but appointment rules, the funding formula, the deans' way of leading and what academics are rewarded for all still assume each faculty works alone. The rector wants a picture of which of these elements fit the new aim and which pull against it."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 20
+  },
+  "audience": [
+    "executive and management boards",
+    "public administration leadership",
+    "hospital and health-care management",
+    "university and school-group leadership",
+    "nonprofit boards and directors",
+    "post-merger integration teams",
+    "organisation development and HR"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}
