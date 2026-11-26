@@ -801,6 +801,12 @@ PROBES = [
         "keeps asking whether we are behind.",
         "Gantt_Chart",
     ),
+    (
+        "Every provider in our market offers the same features at roughly the same price, and "
+        "customers can't tell us apart from the rest. How do we find a way to stand out instead "
+        "of just competing harder on the same things?",
+        "Strategy_Canvas",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1499,6 +1505,12 @@ PROBES_DE = [
         "sieht auf einen Blick, was gerade dran ist, was als Nächstes kommt und ob wir hinter "
         "dem Plan liegen.",
         "Gantt_Chart",
+    ),
+    (
+        "Unsere Sprachschule sieht für Kundinnen genauso aus wie die drei anderen in der Stadt, "
+        "und wir kämpfen nur noch über den Preis. Wie entwickeln wir ein Angebot, das sich klar "
+        "von der Konkurrenz unterscheidet?",
+        "Strategy_Canvas",
     ),
 ]
 
