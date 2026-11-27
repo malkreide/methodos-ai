@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "Buy_a_Feature",
+  "name": "Buy a Feature",
+  "category": "prioritization",
+  "use_case": "Customers, residents or members ask for much more than the budget can pay for, and in one-to-one conversations they mark nearly every wish as essential. A game hands each player an equal share of play money and a menu of priced options; some options are dearer than any single player can afford, so players have to club together and persuade each other. What sells, what draws a coalition and what stays on the shelf reveals the trade-offs the group accepts together.",
+  "strengths": [
+    "a real price on each option forces the trade-off that a rating scale lets people avoid",
+    "items priced beyond any one budget make participants explain their reasons to each other, and those conversations are the richest result",
+    "options that nobody pays for are as informative as the ones that sell out",
+    "easy to explain and engaging for customers, residents or members with no planning background",
+    "several tables playing the same menu show whether a choice is shared widely or specific to one group"
+  ],
+  "weaknesses": [
+    "the prices steer the outcome, so a poorly costed menu produces a misleading result",
+    "confident negotiators can pull a table towards their own favourites",
+    "the menu only contains what the organisers thought of; missing options cannot be bought",
+    "the budget size needs care: too much money removes the tension, too little leaves people unable to buy anything they care about",
+    "the result shows what one group would fund in one session, not a binding decision or a representative survey",
+    "a large menu overwhelms players; it works best with roughly a dozen to thirty options"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 120
+  },
+  "references": [
+    "https://en.wikipedia.org/wiki/Innovation_game",
+    "https://www.productplan.com/glossary/buy-a-feature/",
+    "https://kromatic.com/real-startup-book/3-generative-product-research/prioritization-games/buy-a-feature/",
+    "https://spin.atomicobject.com/buy-a-feature/",
+    "https://cafwd.org/news/san-jose-invites-citizen-input-on-prioritizing-city-services/"
+  ],
+  "use_cases": [
+    "Every time we survey our users about the roadmap, almost every feature comes back rated very important, so the answers tell us nothing about what they would sacrifice when only a handful can be built this year.",
+    "Our clients ask for many more improvements than our developers can deliver in a year, and each of them insists that their own request cannot wait. I want them to see what each request costs and to decide with one another which few are worth the money.",
+    "Whenever we ask our customers what they need from us next, the answer is all of it; a wish list without prices tells us nothing about which items they would really pay for if their money ran out halfway down the list.",
+    "A city wants to hear residents on next year's spending, but a questionnaire lets people tick parks, libraries, road repairs and more police all at once; it wants small tables of residents to hold a fixed sum that cannot cover everything and settle among themselves what to fund.",
+    "The student council has a fixed sum for this school year and far more requests than it can pay for; the teacher who supports it wants the students to bargain over the choices with that money in hand instead of voting on each request separately.",
+    "A charity's members each back a favourite cause for next year's grants, yet the grant fund covers only a few; the board wants members to spend a share of it in a game and to team up on the costly projects, so the debate turns on what each choice costs the others.",
+    "The tenants of our housing cooperative have a long list of wishes for the shared spaces, from a playground to bicycle storage, but the renovation fund pays for only a few of them; the committee wants the tenants to work out among themselves which ones to pay for."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 4,
+    "max_people": 40
+  },
+  "audience": [
+    "product teams and their customers",
+    "customer advisory boards",
+    "municipal budget and engagement teams",
+    "student councils",
+    "boards of associations and charities"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

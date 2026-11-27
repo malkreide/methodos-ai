@@ -801,6 +801,24 @@ PROBES = [
         "keeps asking whether we are behind.",
         "Gantt_Chart",
     ),
+    (
+        "Every provider in our market offers the same features at roughly the same price, and "
+        "customers can't tell us apart from the rest. How do we find a way to stand out instead "
+        "of just competing harder on the same things?",
+        "Strategy_Canvas",
+    ),
+    (
+        "We announced a new direction last year, but our org chart, our bonus rules and the way "
+        "managers actually behave still pull the other way. How do we see where things don't "
+        "match?",
+        "McKinsey_7S",
+    ),
+    (
+        "Our customers want far more from the next release than we can afford to build, and "
+        "when I ask each of them they say everything is essential. How do I get them to give "
+        "things up and show me what they would actually spend on together?",
+        "Buy_a_Feature",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1499,6 +1517,23 @@ PROBES_DE = [
         "sieht auf einen Blick, was gerade dran ist, was als Nächstes kommt und ob wir hinter "
         "dem Plan liegen.",
         "Gantt_Chart",
+    ),
+    (
+        "Unsere Sprachschule sieht für Kundinnen genauso aus wie die drei anderen in der Stadt, "
+        "und wir kämpfen nur noch über den Preis. Wie entwickeln wir ein Angebot, das sich klar "
+        "von der Konkurrenz unterscheidet?",
+        "Strategy_Canvas",
+    ),
+    (
+        "Nach der Fusion passen Aufbau, Abläufe, Führungsstil und gelebte Werte der beiden "
+        "Häuser nicht zusammen. Wie finden wir heraus, wo es überall hakt?",
+        "McKinsey_7S",
+    ),
+    (
+        "Der Verein hat für nächstes Jahr nur ein kleines Budget, die Mitglieder wünschen sich "
+        "aber zehnmal so viel. Wie bringe ich sie dazu, gemeinsam abzuwägen, wofür das Geld "
+        "wirklich reicht, statt dass jeder einfach alles fordert?",
+        "Buy_a_Feature",
     ),
 ]
 

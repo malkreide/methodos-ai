@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "id": "Strategy_Canvas",
+  "name": "Strategy Canvas and ERRC Grid (Blue Ocean)",
+  "category": "strategy",
+  "use_case": "Price cuts and more extras are the only moves left when every provider sells much the same thing. The factors buyers are offered are listed along one axis, each provider's level on every factor is drawn as a line, and the group decides which factors to eliminate, reduce, raise or create so that its own line is cheaper where buyers care little and stands apart where they care most.",
+  "strengths": [
+    "makes visible on one chart how far the providers in a field have converged on the same profile",
+    "moves the conversation from beating rivals on existing factors to questioning which factors matter at all",
+    "the four actions force cuts as well as additions, so the new offer need not cost more than the old one",
+    "invites attention to people who currently buy from nobody in the field, not only to existing customers",
+    "simple enough that a mixed group, including front-line staff, can draw and argue about the curves together",
+    "the before-and-after curves give a compact picture for explaining a change of direction"
+  ],
+  "weaknesses": [
+    "the choice of factors and the offering levels are judgements; a group can easily plot what it believes rather than what buyers experience",
+    "the evidence behind the wider Blue Ocean approach rests mostly on success stories chosen after the fact, without failed attempts or comparison groups",
+    "says little about whether the new profile can be delivered, defended or marketed, or how quickly others will follow",
+    "works poorly where the field cannot be bounded or where the offer is mandated in detail, such as many statutory services",
+    "a hand-drawn chart invites false precision; small differences between curves are rarely meaningful",
+    "easily turns into a one-off workshop exercise unless the to-be curve is tested with real buyers and non-buyers"
+  ],
+  "complexity_score": 3,
+  "estimated_duration": {
+    "min_minutes": 180,
+    "max_minutes": 480
+  },
+  "references": [
+    "https://hbr.org/2002/06/charting-your-companys-future",
+    "https://hbr.org/2004/10/blue-ocean-strategy",
+    "https://www.blueoceanstrategy.com/tools/strategy-canvas/",
+    "https://www.blueoceanstrategy.com/tools/errc-grid/",
+    "https://en.wikipedia.org/wiki/Blue_Ocean_Strategy",
+    "https://www.apo-tokyo.org/articles/the-blue-ocean-strategy-part-3-novel-solutions-for-public-services/",
+    "https://repub.eur.nl/pub/16037",
+    "https://hbr.org/2010/05/blue-ocean-vs-five-forces",
+    "https://ideas.repec.org/a/gam/jscscx/v8y2019i1p28-d198793.html"
+  ],
+  "use_cases": [
+    "Every bakery and café on our street sells much the same range for about what everyone charges, and each year we add another extra just to keep pace; we want to see which of the things we all compete on our customers really care about, and which we could drop to afford something nobody else offers.",
+    "To buyers we are one more of several near-identical providers, so almost every sale ends with a discount; we want to work out a profile of our own that sets us apart from the competitors instead of undercutting them.",
+    "We run one of four driving schools in our town; to the people choosing, we all look alike, so the only thing they compare is the price per lesson, and we want an offer that is noticeably different.",
+    "Our product is judged on the same checklist as all the rival products: more options, more add-ons, longer guarantees. Every round of extras raises our costs without winning anyone over, and we want an offer that is deliberately lower on some of those points and far higher on a few.",
+    "Our sales team keeps asking for discounts and our product team for more features, and nobody can show which of the things we compete on matter to customers and which we could simply stop doing.",
+    "Most people who could use what our industry sells never buy from any of us, while all providers chase the same small group of regulars; we want to understand what puts the others off and shape an offer around them instead of around the competition.",
+    "A regional transport operator loses riders to coach lines, car sharing and driving, and its managers want to rate how each option performs on what travellers care about, such as fare, frequency, comfort and door-to-door time, and decide where to cut back and what new kind of service to add.",
+    "A public office runs its permit service the way such offices always have, with appointments, paper forms and several visits, and the team wants to question which of these customary features could be scrapped or reduced and what new form of service would matter most to applicants, compared with what private agents offer.",
+    "A continuing-education provider for health professionals sees its courses compared with every competitor's on length, certificate, fee and venue, and wants to design a format that drops what participants care little about and adds something that draws in people who never sign up for such courses."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "nonprofit",
+    "education"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 3,
+    "max_people": 15
+  },
+  "audience": [
+    "executive team",
+    "small business owners",
+    "product management",
+    "marketing and sales leads",
+    "public service managers",
+    "nonprofit leadership",
+    "continuing-education providers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}
