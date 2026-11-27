@@ -771,6 +771,36 @@ PROBES = [
         "afterwards or what numbers would show it",
         "Logic_Model",
     ),
+    (
+        "Our counters and hotline say they are friendly and quick, but I suspect what a normal "
+        "caller actually gets is quite different. How can we find out without the staff "
+        "knowing it is a test?",
+        "Mystery_Shopping",
+    ),
+    (
+        "I want to understand what really keeps each of my team members going at work, and "
+        "whether the upcoming switch to the new team structure makes that better or worse "
+        "for them.",
+        "Moving_Motivators",
+    ),
+    (
+        "We have just been given a big project and nobody can say what all has to be "
+        "produced; how do we split it into chunks small enough that each one can be priced "
+        "and handed to someone?",
+        "Work_Breakdown_Structure",
+    ),
+    (
+        "My manager told me I come across as impatient with people. I don't want another talk "
+        "about what I did wrong last month; I just want a few colleagues to give me concrete "
+        "ideas on how to handle it better from now on.",
+        "Feedforward",
+    ),
+    (
+        "Our project has around forty tasks spread over the next eight months and nobody has "
+        "one overview of what happens in which week and who is doing it. The steering group "
+        "keeps asking whether we are behind.",
+        "Gantt_Chart",
+    ),
 ]
 
 # The same problems as a German-speaking user would put them. Not literal
@@ -1440,6 +1470,35 @@ PROBES_DE = [
         "sollen wir darlegen, was wir einsetzen, was wir tun und was sich bei den Leuten "
         "dadurch verändern soll, und woran wir das messen.",
         "Logic_Model",
+    ),
+    (
+        "Wir wollen wissen, wie Anfragen am Schalter und am Telefon in Wirklichkeit beantwortet "
+        "werden, nicht wie es im Leitbild steht. Wie prüfen wir das, ohne dass die "
+        "Mitarbeitenden merken, dass es ein Test ist?",
+        "Mystery_Shopping",
+    ),
+    (
+        "Ich möchte im Einzelgespräch herausfinden, was meine Mitarbeitenden wirklich antreibt "
+        "und ob die geplante Umstellung ihnen davon etwas nimmt oder gibt.",
+        "Moving_Motivators",
+    ),
+    (
+        "Wir haben den Auftrag für ein grosses Bauprojekt der Gemeinde bekommen, aber niemand "
+        "überblickt, was alles dazugehört. Wie zerlegen wir das Ganze in Teile, die man "
+        "einzeln schätzen und jemandem übergeben kann?",
+        "Work_Breakdown_Structure",
+    ),
+    (
+        "Ich möchte lernen, in Sitzungen besser zuzuhören statt dauernd zu unterbrechen. Wie "
+        "bitte ich Kolleginnen und Kollegen um konkrete Tipps für das nächste Mal, ohne dass "
+        "wir über alte Fehler reden und ich mich rechtfertigen muss?",
+        "Feedforward",
+    ),
+    (
+        "Für unser Projekt laufen über zehn Monate viele Aufgaben nebeneinander, aber niemand "
+        "sieht auf einen Blick, was gerade dran ist, was als Nächstes kommt und ob wir hinter "
+        "dem Plan liegen.",
+        "Gantt_Chart",
     ),
 ]
 

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Gantt_Chart",
+  "name": "Gantt Chart",
+  "category": "analysis",
+  "use_case": "A project with many tasks over several months has no calendar on which the planned dates of all its tasks can be seen together. Dates sit in separate lists and e-mails, two deliveries land in the same week or work is planned over the holidays without anyone spotting it, and when the board asks whether the project is on schedule there is nothing to show. Drawing every task as a bar against a calendar, with its start, its length, the tasks it must wait for and the milestone dates, and marking today's date on it, gives a schedule that the team and its board can read without explanation and that shows straight away which task has slipped.",
+  "strengths": [
+    "readable without any training: anyone who can read a calendar can see what is planned for which week",
+    "puts parallel work side by side, so clashes, overloaded weeks and holiday gaps show up before they happen",
+    "milestones and a line for today's date make it obvious whether the project is ahead of or behind its plan",
+    "keeping the original dates as a baseline next to the current ones shows how much the schedule has slipped and where",
+    "works as a hand-drawn wall chart, a spreadsheet or a scheduling tool, and the same chart serves the team and the people it reports to"
+  ],
+  "weaknesses": [
+    "shows each date as fixed, so the plan looks more certain than the estimates behind it",
+    "with many dependency arrows a large chart becomes cluttered; it does not by itself calculate which tasks determine the finish date",
+    "a chart that is not updated every week or two keeps showing the plan instead of what is really happening",
+    "bar length shows duration, not effort or who is overloaded, so one person can be booked on three bars at once without the chart showing it",
+    "fits work whose tasks are known in advance; when the task list keeps changing, redrawing the chart costs more than it is worth",
+    "researchers note that it was designed for planned, repetitive work and says little about uncertainty, ambiguity or change"
+  ],
+  "complexity_score": 2,
+  "estimated_duration": {
+    "min_minutes": 60,
+    "max_minutes": 240
+  },
+  "references": [
+    "https://archive.org/details/ganttchartworkin00clar",
+    "https://doi.org/10.1108/17538371211268889",
+    "https://mosaicprojects.wordpress.com/2024/09/13/henry-gantt-vs-karol-adamiecki/",
+    "https://en.wikipedia.org/wiki/Gantt_chart",
+    "https://en.wikipedia.org/wiki/Henry_Gantt",
+    "https://en.wikipedia.org/wiki/Karol_Adamiecki"
+  ],
+  "use_cases": [
+    "I'm in charge of a project with dozens of jobs over the coming year; the dates exist only in my head and a long to-do list, and colleagues keep asking me in which month their part starts and what it has to wait for.",
+    "Every month the management board wants to see how far the project has got: which tasks are done, which are under way and which have fallen behind the dates we promised at the start.",
+    "At the kick-off every task got a start and end date, and now I need to compare progress with those dates week by week: bars on a calendar with a line for today, so it is clear at once which tasks are ahead and which are behind.",
+    "A head teacher wants to see every project running in the school year, such as a curriculum revision, staff training days and a timetable change, as bars week by week, so that exam periods and holidays are not overloaded.",
+    "A public works department is renewing water pipes street by street over three years and has to tell residents, bus operators and the fire brigade which street will be closed in which months, and show the council how far the work has got.",
+    "A volunteer committee wants a chart of the months leading up to its annual event, with a bar for every job and the deadlines for permits and printing marked, so helpers know in which weeks they are needed.",
+    "Several of our projects run at the same time and share the same few people, and I want to see on a calendar where they overlap so that nobody discovers in the middle of the month that three deliveries fall in the same week."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote",
+    "async"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 12
+  },
+  "audience": [
+    "project managers",
+    "school leadership",
+    "public-sector project leads",
+    "steering committees and boards",
+    "event and volunteer coordinators",
+    "construction and facilities managers"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

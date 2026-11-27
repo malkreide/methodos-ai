@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "Feedforward",
+  "name": "Feedforward",
+  "category": "facilitation",
+  "use_case": "A person wants to get better at one behaviour, for example listening, patience or delegating, and asks the people around them for suggestions for next time instead of criticism of the past. They listen without arguing, write the suggestions down and say thank you; in a group, pairs swap partners every couple of minutes.",
+  "strengths": [
+    "takes about two minutes per exchange and needs no materials, so a whole room can take part in a quarter of an hour",
+    "because nobody revisits past incidents, there is nothing to dispute, and the person asking can listen instead of justifying themselves",
+    "suggestions can come from anyone, including people who have never worked with the person and so have no history with them",
+    "the rule of answering only with thanks removes the pressure to accept or reject an idea on the spot; the person chooses later what to try",
+    "giving suggestions is as useful as receiving them: participants hear many ideas for behaviours they may share"
+  ],
+  "weaknesses": [
+    "it does not tell a person what to work on; if they pick a behaviour that others do not see as the real issue, the ideas will miss the point",
+    "two-minute exchanges produce quick tips, not an understanding of why a habit persists; deeper patterns need coaching or a longer conversation",
+    "it is no substitute for addressing a specific incident that has to be talked about, such as a conflict or a serious mistake",
+    "people new to it find it awkward not to discuss the ideas, and facilitators have to hold the rule firmly or the exchanges slide back into debate",
+    "the evidence is mainly Goldsmith's own accounts from workshops and coaching; independent studies of the exercise itself are scarce"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 10,
+    "max_minutes": 30
+  },
+  "references": [
+    "https://www.marshallgoldsmith.com/post/try-feedforward-instead-of-feedback",
+    "https://www.hachettebookgroup.com/titles/marshall-goldsmith/what-got-you-here-wont-get-you-there/9781401388775/",
+    "https://www.leadershipnow.com/leadingblog/2007/01/goldsmiths_gold_feedforward.html"
+  ],
+  "use_cases": [
+    "I have heard that I seem impatient and abrupt with people. I want to change that, and rather than going back over what happened, I would like colleagues to suggest what I could do differently from here on.",
+    "How can I get better at one thing in the way I deal with people by asking colleagues what I could do differently from now on, instead of hearing again what went wrong?",
+    "Asking for advice on improving yourself without getting defensive: name the behaviour, ask for two suggestions for the future, listen, take notes and say thank you.",
+    "In a two-minute pair exchange, each person names one habit of their own they want to change and hears two suggestions; then everyone moves on to a new partner, several times in a row.",
+    "My pupils take every criticism as an attack; I want them to practise asking a classmate for two suggestions on something they want to improve and accepting them with a simple thank you.",
+    "After a 360-degree review a manager knows which behaviour her staff most want her to change, but going over the old examples again would only embarrass everyone; she wants to ask individual colleagues every few weeks for a couple of practical ideas for the months ahead.",
+    "I lead a team in a municipal office and my staff say I make decisions without asking them. I want to ask several of them for two concrete ideas each on how I could do better and promise myself not to argue or explain, only to write the ideas down and thank them.",
+    "Whenever we talk about someone's past mistakes they feel hurt and nothing changes; we want staff to ask one another how they could behave better in future instead."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 2,
+    "max_people": 300
+  },
+  "audience": [
+    "managers and team leads",
+    "leadership programme participants",
+    "trainers and workshop hosts",
+    "teachers and school leadership",
+    "public administration staff",
+    "pupils and students",
+    "individuals working on their own behaviour"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}

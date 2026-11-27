@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "Moving_Motivators",
+  "name": "Moving Motivators",
+  "category": "change-management",
+  "use_case": "Before a change such as a new role, a combined unit or a different way of working, a manager wants to understand what motivates each individual, because people differ: one is energised by learning new things, another by clear rules, another by recognition or good colleagues, and guessing how the change will land for each of them often goes wrong. Each person lays out ten cards naming motivators such as curiosity, freedom, mastery, belonging and status in the order in which they matter to them, then shifts each card up or down to show whether the coming change would strengthen or weaken it, and the conversation that follows makes visible what drives that person and where the change helps or hurts them.",
+  "strengths": [
+    "turns a vague talk about motivation into something concrete that both people can point at and ask about",
+    "shows that people on the same team are driven by different things, which corrects the habit of assuming everyone wants what the manager wants",
+    "links a planned change to its personal effect on each person before it happens, so concerns surface early and specifically",
+    "quick to learn, cheap to run with printed or free downloadable cards, and works on paper, at a table or on a shared online board",
+    "can be repeated later to see whether a change actually landed the way people expected"
+  ],
+  "weaknesses": [
+    "the ten motivators are a practitioner selection; they are not a validated psychological instrument and the result is not a measurement",
+    "people may lay out the cards they think their manager wants to see, especially in a one-to-one with their own line manager or when trust is low",
+    "the word on a card means different things to different people unless its meaning is talked through",
+    "it shows what matters and how a change touches it, but does not by itself say what to do about it; the follow-up has to be agreed separately",
+    "cannot make an unwelcome change acceptable; when the decision is final and the losses are real, it can make people feel consulted on something that is not open"
+  ],
+  "complexity_score": 1,
+  "estimated_duration": {
+    "min_minutes": 30,
+    "max_minutes": 90
+  },
+  "references": [
+    "https://management30.com/practice/moving-motivators/",
+    "https://www.wiley-vch.de/en/areas-interest/finance-economics-law/managing-for-happiness-978-1-119-26868-0",
+    "https://www.infoq.com/news/2013/11/intrinsic-motivators",
+    "https://selfdeterminationtheory.org/theory/",
+    "https://selfdeterminationtheory.org/SDT/documents/2000_RyanDeci_SDT.pdf",
+    "https://news.osu.edu/new-theory-of-motivation-lists-16-basic-desires-that-guide-us/"
+  ],
+  "use_cases": [
+    "I have led these people for a year and still could not tell you what each of them actually cares about in the job; for one it might be learning, for another recognition or a calm, predictable routine, and I want a conversation that brings that out.",
+    "A team lead wants to use a regular one-to-one conversation to learn which motivators count most for an employee, then go through a planned change together and see which of those it would feed and which it would starve.",
+    "We are about to change how the department works, and before we roll it out I want to know person by person whose sense of freedom, standing or belonging it threatens and whose it might boost.",
+    "A head of school wants to talk with each teacher about what gives them energy in their work before next year's teaching assignments are changed, so that the change does not quietly take away what matters most to someone.",
+    "Two units of a municipal office are being combined, and the head of section wants each case officer to show what motivates them at work, such as clear rules, good colleagues, influence or recognition, and which of those the combination would strengthen or weaken.",
+    "I have been offered a different job inside my organisation and cannot make up my mind; I want to think through which of the things that motivate me the move would give me more of and which less.",
+    "Several good developers have seemed flat since the company grew, and their lead wants to understand which of their personal motivators, such as curiosity, mastery, autonomy or purpose, are no longer being met.",
+    "A volunteer organisation is changing how its helpers are assigned, and the coordinator wants to hear from volunteers what draws them to the work, such as company, a sense of purpose or being trusted, and whether the new arrangement would take that away."
+  ],
+  "contexts": [
+    "business",
+    "public-sector",
+    "education",
+    "nonprofit",
+    "personal"
+  ],
+  "formats": [
+    "in-person",
+    "hybrid",
+    "remote"
+  ],
+  "group_size": {
+    "min_people": 1,
+    "max_people": 8
+  },
+  "audience": [
+    "team leads and line managers",
+    "agile coaches and Scrum Masters",
+    "school leadership and teaching staff",
+    "public administration units",
+    "volunteer coordinators",
+    "individuals facing a job decision"
+  ],
+  "language": "en",
+  "owner": "Hayal Özkan",
+  "last_reviewed": "2026-11-24"
+}
